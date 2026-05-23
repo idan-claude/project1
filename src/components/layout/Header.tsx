@@ -12,30 +12,30 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="text-xl font-bold text-blue-600 tracking-tight">
-              TrackIt IL
+            <Link href="/" className="flex items-center gap-1.5">
+              <span className="text-xl font-black text-blue-600 tracking-tight">Find</span>
+              <span className="text-xl font-black text-gray-900 tracking-tight">Card</span>
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600 font-medium">
-              <Link href="/products" className="hover:text-blue-600 transition-colors">כל המוצרים</Link>
-              <Link href="/products?featured=true" className="hover:text-blue-600 transition-colors">מוצרים מובחרים</Link>
-              <Link href="/products?category=bundles" className="hover:text-blue-600 transition-colors">חבילות</Link>
+            <nav className="hidden md:flex items-center gap-8 text-sm text-gray-600 font-medium">
+              <Link href="/" className="hover:text-blue-600 transition-colors">בית</Link>
+              <Link href="/product" className="hover:text-blue-600 transition-colors">המוצר שלנו</Link>
+              <Link href="/track" className="hover:text-blue-600 transition-colors">מעקב הזמנה</Link>
             </nav>
 
-            {/* Actions */}
+            {/* Cart button */}
             <div className="flex items-center gap-3">
-              <Link href="/account" className="hidden md:block text-sm text-gray-600 hover:text-blue-600 transition-colors font-medium">
-                החשבון שלי
-              </Link>
               <button
                 onClick={() => setCartOpen(true)}
-                className="relative flex items-center gap-1.5 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="relative flex items-center gap-1.5 bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                <CartIcon />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
                 סל קניות
                 {itemCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
@@ -44,39 +44,27 @@ export default function Header() {
                 )}
               </button>
 
-              {/* Mobile menu toggle */}
-              <button
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100"
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
+              {/* Mobile hamburger */}
+              <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setMenuOpen(!menuOpen)}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
                 </svg>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-4 py-3 flex flex-col gap-3 text-sm font-medium text-gray-700">
-            <Link href="/products" onClick={() => setMenuOpen(false)}>כל המוצרים</Link>
-            <Link href="/products?featured=true" onClick={() => setMenuOpen(false)}>מוצרים מובחרים</Link>
-            <Link href="/products?category=bundles" onClick={() => setMenuOpen(false)}>חבילות</Link>
-            <Link href="/account" onClick={() => setMenuOpen(false)}>החשבון שלי</Link>
+          <div className="md:hidden border-t bg-white px-4 py-3 flex flex-col gap-3 text-sm font-medium text-gray-700">
+            <Link href="/" onClick={() => setMenuOpen(false)}>בית</Link>
+            <Link href="/product" onClick={() => setMenuOpen(false)}>המוצר שלנו</Link>
+            <Link href="/track" onClick={() => setMenuOpen(false)}>מעקב הזמנה</Link>
           </div>
         )}
       </header>
 
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </>
-  )
-}
-
-function CartIcon() {
-  return (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-    </svg>
   )
 }
