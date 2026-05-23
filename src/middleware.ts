@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getToken } from 'next-auth/jwt'
-import { verifyAdminToken } from '@/lib/auth/adminAuth'
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -13,10 +12,11 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Protect /admin/* (except /admin/login) — requires admin JWT cookie
+  // Protect /admin/* (except /admin/login) — cookie presence check only
+  // Full JWT verification happens in each API route via withAdminAuth()
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const adminToken = req.cookies.get('admin_token')?.value
-    if (!adminToken || !verifyAdminToken(adminToken)) {
+    if (!adminToken) {
       return NextResponse.redirect(new URL('/admin/login', req.url))
     }
   }
