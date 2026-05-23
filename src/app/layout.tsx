@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'TrackIt IL - עוקבי מיקום חכמים',
-  description: 'עוקבי מיקום חכמים תואמי Apple Find My. לעולם אל תאבד את הדברים שחשובים לך.',
-  keywords: 'עוקב מיקום, מעקב חכם, Apple Find My, כרטיס מעקב',
+  title: 'FindCard - כרטיס המעקב החכם',
+  description: 'כרטיס מעקב חכם תואם Apple Find My. דק כמו כרטיס אשראי — מצא את הארנק, המפתחות וכל דבר אחר בשניות.',
+  keywords: 'FindCard, כרטיס מעקב, Apple Find My, עוקב מיקום, ארנק חכם',
   openGraph: {
     locale: 'he_IL',
     type: 'website',
