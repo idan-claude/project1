@@ -112,7 +112,6 @@ const ProductSchema = new Schema<IProduct>(
   { timestamps: true }
 )
 
-ProductSchema.index({ slug: 1 }, { unique: true })
 ProductSchema.index({ status: 1, featured: -1, createdAt: -1 })
 ProductSchema.index({ category: 1 })
 ProductSchema.index({ nameHe: 'text', descriptionHe: 'text' })
