@@ -109,7 +109,6 @@ const OrderSchema = new Schema<IOrder>(
   { timestamps: true }
 )
 
-OrderSchema.index({ orderNumber: 1 }, { unique: true })
 OrderSchema.index({ 'customer.email': 1 })
 OrderSchema.index({ status: 1 })
 OrderSchema.index({ 'payment.status': 1 })
