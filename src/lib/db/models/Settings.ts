@@ -14,8 +14,6 @@ const SettingsSchema = new Schema<ISettings>(
   { timestamps: true }
 )
 
-SettingsSchema.index({ key: 1 }, { unique: true })
-
 const Settings: Model<ISettings> =
   mongoose.models.Settings || mongoose.model<ISettings>('Settings', SettingsSchema)
 export default Settings
