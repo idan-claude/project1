@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   const order = await Order.findById(orderId)
   if (!order) return NextResponse.json({ ok: true })
 
-  const isSuccess = Operation === '2' || Operation === 2
+  const isSuccess = Operation === '2' || String(Operation) === '2'
 
   if (isSuccess) {
     order.payment.status = 'paid'
