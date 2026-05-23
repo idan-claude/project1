@@ -4,14 +4,6 @@ import { getToken } from 'next-auth/jwt'
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // Protect /account/* — requires NextAuth session
-  if (pathname.startsWith('/account')) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
-    if (!token) {
-      return NextResponse.redirect(new URL('/login?callbackUrl=' + pathname, req.url))
-    }
-  }
-
   // Protect /admin/* (except /admin/login) — cookie presence check only
   // Full JWT verification happens in each API route via withAdminAuth()
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
