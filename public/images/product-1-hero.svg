@@ -1,117 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 504" width="800" height="504">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
   <defs>
-    <radialGradient id="bg1" cx="50%" cy="45%" r="75%">
-      <stop offset="0%" stop-color="#F0F7FF"/>
-      <stop offset="60%" stop-color="#DBEAFE"/>
-      <stop offset="100%" stop-color="#BFDBFE"/>
+    <!-- Clean white-to-light-blue background -->
+    <radialGradient id="bg" cx="45%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#EFF6FF"/>
+      <stop offset="100%" stop-color="#DBEAFE"/>
     </radialGradient>
-    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6"/>
-      <stop offset="35%" stop-color="#2563EB"/>
-      <stop offset="75%" stop-color="#1D4ED8"/>
+    <!-- Card gradient: vibrant blue top-left, deeper blue bottom-right -->
+    <linearGradient id="cg" x1="5%" y1="5%" x2="95%" y2="95%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="30%" stop-color="#3B82F6"/>
+      <stop offset="65%" stop-color="#2563EB"/>
       <stop offset="100%" stop-color="#1E3A8A"/>
     </linearGradient>
-    <radialGradient id="cardShine1" cx="30%" cy="20%" r="55%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
-      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+    <!-- Soft diagonal shine across top portion -->
+    <linearGradient id="shineL" x1="0%" y1="0%" x2="100%" y2="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.04"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="chip1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FDE68A"/>
-      <stop offset="30%" stop-color="#F59E0B"/>
-      <stop offset="70%" stop-color="#D97706"/>
+    </linearGradient>
+    <!-- Top edge highlight -->
+    <linearGradient id="topHL" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Gold chip -->
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="25%" stop-color="#FCD34D"/>
+      <stop offset="60%" stop-color="#D97706"/>
       <stop offset="100%" stop-color="#92400E"/>
     </linearGradient>
-    <filter id="sh1" x="-30%" y="-35%" width="160%" height="200%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="b1"/>
-      <feOffset in="b1" dx="6" dy="30" result="o1"/>
-      <feColorMatrix in="o1" type="matrix" values="0 0 0 0 0.06 0 0 0 0 0.12 0 0 0 0 0.42 0 0 0 0.38 0" result="c1"/>
-      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b2"/>
-      <feOffset in="b2" dx="2" dy="8" result="o2"/>
-      <feColorMatrix in="o2" type="matrix" values="0 0 0 0 0.04 0 0 0 0 0.08 0 0 0 0 0.30 0 0 0 0.18 0" result="c2"/>
+    <linearGradient id="chipH" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF9C3" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FEF9C3" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Multi-layer drop shadow -->
+    <filter id="shadow" x="-30%" y="-35%" width="160%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="28" result="b1"/>
+      <feOffset in="b1" dx="0" dy="36" result="o1"/>
+      <feColorMatrix in="o1" type="matrix" values="0 0 0 0 0.07 0 0 0 0 0.14 0 0 0 0 0.45 0 0 0 0.32 0" result="c1"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="b2"/>
+      <feOffset in="b2" dx="0" dy="10" result="o2"/>
+      <feColorMatrix in="o2" type="matrix" values="0 0 0 0 0.05 0 0 0 0 0.10 0 0 0 0 0.35 0 0 0 0.18 0" result="c2"/>
       <feMerge>
         <feMergeNode in="c1"/>
         <feMergeNode in="c2"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <pattern id="dots1" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-      <circle cx="5" cy="5" r="0.7" fill="white" opacity="0.07"/>
+    <!-- Dot pattern (subtle) -->
+    <pattern id="dp" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="0.8" fill="white" opacity="0.06"/>
     </pattern>
   </defs>
 
   <!-- Background -->
-  <rect width="800" height="504" fill="url(#bg1)"/>
+  <rect width="800" height="500" fill="url(#bg)"/>
 
-  <!-- Subtle floor shadow -->
-  <ellipse cx="400" cy="430" rx="230" ry="16" fill="#93C5FD" opacity="0.22"/>
+  <!-- Soft floor shadow ellipse -->
+  <ellipse cx="400" cy="448" rx="215" ry="14" fill="#93C5FD" opacity="0.20"/>
 
-  <!-- Card: slightly tilted, centered -->
-  <g transform="translate(400,236) rotate(-8)" filter="url(#sh1)">
+  <!-- ═══ CARD (440×277, centered at 400,240, rotated -9°) ═══ -->
+  <g transform="translate(400,238) rotate(-9)" filter="url(#shadow)">
     <!-- Card body -->
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#card1)"/>
-    <!-- Dot pattern -->
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#dots1)"/>
-    <!-- Shine -->
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#cardShine1)"/>
-    <!-- Top edge highlight -->
-    <rect x="-228" y="-144" width="456" height="5" rx="2" fill="white" opacity="0.15"/>
-    <!-- Left edge highlight -->
-    <rect x="-228" y="-144" width="4" height="288" rx="2" fill="white" opacity="0.10"/>
+    <rect x="-220" y="-138" width="440" height="276" rx="20" fill="url(#cg)"/>
+    <!-- Dot pattern overlay -->
+    <rect x="-220" y="-138" width="440" height="276" rx="20" fill="url(#dp)"/>
+    <!-- Diagonal shine -->
+    <rect x="-220" y="-138" width="440" height="276" rx="20" fill="url(#shineL)"/>
+    <!-- Top edge bright line -->
+    <rect x="-220" y="-138" width="440" height="6" rx="3" fill="url(#topHL)"/>
+    <!-- Left edge subtle highlight -->
+    <rect x="-220" y="-138" width="3" height="276" rx="1" fill="white" opacity="0.08"/>
 
-    <!-- Chip (gold, upper left) -->
-    <g transform="translate(-172,-90)">
-      <rect x="0" y="0" width="50" height="40" rx="6" fill="url(#chip1)"/>
-      <rect x="0" y="0" width="50" height="40" rx="6" fill="none" stroke="#92400E" stroke-width="0.5" opacity="0.3"/>
-      <line x1="0" y1="13" x2="50" y2="13" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <line x1="0" y1="27" x2="50" y2="27" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <line x1="16" y1="0" x2="16" y2="40" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <line x1="34" y1="0" x2="34" y2="40" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <ellipse cx="25" cy="20" rx="10" ry="8" fill="none" stroke="#92400E" stroke-width="0.5" opacity="0.3"/>
+    <!-- ── CHIP (upper-left) ── -->
+    <g transform="translate(-155, -78)">
+      <!-- Chip body -->
+      <rect x="0" y="0" width="48" height="38" rx="6" fill="url(#chip)"/>
+      <rect x="0" y="0" width="48" height="38" rx="6" fill="url(#chipH)"/>
+      <!-- Chip internal grid lines -->
+      <line x1="16" y1="0" x2="16" y2="38" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <line x1="32" y1="0" x2="32" y2="38" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <line x1="0" y1="12" x2="48" y2="12" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <line x1="0" y1="26" x2="48" y2="26" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <!-- Center contact oval -->
+      <ellipse cx="24" cy="19" rx="10" ry="8" fill="none" stroke="#92400E" stroke-width="0.6" opacity="0.35"/>
     </g>
 
-    <!-- WiFi/NFC arcs to the right of chip -->
-    <g transform="translate(-96,-72)" opacity="0.90">
-      <circle cx="0" cy="14" r="3.5" fill="white"/>
-      <path d="M-12,6 Q0,-8 12,6" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M-22,-2 Q0,-20 22,-2" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" opacity="0.72"/>
-      <path d="M-32,-10 Q0,-32 32,-10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+    <!-- ── CONTACTLESS SYMBOL (right of chip) ── -->
+    <g transform="translate(-85, -66)" opacity="0.85">
+      <circle cx="0" cy="14" r="4" fill="white" opacity="0.90"/>
+      <path d="M-14,7 Q0,-8 14,7" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" opacity="0.95"/>
+      <path d="M-22,0 Q0,-18 22,0" fill="none" stroke="white" stroke-width="2.0" stroke-linecap="round" opacity="0.72"/>
+      <path d="M-30,-7 Q0,-28 30,-7" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" opacity="0.46"/>
     </g>
 
-    <!-- FINDCARD top-left -->
-    <text x="-210" y="-115" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.72" letter-spacing="3.5">FINDCARD</text>
-    <!-- PRO pill -->
-    <rect x="-122" y="-128" width="36" height="17" rx="8.5" fill="white" opacity="0.28"/>
-    <text x="-104" y="-116" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="800" fill="white" text-anchor="middle" opacity="0.95">PRO</text>
+    <!-- ── TOP-LEFT BRAND ── -->
+    <text x="-200" y="-108" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.70" letter-spacing="4">FINDCARD</text>
 
-    <!-- Main text: "Find  Card" across card center -->
-    <text x="-55" y="28" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="68" fill="white" letter-spacing="-2" text-anchor="middle">Find</text>
-    <text x="118" y="28" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="68" fill="white" letter-spacing="-2" text-anchor="middle">Card</text>
+    <!-- ── PRO BADGE ── -->
+    <rect x="-124" y="-121" width="34" height="16" rx="8" fill="white" opacity="0.22"/>
+    <text x="-107" y="-110" font-family="'Arial',Helvetica,sans-serif" font-size="8" font-weight="800" fill="white" opacity="0.90" text-anchor="middle">PRO</text>
 
-    <!-- Dots row (like a real card) -->
-    <circle cx="-175" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-163" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-151" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-139" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-120" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-108" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-96" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-84" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-65" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-53" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-41" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-29" cy="60" r="3" fill="white" opacity="0.28"/>
+    <!-- ── MAIN BRAND TEXT — balanced, not dominant ── -->
+    <!-- "Find" — lighter blue tint to differentiate -->
+    <text x="-60" y="24" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="42" fill="#BFDBFE" letter-spacing="-1" text-anchor="middle">Find</text>
+    <!-- "Card" — white -->
+    <text x="90" y="24" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="42" fill="white" letter-spacing="-1" text-anchor="middle">Card</text>
 
-    <!-- Separator line -->
-    <line x1="-210" y1="80" x2="210" y2="80" stroke="white" stroke-width="0.6" opacity="0.14"/>
+    <!-- ── CARD NUMBER DOTS (like a real card) ── -->
+    <!-- Group 1 -->
+    <circle cx="-178" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-166" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-154" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-142" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <!-- Group 2 -->
+    <circle cx="-122" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-110" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-98" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-86" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <!-- Group 3 -->
+    <circle cx="-66" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-54" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-42" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-30" cy="65" r="3.2" fill="white" opacity="0.32"/>
 
-    <!-- Bottom branding -->
-    <text x="-210" y="100" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.65">FINDCARD PRO</text>
-    <text x="-210" y="116" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.42">Apple Find My · Bluetooth 5.1 · 1.8mm · IP67 · 8-Month Battery</text>
+    <!-- ── SEPARATOR ── -->
+    <line x1="-200" y1="88" x2="200" y2="88" stroke="white" stroke-width="0.5" opacity="0.12"/>
 
-    <!-- MFi badge -->
-    <rect x="166" y="110" width="54" height="22" rx="6" fill="white" opacity="0.20"/>
-    <text x="193" y="125" font-family="Arial,Helvetica,sans-serif" font-size="9.5" font-weight="700" fill="white" opacity="0.85" text-anchor="middle">MFi ✓</text>
+    <!-- ── BOTTOM INFO STRIP ── -->
+    <text x="-200" y="106" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.65" letter-spacing="0.5">FINDCARD PRO</text>
+    <text x="-200" y="120" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.42" letter-spacing="0.3">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
+
+    <!-- ── MFi BADGE (bottom-right) ── -->
+    <rect x="158" y="108" width="52" height="22" rx="6" fill="white" opacity="0.16"/>
+    <text x="184" y="123" font-family="'Arial',Helvetica,sans-serif" font-size="9.5" font-weight="700" fill="white" opacity="0.82" text-anchor="middle">MFi ✓</text>
   </g>
 </svg>
