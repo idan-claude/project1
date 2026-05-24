@@ -323,8 +323,8 @@ export default function ProductPage() {
                 <span className="text-xl">🚚</span>
                 <div>
                   <p className="font-semibold text-gray-900">משלוח חינם לכל הארץ</p>
-                  <p className="text-xs text-gray-500">מגיע תוך 7-14 ימי עסקים · מספר מעקב נשלח במייל</p>
-                  <p className="text-xs text-orange-500 mt-0.5">⚠️ עקב עומסים יתכנו עיכובים קלים</p>
+                  <p className="text-xs text-gray-500">מגיע תוך 7-14 ימי עסקים · מספר מעקב במייל</p>
+                  <p className="text-xs text-orange-500 mt-0.5">⚠️ לפעמים יש קצת עיכוב, אבל מגיע!</p>
                 </div>
               </div>
             </div>
