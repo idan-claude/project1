@@ -166,7 +166,30 @@ export default function ProductPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1">
+
+      {/* Sticky mobile buy bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-white border-t border-gray-200 px-4 py-3 shadow-2xl">
+        <div className="flex items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 truncate">{tier.label}</p>
+            <p className="text-xl font-black text-blue-700 leading-tight">{priceDisplay(tier.price)}</p>
+          </div>
+          <button
+            onClick={handleBuyNow}
+            className="bg-blue-700 text-white font-extrabold px-5 py-3 rounded-xl text-base shadow-lg flex-shrink-0"
+          >
+            קנה עכשיו ←
+          </button>
+          <button
+            onClick={handleAdd}
+            className="bg-white border-2 border-blue-600 text-blue-600 font-bold px-4 py-3 rounded-xl text-base flex-shrink-0"
+          >
+            {added ? '✓' : '🛒'}
+          </button>
+        </div>
+      </div>
+
+      <main className="flex-1 pb-24 lg:pb-0">
 
         {/* Breadcrumb */}
         <div className="bg-gray-50 border-b">
