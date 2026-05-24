@@ -60,36 +60,6 @@ async function main() {
     console.log('— Apple product already exists')
   }
 
-  // --- Android FindCard ---
-  const androidExisting = await Product.findOne({ slug: 'kartis-maakav-android-pro' })
-  if (!androidExisting) {
-    await Product.create({
-      slug: 'kartis-maakav-android-pro',
-      nameHe: 'כרטיס מעקב FindCard Android',
-      nameEn: 'FindCard Android Tracking Card',
-      descriptionHe: 'כרטיס מעקב חכם תואם Google Find My Device. עובד עם כל מכשיר Android — מצא את הארנק, המפתחות וכל דבר אחר בשניות.',
-      images: [],
-      category: trackingCat?._id,
-      pricing: {
-        sellingPrice: 14900,
-        compareAtPrice: 22900,
-        costPrice: 5000,
-        vatIncluded: true,
-      },
-      inventory: { trackQuantity: false, quantity: 999, lowStockThreshold: 5 },
-      status: 'active',
-      featured: true,
-      aliexpressData: {
-        productId: '1005012114169555',
-        sourceUrl: 'https://he.aliexpress.com/item/1005012114169555.html',
-        lastSynced: new Date(),
-      },
-    })
-    console.log('✓ Product: כרטיס מעקב FindCard Android')
-  } else {
-    console.log('— Android product already exists')
-  }
-
   // --- Bundle ---
   const bundleCat = await Category.findOne({ slug: 'bundles' })
   const bundleExisting = await Product.findOne({ slug: 'chavila-mishpachtit-3-kartisim' })
