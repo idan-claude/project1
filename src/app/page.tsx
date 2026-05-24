@@ -396,7 +396,7 @@ export default function HomePage() {
             <div className="text-5xl mb-4">🛡️</div>
             <h2 className="text-2xl md:text-3xl font-extrabold mb-3">אחריות לכל החיים + 100 יום החזר כסף</h2>
             <p className="text-gray-300 text-lg max-w-xl mx-auto">
-              אנחנו בטוחים במוצר שלנו. Lifetime Warranty על פגמי ייצור + 100 יום להחזרת כסף ללא שאלות אם לא מרוצה.
+              אנחנו מאמינים במוצר הזה. לכן: אחריות לכל החיים על כל פגם ייצור, ו-100 יום להחזר כסף אם לא מרוצה — לא שואלים שאלות.
             </p>
             <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-gray-400">
               <span>✅ Apple MFI מאושר</span>
