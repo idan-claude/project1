@@ -87,7 +87,7 @@
 
     <line x1="-194" y1="84" x2="194" y2="84" stroke="white" stroke-width="0.4" opacity="0.10"/>
     <text x="-194" y="102" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="600" fill="white" opacity="0.52">FINDCARD PRO</text>
-    <text x="-194" y="116" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.33">Apple Find My  ·  BT 5.1  ·  1.8mm  ·  IP67  ·  Qi</text>
+    <text x="-194" y="116" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.33" direction="ltr">Apple Find My  ·  BT 5.1  ·  1.8mm  ·  IP67  ·  Qi</text>
     <rect x="154" y="104" width="50" height="20" rx="5" fill="white" opacity="0.10"/>
     <text x="179" y="118" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.72" text-anchor="middle">MFi ✓</text>
   </g>
