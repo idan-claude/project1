@@ -139,25 +139,29 @@ const GALLERY = [
 
 function MiniReviewCarousel() {
   const [idx, setIdx] = useState(0)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
 
-  function reset() {
-    if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => setIdx(i => (i + 1) % CAROUSEL_REVIEWS.length), 4000)
+  function prev() { setIdx(i => (i - 1 + CAROUSEL_REVIEWS.length) % CAROUSEL_REVIEWS.length) }
+  function next() { setIdx(i => (i + 1) % CAROUSEL_REVIEWS.length) }
+
+  function onTouchStart(e: React.TouchEvent) { touchStartX.current = e.touches[0].clientX }
+  function onTouchEnd(e: React.TouchEvent) {
+    touchEndX.current = e.changedTouches[0].clientX
+    const diff = touchStartX.current - touchEndX.current
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev()
   }
-
-  useEffect(() => { reset(); return () => { if (timerRef.current) clearInterval(timerRef.current) } }, [])
-
-  function go(i: number) { setIdx(i); reset() }
 
   const r = CAROUSEL_REVIEWS[idx]
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 border border-blue-100">
+    <div
+      className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 border border-blue-100 select-none"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <div className="flex items-center gap-3 mb-3">
-        <div className={`w-10 h-10 rounded-full ${r.color} text-white font-bold text-base flex items-center justify-center flex-shrink-0`}>
-          {r.initials}
-        </div>
+        <img src={r.photo} alt={r.name} className="w-11 h-11 rounded-full object-cover flex-shrink-0 border-2 border-white shadow" />
         <div className="flex-1 min-w-0">
           <p className="font-bold text-sm text-gray-900">{r.name} <span className="text-gray-400 font-normal">· {r.location}</span></p>
           <div className="flex items-center gap-1">
@@ -171,10 +175,14 @@ function MiniReviewCarousel() {
       <p className="text-gray-700 text-sm leading-relaxed">"{r.text}"</p>
       <div className="flex items-center justify-between mt-3">
         <p className="text-xs text-gray-400">{r.detail}</p>
-        <div className="flex gap-1.5">
-          {CAROUSEL_REVIEWS.map((_, i) => (
-            <button key={i} onClick={() => go(i)} className={`rounded-full transition-all duration-300 ${i === idx ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-gray-300'}`} />
-          ))}
+        <div className="flex items-center gap-2">
+          <button onClick={prev} className="w-7 h-7 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 text-xs">›</button>
+          <div className="flex gap-1.5">
+            {CAROUSEL_REVIEWS.map((_, i) => (
+              <button key={i} onClick={() => setIdx(i)} className={`rounded-full transition-all duration-300 ${i === idx ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-gray-300'}`} />
+            ))}
+          </div>
+          <button onClick={next} className="w-7 h-7 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 text-xs">‹</button>
         </div>
       </div>
     </div>
