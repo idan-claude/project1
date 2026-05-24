@@ -466,12 +466,10 @@ export default function ProductPage() {
             <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-2">מה הלקוחות שלנו אומרים</h2>
             <p className="text-center text-gray-500 mb-10">⭐ 4.9 / 5 · מעל 312 ביקורות מאומתות</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {REVIEWS.map(({ initials, color, name, location, text, detail, stars }) => (
+              {REVIEWS.map(({ photo, name, location, text, detail, stars }) => (
                 <div key={name + location} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className={`w-11 h-11 rounded-full ${color} text-white font-bold text-lg flex items-center justify-center flex-shrink-0`}>
-                      {initials}
-                    </div>
+                    <img src={photo} alt={name} className="w-11 h-11 rounded-full object-cover flex-shrink-0 border-2 border-gray-100" />
                     <div>
                       <p className="font-bold text-sm text-gray-900">{name}</p>
                       <p className="text-xs text-gray-400">{location}</p>
