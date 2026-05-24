@@ -312,7 +312,7 @@ export default function ProductPage() {
                 </button>
                 <button
                   onClick={handleAdd}
-                  className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors text-lg"
+                  className="w-full bg-white text-blue-600 border-2 border-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-colors text-lg"
                 >
                   {added ? '✓ נוסף לסל! 🛒' : 'הוסף לסל 🛒'}
                 </button>
