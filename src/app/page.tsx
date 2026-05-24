@@ -431,7 +431,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex mb-3">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className={`text-lg ${i < stars ? 'text-yellow-400' : 'text-gray-200'}`}>★</span>
+                    <span key={i} className={`text-lg ${i < stars ? 'text-blue-500' : 'text-gray-200'}`}>★</span>
                   ))}
                 </div>
                 <p className="text-gray-700 text-sm leading-relaxed flex-1">"{text}"</p>
