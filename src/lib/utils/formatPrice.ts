@@ -1,10 +1,11 @@
 // Prices are stored as integers in agorot (100 agorot = ₪1)
 export function formatPrice(agorot: number): string {
+  const hasDecimals = agorot % 100 !== 0
   return (agorot / 100).toLocaleString('he-IL', {
     style: 'currency',
     currency: 'ILS',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: hasDecimals ? 2 : 0,
+    maximumFractionDigits: hasDecimals ? 2 : 0,
   })
 }
 
