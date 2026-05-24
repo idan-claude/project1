@@ -31,10 +31,10 @@ const FEATURE_SLIDES = [
   {
     icon: '💳',
     color: 'from-violet-600 to-purple-700',
-    label: 'עובי 1.8מ"מ',
-    title: 'דק 1.8מ"מ — בדיוק כמו כרטיס אשראי',
-    desc: 'בעובי של 1.8מ"מ ומשקל של 7 גרם בלבד, FindCard נכנס לכל תא כרטיסים בכל ארנק. לא תרגיש אותו, אבל הוא תמיד שם כשתצטרך.',
-    stat: '1.8מ"מ עובי · 7 גרם משקל',
+    label: 'דק — נכנס לכל מקום',
+    title: 'דק במיוחד — נכנס לכל ארנק, תיק ומחזיק מפתחות',
+    desc: 'בעובי של 1.8מ"מ ומשקל של 7 גרם בלבד, FindCard נכנס לכל תא כרטיסים, כיס ומחזיק מפתחות — בכל ארנק, בכל תיק. לא תרגיש אותו, אבל הוא תמיד שם כשתצטרך.',
+    stat: 'עובי 1.8מ"מ בלבד · נכנס לכל ארנק',
     statIcon: '✦',
   },
   {
@@ -245,8 +245,8 @@ export default function HomePage() {
                 </p>
                 <div className="flex flex-wrap items-center gap-2 mb-8 justify-center md:justify-start text-sm">
                   <span className="bg-white/15 rounded-full px-3 py-1 font-medium">✅ Apple MFI מאושר</span>
-                  <span className="bg-white/15 rounded-full px-3 py-1 font-medium">⭐ 4.9/5 · 2,847 ביקורות</span>
-                  <span className="bg-white/15 rounded-full px-3 py-1 font-medium">👥 100,000+ לקוחות</span>
+                  <span className="bg-white/15 rounded-full px-3 py-1 font-medium">⭐ 4.9/5 · 312 ביקורות</span>
+                  <span className="bg-white/15 rounded-full px-3 py-1 font-medium">👥 2,000+ לקוחות</span>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <Link href="/product"
@@ -292,7 +292,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי — 100,000+ לקוחות מרוצים</span>
+                <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי — 2,000+ לקוחות מרוצים</span>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mt-4 mb-2">
                   כרטיס מעקב <span className="text-blue-600">FindCard PRO</span>
                 </h2>
@@ -415,7 +415,7 @@ export default function HomePage() {
           <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-2">
             מה הלקוחות שלנו אומרים
           </h2>
-          <p className="text-center text-gray-500 mb-10">⭐ 4.9 / 5 · מעל 2,847 ביקורות מאומתות</p>
+          <p className="text-center text-gray-500 mb-10">⭐ 4.9 / 5 · מעל 312 ביקורות מאומתות</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {REVIEWS.map(({ initials, color, name, location, text, detail, stars }) => (
               <div key={name + location} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
