@@ -3,6 +3,8 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Product from '@/lib/db/models/Product'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async (_req, { params }) => {
   await connectDB()
   const product = await Product.findById(params.id).populate('category', 'nameHe slug')

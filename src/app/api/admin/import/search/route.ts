@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { searchProducts } from '@/lib/aliexpress/api'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async (req) => {
   const { searchParams } = new URL(req.url)
   const q = searchParams.get('q') || ''

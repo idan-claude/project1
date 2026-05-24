@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken, getAdminTokenFromRequest } from '@/lib/auth/adminAuth'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   const token = getAdminTokenFromRequest(req)
   if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

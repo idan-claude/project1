@@ -4,6 +4,8 @@ import Order from '@/lib/db/models/Order'
 import { sendOrderWhatsApp } from '@/lib/notifications/whatsapp'
 import { sendOrderConfirmationEmail } from '@/lib/notifications/email'
 
+export const dynamic = 'force-dynamic'
+
 // Cardcom sends POST with form-encoded body
 export async function POST(req: NextRequest) {
   await connectDB()

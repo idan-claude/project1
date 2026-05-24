@@ -4,6 +4,8 @@ import { connectDB } from '@/lib/db/mongoose'
 import Product from '@/lib/db/models/Product'
 import { slugify } from '@/lib/utils/slugify'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async (req) => {
   await connectDB()
   const { searchParams } = new URL(req.url)

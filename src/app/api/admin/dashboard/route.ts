@@ -5,6 +5,8 @@ import Order from '@/lib/db/models/Order'
 import User from '@/lib/db/models/User'
 import Product from '@/lib/db/models/Product'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async () => {
   await connectDB()
 

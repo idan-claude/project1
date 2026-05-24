@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs'
 import { connectDB } from '@/lib/db/mongoose'
 import User from '@/lib/db/models/User'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   await connectDB()
   const { name, email, password, phone } = await req.json()

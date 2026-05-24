@@ -4,6 +4,8 @@ import { authOptions } from '@/lib/auth/nextauth'
 import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

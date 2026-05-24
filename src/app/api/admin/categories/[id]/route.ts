@@ -3,6 +3,8 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Category from '@/lib/db/models/Category'
 
+export const dynamic = 'force-dynamic'
+
 export const PUT = withAdminAuth(async (req, { params }) => {
   await connectDB()
   const body = await req.json()

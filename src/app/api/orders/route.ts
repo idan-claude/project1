@@ -6,6 +6,8 @@ import { generateOrderNumber } from '@/lib/utils/generateOrderNumber'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth/nextauth'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   await connectDB()
   const session = await getServerSession(authOptions)

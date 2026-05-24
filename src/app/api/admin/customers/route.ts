@@ -3,6 +3,8 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import User from '@/lib/db/models/User'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async (req) => {
   await connectDB()
   const { searchParams } = new URL(req.url)

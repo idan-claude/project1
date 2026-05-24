@@ -3,6 +3,8 @@ import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 import { initiateCardcomPayment } from '@/lib/payment/cardcom'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
   await connectDB()
   const { orderId } = await req.json()

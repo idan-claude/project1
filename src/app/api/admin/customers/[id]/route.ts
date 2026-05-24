@@ -4,6 +4,8 @@ import { connectDB } from '@/lib/db/mongoose'
 import User from '@/lib/db/models/User'
 import Order from '@/lib/db/models/Order'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async (_req, { params }) => {
   await connectDB()
   const [customer, orders] = await Promise.all([
