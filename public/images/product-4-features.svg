@@ -100,7 +100,7 @@
   <circle cx="572" cy="154" r="3.8" fill="#1D4ED8"/>
   <rect x="630" y="106" width="138" height="34" rx="10" fill="#1D4ED8"/>
   <text x="699" y="122" font-family="'Arial',Helvetica,sans-serif" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">🔵 Bluetooth 5.1</text>
-  <text x="699" y="135" font-family="'Arial',Helvetica,sans-serif" font-size="9" fill="#BFDBFE" text-anchor="middle">טווח עד 90 מטר</text>
+  <text x="699" y="135" font-family="'Arial',Helvetica,sans-serif" font-size="9" fill="#BFDBFE" text-anchor="middle">עד 90 מ׳ ישיר · בכל מקום דרך Find My</text>
 
   <!-- Thickness — RIGHT -->
   <line x1="594" y1="246" x2="642" y2="246" stroke="#2563EB" stroke-width="1.3" stroke-dasharray="4,3"/>
