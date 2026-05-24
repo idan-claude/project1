@@ -250,7 +250,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <Link href="/product"
-                    className="bg-yellow-400 text-yellow-900 font-bold px-8 py-3.5 rounded-xl hover:bg-yellow-300 transition-colors text-lg shadow-lg">
+                    className="bg-white text-blue-700 font-bold px-8 py-3.5 rounded-xl hover:bg-blue-50 transition-colors text-lg shadow-lg">
                     לרכישה עכשיו ←
                   </Link>
                   <button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
