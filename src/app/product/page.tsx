@@ -273,7 +273,6 @@ export default function ProductPage() {
                             <div className="text-right">
                               <p className="font-bold text-gray-900 text-sm">{t.label}</p>
                               {t.sublabel && <p className="text-xs text-gray-400">{t.sublabel}</p>}
-                              {t.gift && <p className="text-xs text-orange-600 font-medium">{t.gift}</p>}
                             </div>
                           </div>
                           <div className="text-left flex-shrink-0">
