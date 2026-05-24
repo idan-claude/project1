@@ -93,7 +93,7 @@
   <circle cx="400" cy="124" r="3.8" fill="#2563EB"/>
   <rect x="316" y="24" width="168" height="34" rx="10" fill="#2563EB"/>
   <text x="400" y="40" font-family="'Arial',Helvetica,sans-serif" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">📡 Apple Find My</text>
-  <text x="400" y="53" font-family="'Arial',Helvetica,sans-serif" font-size="9" fill="#BFDBFE" text-anchor="middle">500M+ מכשירי iPhone</text>
+  <text x="400" y="53" font-family="'Arial',Helvetica,sans-serif" font-size="9" fill="#BFDBFE" text-anchor="middle">מאות מיליוני מכשירי Apple</text>
 
   <!-- Bluetooth — TOP RIGHT -->
   <line x1="572" y1="154" x2="632" y2="128" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4,3"/>
