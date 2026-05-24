@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -28,94 +28,107 @@ const PRODUCT = {
 }
 
 const TIERS = [
-  {
-    actualCards: 1,
-    label: 'כרטיס 1',
-    sublabel: '',
-    price: 19990,
-    compareAt: 29900,
-    badge: null as string | null,
-    badgeOrange: false,
-    gift: null as string | null,
-  },
-  {
-    actualCards: 3,
-    label: '2 כרטיסים + 1 חינם',
-    sublabel: '(סה"כ 3 כרטיסים)',
-    price: 29990,
-    compareAt: 59900,
-    badge: '72% מהלקוחות בחרו',
-    badgeOrange: false,
-    gift: null as string | null,
-  },
-  {
-    actualCards: 4,
-    label: '3 כרטיסים + 1 חינם',
-    sublabel: '(סה"כ 4 כרטיסים)',
-    price: 37990,
-    compareAt: 79900,
-    badge: 'הכי משתלם!',
-    badgeOrange: true,
-    gift: null as string | null,
-  },
+  { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: 19990, compareAt: 29900, badge: null as string | null, badgeOrange: false },
+  { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: '(סה"כ 3 כרטיסים)', price: 29990, compareAt: 59900, badge: '72% מהלקוחות בחרו', badgeOrange: false },
+  { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: '(סה"כ 4 כרטיסים)', price: 37990, compareAt: 79900, badge: 'הכי משתלם!', badgeOrange: true },
 ]
 
 const SPECS = [
   ['גודל', '85.6 × 54 × 1.8 מ"מ'],
   ['משקל', '7 גרם'],
-  ['סוללה', 'Li-Polymer נטענת אלחוטית (Qi)'],
+  ['סוללה', 'Li-Polymer — נטענת אלחוטית (Qi)'],
   ['זמן טעינה', 'כ-2 שעות'],
   ['חיי סוללה', 'עד 8 חודשים'],
   ['עמידות', 'IP67 (מים ואבק)'],
   ['טכנולוגיה', 'Bluetooth 5.1 + Apple Find My'],
   ['טווח', 'עד 90 מטר (Bluetooth ישיר)'],
-  ['אחריות', 'Lifetime Warranty + 100 יום החזר כסף'],
+  ['אחריות', 'אחריות לכל החיים + 100 יום החזר כסף'],
 ]
 
-function AppleCardSVG() {
-  return (
-    <svg viewBox="0 0 360 225" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-sm mx-auto rounded-2xl" style={{ filter: 'drop-shadow(0 20px 40px rgba(30,58,138,0.4))' }}>
-      <defs>
-        <linearGradient id="apg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#1e3a8a"/>
-          <stop offset="100%" stopColor="#4338ca"/>
-        </linearGradient>
-        <linearGradient id="chg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#fde68a"/>
-          <stop offset="100%" stopColor="#f59e0b"/>
-        </linearGradient>
-        <radialGradient id="glow" cx="75%" cy="25%" r="60%">
-          <stop offset="0%" stopColor="white" stopOpacity="0.12"/>
-          <stop offset="100%" stopColor="white" stopOpacity="0"/>
-        </radialGradient>
-      </defs>
-      <rect width="360" height="225" rx="20" fill="url(#apg)"/>
-      <rect width="360" height="225" rx="20" fill="url(#glow)"/>
-      <circle cx="310" cy="-20" r="110" fill="none" stroke="white" strokeWidth="1" opacity="0.08"/>
-      <circle cx="310" cy="-20" r="140" fill="none" stroke="white" strokeWidth="1" opacity="0.06"/>
-      <circle cx="50" cy="260" r="90" fill="none" stroke="white" strokeWidth="1" opacity="0.06"/>
-      <rect x="28" y="68" width="52" height="40" rx="7" fill="url(#chg)"/>
-      <line x1="41" y1="68" x2="41" y2="108" stroke="#b45309" strokeWidth="0.7" opacity="0.5"/>
-      <line x1="54" y1="68" x2="54" y2="108" stroke="#b45309" strokeWidth="0.7" opacity="0.5"/>
-      <line x1="67" y1="68" x2="67" y2="108" stroke="#b45309" strokeWidth="0.7" opacity="0.5"/>
-      <line x1="28" y1="83" x2="80" y2="83" stroke="#b45309" strokeWidth="0.7" opacity="0.5"/>
-      <line x1="28" y1="96" x2="80" y2="96" stroke="#b45309" strokeWidth="0.7" opacity="0.5"/>
-      <text x="28" y="50" fill="#93c5fd" fontSize="10.5" fontWeight="700" letterSpacing="3.5" fontFamily="'Arial', sans-serif">FINDCARD</text>
-      <rect x="121" y="36" width="40" height="19" rx="9.5" fill="#fbbf24"/>
-      <text x="141" y="49.5" fill="#78350f" fontSize="9.5" fontWeight="800" textAnchor="middle" fontFamily="'Arial', sans-serif">PRO</text>
-      <g transform="translate(306,70)" opacity="0.75">
-        <path d="M10 26 Q19 9 28 26" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-        <path d="M5 32 Q19 3 33 32" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-        <path d="M0 38 Q19 -3 38 38" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-      </g>
-      <text x="28" y="162" fill="rgba(255,255,255,0.55)" fontSize="17" letterSpacing="6" fontFamily="'Courier New', monospace">•••• •••• ••••</text>
-      <text x="28" y="198" fill="white" fontSize="16" fontWeight="800" fontFamily="'Arial', sans-serif">FindCard PRO</text>
-      <text x="28" y="215" fill="#93c5fd" fontSize="9" fontFamily="'Arial', sans-serif" letterSpacing="0.5">Apple Find My  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
-      <rect x="291" y="188" width="42" height="22" rx="5" fill="white" opacity="0.12"/>
-      <text x="312" y="203" fill="white" fontSize="8" fontWeight="600" textAnchor="middle" fontFamily="'Arial', sans-serif">MFi ✓</text>
-    </svg>
-  )
-}
+const FEATURE_SLIDES = [
+  {
+    icon: '📡', color: 'from-blue-600 to-indigo-700', label: 'Apple Find My',
+    title: 'Apple Find My — רשת עולמית',
+    desc: 'FindCard רץ על רשת ה-Find My של Apple — מאות מיליוני אייפונים שעובדים ביחד. כל אחד שעובר ליד הכרטיס מעדכן את המיקום שלו בשקט. פותחים Find My ורואים בדיוק איפה.',
+    stat: 'מעל 500 מיליון מכשיר Apple ברשת', statIcon: '🌐',
+  },
+  {
+    icon: '🔋', color: 'from-emerald-600 to-teal-700', label: '8 חודשי סוללה',
+    title: '8 חודשי סוללה — לא תחשוב עליה',
+    desc: 'מניחים על משטח Qi פעם בשמונה חודשים ושעתיים אחרי — מלא. לא מחליפים סוללה לעולם, לא קונים CR2032, לא שום דבר.',
+    stat: 'עד 8 חודשים בין טעינה לטעינה', statIcon: '⚡',
+  },
+  {
+    icon: '💳', color: 'from-violet-600 to-purple-700', label: '1.8מ"מ — דק',
+    title: 'הכי דק בשוק — 1.8מ"מ בלבד',
+    desc: '1.8מ"מ ו-7 גרם. לא תרגיש אותו בארנק, לא בתיק, לא בכיס. הוא פשוט שם — ואתה פותח את הטלפון כשצריך למצוא.',
+    stat: 'עובי 1.8מ"מ בלבד — נכנס לכל ארנק', statIcon: '✦',
+  },
+  {
+    icon: '🌊', color: 'from-cyan-600 to-blue-700', label: 'עמידות IP67',
+    title: 'IP67 — עמיד בגשם, שלג ולחות',
+    desc: 'הכרטיס מוגן IP67 — שוקע מטר עומק ל-30 דקות ולא קורה לו כלום. נפל לשירותים? נכנס לכביסה בטעות? יצא ממנה עובד.',
+    stat: 'IP67 — עד מטר עומק, 30 דקות', statIcon: '🛡️',
+  },
+  {
+    icon: '🔊', color: 'from-orange-500 to-red-600', label: 'התראה קולית',
+    title: 'התראה קולית חזקה',
+    desc: 'לוחצים באפליקציה — הכרטיס מצפצף חזק. אפשר למצוא אותו מתחת לכרית, בין הכיסאות, בתוך התיק. כמה שניות וזהו.',
+    stat: 'נשמע ממרחק עד 30 מטר', statIcon: '📢',
+  },
+  {
+    icon: '⚡', color: 'from-blue-500 to-indigo-600', label: 'הגדרה מהירה',
+    title: 'הגדרה תוך 30 שניות',
+    desc: 'פותחים Find My, "הוסף מכשיר", מכניסים לארנק. זהו. בלי הורדות, בלי הרשמה, בלי סיסמאות. 30 שניות ואתה בסדר.',
+    stat: '30 שניות הגדרה ראשונית', statIcon: '🎯',
+  },
+]
+
+const REVIEWS = [
+  {
+    initials: 'ד', color: 'bg-blue-500', name: 'דנה כ.', location: 'תל אביב',
+    stars: 5, detail: 'לקוחה 4 חודשים',
+    text: 'שנתיים הייתי מאבדת את הארנק שלי בבית — לפחות פעמיים בשבוע. מאז שהכנסתי את FindCard לא חיפשתי אותו ולו פעם אחת. פשוט פותחת Find My ותוך 10 שניות מוצאת. שינה לי את החיים!',
+  },
+  {
+    initials: 'א', color: 'bg-green-500', name: 'אבי מ.', location: 'חיפה',
+    stars: 5, detail: 'קנה 3 יחידות · לקוח 6 חודשים',
+    text: 'קניתי שלושה — לי, לאשתי ולבן ה-14 שמאבד כל דבר. הבן שלי "איבד" את תיק הספרים בבית הספר ומצאנו אותו תוך דקה! ממליץ בחום.',
+  },
+  {
+    initials: 'ש', color: 'bg-purple-500', name: 'שירה ל.', location: 'ירושלים',
+    stars: 5, detail: 'לקוחה 5 חודשים',
+    text: 'טסתי לאמסטרדם ואיבדתי את המזוודה בפרנקפורט. ידעתי בדיוק שהיא בשדה התעופה הגרמני! הראיתי לשירות לקוחות את המפה ושלחו אותה אלי. הציל לי את החופשה ממש.',
+  },
+  {
+    initials: 'מ', color: 'bg-pink-500', name: 'מרים ה.', location: 'נתניה',
+    stars: 5, detail: 'קנתה לאמא · לקוחה 5 חודשים',
+    text: 'קניתי לאמא שלי בת ה-78 שמאבדת את הארנק כל יום. פשוט מתקשרים אליה ומוצאים דרך הטלפון שלנו. שלום נפשי לכל המשפחה!',
+  },
+  {
+    initials: 'נ', color: 'bg-blue-600', name: 'נועה ג.', location: 'הרצליה',
+    stars: 4, detail: 'לקוחה 3 חודשים',
+    text: 'קיבלתי במתנה ולא הייתי בטוחה שאשתמש. חודש אחרי — הארנק נפל מהתיק בקניון, Find My הראה שהוא עדיין שם. חזרתי ומצאתי. חסכתי כ-750 שקל!',
+  },
+  {
+    initials: 'ת', color: 'bg-orange-500', name: 'תומר ז.', location: 'גבעתיים',
+    stars: 3, detail: 'לקוח חודשיים',
+    text: 'עובד כמו שאמרו. ההגדרה הייתה קצת מבלבלת בהתחלה אבל אחרי 5 דקות הסתדרתי. המשלוח לקח כשבועיים. בסך הכל מרוצה.',
+  },
+]
+
+const CAROUSEL_REVIEWS = REVIEWS.slice(0, 3)
+
+const FAQS = [
+  { q: 'איך FindCard עובד?', a: 'FindCard משתמש בטכנולוגיית Bluetooth 5.1 ומתחבר לרשת ה-Find My של Apple. כל מכשיר iPhone בסביבה מדווח על מיקום הכרטיס לשרתי Apple — ואתה מקבל את המיקום המדויק דרך האפליקציה.' },
+  { q: 'האם זה עובד עם אנדרואיד?', a: 'כרגע רק עם Apple — iPhone ו-iPad עם iOS 14.5 ומעלה.' },
+  { q: 'כמה עבה הכרטיס?', a: 'בדיוק 1.8 מ"מ — אותו עובי של כרטיס אשראי. נכנס לכל תא כרטיסים, בכל ארנק, מבלי ליצור בליטה.' },
+  { q: 'כמה זמן הסוללה מחזיקה?', a: 'עד 8 חודשים בשימוש יומיומי. טעינה אלחוטית (Qi) — מניחים על משטח טעינה ותוך שעתיים הסוללה מלאה. לא צריך להחליף סוללה לעולם.' },
+  { q: 'מה הטווח המקסימלי?', a: 'טווח Bluetooth ישיר של עד 90 מטר. מחוץ לטווח — רשת Find My ממשיכה לעדכן את המיקום דרך כל iPhone בסביבה, בכל מקום בעולם.' },
+  { q: 'האם הכרטיס עמיד במים?', a: 'כן! FindCard מדורג IP67 — עמיד בשקיעה במים עד עומק 1 מטר למשך 30 דקות. עמיד גם בגשם, שלג ולחות.' },
+  { q: 'כמה זמן ההגדרה הראשונית?', a: 'כ-30 שניות. פותחים Find My באייפון, לוחצים "הוסף מכשיר" ומוכנים. בלי להוריד שום דבר נוסף.' },
+  { q: 'מה כוללת האחריות?', a: 'אחריות לכל החיים על פגמי ייצור + 100 יום החזר כסף מלא אם לא מרוצה מכל סיבה. בלי שאלות.' },
+]
 
 const GALLERY = [
   { src: '/images/product-1-hero.svg', label: 'תמונה ראשית' },
@@ -124,11 +137,110 @@ const GALLERY = [
   { src: '/images/product-4-features.svg', label: 'פיצ\'רים' },
 ]
 
+function MiniReviewCarousel() {
+  const [idx, setIdx] = useState(0)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  function reset() {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => setIdx(i => (i + 1) % CAROUSEL_REVIEWS.length), 4000)
+  }
+
+  useEffect(() => { reset(); return () => { if (timerRef.current) clearInterval(timerRef.current) } }, [])
+
+  function go(i: number) { setIdx(i); reset() }
+
+  const r = CAROUSEL_REVIEWS[idx]
+
+  return (
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 border border-blue-100">
+      <div className="flex items-center gap-3 mb-3">
+        <div className={`w-10 h-10 rounded-full ${r.color} text-white font-bold text-base flex items-center justify-center flex-shrink-0`}>
+          {r.initials}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-sm text-gray-900">{r.name} <span className="text-gray-400 font-normal">· {r.location}</span></p>
+          <div className="flex items-center gap-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <span key={i} className={`text-sm ${i < r.stars ? 'text-yellow-400' : 'text-gray-200'}`}>★</span>
+            ))}
+            <span className="text-xs text-green-600 font-medium mr-1">מאומת ✓</span>
+          </div>
+        </div>
+      </div>
+      <p className="text-gray-700 text-sm leading-relaxed">"{r.text}"</p>
+      <div className="flex items-center justify-between mt-3">
+        <p className="text-xs text-gray-400">{r.detail}</p>
+        <div className="flex gap-1.5">
+          {CAROUSEL_REVIEWS.map((_, i) => (
+            <button key={i} onClick={() => go(i)} className={`rounded-full transition-all duration-300 ${i === idx ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-gray-300'}`} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function FeatureCarousel() {
+  const [active, setActive] = useState(0)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  function resetTimer() {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => setActive(a => (a + 1) % FEATURE_SLIDES.length), 4500)
+  }
+
+  useEffect(() => { resetTimer(); return () => { if (timerRef.current) clearInterval(timerRef.current) } }, [])
+
+  function go(i: number) { setActive(i); resetTimer() }
+
+  const f = FEATURE_SLIDES[active]
+
+  return (
+    <section className="py-14 px-4 bg-white overflow-hidden border-t">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-8">
+          למה FindCard הוא הבחירה הנכונה?
+        </h2>
+        <div className={`bg-gradient-to-br ${f.color} rounded-3xl p-8 md:p-10 text-white mb-6 transition-all duration-500`}>
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="text-7xl md:text-8xl flex-shrink-0">{f.icon}</div>
+            <div className="text-center md:text-right flex-1">
+              <h3 className="text-xl md:text-2xl font-extrabold mb-3">{f.title}</h3>
+              <p className="text-white/80 text-base leading-relaxed mb-4">{f.desc}</p>
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-bold">
+                <span>{f.statIcon}</span>
+                <span>{f.stat}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex gap-2">
+            {FEATURE_SLIDES.map((_, i) => (
+              <button key={i} onClick={() => go(i)} className={`rounded-full transition-all duration-300 ${active === i ? 'w-7 h-3 bg-blue-600' : 'w-3 h-3 bg-gray-300 hover:bg-gray-400'}`} />
+            ))}
+          </div>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-2 w-full">
+            {FEATURE_SLIDES.map((slide, i) => (
+              <button key={i} onClick={() => go(i)} className={`rounded-xl p-3 text-center transition-all border-2 ${active === i ? 'border-blue-600 bg-blue-50 shadow-md' : 'border-transparent bg-gray-50 hover:bg-gray-100'}`}>
+                <div className="text-2xl mb-1">{slide.icon}</div>
+                <p className="text-xs font-semibold text-gray-700 leading-tight">{slide.label}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function ProductPage() {
   const [tierIndex, setTierIndex] = useState(1)
   const [added, setAdded] = useState(false)
   const [activeImg, setActiveImg] = useState(0)
-  const addItem = useCartStore((s) => s.addItem)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const addItem = useCartStore(s => s.addItem)
   const router = useRouter()
 
   const tier = TIERS[tierIndex]
@@ -137,29 +249,13 @@ export default function ProductPage() {
   const pricePerUnit = Math.round(tier.price / tier.actualCards)
 
   function handleAdd() {
-    addItem({
-      productId: PRODUCT.id,
-      slug: PRODUCT.slug,
-      nameHe: `${PRODUCT.nameHe} — ${tier.label}`,
-      image: '',
-      sellingPrice: tier.price,
-      quantity: 1,
-      variantLabel: tier.label,
-    })
+    addItem({ productId: PRODUCT.id, slug: PRODUCT.slug, nameHe: `${PRODUCT.nameHe} — ${tier.label}`, image: '', sellingPrice: tier.price, quantity: 1, variantLabel: tier.label })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
 
   function handleBuyNow() {
-    addItem({
-      productId: PRODUCT.id,
-      slug: PRODUCT.slug,
-      nameHe: `${PRODUCT.nameHe} — ${tier.label}`,
-      image: '',
-      sellingPrice: tier.price,
-      quantity: 1,
-      variantLabel: tier.label,
-    })
+    addItem({ productId: PRODUCT.id, slug: PRODUCT.slug, nameHe: `${PRODUCT.nameHe} — ${tier.label}`, image: '', sellingPrice: tier.price, quantity: 1, variantLabel: tier.label })
     router.push('/checkout')
   }
 
@@ -174,16 +270,10 @@ export default function ProductPage() {
             <p className="text-xs text-gray-500 truncate">{tier.label}</p>
             <p className="text-xl font-black text-blue-700 leading-tight">{priceDisplay(tier.price)}</p>
           </div>
-          <button
-            onClick={handleBuyNow}
-            className="bg-blue-700 text-white font-extrabold px-5 py-3 rounded-xl text-base shadow-lg flex-shrink-0"
-          >
+          <button onClick={handleBuyNow} className="bg-blue-700 text-white font-extrabold px-5 py-3 rounded-xl text-base shadow-lg flex-shrink-0">
             קנה עכשיו ←
           </button>
-          <button
-            onClick={handleAdd}
-            className="bg-white border-2 border-blue-600 text-blue-600 font-bold px-4 py-3 rounded-xl text-base flex-shrink-0"
-          >
+          <button onClick={handleAdd} className="bg-white border-2 border-blue-600 text-blue-600 font-bold px-4 py-3 rounded-xl text-base flex-shrink-0">
             {added ? '✓' : '🛒'}
           </button>
         </div>
@@ -203,30 +293,21 @@ export default function ProductPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-            {/* Left: Image gallery */}
+            {/* Left: Image gallery + mini review carousel */}
             <div className="space-y-4 lg:sticky lg:top-24">
-              {/* Main image */}
               <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl overflow-hidden">
-                <img
-                  src={GALLERY[activeImg].src}
-                  alt={GALLERY[activeImg].label}
-                  className="w-full h-auto"
-                />
+                <img src={GALLERY[activeImg].src} alt={GALLERY[activeImg].label} className="w-full h-auto" />
               </div>
-              {/* Thumbnails */}
               <div className="grid grid-cols-4 gap-2">
                 {GALLERY.map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveImg(i)}
-                    className={`rounded-xl overflow-hidden border-2 transition-all ${
-                      activeImg === i ? 'border-blue-600 shadow-md' : 'border-gray-200 hover:border-blue-300'
-                    }`}
-                  >
+                  <button key={i} onClick={() => setActiveImg(i)} className={`rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-blue-600 shadow-md' : 'border-gray-200 hover:border-blue-300'}`}>
                     <img src={img.src} alt={img.label} className="w-full h-auto" />
                   </button>
                 ))}
               </div>
+
+              {/* Mini review carousel */}
+              <MiniReviewCarousel />
 
               {/* Trust badges */}
               <div className="grid grid-cols-3 gap-3 text-center">
@@ -258,6 +339,18 @@ export default function ProductPage() {
                 <p className="text-gray-500 leading-relaxed text-sm">{PRODUCT.descriptionHe}</p>
               </div>
 
+              {/* Feature bullets */}
+              <div className="bg-blue-50 rounded-xl p-4">
+                <ul className="space-y-2">
+                  {PRODUCT.features.map(f => (
+                    <li key={f} className="flex items-center gap-2.5 text-sm text-gray-700">
+                      <span className="text-blue-500 font-bold flex-shrink-0">✓</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               {/* Urgency */}
               <div className="flex items-center gap-2 text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-4 py-2.5">
                 <span>🔥</span>
@@ -272,25 +365,15 @@ export default function ProductPage() {
                     const isSelected = tierIndex === i
                     const tierSavePct = Math.round(((t.compareAt - t.price) / t.compareAt) * 100)
                     return (
-                      <button
-                        key={i}
-                        onClick={() => setTierIndex(i)}
-                        className={`w-full text-right border-2 rounded-xl px-4 py-3.5 transition-all relative ${
-                          isSelected ? 'border-blue-600 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
-                        }`}
-                      >
+                      <button key={i} onClick={() => setTierIndex(i)} className={`w-full text-right border-2 rounded-xl px-4 py-3.5 transition-all relative ${isSelected ? 'border-blue-600 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
                         {t.badge && (
-                          <span className={`absolute -top-2.5 right-3 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ${
-                            t.badgeOrange ? 'bg-orange-500' : 'bg-blue-600'
-                          }`}>
+                          <span className={`absolute -top-2.5 right-3 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ${t.badgeOrange ? 'bg-orange-500' : 'bg-blue-600'}`}>
                             {t.badge}
                           </span>
                         )}
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-3">
-                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                              isSelected ? 'border-blue-600' : 'border-gray-300'
-                            }`}>
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-blue-600' : 'border-gray-300'}`}>
                               {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />}
                             </div>
                             <div className="text-right">
@@ -299,9 +382,7 @@ export default function ProductPage() {
                             </div>
                           </div>
                           <div className="text-left flex-shrink-0">
-                            <p className={`text-lg font-black ${isSelected ? 'text-blue-600' : 'text-gray-900'}`}>
-                              {priceDisplay(t.price)}
-                            </p>
+                            <p className={`text-lg font-black ${isSelected ? 'text-blue-600' : 'text-gray-900'}`}>{priceDisplay(t.price)}</p>
                             <p className="text-xs text-gray-400 line-through">{priceDisplay(t.compareAt)}</p>
                             <p className="text-xs font-bold text-green-600">חסוך {tierSavePct}%</p>
                           </div>
@@ -312,31 +393,21 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              {/* Summary */}
+              {/* Price summary */}
               <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">
-                    {tier.actualCards} כרטיסים · {priceDisplay(pricePerUnit)} ליחידה
-                  </span>
+                  <span className="text-gray-700 font-medium">{tier.actualCards} כרטיסים · {priceDisplay(pricePerUnit)} ליחידה</span>
                   <span className="font-extrabold text-xl text-gray-900">{priceDisplay(tier.price)}</span>
                 </div>
-                <p className="text-green-600 font-bold text-xs mt-1">
-                  ✓ חסכת {priceDisplay(saveAmount)} ({savePercent}% הנחה)
-                </p>
+                <p className="text-green-600 font-bold text-xs mt-1">✓ חסכת {priceDisplay(saveAmount)} ({savePercent}% הנחה)</p>
               </div>
 
               {/* CTAs */}
               <div className="flex flex-col gap-3">
-                <button
-                  onClick={handleBuyNow}
-                  className="w-full bg-blue-700 text-white font-extrabold py-4 rounded-xl hover:bg-blue-800 transition-colors text-lg shadow-lg"
-                >
+                <button onClick={handleBuyNow} className="w-full bg-blue-700 text-white font-extrabold py-4 rounded-xl hover:bg-blue-800 transition-colors text-lg shadow-lg">
                   קנה עכשיו ← {priceDisplay(tier.price)}
                 </button>
-                <button
-                  onClick={handleAdd}
-                  className="w-full bg-white text-blue-600 border-2 border-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-colors text-lg"
-                >
+                <button onClick={handleAdd} className="w-full bg-white text-blue-600 border-2 border-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-colors text-lg">
                   {added ? '✓ נוסף לסל! 🛒' : 'הוסף לסל 🛒'}
                 </button>
               </div>
@@ -346,68 +417,92 @@ export default function ProductPage() {
                 <span className="text-xl">🚚</span>
                 <div>
                   <p className="font-semibold text-gray-900">משלוח חינם לכל הארץ</p>
-                  <p className="text-xs text-gray-500">מגיע תוך 7-14 ימי עסקים · מספר מעקב במייל</p>
-                  <p className="text-xs text-orange-500 mt-0.5">⚠️ לפעמים יש קצת עיכוב, אבל מגיע!</p>
+                  <p className="text-xs text-gray-500">מגיע תוך 7–14 ימי עסקים · מספר מעקב במייל</p>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Features + Specs */}
-          <div className="mt-16 border-t pt-14">
-            <h2 className="text-2xl font-extrabold text-gray-900 mb-8 text-center">פרטי המוצר</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-              <div className="bg-blue-50 rounded-2xl p-6">
-                <h3 className="font-bold text-gray-900 mb-4">מה הכרטיס יודע לעשות:</h3>
-                <ul className="space-y-2.5">
-                  {PRODUCT.features.map((f) => (
-                    <li key={f} className="flex items-center gap-3 text-sm text-gray-700">
-                      <span className="text-blue-500 font-bold flex-shrink-0">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="bg-gray-50 rounded-2xl p-6">
-                <h3 className="font-bold text-gray-900 mb-4">מפרט טכני:</h3>
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-gray-200">
-                    {SPECS.map(([k, v]) => (
-                      <tr key={k}>
-                        <td className="py-2 font-medium text-gray-700">{k}</td>
-                        <td className="py-2 text-gray-600">{v}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {/* Guarantee strip */}
+              <div className="flex items-center gap-3 bg-gray-900 text-white rounded-xl px-4 py-3 text-sm">
+                <span className="text-2xl flex-shrink-0">🛡️</span>
+                <p><strong>אחריות לכל החיים</strong> + 100 יום החזר כסף מלא — בלי שאלות</p>
               </div>
             </div>
-
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
-              <h3 className="font-bold text-xl mb-5 text-center">במה FindCard שונה?</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  { icon: '💳', text: 'הכרטיס הדק ביותר בשוק — 1.8מ"מ בלבד' },
-                  { icon: '🔋', text: 'לא צריך להחליף סוללה לעולם — רק לטעון' },
-                  { icon: '🌐', text: 'רשת מיקום של מאות מיליוני מכשירי Apple' },
-                  { icon: '⚡', text: 'הגדרה של 30 שניות — ללא הורדות' },
-                  { icon: '🛡️', text: 'Lifetime Warranty + 100 יום החזר כסף' },
-                  { icon: '🌊', text: 'IP67 — עמיד בגשם, שלג ולחות' },
-                ].map(({ icon, text }) => (
-                  <div key={text} className="flex items-start gap-3">
-                    <span className="text-xl flex-shrink-0">{icon}</span>
-                    <p className="text-gray-300 text-sm leading-relaxed">{text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 bg-gray-50 rounded-2xl p-6 border text-center">
-            <p className="text-2xl font-extrabold text-gray-900 mb-1">⭐ 4.9 / 5</p>
-            <p className="text-gray-500 text-sm">מבוסס על 312 ביקורות מאומתות · 2,000+ לקוחות מרוצים</p>
           </div>
         </div>
+
+        {/* Feature carousel */}
+        <FeatureCarousel />
+
+        {/* Specs table */}
+        <section className="bg-gray-50 py-14 px-4 border-t">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-8 text-center">מפרט טכני</h2>
+            <div className="bg-white rounded-2xl border overflow-hidden shadow-sm">
+              <table className="w-full text-sm">
+                <tbody className="divide-y divide-gray-100">
+                  {SPECS.map(([k, v]) => (
+                    <tr key={k} className="hover:bg-gray-50">
+                      <td className="px-6 py-3.5 font-semibold text-gray-700 w-1/3">{k}</td>
+                      <td className="px-6 py-3.5 text-gray-600">{v}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Reviews */}
+        <section className="py-14 px-4 bg-white border-t">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-2">מה הלקוחות שלנו אומרים</h2>
+            <p className="text-center text-gray-500 mb-10">⭐ 4.9 / 5 · מעל 312 ביקורות מאומתות</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {REVIEWS.map(({ initials, color, name, location, text, detail, stars }) => (
+                <div key={name + location} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`w-11 h-11 rounded-full ${color} text-white font-bold text-lg flex items-center justify-center flex-shrink-0`}>
+                      {initials}
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-gray-900">{name}</p>
+                      <p className="text-xs text-gray-400">{location}</p>
+                    </div>
+                    <span className="mr-auto text-xs bg-green-50 text-green-600 border border-green-200 rounded-full px-2 py-0.5 font-medium whitespace-nowrap">מאומת ✓</span>
+                  </div>
+                  <div className="flex mb-3">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span key={i} className={`text-lg ${i < stars ? 'text-yellow-400' : 'text-gray-200'}`}>★</span>
+                    ))}
+                  </div>
+                  <p className="text-gray-700 text-sm leading-relaxed flex-1">"{text}"</p>
+                  <p className="text-xs text-gray-400 mt-4 pt-3 border-t">{detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="bg-gray-50 py-14 px-4 border-t">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-10">שאלות נפוצות</h2>
+            <div className="space-y-3">
+              {FAQS.map(({ q, a }, i) => (
+                <div key={i} className="bg-white border rounded-xl overflow-hidden">
+                  <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between px-5 py-4 text-right font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                    <span>{q}</span>
+                    <span className={`text-gray-400 text-xl transition-transform duration-200 flex-shrink-0 mr-3 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-5 pb-4 text-sm text-gray-600 leading-relaxed border-t pt-3">{a}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </main>
       <Footer />
     </div>
