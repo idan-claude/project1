@@ -44,15 +44,17 @@ export default function ReturnPolicyPage() {
           <div className="bg-white rounded-2xl border shadow-sm p-6">
             <h2 className="text-xl font-extrabold text-gray-900 mb-4">2. מדיניות 100 יום החזר כסף</h2>
             <div className="space-y-3 text-sm text-gray-700 leading-relaxed">
-              <p>אנחנו מאמינים כל כך ב-FindCard שאנחנו מציעים <strong>100 יום אחריות להחזרת כסף מלאה</strong> — ללא שאלות, ללא בירוקרטיה.</p>
+              <p>אנחנו מאמינים ב-FindCard ומציעים <strong>100 יום אחריות להחזרת כסף מלאה</strong> — אם אינך מרוצה מכל סיבה שהיא.</p>
               <p><strong>כיצד לבקש החזר:</strong></p>
-              <ol className="list-decimal list-inside space-y-1 mr-4">
+              <ol className="list-decimal list-inside space-y-2 mr-4">
                 <li>פנה אלינו בתוך 100 יום מיום קבלת המוצר</li>
-                <li>שלח מייל ל-<a href="mailto:findcardsupport@gmail.com" className="text-blue-600">findcardsupport@gmail.com</a> עם מספר ההזמנה</li>
-                <li>נחזיר לך את הכסף תוך 3-7 ימי עסקים</li>
+                <li>שלח מייל ל-<a href="mailto:findcardsupport@gmail.com" className="text-blue-600">findcardsupport@gmail.com</a> עם מספר ההזמנה וסיבת ההחזרה</li>
+                <li>נשלח לך את כתובת ההחזרה ואישור</li>
+                <li>אחוז את המוצר באריזה מתאימה ושלח אלינו</li>
+                <li>לאחר קבלת המוצר — נחזיר לך את הכסף תוך 3-7 ימי עסקים</li>
               </ol>
               <p className="bg-blue-50 border border-blue-200 rounded-xl p-3">
-                <strong>לא נדרש להחזיר את המוצר</strong> — אנחנו מספיק בטוחים באיכות שלנו ולא נטריח אותך.
+                💡 <strong>שים לב:</strong> ההחזר מותנה בקבלת המוצר בחזרה במצב תקין. עלות המשלוח החוזר אינה כלולה בהחזר.
               </p>
             </div>
           </div>
