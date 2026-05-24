@@ -69,6 +69,7 @@ export default function Header() {
           </div>
         )}
       </header>
+      </div>
 
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </>
