@@ -394,7 +394,7 @@ export default function HomePage() {
         <section className="bg-gray-900 text-white py-14 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <div className="text-5xl mb-4">🛡️</div>
-            <h2 className="text-2xl md:text-3xl font-extrabold mb-3">אחריות לכל החיים + 100 יום החזר כסף</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-3">אחריות לכל החיים — 100 יום החזר כסף</h2>
             <p className="text-gray-300 text-lg max-w-xl mx-auto">
               אנחנו מאמינים במוצר הזה. לכן: אחריות לכל החיים על כל פגם ייצור, ו-100 יום להחזר כסף אם לא מרוצה — לא שואלים שאלות.
             </p>
