@@ -117,9 +117,17 @@ function AppleCardSVG() {
   )
 }
 
+const GALLERY = [
+  { src: '/images/product-1-hero.svg', label: 'תמונה ראשית' },
+  { src: '/images/product-2-wallet.svg', label: 'בארנק' },
+  { src: '/images/product-3-bundle.svg', label: 'חבילה' },
+  { src: '/images/product-4-features.svg', label: 'פיצ\'רים' },
+]
+
 export default function ProductPage() {
   const [tierIndex, setTierIndex] = useState(1)
   const [added, setAdded] = useState(false)
+  const [activeImg, setActiveImg] = useState(0)
   const addItem = useCartStore((s) => s.addItem)
   const router = useRouter()
 
