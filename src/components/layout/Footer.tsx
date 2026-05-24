@@ -8,9 +8,8 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-1 mb-3">
-              <span className="text-blue-400 font-black text-xl">Find</span>
-              <span className="text-white font-black text-xl">Card</span>
+            <div className="mb-3">
+              <span className="text-blue-400 font-black text-xl">Find</span><span className="text-white font-black text-xl">Card</span>
             </div>
             <p className="text-sm leading-relaxed mb-4">
               כרטיס מעקב חכם תואם Apple Find My. מצא את הארנק, המפתחות, התיק ועוד — תמיד.
