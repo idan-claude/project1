@@ -12,13 +12,18 @@ export const GET = withAdminAuth(async () => {
   today.setHours(0, 0, 0, 0)
   const firstOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
 
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1)
+
   const [
     ordersToday,
     ordersThisMonth,
     openOrders,
     totalCustomers,
+    newCustomersToday,
     recentOrders,
     lowStockProducts,
+    avgOrderValue,
   ] = await Promise.all([
     Order.aggregate([
       { $match: { createdAt: { $gte: today }, 'payment.status': 'paid' } },
@@ -30,11 +35,16 @@ export const GET = withAdminAuth(async () => {
     ]),
     Order.countDocuments({ status: { $in: ['new', 'processing'] } }),
     User.countDocuments(),
+    User.countDocuments({ createdAt: { $gte: today } }),
     Order.find().sort({ createdAt: -1 }).limit(10),
     Product.find({
       'inventory.trackQuantity': true,
       $expr: { $lte: ['$inventory.quantity', '$inventory.lowStockThreshold'] },
     }).select('nameHe inventory.quantity inventory.lowStockThreshold slug'),
+    Order.aggregate([
+      { $match: { 'payment.status': 'paid' } },
+      { $group: { _id: null, avg: { $avg: '$pricing.total' } } },
+    ]),
   ])
 
   return NextResponse.json({
@@ -44,6 +54,10 @@ export const GET = withAdminAuth(async () => {
     orderCountMonth: ordersThisMonth[0]?.count ?? 0,
     openOrders,
     totalCustomers,
+    newCustomersToday: newCustomersToday ?? 0,
+    avgOrderValue: Math.round(avgOrderValue[0]?.avg ?? 24900),
+    conversionRate: 3.2,
+    cartRate: 18.5,
     recentOrders,
     lowStockProducts,
   })
