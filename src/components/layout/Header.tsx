@@ -29,9 +29,8 @@ export default function Header() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-1.5">
-              <span className="text-xl font-black text-blue-600 tracking-tight">Find</span>
-              <span className="text-xl font-black text-gray-900 tracking-tight">Card</span>
+            <Link href="/" className="text-xl font-black tracking-tight">
+              <span className="text-blue-600">Find</span><span className="text-gray-900">Card</span>
             </Link>
 
             {/* Desktop Nav */}
