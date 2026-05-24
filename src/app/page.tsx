@@ -195,7 +195,7 @@ function FeatureCarousel() {
                 }`}
               >
                 <div className="text-2xl mb-1">{slide.icon}</div>
-                <p className="text-xs font-semibold text-gray-700 leading-tight">{slide.title.split(' ')[0]}</p>
+                <p className="text-xs font-semibold text-gray-700 leading-tight">{slide.label}</p>
               </button>
             ))}
           </div>
