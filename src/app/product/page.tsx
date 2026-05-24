@@ -46,7 +46,7 @@ const TIERS = [
     compareAt: 59900,
     badge: '72% מהלקוחות בחרו',
     badgeOrange: false,
-    gift: '🎁 מתנת הפתעה כלולה',
+    gift: null as string | null,
   },
   {
     actualCards: 4,
@@ -56,7 +56,7 @@ const TIERS = [
     compareAt: 79900,
     badge: 'הכי משתלם!',
     badgeOrange: true,
-    gift: '🎁 מתנת פרמיום בשווי ₪150',
+    gift: null as string | null,
   },
 ]
 
@@ -229,7 +229,7 @@ export default function ProductPage() {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי ✓</span>
-                  <span className="text-xs text-gray-400">⭐ 4.9 · 2,847 ביקורות</span>
+                  <span className="text-xs text-gray-400">⭐ 4.9 · 312 ביקורות</span>
                 </div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">{PRODUCT.nameHe}</h1>
                 <p className="text-gray-500 leading-relaxed text-sm">{PRODUCT.descriptionHe}</p>
@@ -384,7 +384,7 @@ export default function ProductPage() {
 
           <div className="mt-8 bg-gray-50 rounded-2xl p-6 border text-center">
             <p className="text-2xl font-extrabold text-gray-900 mb-1">⭐ 4.9 / 5</p>
-            <p className="text-gray-500 text-sm">מבוסס על 2,847 ביקורות מאומתות · 100,000+ לקוחות מרוצים</p>
+            <p className="text-gray-500 text-sm">מבוסס על 312 ביקורות מאומתות · 2,000+ לקוחות מרוצים</p>
           </div>
         </div>
       </main>
