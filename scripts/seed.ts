@@ -1,6 +1,6 @@
 /**
- * Seed script — run once to populate initial categories and a sample product.
- * Usage: npx tsx scripts/seed.ts
+ * Seed script — run once to populate initial categories and products.
+ * Usage: npm run seed
  */
 import mongoose from 'mongoose'
 
@@ -10,7 +10,6 @@ async function main() {
   await mongoose.connect(MONGODB_URI)
   console.log('Connected to MongoDB')
 
-  // Dynamic imports after connection
   const Category = (await import('../src/lib/db/models/Category')).default
   const Product = (await import('../src/lib/db/models/Product')).default
 
@@ -31,21 +30,19 @@ async function main() {
 
   const trackingCat = await Category.findOne({ slug: 'tracking-cards' })
 
-  // --- Sample product ---
-  const existing = await Product.findOne({ slug: 'kartis-maakav-smart-pro' })
-  if (!existing) {
+  // --- Apple FindCard PRO ---
+  const appleExisting = await Product.findOne({ slug: 'kartis-maakav-smart-pro' })
+  if (!appleExisting) {
     await Product.create({
       slug: 'kartis-maakav-smart-pro',
-      nameHe: 'כרטיס מעקב Smart PRO',
-      nameEn: 'Smart PRO Tracking Card',
-      descriptionHe: 'כרטיס מעקב חכם תואם Apple Find My. דק כמו כרטיס אשראי, נכנס לכל ארנק. גלה את מיקום הארנק שלך בשניות דרך אפליקציית Find My. סוללה נטענת אלחוטית עם עמידות של עד 6 חודשים.',
-      images: [
-        { url: 'https://via.placeholder.com/600x600/2563EB/FFFFFF?text=TrackIT+PRO', alt: 'כרטיס מעקב Smart PRO' },
-      ],
+      nameHe: 'כרטיס מעקב FindCard PRO',
+      nameEn: 'FindCard PRO Tracking Card',
+      descriptionHe: 'כרטיס מעקב חכם תואם Apple Find My. דק בדיוק 1.8מ"מ — נכנס לכל ארנק ומוצא את המפתחות, הארנק וכל דבר אחר תוך שניות.',
+      images: [],
       category: trackingCat?._id,
       pricing: {
-        sellingPrice: 16900,  // ₪169
-        compareAtPrice: 24900, // ₪249
+        sellingPrice: 16900,
+        compareAtPrice: 24900,
         costPrice: 5500,
         vatIncluded: true,
       },
@@ -58,12 +55,42 @@ async function main() {
         lastSynced: new Date(),
       },
     })
-    console.log('✓ Sample product: כרטיס מעקב Smart PRO')
+    console.log('✓ Product: כרטיס מעקב FindCard PRO (Apple)')
   } else {
-    console.log('— Sample product already exists')
+    console.log('— Apple product already exists')
   }
 
-  // --- Bundle product ---
+  // --- Android FindCard ---
+  const androidExisting = await Product.findOne({ slug: 'kartis-maakav-android-pro' })
+  if (!androidExisting) {
+    await Product.create({
+      slug: 'kartis-maakav-android-pro',
+      nameHe: 'כרטיס מעקב FindCard Android',
+      nameEn: 'FindCard Android Tracking Card',
+      descriptionHe: 'כרטיס מעקב חכם תואם Google Find My Device. עובד עם כל מכשיר Android — מצא את הארנק, המפתחות וכל דבר אחר בשניות.',
+      images: [],
+      category: trackingCat?._id,
+      pricing: {
+        sellingPrice: 14900,
+        compareAtPrice: 22900,
+        costPrice: 5000,
+        vatIncluded: true,
+      },
+      inventory: { trackQuantity: false, quantity: 999, lowStockThreshold: 5 },
+      status: 'active',
+      featured: true,
+      aliexpressData: {
+        productId: '1005012114169555',
+        sourceUrl: 'https://he.aliexpress.com/item/1005012114169555.html',
+        lastSynced: new Date(),
+      },
+    })
+    console.log('✓ Product: כרטיס מעקב FindCard Android')
+  } else {
+    console.log('— Android product already exists')
+  }
+
+  // --- Bundle ---
   const bundleCat = await Category.findOne({ slug: 'bundles' })
   const bundleExisting = await Product.findOne({ slug: 'chavila-mishpachtit-3-kartisim' })
   if (!bundleExisting) {
@@ -71,14 +98,12 @@ async function main() {
       slug: 'chavila-mishpachtit-3-kartisim',
       nameHe: 'חבילה משפחתית — 3 כרטיסי מעקב',
       nameEn: 'Family Bundle - 3 Tracking Cards',
-      descriptionHe: 'קנה 2 כרטיסי מעקב Smart PRO וקבל אחד נוסף חינם! מושלם למשפחות. כל כרטיס תואם Apple Find My.',
-      images: [
-        { url: 'https://via.placeholder.com/600x600/1D4ED8/FFFFFF?text=Family+Bundle', alt: 'חבילה משפחתית' },
-      ],
+      descriptionHe: 'קנה 2 כרטיסי מעקב FindCard PRO וקבל אחד נוסף חינם! מושלם למשפחות. כל כרטיס תואם Apple Find My.',
+      images: [],
       category: bundleCat?._id,
       pricing: {
-        sellingPrice: 33800,  // ₪338
-        compareAtPrice: 50700, // ₪507
+        sellingPrice: 33800,
+        compareAtPrice: 50700,
         costPrice: 16500,
         vatIncluded: true,
       },
@@ -86,7 +111,9 @@ async function main() {
       status: 'active',
       featured: true,
     })
-    console.log('✓ Bundle product: חבילה משפחתית')
+    console.log('✓ Bundle: חבילה משפחתית')
+  } else {
+    console.log('— Bundle already exists')
   }
 
   await mongoose.disconnect()
