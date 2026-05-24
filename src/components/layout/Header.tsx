@@ -11,13 +11,14 @@ export default function Header() {
 
   return (
     <>
-      {/* Announcement bar — always visible, sticky at top */}
-      <div className="sticky top-0 z-50 bg-blue-700 text-white text-center text-xs font-bold py-2.5 px-4">
-        <span className="hidden sm:inline">⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; 🚚 משלוח חינם על כל הזמנה &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!</span>
-        <span className="sm:hidden">⚡ קנה 2, קבל 1 חינם · משלוח חינם</span>
-      </div>
+      <div className="sticky top-0 z-40">
+        {/* Announcement bar — always visible, no dismiss */}
+        <div className="bg-blue-700 text-white text-center text-xs font-bold py-2.5 px-4">
+          <span className="hidden sm:inline">⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; 🚚 משלוח חינם על כל הזמנה &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!</span>
+          <span className="sm:hidden">⚡ קנה 2, קבל 1 חינם · משלוח חינם</span>
+        </div>
 
-      <header className="sticky top-[37px] z-40 bg-white border-b border-gray-100 shadow-sm">
+      <header className="bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
