@@ -4,10 +4,48 @@ import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useCartStore } from '@/store/cartStore'
-import { formatPrice } from '@/lib/utils/formatPrice'
 import { useRouter } from 'next/navigation'
 
 type Platform = 'apple' | 'android'
+
+// Price display with decimals (e.g. ₪199.90)
+function priceDisplay(agorot: number): string {
+  const n = agorot / 100
+  return `₪${Number.isInteger(n) ? n.toLocaleString('he-IL') : n.toFixed(2)}`
+}
+
+const TIERS = [
+  {
+    actualCards: 1,
+    label: '1 כרטיס',
+    sublabel: '',
+    price: 19990,
+    compareAt: 29900,
+    badge: null as string | null,
+    badgeColor: '',
+    gift: null as string | null,
+  },
+  {
+    actualCards: 3,
+    label: '2 כרטיסים + 1 חינם',
+    sublabel: '(סה"כ 3 כרטיסים)',
+    price: 29990,
+    compareAt: 59900,
+    badge: '72% מהלקוחות בחרו',
+    badgeColor: '',
+    gift: '🎁 מתנת הפתעה כלולה',
+  },
+  {
+    actualCards: 4,
+    label: '3 כרטיסים + 1 חינם',
+    sublabel: '(סה"כ 4 כרטיסים)',
+    price: 37990,
+    compareAt: 79900,
+    badge: 'הכי משתלם!',
+    badgeColor: 'orange',
+    gift: '🎁 מתנת פרמיום בשווי ₪150',
+  },
+]
 
 const PRODUCTS = {
   apple: {
@@ -25,11 +63,6 @@ const PRODUCTS = {
       'עמיד בפני מים IP67 (עד 1 מטר)',
       'הגדרה ראשונית תוך 30 שניות',
     ],
-    tiers: [
-      { qty: 1, label: '1 כרטיס', price: 16900, compareAt: 24900, badge: null, badgeColor: '', gift: null },
-      { qty: 2, label: '2 כרטיסים', price: 29900, compareAt: 49800, badge: '72% מהלקוחות בחרו', badgeColor: 'bg-blue-600', gift: '🎁 מתנת הפתעה בשווי ₪50' },
-      { qty: 3, label: '3 כרטיסים', price: 33800, compareAt: 74700, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500', gift: '🎁 מתנת פרמיום בשווי ₪150' },
-    ],
   },
   android: {
     id: 'kartis-maakav-android-pro',
@@ -45,11 +78,6 @@ const PRODUCTS = {
       'התראה קולית חזקה בלחיצת כפתור',
       'עמיד בפני מים IP67 (עד 1 מטר)',
       'הגדרה ראשונית תוך 30 שניות',
-    ],
-    tiers: [
-      { qty: 1, label: '1 כרטיס', price: 14900, compareAt: 22900, badge: null, badgeColor: '', gift: null },
-      { qty: 2, label: '2 כרטיסים', price: 26900, compareAt: 45800, badge: '72% מהלקוחות בחרו', badgeColor: 'bg-green-600', gift: '🎁 מתנת הפתעה בשווי ₪50' },
-      { qty: 3, label: '3 כרטיסים', price: 29800, compareAt: 68700, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500', gift: '🎁 מתנת פרמיום בשווי ₪150' },
     ],
   },
 }
@@ -162,20 +190,20 @@ export default function ProductPage() {
   const router = useRouter()
 
   const p = PRODUCTS[platform]
-  const tier = p.tiers[tierIndex]
+  const tier = TIERS[tierIndex]
   const saveAmount = tier.compareAt - tier.price
   const savePercent = Math.round((saveAmount / tier.compareAt) * 100)
-  const pricePerUnit = Math.round(tier.price / tier.qty)
+  const accentBlue = platform === 'apple'
 
   function handleAdd() {
     addItem({
       productId: p.id,
       slug: p.slug,
-      nameHe: p.nameHe,
+      nameHe: `${p.nameHe} — ${tier.label}`,
       image: '',
       sellingPrice: tier.price,
-      quantity: tier.qty,
-      variantLabel: `${p.compatLabel} × ${tier.qty}`,
+      quantity: 1,
+      variantLabel: tier.label,
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
@@ -185,17 +213,14 @@ export default function ProductPage() {
     addItem({
       productId: p.id,
       slug: p.slug,
-      nameHe: p.nameHe,
+      nameHe: `${p.nameHe} — ${tier.label}`,
       image: '',
       sellingPrice: tier.price,
-      quantity: tier.qty,
-      variantLabel: `${p.compatLabel} × ${tier.qty}`,
+      quantity: 1,
+      variantLabel: tier.label,
     })
     router.push('/checkout')
   }
-
-  const accentBlue = platform === 'apple'
-  const accent = accentBlue ? 'blue' : 'green'
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -216,11 +241,11 @@ export default function ProductPage() {
           {/* Platform selector */}
           <div className="mb-8 text-center">
             <p className="text-sm font-semibold text-gray-600 mb-3">בחר גרסה — לאיזה טלפון יש לך?</p>
-            <div className="inline-flex gap-3 p-1 bg-gray-100 rounded-2xl">
+            <div className="inline-flex gap-1 p-1 bg-gray-100 rounded-2xl">
               {(['apple', 'android'] as Platform[]).map((pl) => (
                 <button
                   key={pl}
-                  onClick={() => { setPlatform(pl); setTierIndex(1); setAdded(false) }}
+                  onClick={() => { setPlatform(pl); setAdded(false) }}
                   className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
                     platform === pl
                       ? pl === 'apple'
@@ -237,7 +262,7 @@ export default function ProductPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-            {/* Left: Card image */}
+            {/* Left: Card image — sticky on desktop */}
             <div className="space-y-5 lg:sticky lg:top-24">
               <div className={`rounded-3xl p-10 flex items-center justify-center transition-colors duration-300 ${
                 accentBlue ? 'bg-gradient-to-br from-blue-50 to-indigo-100' : 'bg-gradient-to-br from-emerald-50 to-teal-100'
@@ -279,7 +304,7 @@ export default function ProductPage() {
                 <p className="text-gray-500 leading-relaxed text-sm">{p.descriptionHe}</p>
               </div>
 
-              {/* Urgency */}
+              {/* Urgency bar */}
               <div className="flex items-center gap-2 text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-4 py-2.5">
                 <span>🔥</span>
                 <span><strong>מבצע מוגבל:</strong> 24 שעות אחרונות למחיר הזה!</span>
@@ -287,12 +312,11 @@ export default function ProductPage() {
 
               {/* Tier selector */}
               <div>
-                <p className="text-sm font-semibold text-gray-700 mb-3">בחר כמות:</p>
+                <p className="text-sm font-semibold text-gray-700 mb-3">בחר חבילה:</p>
                 <div className="space-y-3">
-                  {p.tiers.map((t, i) => {
-                    const tierSave = t.compareAt - t.price
-                    const tierSavePct = Math.round((tierSave / t.compareAt) * 100)
+                  {TIERS.map((t, i) => {
                     const isSelected = tierIndex === i
+                    const tierSavePct = Math.round(((t.compareAt - t.price) / t.compareAt) * 100)
                     return (
                       <button
                         key={i}
@@ -307,13 +331,15 @@ export default function ProductPage() {
                       >
                         {/* Badge */}
                         {t.badge && (
-                          <span className={`absolute -top-2.5 right-3 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ${t.badgeColor}`}>
+                          <span className={`absolute -top-2.5 right-3 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                            t.badgeColor === 'orange' ? 'bg-orange-500' : accentBlue ? 'bg-blue-600' : 'bg-green-600'
+                          }`}>
                             {t.badge}
                           </span>
                         )}
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-2">
+                          {/* Radio + label */}
                           <div className="flex items-center gap-3">
-                            {/* Radio circle */}
                             <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                               isSelected
                                 ? accentBlue ? 'border-blue-600' : 'border-green-600'
@@ -325,14 +351,16 @@ export default function ProductPage() {
                             </div>
                             <div className="text-right">
                               <p className="font-bold text-gray-900 text-sm">{t.label}</p>
+                              {t.sublabel && <p className="text-xs text-gray-400">{t.sublabel}</p>}
                               {t.gift && <p className="text-xs text-orange-600 font-medium">{t.gift}</p>}
                             </div>
                           </div>
-                          <div className="text-left">
+                          {/* Price */}
+                          <div className="text-left flex-shrink-0">
                             <p className={`text-lg font-black ${isSelected ? (accentBlue ? 'text-blue-600' : 'text-green-600') : 'text-gray-900'}`}>
-                              {formatPrice(t.price)}
+                              {priceDisplay(t.price)}
                             </p>
-                            <p className="text-xs text-gray-400 line-through">{formatPrice(t.compareAt)}</p>
+                            <p className="text-xs text-gray-400 line-through">{priceDisplay(t.compareAt)}</p>
                             <p className="text-xs font-bold text-green-600">חסוך {tierSavePct}%</p>
                           </div>
                         </div>
@@ -348,11 +376,13 @@ export default function ProductPage() {
               }`}>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700 font-medium">
-                    {tier.qty} כרטיס{tier.qty > 1 ? 'ים' : ''} · {formatPrice(pricePerUnit)} ליחידה
+                    {tier.actualCards} כרטיסים · {priceDisplay(Math.round(tier.price / tier.actualCards))} ליחידה
                   </span>
-                  <span className="font-extrabold text-lg text-gray-900">{formatPrice(tier.price)}</span>
+                  <span className="font-extrabold text-xl text-gray-900">{priceDisplay(tier.price)}</span>
                 </div>
-                <p className="text-green-600 font-bold text-xs mt-1">✓ חסכת {formatPrice(saveAmount)} ({savePercent}% הנחה)</p>
+                <p className="text-green-600 font-bold text-xs mt-1">
+                  ✓ חסכת {priceDisplay(saveAmount)} ({savePercent}% הנחה)
+                </p>
                 {tier.gift && <p className="text-orange-600 font-medium text-xs mt-0.5">{tier.gift} נוסף בחינם</p>}
               </div>
 
@@ -362,7 +392,7 @@ export default function ProductPage() {
                   onClick={handleBuyNow}
                   className="w-full bg-yellow-400 text-yellow-900 font-extrabold py-4 rounded-xl hover:bg-yellow-300 transition-colors text-lg shadow-lg"
                 >
-                  קנה עכשיו ← {formatPrice(tier.price)}
+                  קנה עכשיו ← {priceDisplay(tier.price)}
                 </button>
                 <button
                   onClick={handleAdd}
@@ -379,7 +409,8 @@ export default function ProductPage() {
                 <span className="text-xl">🚚</span>
                 <div>
                   <p className="font-semibold text-gray-900">משלוח חינם לכל הארץ</p>
-                  <p className="text-xs text-gray-500">מגיע תוך 3-5 ימי עסקים · מספר מעקב נשלח למייל</p>
+                  <p className="text-xs text-gray-500">מגיע תוך 7-14 ימי עסקים · מספר מעקב נשלח במייל</p>
+                  <p className="text-xs text-orange-500 mt-0.5">⚠️ עקב עומסים יתכנו עיכובים קלים</p>
                 </div>
               </div>
             </div>
@@ -389,7 +420,6 @@ export default function ProductPage() {
           <div className="mt-16 border-t pt-14">
             <h2 className="text-2xl font-extrabold text-gray-900 mb-8 text-center">פרטי המוצר</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-              {/* Features */}
               <div className={`rounded-2xl p-6 ${accentBlue ? 'bg-blue-50' : 'bg-green-50'}`}>
                 <h3 className="font-bold text-gray-900 mb-4">מה כלול:</h3>
                 <ul className="space-y-2.5">
@@ -402,7 +432,6 @@ export default function ProductPage() {
                 </ul>
               </div>
 
-              {/* Specs */}
               <div className="bg-gray-50 rounded-2xl p-6">
                 <h3 className="font-bold text-gray-900 mb-4">מפרט טכני:</h3>
                 <table className="w-full text-sm">
@@ -427,12 +456,12 @@ export default function ProductPage() {
               <h3 className="font-bold text-xl mb-5 text-center">במה FindCard שונה?</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { icon: '💳', text: 'הכרטיס הדק ביותר בשוק — 1.8מ"מ בלבד' },
-                  { icon: '🔋', text: 'לא צריך להחליף סוללה לעולם — רק לטעון אלחוטית' },
-                  { icon: '🌐', text: accentBlue ? 'רשת מיקום של מאות מיליוני מכשירי Apple' : 'רשת מיקום של מיליארד+ מכשירי Android' },
-                  { icon: '⚡', text: 'הגדרה של 30 שניות בלבד — פשוט לגמרי' },
+                  { icon: '💳', text: 'הכרטיס הדק ביותר בשוק — 1.8מ"מ בלבד, לא תרגיש אותו בארנק' },
+                  { icon: '🔋', text: 'לא צריך להחליף סוללה לעולם — רק לטעון אלחוטית פעם בחצי שנה' },
+                  { icon: '🌐', text: accentBlue ? 'רשת מיקום של מאות מיליוני מכשירי Apple בכל העולם' : 'רשת מיקום של מיליארד+ מכשירי Android בכל העולם' },
+                  { icon: '⚡', text: 'הגדרה של 30 שניות בלבד — ללא הורדות, ללא הרשמה' },
                   { icon: '🛡️', text: '100 יום אחריות להחזרת כסף ללא שאלות' },
-                  { icon: '🌊', text: 'עמיד בגשם, שלג ולחות — IP67 מאושר' },
+                  { icon: '🌊', text: 'עמיד בגשם, שלג ולחות — IP67 מאושר רשמית' },
                 ].map(({ icon, text }) => (
                   <div key={text} className="flex items-start gap-3">
                     <span className="text-xl flex-shrink-0">{icon}</span>
