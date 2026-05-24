@@ -285,12 +285,8 @@ export default function HomePage() {
         <section className="bg-gray-50 py-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl aspect-square flex items-center justify-center shadow-inner order-2 md:order-1">
-                <div className="text-center">
-                  <div className="text-9xl mb-4">💳</div>
-                  <p className="text-blue-700 font-bold text-2xl">FindCard PRO</p>
-                  <p className="text-blue-500 text-sm mt-2">עובי 1.8מ"מ · טווח 90 מטר</p>
-                </div>
+              <div className="rounded-3xl overflow-hidden shadow-xl order-2 md:order-1">
+                <img src="/images/product-2-wallet.svg" alt="FindCard PRO בארנק" className="w-full h-auto" />
               </div>
               <div className="order-1 md:order-2">
                 <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי — 2,000+ לקוחות מרוצים</span>
