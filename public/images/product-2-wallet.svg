@@ -1,130 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 504" width="800" height="504">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
   <defs>
     <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F8FAFF"/>
-      <stop offset="100%" stop-color="#EFF6FF"/>
+      <stop offset="0%" stop-color="#FEFCE8"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
     </linearGradient>
-    <linearGradient id="card2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6"/>
-      <stop offset="40%" stop-color="#2563EB"/>
+    <!-- FindCard blue -->
+    <linearGradient id="cg2" x1="5%" y1="5%" x2="95%" y2="95%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="30%" stop-color="#3B82F6"/>
+      <stop offset="65%" stop-color="#2563EB"/>
       <stop offset="100%" stop-color="#1E3A8A"/>
     </linearGradient>
-    <radialGradient id="shine2" cx="30%" cy="20%" r="55%">
+    <linearGradient id="shine2" x1="0%" y1="0%" x2="100%" y2="60%">
       <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.20"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.04"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="chip2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FDE68A"/>
-      <stop offset="50%" stop-color="#D97706"/>
-      <stop offset="100%" stop-color="#92400E"/>
     </linearGradient>
-    <!-- CC card behind (gray) -->
-    <linearGradient id="ccGray" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#D1D5DB"/>
-      <stop offset="100%" stop-color="#9CA3AF"/>
+    <!-- Card behind: plain gray bank card -->
+    <linearGradient id="bankCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9CA3AF"/>
+      <stop offset="100%" stop-color="#6B7280"/>
     </linearGradient>
-    <!-- CC card behind (black) -->
-    <linearGradient id="ccDark" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Black card -->
+    <linearGradient id="blackCard" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#374151"/>
       <stop offset="100%" stop-color="#111827"/>
     </linearGradient>
-    <filter id="sh2" x="-25%" y="-30%" width="150%" height="180%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="18" result="b"/>
-      <feOffset in="b" dx="4" dy="22" result="o"/>
-      <feColorMatrix in="o" type="matrix" values="0 0 0 0 0.06 0 0 0 0 0.12 0 0 0 0 0.40 0 0 0 0.32 0" result="c"/>
+    <linearGradient id="chip2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="30%" stop-color="#FCD34D"/>
+      <stop offset="65%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <filter id="sh2" x="-28%" y="-32%" width="156%" height="190%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="22" result="b1"/>
+      <feOffset in="b1" dx="0" dy="28" result="o1"/>
+      <feColorMatrix in="o1" type="matrix" values="0 0 0 0 0.06 0 0 0 0 0.12 0 0 0 0 0.40 0 0 0 0.30 0" result="c1"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b2"/>
+      <feOffset in="b2" dx="0" dy="8" result="o2"/>
+      <feColorMatrix in="o2" type="matrix" values="0 0 0 0 0.03 0 0 0 0 0.06 0 0 0 0 0.20 0 0 0 0.14 0" result="c2"/>
       <feMerge>
-        <feMergeNode in="c"/>
+        <feMergeNode in="c1"/>
+        <feMergeNode in="c2"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="shCard" x="-20%" y="-25%" width="140%" height="170%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="b"/>
-      <feOffset in="b" dx="2" dy="12" result="o"/>
-      <feColorMatrix in="o" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0 0 0 0.20 0" result="c"/>
-      <feMerge>
-        <feMergeNode in="c"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="shBack" x="-20%" y="-25%" width="140%" height="170%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" result="b"/>
+      <feOffset in="b" dx="0" dy="14" result="o"/>
+      <feColorMatrix in="o" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0" result="c"/>
+      <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <pattern id="dots2" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-      <circle cx="5" cy="5" r="0.7" fill="white" opacity="0.07"/>
+    <pattern id="dp2" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="0.8" fill="white" opacity="0.06"/>
     </pattern>
   </defs>
 
-  <rect width="800" height="504" fill="url(#bg2)"/>
+  <rect width="800" height="500" fill="url(#bg2)"/>
 
-  <!-- Decorative circles -->
-  <circle cx="120" cy="100" r="120" fill="#DBEAFE" opacity="0.35"/>
-  <circle cx="680" cy="400" r="100" fill="#DBEAFE" opacity="0.28"/>
+  <!-- Decorative blobs -->
+  <circle cx="100" cy="120" r="140" fill="#FDE68A" opacity="0.14"/>
+  <circle cx="700" cy="380" r="110" fill="#BFDBFE" opacity="0.18"/>
 
-  <!-- Credit card behind (dark, peeking out) -->
-  <g transform="translate(400, 260) rotate(5)" filter="url(#shCard)" opacity="0.9">
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#ccDark)"/>
-    <rect x="-228" y="-144" width="456" height="3" rx="1" fill="white" opacity="0.08"/>
-    <text x="-200" y="-110" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="white" opacity="0.25" letter-spacing="2">CREDIT CARD</text>
-    <!-- Chip on back card -->
-    <rect x="-192" y="-74" width="38" height="30" rx="4" fill="#374151"/>
-    <!-- Stripe -->
-    <rect x="-228" y="-30" width="456" height="52" fill="black" opacity="0.55"/>
+  <!-- Floor shadow -->
+  <ellipse cx="400" cy="448" rx="220" ry="13" fill="#78350F" opacity="0.07"/>
+
+  <!-- ── BACK CARD (gray bank card, slightly rotated right) ── -->
+  <g transform="translate(400,242) rotate(6)" filter="url(#shBack)" opacity="0.88">
+    <rect x="-214" y="-134" width="428" height="268" rx="18" fill="url(#bankCard)"/>
+    <rect x="-214" y="-134" width="428" height="5" rx="2" fill="white" opacity="0.12"/>
+    <text x="-192" y="-100" font-family="'Arial',Helvetica,sans-serif" font-size="8" fill="white" opacity="0.22" letter-spacing="2">BANK CARD</text>
+    <rect x="-192" y="-76" width="40" height="32" rx="5" fill="#D1D5DB"/>
+    <rect x="-192" y="-26" width="200" height="18" rx="3" fill="#6B7280" opacity="0.5"/>
+    <!-- Mag stripe -->
+    <rect x="-214" y="10" width="428" height="46" fill="#374151" opacity="0.60"/>
   </g>
 
-  <!-- Gray card (middle) -->
-  <g transform="translate(400, 248) rotate(-2)" filter="url(#shCard)" opacity="0.85">
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#ccGray)"/>
-    <rect x="-228" y="-144" width="456" height="3" rx="1" fill="white" opacity="0.20"/>
+  <!-- ── MIDDLE CARD (black card, slight left tilt) ── -->
+  <g transform="translate(400,238) rotate(-3)" filter="url(#shBack)" opacity="0.92">
+    <rect x="-214" y="-134" width="428" height="268" rx="18" fill="url(#blackCard)"/>
+    <rect x="-214" y="-134" width="428" height="5" rx="2" fill="white" opacity="0.10"/>
+    <text x="-192" y="-100" font-family="'Arial',Helvetica,sans-serif" font-size="8" fill="white" opacity="0.18" letter-spacing="2">CREDIT CARD</text>
+    <rect x="-192" y="-76" width="40" height="32" rx="5" fill="#4B5563"/>
+    <circle cx="170" cy="-100" r="20" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity="0.35"/>
+    <circle cx="158" cy="-100" r="20" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity="0.20"/>
+    <!-- Card number placeholders -->
+    <rect x="-192" y="-8" width="250" height="10" rx="3" fill="#374151"/>
   </g>
 
-  <!-- FindCard PRO (front, blue) -->
-  <g transform="translate(400, 236) rotate(-6)" filter="url(#sh2)">
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#card2)"/>
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#dots2)"/>
-    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#shine2)"/>
-    <rect x="-228" y="-144" width="456" height="5" rx="2" fill="white" opacity="0.16"/>
+  <!-- ── FINDCARD PRO (front, blue, slight left tilt) ── -->
+  <g transform="translate(400,228) rotate(-7)" filter="url(#sh2)">
+    <rect x="-220" y="-138" width="440" height="276" rx="20" fill="url(#cg2)"/>
+    <rect x="-220" y="-138" width="440" height="276" rx="20" fill="url(#dp2)"/>
+    <rect x="-220" y="-138" width="440" height="276" rx="20" fill="url(#shine2)"/>
+    <rect x="-220" y="-138" width="440" height="6" rx="3" fill="white" opacity="0.22"/>
+    <rect x="-220" y="-138" width="3" height="276" rx="1" fill="white" opacity="0.10"/>
 
     <!-- Chip -->
-    <g transform="translate(-172,-90)">
-      <rect x="0" y="0" width="50" height="40" rx="6" fill="url(#chip2)"/>
-      <line x1="0" y1="13" x2="50" y2="13" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <line x1="0" y1="27" x2="50" y2="27" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <line x1="16" y1="0" x2="16" y2="40" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
-      <line x1="34" y1="0" x2="34" y2="40" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
+    <g transform="translate(-155,-78)">
+      <rect x="0" y="0" width="48" height="38" rx="6" fill="url(#chip2)"/>
+      <line x1="16" y1="0" x2="16" y2="38" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <line x1="32" y1="0" x2="32" y2="38" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <line x1="0" y1="12" x2="48" y2="12" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <line x1="0" y1="26" x2="48" y2="26" stroke="#92400E" stroke-width="0.8" opacity="0.40"/>
+      <ellipse cx="24" cy="19" rx="10" ry="8" fill="none" stroke="#92400E" stroke-width="0.6" opacity="0.35"/>
+    </g>
+    <!-- Contactless -->
+    <g transform="translate(-85,-66)" opacity="0.85">
+      <circle cx="0" cy="14" r="4" fill="white" opacity="0.90"/>
+      <path d="M-14,7 Q0,-8 14,7" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M-22,0 Q0,-18 22,0" fill="none" stroke="white" stroke-width="2.0" stroke-linecap="round" opacity="0.72"/>
+      <path d="M-30,-7 Q0,-28 30,-7" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" opacity="0.46"/>
     </g>
 
-    <!-- WiFi arcs -->
-    <g transform="translate(-96,-72)" opacity="0.88">
-      <circle cx="0" cy="14" r="3.5" fill="white"/>
-      <path d="M-12,6 Q0,-8 12,6" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M-22,-2 Q0,-20 22,-2" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" opacity="0.70"/>
-      <path d="M-32,-10 Q0,-32 32,-10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.44"/>
-    </g>
+    <text x="-200" y="-108" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.70" letter-spacing="4">FINDCARD</text>
+    <rect x="-124" y="-121" width="34" height="16" rx="8" fill="white" opacity="0.22"/>
+    <text x="-107" y="-110" font-family="'Arial',Helvetica,sans-serif" font-size="8" font-weight="800" fill="white" opacity="0.90" text-anchor="middle">PRO</text>
 
-    <!-- Branding -->
-    <text x="-210" y="-115" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.72" letter-spacing="3.5">FINDCARD</text>
-    <rect x="-122" y="-128" width="36" height="17" rx="8.5" fill="white" opacity="0.28"/>
-    <text x="-104" y="-116" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="800" fill="white" text-anchor="middle" opacity="0.95">PRO</text>
+    <text x="-60" y="24" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="42" fill="#BFDBFE" letter-spacing="-1" text-anchor="middle">Find</text>
+    <text x="90" y="24" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="42" fill="white" letter-spacing="-1" text-anchor="middle">Card</text>
 
-    <!-- Main text -->
-    <text x="-55" y="28" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="68" fill="white" letter-spacing="-2" text-anchor="middle">Find</text>
-    <text x="118" y="28" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="68" fill="white" letter-spacing="-2" text-anchor="middle">Card</text>
+    <circle cx="-178" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-166" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-154" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-142" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-122" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-110" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-98" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-86" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-66" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-54" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-42" cy="65" r="3.2" fill="white" opacity="0.32"/>
+    <circle cx="-30" cy="65" r="3.2" fill="white" opacity="0.32"/>
 
-    <!-- Dots -->
-    <circle cx="-175" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-163" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-151" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-139" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-120" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-108" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-96" cy="60" r="3" fill="white" opacity="0.28"/>
-    <circle cx="-84" cy="60" r="3" fill="white" opacity="0.28"/>
-
-    <line x1="-210" y1="80" x2="210" y2="80" stroke="white" stroke-width="0.6" opacity="0.14"/>
-    <text x="-210" y="100" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.65">FINDCARD PRO</text>
-    <text x="-210" y="116" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.42">Apple Find My · Bluetooth 5.1 · 1.8mm · IP67 · 8-Month Battery</text>
-    <rect x="166" y="110" width="54" height="22" rx="6" fill="white" opacity="0.20"/>
-    <text x="193" y="125" font-family="Arial,Helvetica,sans-serif" font-size="9.5" font-weight="700" fill="white" opacity="0.85" text-anchor="middle">MFi ✓</text>
+    <line x1="-200" y1="88" x2="200" y2="88" stroke="white" stroke-width="0.5" opacity="0.12"/>
+    <text x="-200" y="106" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.65" letter-spacing="0.5">FINDCARD PRO</text>
+    <text x="-200" y="120" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.42">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67</text>
+    <rect x="158" y="108" width="52" height="22" rx="6" fill="white" opacity="0.16"/>
+    <text x="184" y="123" font-family="'Arial',Helvetica,sans-serif" font-size="9.5" font-weight="700" fill="white" opacity="0.82" text-anchor="middle">MFi ✓</text>
   </g>
 
   <!-- Caption -->
-  <text x="400" y="474" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="16" fill="#1E40AF" text-anchor="middle">דק 1.8מ"מ — נכנס בין הכרטיסים בארנק</text>
+  <text x="400" y="482" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="15" fill="#1E40AF" text-anchor="middle">דק 1.8מ"מ — נכנס בין כל הכרטיסים בארנק</text>
 </svg>
