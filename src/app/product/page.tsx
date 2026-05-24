@@ -281,7 +281,7 @@ export default function ProductPage() {
               <div className="flex flex-col gap-3">
                 <button
                   onClick={handleBuyNow}
-                  className="w-full bg-yellow-400 text-yellow-900 font-extrabold py-4 rounded-xl hover:bg-yellow-300 transition-colors text-lg shadow-lg"
+                  className="w-full bg-blue-700 text-white font-extrabold py-4 rounded-xl hover:bg-blue-800 transition-colors text-lg shadow-lg"
                 >
                   קנה עכשיו ← {priceDisplay(tier.price)}
                 </button>
