@@ -272,7 +272,7 @@ export default function HomePage() {
                 <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20">
                   <img src="/images/product-1-hero.svg" alt="FindCard PRO" className="w-full h-auto" />
                 </div>
-                <p className="text-center text-blue-200 text-xs mt-3">עובי 1.8מ"מ · IP67 · 8 חודשי סוללה</p>
+                <p className="text-center text-blue-200 text-xs mt-3">עובי 1.8 מ"מ · IP67 · 8 חודשי סוללה</p>
               </div>
             </div>
           </div>
