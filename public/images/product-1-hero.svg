@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 504" width="800" height="504">
+  <defs>
+    <radialGradient id="p1bg" cx="50%" cy="48%" r="68%">
+      <stop offset="0%" stop-color="#EEF2FF"/>
+      <stop offset="100%" stop-color="#BFDBFE"/>
+    </radialGradient>
+    <linearGradient id="p1card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="48%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <radialGradient id="p1shine" cx="27%" cy="22%" r="56%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="p1chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <filter id="p1shadow" x="-28%" y="-40%" width="156%" height="210%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="blur"/>
+      <feOffset in="blur" dx="6" dy="30" result="off"/>
+      <feColorMatrix type="matrix" in="off"
+        values="0 0 0 0 0.09  0 0 0 0 0.18  0 0 0 0 0.55  0 0 0 0.48 0"
+        result="col"/>
+      <feMerge>
+        <feMergeNode in="col"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="504" fill="url(#p1bg)"/>
+  <ellipse cx="100" cy="90" rx="210" ry="145" fill="#C7D2FE" opacity="0.38"/>
+  <ellipse cx="700" cy="420" rx="175" ry="120" fill="#BFDBFE" opacity="0.32"/>
+  <ellipse cx="650" cy="70" rx="100" ry="68" fill="#E0E7FF" opacity="0.28"/>
+
+  <g transform="translate(400,248) rotate(-8)" filter="url(#p1shadow)">
+    <rect x="-232" y="-146" width="464" height="292" rx="20" fill="url(#p1card)"/>
+    <rect x="-232" y="-146" width="464" height="292" rx="20" fill="url(#p1shine)"/>
+    <circle cx="232" cy="-146" r="82" fill="none" stroke="white" stroke-width="48" opacity="0.04"/>
+    <circle cx="232" cy="-146" r="148" fill="none" stroke="white" stroke-width="48" opacity="0.03"/>
+    <circle cx="-232" cy="146" r="62" fill="none" stroke="white" stroke-width="32" opacity="0.03"/>
+
+    <!-- Chip -->
+    <g transform="translate(-185,-96)">
+      <rect width="60" height="47" rx="7" fill="url(#p1chip)"/>
+      <rect width="60" height="18" rx="7" fill="white" opacity="0.22"/>
+      <line x1="0" y1="15" x2="60" y2="15" stroke="#92400E" stroke-width="0.9" opacity="0.45"/>
+      <line x1="0" y1="32" x2="60" y2="32" stroke="#92400E" stroke-width="0.9" opacity="0.45"/>
+      <line x1="20" y1="0" x2="20" y2="47" stroke="#92400E" stroke-width="0.9" opacity="0.45"/>
+      <line x1="40" y1="0" x2="40" y2="47" stroke="#92400E" stroke-width="0.9" opacity="0.45"/>
+      <rect x="21" y="16" width="18" height="15" rx="2" fill="none" stroke="#92400E" stroke-width="0.7" opacity="0.3"/>
+    </g>
+
+    <!-- NFC -->
+    <g transform="translate(-105,-82)" opacity="0.88">
+      <circle cx="0" cy="23" r="3.5" fill="white"/>
+      <path d="M9,11 Q24,-8 39,11" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round"/>
+      <path d="M2,4 Q24,-19 46,4" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round"/>
+      <path d="M-5,-3 Q24,-27 53,-3" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round"/>
+    </g>
+
+    <text x="-183" y="-103" font-family="Arial,Helvetica,sans-serif" font-size="10.5" font-weight="700" fill="#93C5FD" letter-spacing="4.5">FINDCARD</text>
+
+    <!-- PRO badge — white/blue -->
+    <rect x="-64" y="-124" width="44" height="20" rx="10" fill="white" opacity="0.92"/>
+    <text x="-42" y="-110.5" font-family="Arial,Helvetica,sans-serif" font-size="9.5" font-weight="800" fill="#1E40AF" text-anchor="middle">PRO</text>
+
+    <!-- Main logo -->
+    <text x="-218" y="52" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="74" fill="#93C5FD" letter-spacing="-2">Find</text>
+    <text x="8" y="52" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="74" fill="white" letter-spacing="-2">Card</text>
+
+    <text x="-218" y="98" font-family="Courier New,Courier,monospace" font-size="17" fill="white" opacity="0.28" letter-spacing="8">••••  ••••  ••••  ••••</text>
+    <text x="-218" y="124" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white" opacity="0.88" letter-spacing="1.5">FINDCARD PRO</text>
+    <text x="-218" y="142" font-family="Arial,Helvetica,sans-serif" font-size="10.5" fill="#93C5FD" opacity="0.9" letter-spacing="0.3">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
+
+    <rect x="163" y="112" width="64" height="27" rx="6" fill="white" opacity="0.14"/>
+    <text x="195" y="130" font-family="Arial,Helvetica,sans-serif" font-size="10.5" font-weight="600" fill="white" text-anchor="middle">MFi ✓</text>
+  </g>
+</svg>
