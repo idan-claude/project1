@@ -108,9 +108,7 @@
     <text x="-117" y="-112" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" font-weight="800" fill="white" opacity="0.78" text-anchor="middle">PRO</text>
 
     <!-- Center logo -->
-    <text x="20" y="20" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="44" fill="white" letter-spacing="-1" text-anchor="middle" opacity="0.95">
-      <tspan fill="#93C5FD">Find</tspan><tspan fill="white">Card</tspan>
-    </text>
+    <text x="20" y="20" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="44" fill="white" letter-spacing="-1" text-anchor="middle" opacity="0.95">FindCard</text>
 
     <!-- Dots -->
     <circle cx="-178" cy="62" r="3" fill="white" opacity="0.28"/>
