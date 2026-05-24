@@ -357,8 +357,8 @@ export default function HomePage() {
             <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-10">
               למה לבחור ב-FindCard?
             </h2>
-            <div className="bg-white rounded-2xl border overflow-hidden shadow-sm">
-              <table className="w-full text-sm">
+            <div className="bg-white rounded-2xl border overflow-hidden shadow-sm overflow-x-auto">
+              <table className="w-full text-sm min-w-[340px]">
                 <thead>
                   <tr className="border-b">
                     <th className="text-right px-6 py-4 font-semibold text-gray-500">תכונה</th>
