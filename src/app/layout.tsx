@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import WhatsAppBubble from '@/components/ui/WhatsAppBubble'
 
 export const metadata: Metadata = {
   title: 'FindCard - כרטיס המעקב החכם',
