@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 504" width="800" height="504">
+  <defs>
+    <linearGradient id="p3bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E1B4B"/>
+    </linearGradient>
+    <linearGradient id="p3card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="50%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <linearGradient id="p3cardL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#312E81" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="p3cardR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#3730A3" stop-opacity="0.85"/>
+    </linearGradient>
+    <radialGradient id="p3shine" cx="27%" cy="22%" r="56%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="p3shineDim" cx="27%" cy="22%" r="56%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="p3chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <filter id="p3shadow" x="-30%" y="-40%" width="160%" height="210%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20" result="blur"/>
+      <feOffset in="blur" dx="0" dy="22" result="off"/>
+      <feColorMatrix type="matrix" in="off"
+        values="0 0 0 0 0.05  0 0 0 0 0.1  0 0 0 0 0.4  0 0 0 0.6 0" result="col"/>
+      <feMerge>
+        <feMergeNode in="col"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="p3glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="blur"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="504" fill="url(#p3bg)"/>
+  <!-- Glow spots on dark background -->
+  <ellipse cx="400" cy="260" rx="280" ry="180" fill="#1D4ED8" opacity="0.08" filter="url(#p3glow)"/>
+  <ellipse cx="200" cy="300" rx="120" ry="80" fill="#3730A3" opacity="0.12" filter="url(#p3glow)"/>
+  <ellipse cx="600" cy="300" rx="120" ry="80" fill="#2563EB" opacity="0.12" filter="url(#p3glow)"/>
+
+  <!-- Left card (back-left, rotated -20°) -->
+  <g transform="translate(245,268) rotate(-20)" filter="url(#p3shadow)" opacity="0.82">
+    <rect x="-192" y="-121" width="384" height="242" rx="18" fill="url(#p3cardL)"/>
+    <rect x="-192" y="-121" width="384" height="242" rx="18" fill="url(#p3shineDim)"/>
+    <g transform="translate(-152,-80)">
+      <rect width="50" height="39" rx="5" fill="url(#p3chip)" opacity="0.8"/>
+    </g>
+    <text x="-152" y="-85" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="52" fill="#93C5FD" letter-spacing="-1" opacity="0.7">Find</text>
+    <text x="6" y="-85" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="52" fill="white" letter-spacing="-1" opacity="0.7">Card</text>
+    <text x="-152" y="100" font-family="Arial,sans-serif" font-size="9" fill="#93C5FD" opacity="0.6">Apple Find My  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
+  </g>
+
+  <!-- Right card (back-right, rotated +15°) -->
+  <g transform="translate(555,268) rotate(15)" filter="url(#p3shadow)" opacity="0.82">
+    <rect x="-192" y="-121" width="384" height="242" rx="18" fill="url(#p3cardR)"/>
+    <rect x="-192" y="-121" width="384" height="242" rx="18" fill="url(#p3shineDim)"/>
+    <g transform="translate(-152,-80)">
+      <rect width="50" height="39" rx="5" fill="url(#p3chip)" opacity="0.8"/>
+    </g>
+    <text x="-152" y="-85" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="52" fill="#93C5FD" letter-spacing="-1" opacity="0.7">Find</text>
+    <text x="6" y="-85" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="52" fill="white" letter-spacing="-1" opacity="0.7">Card</text>
+    <text x="-152" y="100" font-family="Arial,sans-serif" font-size="9" fill="#93C5FD" opacity="0.6">Apple Find My  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
+  </g>
+
+  <!-- Center card (front, slight tilt -5°) -->
+  <g transform="translate(400,252) rotate(-5)" filter="url(#p3shadow)">
+    <rect x="-210" y="-132" width="420" height="264" rx="20" fill="url(#p3card)"/>
+    <rect x="-210" y="-132" width="420" height="264" rx="20" fill="url(#p3shine)"/>
+    <circle cx="210" cy="-132" r="88" fill="none" stroke="white" stroke-width="50" opacity="0.05"/>
+
+    <!-- Chip -->
+    <g transform="translate(-168,-87)">
+      <rect width="56" height="44" rx="6" fill="url(#p3chip)"/>
+      <rect width="56" height="17" rx="6" fill="white" opacity="0.22"/>
+      <line x1="0" y1="14" x2="56" y2="14" stroke="#92400E" stroke-width="0.9" opacity="0.4"/>
+      <line x1="0" y1="30" x2="56" y2="30" stroke="#92400E" stroke-width="0.9" opacity="0.4"/>
+      <line x1="19" y1="0" x2="19" y2="44" stroke="#92400E" stroke-width="0.9" opacity="0.4"/>
+      <line x1="37" y1="0" x2="37" y2="44" stroke="#92400E" stroke-width="0.9" opacity="0.4"/>
+    </g>
+
+    <!-- NFC -->
+    <g transform="translate(-96,-74)" opacity="0.88">
+      <circle cx="0" cy="21" r="3" fill="white"/>
+      <path d="M8,10 Q22,-6 36,10" fill="none" stroke="white" stroke-width="2.1" stroke-linecap="round"/>
+      <path d="M2,4 Q22,-17 42,4" fill="none" stroke="white" stroke-width="2.1" stroke-linecap="round"/>
+      <path d="M-4,-2 Q22,-24 48,-2" fill="none" stroke="white" stroke-width="2.1" stroke-linecap="round"/>
+    </g>
+
+    <text x="-165" y="-93" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#93C5FD" letter-spacing="4">FINDCARD</text>
+    <rect x="-58" y="-112" width="42" height="19" rx="9.5" fill="white" opacity="0.92"/>
+    <text x="-37" y="-99.5" font-family="Arial,sans-serif" font-size="9" font-weight="800" fill="#1E40AF" text-anchor="middle">PRO</text>
+
+    <text x="-200" y="46" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="66" fill="#93C5FD" letter-spacing="-2">Find</text>
+    <text x="5" y="46" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="66" fill="white" letter-spacing="-2">Card</text>
+
+    <text x="-200" y="88" font-family="Courier New,monospace" font-size="15" fill="white" opacity="0.25" letter-spacing="8">••••  ••••  ••••  ••••</text>
+    <text x="-200" y="112" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="white" opacity="0.88" letter-spacing="1.5">FINDCARD PRO</text>
+    <text x="-200" y="128" font-family="Arial,sans-serif" font-size="10" fill="#93C5FD" opacity="0.88">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
+
+    <rect x="145" y="100" width="60" height="24" rx="5" fill="white" opacity="0.13"/>
+    <text x="175" y="116.5" font-family="Arial,sans-serif" font-size="10" font-weight="600" fill="white" text-anchor="middle">MFi ✓</text>
+  </g>
+
+  <!-- Bundle label -->
+  <rect x="258" y="416" width="284" height="56" rx="16" fill="white" opacity="0.08"/>
+  <text x="400" y="443" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="16" fill="white" text-anchor="middle">חבילת 2+1 — קנה 2 קבל 1 חינם</text>
+  <text x="400" y="463" font-family="Arial,sans-serif" font-size="13" fill="#93C5FD" text-anchor="middle">₪299.90 · חסכון של ₪299</text>
+</svg>
