@@ -335,7 +335,7 @@ export default function ProductPage() {
             <h2 className="text-2xl font-extrabold text-gray-900 mb-8 text-center">פרטי המוצר</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
               <div className="bg-blue-50 rounded-2xl p-6">
-                <h3 className="font-bold text-gray-900 mb-4">מה כלול:</h3>
+                <h3 className="font-bold text-gray-900 mb-4">מה הכרטיס יודע לעשות:</h3>
                 <ul className="space-y-2.5">
                   {PRODUCT.features.map((f) => (
                     <li key={f} className="flex items-center gap-3 text-sm text-gray-700">
