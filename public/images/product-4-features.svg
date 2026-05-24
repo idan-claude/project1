@@ -1,122 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 504" width="800" height="504">
   <defs>
-    <radialGradient id="p4bg" cx="50%" cy="50%" r="65%">
-      <stop offset="0%" stop-color="#F0F7FF"/>
-      <stop offset="100%" stop-color="#E8EEFF"/>
+    <radialGradient id="bg4" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#F0F4FF"/>
+      <stop offset="100%" stop-color="#E5EAFA"/>
     </radialGradient>
-    <linearGradient id="p4card" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E3A8A"/>
-      <stop offset="50%" stop-color="#2563EB"/>
-      <stop offset="100%" stop-color="#3730A3"/>
+    <linearGradient id="card4" x1="8%" y1="5%" x2="92%" y2="95%">
+      <stop offset="0%" stop-color="#1C2C48"/>
+      <stop offset="55%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0C1320"/>
     </linearGradient>
-    <radialGradient id="p4shine" cx="27%" cy="22%" r="56%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.20"/>
+    <radialGradient id="shine4" cx="78%" cy="12%" r="45%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.10"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="p4chip" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FDE68A"/>
-      <stop offset="100%" stop-color="#B45309"/>
+    <linearGradient id="topGlow4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.20"/>
+      <stop offset="12%" stop-color="#FFFFFF" stop-opacity="0"/>
     </linearGradient>
-    <filter id="p4shadow" x="-20%" y="-20%" width="140%" height="160%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="16" result="blur"/>
-      <feOffset in="blur" dx="0" dy="18" result="off"/>
-      <feColorMatrix type="matrix" in="off"
-        values="0 0 0 0 0.1  0 0 0 0 0.2  0 0 0 0 0.55  0 0 0 0.32 0" result="col"/>
+    <filter id="sh4" x="-18%" y="-18%" width="136%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14" result="b"/>
+      <feOffset in="b" dx="0" dy="16" result="o"/>
+      <feColorMatrix type="matrix" in="o" values="0 0 0 0 0.08 0 0 0 0 0.14 0 0 0 0 0.32 0 0 0 0.24 0" result="c"/>
       <feMerge>
-        <feMergeNode in="col"/>
+        <feMergeNode in="c"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
   </defs>
 
-  <rect width="800" height="504" fill="url(#p4bg)"/>
+  <rect width="800" height="504" fill="url(#bg4)"/>
 
-  <!-- Card (face-up, centered, slight scale for annotation space) -->
-  <g transform="translate(400,242)" filter="url(#p4shadow)">
-    <rect x="-200" y="-126" width="400" height="252" rx="18" fill="url(#p4card)"/>
-    <rect x="-200" y="-126" width="400" height="252" rx="18" fill="url(#p4shine)"/>
-    <circle cx="200" cy="-126" r="72" fill="none" stroke="white" stroke-width="40" opacity="0.04"/>
+  <!-- Card: flat, centered, slight scale for room for callouts -->
+  <g transform="translate(400,244)" filter="url(#sh4)">
+    <rect x="-196" y="-124" width="392" height="248" rx="18" fill="url(#card4)"/>
+    <rect x="-196" y="-124" width="392" height="248" rx="18" fill="url(#topGlow4)"/>
+    <rect x="-196" y="-124" width="392" height="248" rx="18" fill="url(#shine4)"/>
 
-    <!-- Chip -->
-    <g transform="translate(-160,-83)">
-      <rect width="52" height="41" rx="6" fill="url(#p4chip)"/>
-      <rect width="52" height="16" rx="6" fill="white" opacity="0.22"/>
-      <line x1="0" y1="13" x2="52" y2="13" stroke="#92400E" stroke-width="0.8" opacity="0.4"/>
-      <line x1="0" y1="27" x2="52" y2="27" stroke="#92400E" stroke-width="0.8" opacity="0.4"/>
-      <line x1="17" y1="0" x2="17" y2="41" stroke="#92400E" stroke-width="0.8" opacity="0.4"/>
-      <line x1="35" y1="0" x2="35" y2="41" stroke="#92400E" stroke-width="0.8" opacity="0.4"/>
+    <!-- LED -->
+    <circle cx="165" cy="-96" r="7" fill="#38BDF8" opacity="0.45"/>
+    <circle cx="165" cy="-96" r="3" fill="#38BDF8"/>
+
+    <!-- NFC arcs -->
+    <g transform="translate(125,-96)" opacity="0.22">
+      <path d="M0,11 Q8,-2 16,11" fill="none" stroke="#7DD3FC" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M-4,16 Q8,-7 20,16" fill="none" stroke="#7DD3FC" stroke-width="1.5" stroke-linecap="round"/>
     </g>
 
-    <!-- NFC -->
-    <g transform="translate(-91,-70)" opacity="0.88">
-      <circle cx="0" cy="19" r="3" fill="white"/>
-      <path d="M7,9 Q19,-5 31,9" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      <path d="M2,3 Q19,-14 36,3" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      <path d="M-3,-3 Q19,-21 41,-3" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
-    </g>
+    <text x="-178" y="-98" font-family="Arial,sans-serif" font-size="8.5" fill="white" opacity="0.30" letter-spacing="2">FINDCARD PRO</text>
 
-    <text x="-144" y="-88" font-family="Arial,sans-serif" font-size="9.5" font-weight="700" fill="#93C5FD" letter-spacing="4">FINDCARD</text>
-    <rect x="-52" y="-108" width="40" height="18" rx="9" fill="white" opacity="0.92"/>
-    <text x="-32" y="-96" font-family="Arial,sans-serif" font-size="8.5" font-weight="800" fill="#1E40AF" text-anchor="middle">PRO</text>
+    <text x="0" y="-2" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="44" fill="#7DD3FC" letter-spacing="-1" text-anchor="middle">Find</text>
+    <text x="0" y="50" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="44" fill="#F1F5F9" letter-spacing="-1" text-anchor="middle">Card</text>
 
-    <text x="-185" y="42" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="60" fill="#93C5FD" letter-spacing="-1">Find</text>
-    <text x="5" y="42" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="60" fill="white" letter-spacing="-1">Card</text>
-
-    <text x="-185" y="82" font-family="Courier New,monospace" font-size="14" fill="white" opacity="0.28" letter-spacing="7">••••  ••••  ••••</text>
-    <text x="-185" y="105" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" opacity="0.85">FINDCARD PRO</text>
-    <text x="-185" y="120" font-family="Arial,sans-serif" font-size="9.5" fill="#93C5FD" opacity="0.88">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67</text>
-
-    <rect x="142" y="92" width="56" height="24" rx="5" fill="white" opacity="0.13"/>
-    <text x="170" y="108.5" font-family="Arial,sans-serif" font-size="10" font-weight="600" fill="white" text-anchor="middle">MFi ✓</text>
+    <line x1="-48" y1="63" x2="48" y2="63" stroke="white" stroke-width="0.5" opacity="0.10"/>
+    <text x="0" y="84" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="white" opacity="0.40" text-anchor="middle">Works with Apple Find My</text>
+    <text x="-178" y="106" font-family="Arial,sans-serif" font-size="8.5" fill="white" opacity="0.18">IP67  ·  1.8mm  ·  Qi  ·  BT 5.1</text>
+    <rect x="146" y="94" width="46" height="18" rx="4" fill="white" opacity="0.06"/>
+    <text x="169" y="107" font-family="Arial,sans-serif" font-size="8.5" fill="white" opacity="0.32" text-anchor="middle">MFi ✓</text>
   </g>
 
-  <!-- ── Annotation Lines + Labels ── -->
-  <!-- All in blue to match brand -->
+  <!-- Callout labels -->
+  <!-- Apple Find My (top) -->
+  <line x1="400" y1="120" x2="400" y2="62" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="400" cy="120" r="3.5" fill="#2563EB"/>
+  <rect x="310" y="28" width="180" height="32" rx="8" fill="#2563EB"/>
+  <text x="400" y="44" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">📡 Apple Find My</text>
+  <text x="400" y="56" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="#BFDBFE" text-anchor="middle">500M+ מכשירי iPhone ברשת</text>
 
-  <!-- 1. Apple Find My (top center → up) -->
-  <line x1="400" y1="116" x2="400" y2="60" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <circle cx="400" cy="116" r="3.5" fill="#2563EB"/>
-  <rect x="312" y="28" width="176" height="30" rx="8" fill="#2563EB"/>
-  <text x="400" y="48" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">📡 Apple Find My</text>
+  <!-- LED / BT (top-right → right) -->
+  <line x1="565" y1="148" x2="636" y2="132" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="565" cy="148" r="3.5" fill="#2563EB"/>
+  <rect x="636" y="112" width="136" height="32" rx="8" fill="#1D4ED8"/>
+  <text x="704" y="127" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">🔵 Bluetooth 5.1</text>
+  <text x="704" y="139" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="#BFDBFE" text-anchor="middle">טווח עד 90 מטר</text>
 
-  <!-- 2. EMV Chip (upper-left → left) -->
-  <line x1="234" y1="162" x2="155" y2="148" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <circle cx="234" cy="162" r="3.5" fill="#2563EB"/>
-  <rect x="28" y="130" width="126" height="34" rx="8" fill="#2563EB"/>
-  <text x="91" y="145" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">שבב EMV</text>
-  <text x="91" y="159" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#BFDBFE" text-anchor="middle">מאובטח ומוצפן</text>
+  <!-- Thickness (right side) -->
+  <line x1="608" y1="244" x2="656" y2="244" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="608" cy="244" r="3.5" fill="#2563EB"/>
+  <line x1="656" y1="232" x2="656" y2="256" stroke="#2563EB" stroke-width="2"/>
+  <line x1="656" y1="232" x2="650" y2="232" stroke="#2563EB" stroke-width="2"/>
+  <line x1="656" y1="256" x2="650" y2="256" stroke="#2563EB" stroke-width="2"/>
+  <rect x="660" y="228" width="118" height="32" rx="8" fill="#2563EB"/>
+  <text x="719" y="243" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">עובי 1.8מ&quot;מ בלבד</text>
+  <text x="719" y="255" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="#BFDBFE" text-anchor="middle">דק כמו כרטיס אשראי</text>
 
-  <!-- 3. NFC / Wireless (left mid → left) -->
-  <line x1="302" y1="174" x2="200" y2="210" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <circle cx="302" cy="174" r="3.5" fill="#2563EB"/>
-  <rect x="28" y="194" width="170" height="34" rx="8" fill="#1E40AF"/>
-  <text x="113" y="209" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">טעינה אלחוטית Qi</text>
-  <text x="113" y="223" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#BFDBFE" text-anchor="middle">NFC + Bluetooth 5.1</text>
+  <!-- Battery (bottom right) -->
+  <line x1="516" y1="368" x2="568" y2="412" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="516" cy="368" r="3.5" fill="#2563EB"/>
+  <rect x="492" y="414" width="160" height="32" rx="8" fill="#1D4ED8"/>
+  <text x="572" y="429" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">🔋 8 חודשי סוללה</text>
+  <text x="572" y="441" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="#BFDBFE" text-anchor="middle">טעינה אלחוטית Qi</text>
 
-  <!-- 4. Thickness arrow (right side → right) -->
-  <!-- Vertical bracket on right edge of card -->
-  <line x1="612" y1="190" x2="650" y2="190" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <circle cx="612" cy="190" r="3.5" fill="#2563EB"/>
-  <!-- Bracket showing thinness -->
-  <line x1="650" y1="178" x2="650" y2="202" stroke="#2563EB" stroke-width="2"/>
-  <line x1="650" y1="178" x2="645" y2="178" stroke="#2563EB" stroke-width="2"/>
-  <line x1="650" y1="202" x2="645" y2="202" stroke="#2563EB" stroke-width="2"/>
-  <rect x="655" y="174" width="114" height="34" rx="8" fill="#2563EB"/>
-  <text x="712" y="189" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">עובי 1.8מ&quot;מ בלבד</text>
-  <text x="712" y="203" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#BFDBFE" text-anchor="middle">כמו כרטיס אשראי</text>
+  <!-- IP67 (bottom left) -->
+  <line x1="284" y1="368" x2="230" y2="412" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="284" cy="368" r="3.5" fill="#2563EB"/>
+  <rect x="94" y="414" width="136" height="32" rx="8" fill="#1D4ED8"/>
+  <text x="162" y="429" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">🌊 עמידות IP67</text>
+  <text x="162" y="441" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="#BFDBFE" text-anchor="middle">עד 1 מטר / 30 דקות</text>
 
-  <!-- 5. Battery (bottom right → down-right) -->
-  <line x1="520" y1="368" x2="580" y2="414" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <circle cx="520" cy="368" r="3.5" fill="#2563EB"/>
-  <rect x="504" y="416" width="168" height="34" rx="8" fill="#1D4ED8"/>
-  <text x="588" y="431" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">🔋 8 חודשי סוללה</text>
-  <text x="588" y="445" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#BFDBFE" text-anchor="middle">טעינה אלחוטית Qi</text>
-
-  <!-- 6. IP67 (bottom left → down-left) -->
-  <line x1="282" y1="368" x2="222" y2="414" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <circle cx="282" cy="368" r="3.5" fill="#2563EB"/>
-  <rect x="92" y="416" width="130" height="34" rx="8" fill="#1D4ED8"/>
-  <text x="157" y="431" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">🌊 עמידות IP67</text>
-  <text x="157" y="445" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#BFDBFE" text-anchor="middle">עד 1 מטר / 30 דקות</text>
+  <!-- NFC (left) -->
+  <line x1="202" y1="200" x2="148" y2="184" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="202" cy="200" r="3.5" fill="#2563EB"/>
+  <rect x="18" y="164" width="130" height="32" rx="8" fill="#2563EB"/>
+  <text x="83" y="179" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">טעינה אלחוטית</text>
+  <text x="83" y="191" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="#BFDBFE" text-anchor="middle">Qi + NFC</text>
 </svg>
