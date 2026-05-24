@@ -94,9 +94,7 @@
 
     <!-- ── FINDCARD BRAND — top-left, small and elegant ── -->
     <!-- "Find" in brand light blue, "Card" in white — connected as one word -->
-    <text x="-200" y="-108" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-size="11" font-weight="900" fill="white" opacity="0.90" letter-spacing="0.5">
-      <tspan fill="#60A5FA">Find</tspan><tspan fill="white">Card</tspan>
-    </text>
+    <text x="-200" y="-108" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-size="11" font-weight="900" fill="white" opacity="0.90" letter-spacing="0.5">FindCard</text>
     <!-- PRO badge -->
     <rect x="-132" y="-122" width="30" height="14" rx="7" fill="white" opacity="0.15"/>
     <text x="-117" y="-112" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" font-weight="800" fill="white" opacity="0.80" text-anchor="middle">PRO</text>
