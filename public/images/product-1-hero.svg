@@ -12,42 +12,91 @@
       <stop offset="100%" stop-color="#0D0D0F"/>
     </linearGradient>
     <radialGradient id="matteHL" cx="28%" cy="22%" r="60%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.07"/>
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.08"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="25%" stop-color="#FCD34D"/>
+      <stop offset="60%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
     <filter id="shadow" x="-28%" y="-32%" width="156%" height="200%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="22" result="b1"/>
-      <feOffset in="b1" dx="0" dy="32" result="o1"/>
-      <feColorMatrix in="o1" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.38 0" result="c1"/>
-      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b2"/>
-      <feOffset in="b2" dx="0" dy="8" result="o2"/>
-      <feColorMatrix in="o2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0" result="c2"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="b1"/>
+      <feOffset in="b1" dx="0" dy="34" result="o1"/>
+      <feColorMatrix in="o1" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.40 0" result="c1"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="b2"/>
+      <feOffset in="b2" dx="0" dy="10" result="o2"/>
+      <feColorMatrix in="o2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0" result="c2"/>
       <feMerge>
         <feMergeNode in="c1"/>
         <feMergeNode in="c2"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <pattern id="tex" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="0.5" fill="white" opacity="0.04"/>
+    </pattern>
   </defs>
 
+  <!-- Background -->
   <rect width="800" height="500" fill="url(#bg)"/>
-  <ellipse cx="400" cy="448" rx="220" ry="14" fill="black" opacity="0.09"/>
+  <!-- Subtle ambient circle -->
+  <circle cx="400" cy="240" r="260" fill="white" opacity="0.35"/>
+  <!-- Ground shadow -->
+  <ellipse cx="400" cy="452" rx="224" ry="15" fill="black" opacity="0.09"/>
 
-  <g transform="translate(400,232) rotate(-8)" filter="url(#shadow)">
+  <!-- Card, slightly tilted -->
+  <g transform="translate(400,228) rotate(-7)" filter="url(#shadow)">
     <rect x="-228" y="-143" width="456" height="286" rx="22" fill="url(#cg)"/>
+    <rect x="-228" y="-143" width="456" height="286" rx="22" fill="url(#tex)"/>
     <rect x="-228" y="-143" width="456" height="286" rx="22" fill="url(#matteHL)"/>
-    <rect x="-228" y="-143" width="456" height="5" rx="2" fill="white" opacity="0.14"/>
-    <rect x="-228" y="-138" width="2" height="276" fill="white" opacity="0.05"/>
 
-    <text x="-206" y="-112" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-size="13" font-weight="900" fill="white" opacity="0.92" letter-spacing="0.5">FindCard</text>
-    <rect x="-126" y="-128" width="36" height="16" rx="8" fill="white" opacity="0.16"/>
-    <text x="-108" y="-116" font-family="'Arial',Helvetica,sans-serif" font-size="9" font-weight="800" fill="white" opacity="0.82" text-anchor="middle">PRO</text>
+    <!-- Top sheen -->
+    <rect x="-228" y="-143" width="456" height="5.5" rx="2.5" fill="white" opacity="0.16"/>
+    <!-- Left edge sheen -->
+    <rect x="-228" y="-138" width="2" height="276" fill="white" opacity="0.06"/>
 
-    <line x1="-206" y1="92" x2="206" y2="92" stroke="white" stroke-width="0.5" opacity="0.10"/>
-    <text x="-206" y="110" font-family="'Arial',Helvetica,sans-serif" font-size="10" font-weight="700" fill="white" opacity="0.55" letter-spacing="1">FINDCARD PRO</text>
-    <text x="-206" y="126" font-family="'Arial',Helvetica,sans-serif" font-size="8.5" fill="white" opacity="0.32">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
+    <!-- Chip -->
+    <rect x="-206" y="-92" width="48" height="38" rx="6" fill="url(#chip)"/>
+    <line x1="-206" y1="-81" x2="-158" y2="-81" stroke="#92400E" stroke-width="0.9" opacity="0.55"/>
+    <line x1="-206" y1="-69" x2="-158" y2="-69" stroke="#92400E" stroke-width="0.9" opacity="0.55"/>
+    <line x1="-191" y1="-92" x2="-191" y2="-54" stroke="#92400E" stroke-width="0.9" opacity="0.55"/>
+    <line x1="-177" y1="-92" x2="-177" y2="-54" stroke="#92400E" stroke-width="0.9" opacity="0.55"/>
 
-    <rect x="162" y="112" width="52" height="22" rx="6" fill="white" opacity="0.12"/>
-    <text x="188" y="127" font-family="'Arial',Helvetica,sans-serif" font-size="10" font-weight="700" fill="white" opacity="0.75" text-anchor="middle">MFi ✓</text>
+    <!-- NFC contactless rings (top right) -->
+    <circle cx="182" cy="-112" r="11" fill="none" stroke="white" stroke-width="2" opacity="0.30"/>
+    <circle cx="182" cy="-112" r="19" fill="none" stroke="white" stroke-width="1.6" opacity="0.20"/>
+    <circle cx="182" cy="-112" r="27" fill="none" stroke="white" stroke-width="1.2" opacity="0.12"/>
+
+    <!-- Card number dots — 4 groups of 4 -->
+    <circle cx="-148" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-130" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-112" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-94" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-62" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-44" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-26" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="-8" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="24" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="42" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="60" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="78" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="110" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="128" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="146" cy="28" r="4" fill="white" opacity="0.22"/>
+    <circle cx="164" cy="28" r="4" fill="white" opacity="0.22"/>
+
+    <!-- Separator line -->
+    <line x1="-206" y1="86" x2="206" y2="86" stroke="white" stroke-width="0.5" opacity="0.12"/>
+
+    <!-- Name and validity placeholders -->
+    <rect x="-206" y="100" width="160" height="10" rx="5" fill="white" opacity="0.10"/>
+    <rect x="-206" y="118" width="100" height="10" rx="5" fill="white" opacity="0.08"/>
+
+    <!-- Hologram circle (bottom right) -->
+    <circle cx="182" cy="113" r="24" fill="none" stroke="white" stroke-width="1.2" opacity="0.09"/>
+    <circle cx="182" cy="113" r="16" fill="none" stroke="white" stroke-width="1" opacity="0.07"/>
+    <circle cx="182" cy="113" r="8" fill="white" opacity="0.04"/>
   </g>
 </svg>
