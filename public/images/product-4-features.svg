@@ -110,7 +110,7 @@
   <line x1="642" y1="260" x2="636" y2="260" stroke="#2563EB" stroke-width="2"/>
   <rect x="646" y="228" width="124" height="34" rx="10" fill="#2563EB"/>
   <text x="708" y="244" font-family="'Arial',Helvetica,sans-serif" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">עובי 1.8מ"מ</text>
-  <text x="708" y="257" font-family="'Arial',Helvetica,sans-serif" font-size="9" fill="#BFDBFE" text-anchor="middle">דק כמו כרטיס אשראי</text>
+  <text x="708" y="257" font-family="'Arial',Helvetica,sans-serif" font-size="9" fill="#BFDBFE" text-anchor="middle">נכנס לכל ארנק, לא מרגישים אותו</text>
 
   <!-- Battery — BOTTOM RIGHT -->
   <line x1="506" y1="368" x2="554" y2="406" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4,3"/>
