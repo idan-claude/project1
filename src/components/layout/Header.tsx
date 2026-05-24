@@ -7,10 +7,24 @@ import CartDrawer from '@/components/cart/CartDrawer'
 export default function Header() {
   const [cartOpen, setCartOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [barDismissed, setBarDismissed] = useState(false)
   const itemCount = useCartStore((s) => s.itemCount())
 
   return (
     <>
+      {/* Announcement bar */}
+      {!barDismissed && (
+        <div className="bg-yellow-400 text-yellow-900 text-center text-xs font-bold py-2.5 px-4 relative">
+          ⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; משלוח חינם מעל ₪300 &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!
+          <button
+            onClick={() => setBarDismissed(true)}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-yellow-800 hover:text-yellow-900 text-lg leading-none"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
