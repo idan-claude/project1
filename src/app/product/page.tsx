@@ -300,7 +300,6 @@ export default function ProductPage() {
                 <p className="text-green-600 font-bold text-xs mt-1">
                   ✓ חסכת {priceDisplay(saveAmount)} ({savePercent}% הנחה)
                 </p>
-                {tier.gift && <p className="text-orange-600 font-medium text-xs mt-0.5">{tier.gift} נוסף בחינם</p>}
               </div>
 
               {/* CTAs */}
