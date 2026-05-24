@@ -180,10 +180,29 @@ export default function ProductPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-            {/* Left: Card image */}
-            <div className="space-y-5 lg:sticky lg:top-24">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl p-10 flex items-center justify-center">
-                <AppleCardSVG />
+            {/* Left: Image gallery */}
+            <div className="space-y-4 lg:sticky lg:top-24">
+              {/* Main image */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl overflow-hidden">
+                <img
+                  src={GALLERY[activeImg].src}
+                  alt={GALLERY[activeImg].label}
+                  className="w-full h-auto"
+                />
+              </div>
+              {/* Thumbnails */}
+              <div className="grid grid-cols-4 gap-2">
+                {GALLERY.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImg(i)}
+                    className={`rounded-xl overflow-hidden border-2 transition-all ${
+                      activeImg === i ? 'border-blue-600 shadow-md' : 'border-gray-200 hover:border-blue-300'
+                    }`}
+                  >
+                    <img src={img.src} alt={img.label} className="w-full h-auto" />
+                  </button>
+                ))}
               </div>
 
               {/* Trust badges */}
