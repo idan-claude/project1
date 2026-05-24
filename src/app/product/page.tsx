@@ -86,7 +86,7 @@ const FEATURE_SLIDES = [
 
 const REVIEWS = [
   {
-    photo: 'https://i.pravatar.cc/80?img=47', name: 'דנה כ.', location: 'תל אביב',
+    photo: 'https://i.pravatar.cc/80?img=9', name: 'דנה כ.', location: 'תל אביב',
     stars: 5, detail: 'לקוחה 4 חודשים',
     text: 'שנתיים הייתי מאבדת את הארנק שלי בבית — לפחות פעמיים בשבוע. מאז שהכנסתי את FindCard לא חיפשתי אותו ולו פעם אחת. פשוט פותחת Find My ותוך 10 שניות מוצאת. שינה לי את החיים!',
   },
