@@ -30,7 +30,7 @@ const PRODUCT = {
 const TIERS = [
   {
     actualCards: 1,
-    label: '1 כרטיס',
+    label: 'כרטיס 1',
     sublabel: '',
     price: 19990,
     compareAt: 29900,
