@@ -2,7 +2,7 @@ import { baseEmailHtml } from './baseTemplate'
 import { TrackingEvent } from '../tracking/types'
 import { formatPrice } from '@/lib/utils/formatPrice'
 
-type Ctx = {
+export type Ctx = {
   customerName: string
   orderNumber: string
   trackingNumber?: string
