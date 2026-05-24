@@ -64,21 +64,6 @@
     <rect x="-104" y="-110" width="28" height="14" rx="7" fill="white" opacity="0.13"/>
     <text x="-90" y="-100" font-family="'Arial',Helvetica,sans-serif" font-size="7.5" font-weight="800" fill="white" opacity="0.75" text-anchor="middle">PRO</text>
 
-    <text x="14" y="16" font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="900" font-size="40" fill="white" letter-spacing="-1" text-anchor="middle" opacity="0.95">FindCard</text>
-
-    <circle cx="-160" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-150" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-140" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-130" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-112" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-102" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-92" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-82" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-64" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-54" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-44" cy="50" r="2.8" fill="white" opacity="0.28"/>
-    <circle cx="-34" cy="50" r="2.8" fill="white" opacity="0.28"/>
-
     <line x1="-174" y1="70" x2="174" y2="70" stroke="white" stroke-width="0.4" opacity="0.10"/>
     <text x="-174" y="87" font-family="'Arial',Helvetica,sans-serif" font-size="8.5" font-weight="600" fill="white" opacity="0.50">FINDCARD PRO</text>
     <text x="-174" y="100" font-family="'Arial',Helvetica,sans-serif" font-size="7" fill="white" opacity="0.32">Apple Find My  ·  Bluetooth 5.1  ·  1.8mm  ·  IP67  ·  8-Month Battery</text>
