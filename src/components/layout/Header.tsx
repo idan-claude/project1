@@ -14,8 +14,9 @@ export default function Header() {
     <>
       {/* Announcement bar */}
       {!barDismissed && (
-        <div className="bg-blue-700 text-white text-center text-xs font-bold py-2.5 px-4 relative">
-          ⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; 🚚 משלוח חינם על כל הזמנה &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!
+        <div className="bg-blue-700 text-white text-center text-xs font-bold py-2.5 px-8 relative">
+          <span className="hidden sm:inline">⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; 🚚 משלוח חינם על כל הזמנה &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!</span>
+          <span className="sm:hidden">⚡ קנה 2, קבל 1 חינם · משלוח חינם</span>
           <button
             onClick={() => setBarDismissed(true)}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-200 hover:text-white text-lg leading-none"
