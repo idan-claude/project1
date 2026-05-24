@@ -15,7 +15,7 @@ const FEATURE_SLIDES = [
     color: 'from-blue-600 to-indigo-700',
     label: 'Apple Find My',
     title: 'Apple Find My — רשת עולמית',
-    desc: 'FindCard מתחבר לרשת ה-Find My של Apple. כל iPhone שנמצא בסביבה מדווח בשקט על המיקום — בלי שהאנשים שם יודעים. אתה מקבל מיקום מדויק בכל מקום בעולם.',
+    desc: 'FindCard רץ על רשת ה-Find My של Apple — מאות מיליוני אייפונים שעובדים ביחד. כל אחד שעובר ליד הכרטיס מעדכן את המיקום שלו בשקט, בלי שהוא יודע. אתה פותח Find My ורואה בדיוק איפה.',
     stat: '500 מיליון+ מכשירי Apple ברשת',
     statIcon: '🌐',
   },
