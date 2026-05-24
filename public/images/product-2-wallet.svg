@@ -2,93 +2,129 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 504" width="800" height="504">
   <defs>
     <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FAF8F5"/>
-      <stop offset="100%" stop-color="#EDE9E2"/>
+      <stop offset="0%" stop-color="#F8FAFF"/>
+      <stop offset="100%" stop-color="#EFF6FF"/>
     </linearGradient>
-    <linearGradient id="card2" x1="8%" y1="5%" x2="92%" y2="95%">
-      <stop offset="0%" stop-color="#1C2C48"/>
-      <stop offset="55%" stop-color="#111827"/>
-      <stop offset="100%" stop-color="#0C1320"/>
+    <linearGradient id="card2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="40%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
     </linearGradient>
-    <radialGradient id="shine2" cx="78%" cy="12%" r="45%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.10"/>
+    <radialGradient id="shine2" cx="30%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.20"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="topGlow2" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.20"/>
-      <stop offset="12%" stop-color="#FFFFFF" stop-opacity="0"/>
+    <linearGradient id="chip2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="50%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
     </linearGradient>
-    <linearGradient id="wallet" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2D1B0E"/>
-      <stop offset="50%" stop-color="#1E1208"/>
-      <stop offset="100%" stop-color="#120B04"/>
+    <!-- CC card behind (gray) -->
+    <linearGradient id="ccGray" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D1D5DB"/>
+      <stop offset="100%" stop-color="#9CA3AF"/>
     </linearGradient>
-    <radialGradient id="walletShine" cx="25%" cy="18%" r="55%">
-      <stop offset="0%" stop-color="#4A2F1A" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#120B04" stop-opacity="1"/>
-    </radialGradient>
-    <filter id="wSh" x="-15%" y="-12%" width="130%" height="138%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="16" result="b"/>
-      <feOffset in="b" dx="4" dy="16" result="o"/>
-      <feColorMatrix type="matrix" in="o" values="0 0 0 0 0.05 0 0 0 0 0.03 0 0 0 0 0.01 0 0 0 0.38 0" result="c"/>
+    <!-- CC card behind (black) -->
+    <linearGradient id="ccDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="sh2" x="-25%" y="-30%" width="150%" height="180%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="18" result="b"/>
+      <feOffset in="b" dx="4" dy="22" result="o"/>
+      <feColorMatrix in="o" type="matrix" values="0 0 0 0 0.06 0 0 0 0 0.12 0 0 0 0 0.40 0 0 0 0.32 0" result="c"/>
       <feMerge>
         <feMergeNode in="c"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="cSh2" x="-15%" y="-25%" width="130%" height="155%">
+    <filter id="shCard" x="-20%" y="-25%" width="140%" height="170%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="b"/>
-      <feOffset in="b" dx="0" dy="-5" result="o"/>
-      <feColorMatrix type="matrix" in="o" values="0 0 0 0 0.04 0 0 0 0 0.08 0 0 0 0 0.18 0 0 0 0.28 0" result="c"/>
+      <feOffset in="b" dx="2" dy="12" result="o"/>
+      <feColorMatrix in="o" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0 0 0 0.20 0" result="c"/>
       <feMerge>
         <feMergeNode in="c"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <pattern id="dots2" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="0.7" fill="white" opacity="0.07"/>
+    </pattern>
   </defs>
 
   <rect width="800" height="504" fill="url(#bg2)"/>
-  <ellipse cx="150" cy="120" rx="170" ry="110" fill="#D6CEC0" opacity="0.18"/>
-  <ellipse cx="650" cy="380" rx="150" ry="95" fill="#D6CEC0" opacity="0.15"/>
 
-  <!-- Card (rendered first — bottom will be covered by wallet) -->
-  <g filter="url(#cSh2)">
-    <rect x="190" y="56" width="420" height="264" rx="20" fill="url(#card2)"/>
-    <rect x="190" y="56" width="420" height="264" rx="20" fill="url(#topGlow2)"/>
-    <rect x="190" y="56" width="420" height="264" rx="20" fill="url(#shine2)"/>
+  <!-- Decorative circles -->
+  <circle cx="120" cy="100" r="120" fill="#DBEAFE" opacity="0.35"/>
+  <circle cx="680" cy="400" r="100" fill="#DBEAFE" opacity="0.28"/>
 
-    <!-- LED -->
-    <circle cx="590" cy="86" r="7" fill="#38BDF8" opacity="0.55"/>
-    <circle cx="590" cy="86" r="3" fill="#38BDF8"/>
-
-    <!-- Top label -->
-    <text x="208" y="78" font-family="Arial,sans-serif" font-size="9" font-weight="500" fill="white" opacity="0.32" letter-spacing="2.5">FINDCARD PRO</text>
-
-    <!-- Logo visible top portion -->
-    <text x="400" y="188" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="48" fill="#7DD3FC" letter-spacing="-1" text-anchor="middle">Find</text>
-    <text x="400" y="242" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="48" fill="#F1F5F9" letter-spacing="-1" text-anchor="middle">Card</text>
-
-    <text x="400" y="276" font-family="Arial,sans-serif" font-size="10" fill="white" opacity="0.38" text-anchor="middle">Works with Apple Find My</text>
-    <text x="400" y="310" font-family="Arial,sans-serif" font-size="8.5" fill="white" opacity="0.20" text-anchor="middle">IP67  ·  1.8mm  ·  Qi  ·  Bluetooth 5.1</text>
+  <!-- Credit card behind (dark, peeking out) -->
+  <g transform="translate(400, 260) rotate(5)" filter="url(#shCard)" opacity="0.9">
+    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#ccDark)"/>
+    <rect x="-228" y="-144" width="456" height="3" rx="1" fill="white" opacity="0.08"/>
+    <text x="-200" y="-110" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="white" opacity="0.25" letter-spacing="2">CREDIT CARD</text>
+    <!-- Chip on back card -->
+    <rect x="-192" y="-74" width="38" height="30" rx="4" fill="#374151"/>
+    <!-- Stripe -->
+    <rect x="-228" y="-30" width="456" height="52" fill="black" opacity="0.55"/>
   </g>
 
-  <!-- Wallet (covers bottom of card) -->
-  <g filter="url(#wSh)">
-    <rect x="176" y="248" width="448" height="198" rx="16" fill="url(#walletShine)"/>
-    <!-- Stitching -->
-    <rect x="185" y="257" width="430" height="180" rx="11" fill="none" stroke="#3D2510" stroke-width="1.5" stroke-dasharray="7,5"/>
-    <!-- Card slot opening -->
-    <rect x="190" y="241" width="420" height="18" rx="5" fill="#0A0603"/>
-    <rect x="190" y="251" width="420" height="5" fill="black" opacity="0.22"/>
-    <!-- Leather grain lines -->
-    <line x1="186" y1="290" x2="614" y2="290" stroke="#3D2510" stroke-width="0.6" opacity="0.35"/>
-    <line x1="186" y1="316" x2="614" y2="316" stroke="#3D2510" stroke-width="0.6" opacity="0.28"/>
-    <line x1="186" y1="342" x2="614" y2="342" stroke="#3D2510" stroke-width="0.6" opacity="0.22"/>
-    <line x1="186" y1="368" x2="614" y2="368" stroke="#3D2510" stroke-width="0.6" opacity="0.18"/>
-    <line x1="186" y1="394" x2="614" y2="394" stroke="#3D2510" stroke-width="0.6" opacity="0.14"/>
-    <!-- Edge highlight -->
-    <rect x="176" y="248" width="3" height="198" rx="2" fill="white" opacity="0.04"/>
+  <!-- Gray card (middle) -->
+  <g transform="translate(400, 248) rotate(-2)" filter="url(#shCard)" opacity="0.85">
+    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#ccGray)"/>
+    <rect x="-228" y="-144" width="456" height="3" rx="1" fill="white" opacity="0.20"/>
   </g>
 
-  <text x="400" y="476" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="17" fill="#374151" text-anchor="middle">דק 1.8מ&quot;מ — נכנס לכל ארנק</text>
+  <!-- FindCard PRO (front, blue) -->
+  <g transform="translate(400, 236) rotate(-6)" filter="url(#sh2)">
+    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#card2)"/>
+    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#dots2)"/>
+    <rect x="-228" y="-144" width="456" height="288" rx="22" fill="url(#shine2)"/>
+    <rect x="-228" y="-144" width="456" height="5" rx="2" fill="white" opacity="0.16"/>
+
+    <!-- Chip -->
+    <g transform="translate(-172,-90)">
+      <rect x="0" y="0" width="50" height="40" rx="6" fill="url(#chip2)"/>
+      <line x1="0" y1="13" x2="50" y2="13" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
+      <line x1="0" y1="27" x2="50" y2="27" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
+      <line x1="16" y1="0" x2="16" y2="40" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
+      <line x1="34" y1="0" x2="34" y2="40" stroke="#92400E" stroke-width="0.7" opacity="0.35"/>
+    </g>
+
+    <!-- WiFi arcs -->
+    <g transform="translate(-96,-72)" opacity="0.88">
+      <circle cx="0" cy="14" r="3.5" fill="white"/>
+      <path d="M-12,6 Q0,-8 12,6" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M-22,-2 Q0,-20 22,-2" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" opacity="0.70"/>
+      <path d="M-32,-10 Q0,-32 32,-10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.44"/>
+    </g>
+
+    <!-- Branding -->
+    <text x="-210" y="-115" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.72" letter-spacing="3.5">FINDCARD</text>
+    <rect x="-122" y="-128" width="36" height="17" rx="8.5" fill="white" opacity="0.28"/>
+    <text x="-104" y="-116" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="800" fill="white" text-anchor="middle" opacity="0.95">PRO</text>
+
+    <!-- Main text -->
+    <text x="-55" y="28" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="68" fill="white" letter-spacing="-2" text-anchor="middle">Find</text>
+    <text x="118" y="28" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="68" fill="white" letter-spacing="-2" text-anchor="middle">Card</text>
+
+    <!-- Dots -->
+    <circle cx="-175" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-163" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-151" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-139" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-120" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-108" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-96" cy="60" r="3" fill="white" opacity="0.28"/>
+    <circle cx="-84" cy="60" r="3" fill="white" opacity="0.28"/>
+
+    <line x1="-210" y1="80" x2="210" y2="80" stroke="white" stroke-width="0.6" opacity="0.14"/>
+    <text x="-210" y="100" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="white" opacity="0.65">FINDCARD PRO</text>
+    <text x="-210" y="116" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="white" opacity="0.42">Apple Find My · Bluetooth 5.1 · 1.8mm · IP67 · 8-Month Battery</text>
+    <rect x="166" y="110" width="54" height="22" rx="6" fill="white" opacity="0.20"/>
+    <text x="193" y="125" font-family="Arial,Helvetica,sans-serif" font-size="9.5" font-weight="700" fill="white" opacity="0.85" text-anchor="middle">MFi ✓</text>
+  </g>
+
+  <!-- Caption -->
+  <text x="400" y="474" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="16" fill="#1E40AF" text-anchor="middle">דק 1.8מ"מ — נכנס בין הכרטיסים בארנק</text>
 </svg>
