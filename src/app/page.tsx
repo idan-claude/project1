@@ -263,15 +263,11 @@ export default function HomePage() {
                   <span>🚚 משלוח חינם על כל הזמנה</span>
                 </div>
               </div>
-              <div className="flex-shrink-0 w-72 h-72 md:w-80 md:h-80">
-                <div className="w-full h-full rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-2xl">
-                  <div className="text-center">
-                    <div className="text-8xl mb-3">💳</div>
-                    <p className="text-white font-bold text-xl">FindCard PRO</p>
-                    <p className="text-blue-200 text-sm mt-1">כרטיס מעקב חכם</p>
-                    <p className="text-blue-300 text-xs mt-1.5">עובי 1.8מ"מ · IP67 · 8 חודשי סוללה</p>
-                  </div>
+              <div className="flex-shrink-0 w-72 md:w-96">
+                <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20">
+                  <img src="/images/product-1-hero.svg" alt="FindCard PRO" className="w-full h-auto" />
                 </div>
+                <p className="text-center text-blue-200 text-xs mt-3">עובי 1.8מ"מ · IP67 · 8 חודשי סוללה</p>
               </div>
             </div>
           </div>
