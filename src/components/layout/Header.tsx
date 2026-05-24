@@ -15,7 +15,7 @@ export default function Header() {
       {/* Announcement bar */}
       {!barDismissed && (
         <div className="bg-yellow-400 text-yellow-900 text-center text-xs font-bold py-2.5 px-4 relative">
-          ⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; משלוח חינם מעל ₪300 &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!
+          ⚡ מבצע מוגבל: קנה 2 כרטיסים וקבל 1 חינם! &nbsp;·&nbsp; 🚚 משלוח חינם על כל הזמנה &nbsp;·&nbsp; נגמר בקרוב — אל תפספס!
           <button
             onClick={() => setBarDismissed(true)}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-yellow-800 hover:text-yellow-900 text-lg leading-none"
