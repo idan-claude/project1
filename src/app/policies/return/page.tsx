@@ -44,18 +44,28 @@ export default function ReturnPolicyPage() {
           <div className="bg-white rounded-2xl border shadow-sm p-6">
             <h2 className="text-xl font-extrabold text-gray-900 mb-4">2. מדיניות 100 יום החזר כסף</h2>
             <div className="space-y-3 text-sm text-gray-700 leading-relaxed">
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                <p className="text-green-800 font-semibold text-base">✅ לא אהבת? פשוט שלח לנו מייל — נטפל בהחזר מהר ובלי בירוקרטיה.</p>
+              </div>
               <p>אנחנו מאמינים ב-FindCard ומציעים <strong>100 יום אחריות להחזרת כסף מלאה</strong> — אם אינך מרוצה מכל סיבה שהיא.</p>
               <p><strong>כיצד לבקש החזר:</strong></p>
               <ol className="list-decimal list-inside space-y-2 mr-4">
                 <li>פנה אלינו בתוך 100 יום מיום קבלת המוצר</li>
                 <li>שלח מייל ל-<a href="mailto:findcardsupport@gmail.com" className="text-blue-600">findcardsupport@gmail.com</a> עם מספר ההזמנה וסיבת ההחזרה</li>
-                <li>נשלח לך את כתובת ההחזרה ואישור</li>
+                <li>נשלח לך אישור וכתובת להחזרת המוצר</li>
                 <li>אחוז את המוצר באריזה מתאימה ושלח אלינו</li>
-                <li>לאחר קבלת המוצר — נחזיר לך את הכסף תוך 3-7 ימי עסקים</li>
+                <li>לאחר קבלת המוצר בחזרה ובדיקתו — נחזיר לך את הכסף תוך 3-7 ימי עסקים</li>
               </ol>
-              <p className="bg-blue-50 border border-blue-200 rounded-xl p-3">
-                💡 <strong>שים לב:</strong> ההחזר מותנה בקבלת המוצר בחזרה במצב תקין. עלות המשלוח החוזר אינה כלולה בהחזר.
-              </p>
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs text-gray-500 space-y-1">
+                <p><strong>תנאים לביצוע ההחזר (בהתאם לחוק הגנת הצרכן):</strong></p>
+                <ul className="list-disc list-inside space-y-0.5 mr-3">
+                  <li>המוצר יוחזר בתוך 100 ימים מיום קבלתו</li>
+                  <li>המוצר יוחזר במצבו המקורי, ללא נזק פיזי שאינו תוצאה של פגם ייצור</li>
+                  <li>עלות משלוח ההחזרה חלה על הלקוח אלא אם נקבע אחרת בכתב</li>
+                  <li>ההחזר הכספי יבוצע לאמצעי התשלום המקורי בלבד</li>
+                  <li>FindCard שומרת לעצמה את הזכות לסרב להחזר אם המוצר הוחזר פגום כתוצאה משימוש לא נכון</li>
+                </ul>
+              </div>
             </div>
           </div>
 
