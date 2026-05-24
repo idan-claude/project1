@@ -233,12 +233,12 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1 text-center md:text-right">
-                <div className="inline-block bg-yellow-400 text-yellow-900 text-sm font-bold px-4 py-1.5 rounded-full mb-5">
+                <div className="inline-block bg-white/20 text-white text-sm font-bold px-4 py-1.5 rounded-full mb-5 border border-white/30">
                   🎉 מבצע — קנה 2, קבל 1 חינם · נגמר בקרוב!
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-5">
                   מצא את כל<br className="hidden md:block" />
-                  <span className="text-yellow-300">מה שאיבדת</span>
+                  <span className="text-white">מה שאיבדת</span>
                 </h1>
                 <p className="text-blue-100 text-lg md:text-xl mb-6 max-w-lg mx-auto md:mx-0">
                   FindCard — כרטיס המעקב החכם שנכנס לארנק שלך. תואם Apple Find My, דק כמו כרטיס אשראי ומוצא הכל תוך שניות.
