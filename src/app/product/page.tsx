@@ -194,6 +194,8 @@ export default function ProductPage() {
   const addItem = useCartStore(s => s.addItem)
   const router = useRouter()
 
+  useEffect(() => { track('product_view', { product: PRODUCT.slug }) }, [])
+
   const tier = TIERS[tierIndex]
   const saveAmount = tier.compareAt - tier.price
   const savePercent = Math.round((saveAmount / tier.compareAt) * 100)
@@ -203,7 +205,12 @@ export default function ProductPage() {
     addItem({ productId: PRODUCT.id, slug: PRODUCT.slug, nameHe: `${PRODUCT.nameHe} — ${tier.label}`, image: '', sellingPrice: tier.price, quantity: 1, variantLabel: tier.label })
   }
 
-  function handleAdd() { addCartItem(); setAdded(true); setTimeout(() => setAdded(false), 2000) }
+  function handleAdd() {
+    addCartItem()
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+    track('add_to_cart', { product: PRODUCT.slug, tier: tier.label, price: tier.price })
+  }
   function handleBuyNow() { addCartItem(); router.push('/checkout') }
 
   function imgSwipe(e: React.TouchEvent, type: 'start' | 'end') {
