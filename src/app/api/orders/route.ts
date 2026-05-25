@@ -20,7 +20,8 @@ export async function POST(req: NextRequest) {
   let subtotal = 0
 
   for (const item of items) {
-    const product = await Product.findById(item.productId)
+    let product = await Product.findById(item.productId).catch(() => null)
+    if (!product) product = await Product.findOne({ slug: item.productId })
     if (!product || product.status !== 'active') {
       return NextResponse.json({ error: `מוצר "${item.nameHe}" אינו זמין` }, { status: 400 })
     }
