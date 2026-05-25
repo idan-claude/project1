@@ -235,7 +235,7 @@ export default function ProductPage() {
   function imgSwipe(e: React.TouchEvent, type: 'start' | 'end') {
     if (type === 'start') { imgTouchStart.current = e.touches[0].clientX; return }
     const diff = imgTouchStart.current - e.changedTouches[0].clientX
-    if (Math.abs(diff) > 40) setActiveImg(i => diff > 0 ? (i + 1) % GALLERY.length : (i - 1 + GALLERY.length) % GALLERY.length)
+    if (Math.abs(diff) > 40) setActiveImg(i => diff > 0 ? (i + 1) % gallery.length : (i - 1 + gallery.length) % gallery.length)
   }
 
   const visibleReviews = showAllReviews ? REVIEWS : REVIEWS.slice(0, 6)
