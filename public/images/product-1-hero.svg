@@ -1,94 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <radialGradient id="bg1" cx="50%" cy="48%" r="68%">
-      <stop offset="0%" stop-color="#FAFAFA"/>
-      <stop offset="100%" stop-color="#E8E8ED"/>
+    <radialGradient id="p1bg" cx="50%" cy="44%" r="72%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#F4F5F7"/>
+      <stop offset="100%" stop-color="#E3E5EB"/>
     </radialGradient>
-    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2C2C2E"/>
-      <stop offset="50%" stop-color="#1C1C1E"/>
-      <stop offset="100%" stop-color="#0A0A0C"/>
+    <linearGradient id="p1card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2A2A2D"/>
+      <stop offset="40%" stop-color="#1A1A1D"/>
+      <stop offset="100%" stop-color="#0C0C0E"/>
     </linearGradient>
-    <radialGradient id="hl1" cx="28%" cy="20%" r="60%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.10"/>
+    <radialGradient id="p1gloss" cx="22%" cy="14%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.14"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.04"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="chip1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FEF3C7"/>
-      <stop offset="25%" stop-color="#FCD34D"/>
-      <stop offset="60%" stop-color="#D97706"/>
-      <stop offset="100%" stop-color="#92400E"/>
+    <filter id="p1shadow" x="-30%" y="-30%" width="160%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="22" result="blur"/>
+      <feOffset dx="0" dy="28" in="blur" result="ob"/>
+      <feComponentTransfer in="ob" result="s">
+        <feFuncA type="linear" slope="0.50"/>
+      </feComponentTransfer>
+      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="p1glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="blur"/>
+    </filter>
+    <linearGradient id="p1chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5E27A"/>
+      <stop offset="35%" stop-color="#D4AC2A"/>
+      <stop offset="70%" stop-color="#B8860B"/>
+      <stop offset="100%" stop-color="#8B6508"/>
     </linearGradient>
-    <pattern id="tex1" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-      <circle cx="4" cy="4" r="0.6" fill="white" opacity="0.04"/>
-    </pattern>
   </defs>
 
-  <rect width="800" height="800" fill="url(#bg1)"/>
-  <!-- Subtle center glow -->
-  <ellipse cx="400" cy="410" rx="300" ry="220" fill="white" opacity="0.45"/>
+  <!-- Background -->
+  <rect width="800" height="800" fill="url(#p1bg)"/>
+  <!-- Center warm glow -->
+  <ellipse cx="400" cy="390" rx="260" ry="190" fill="white" opacity="0.38"/>
 
-  <!-- Ground shadow (no filter — just offset ellipse) -->
-  <ellipse cx="408" cy="670" rx="240" ry="16" fill="black" opacity="0.10"/>
-
-  <!-- Card shadow (hard offset rect, no blur) -->
-  <rect x="164" y="277" width="490" height="308" rx="26" fill="black" opacity="0.10" transform="translate(20, 24)"/>
-
-  <!-- Card -->
-  <g transform="translate(400, 430) rotate(-7)">
-    <rect x="-245" y="-154" width="490" height="308" rx="26" fill="url(#card1)"/>
-    <rect x="-245" y="-154" width="490" height="308" rx="26" fill="url(#tex1)"/>
-    <rect x="-245" y="-154" width="490" height="308" rx="26" fill="url(#hl1)"/>
-    <!-- Top sheen -->
-    <rect x="-245" y="-154" width="490" height="6" rx="3" fill="white" opacity="0.18"/>
+  <!-- Card with drop shadow -->
+  <g filter="url(#p1shadow)" transform="translate(400, 425) rotate(-7)">
+    <!-- Card body -->
+    <rect x="-248" y="-157" width="496" height="314" rx="26" fill="url(#p1card)"/>
+    <!-- Gloss -->
+    <rect x="-248" y="-157" width="496" height="314" rx="26" fill="url(#p1gloss)"/>
+    <!-- Top lacquer line -->
+    <rect x="-248" y="-157" width="496" height="5" rx="2.5" fill="white" opacity="0.24"/>
     <!-- Left edge highlight -->
-    <rect x="-245" y="-148" width="2.5" height="296" fill="white" opacity="0.07"/>
+    <rect x="-248" y="-152" width="2.5" height="304" rx="1.2" fill="white" opacity="0.10"/>
+    <!-- Bottom edge subtle -->
+    <rect x="-240" y="152" width="480" height="2" rx="1" fill="white" opacity="0.05"/>
 
-    <!-- Chip -->
-    <rect x="-223" y="-102" width="54" height="42" rx="7" fill="url(#chip1)"/>
-    <line x1="-223" y1="-88" x2="-169" y2="-88" stroke="#92400E" stroke-width="1.1" opacity="0.5"/>
-    <line x1="-223" y1="-74" x2="-169" y2="-74" stroke="#92400E" stroke-width="1.1" opacity="0.5"/>
-    <line x1="-207" y1="-102" x2="-207" y2="-60" stroke="#92400E" stroke-width="1.1" opacity="0.5"/>
-    <line x1="-192" y1="-102" x2="-192" y2="-60" stroke="#92400E" stroke-width="1.1" opacity="0.5"/>
+    <!-- Chip (SIM style) -->
+    <rect x="-218" y="-108" width="52" height="40" rx="7" fill="url(#p1chip)"/>
+    <rect x="-218" y="-95" width="52" height="1.2" fill="#7A4F00" opacity="0.50"/>
+    <rect x="-218" y="-83" width="52" height="1.2" fill="#7A4F00" opacity="0.50"/>
+    <rect x="-203" y="-108" width="1.2" height="40" fill="#7A4F00" opacity="0.50"/>
+    <rect x="-190" y="-108" width="1.2" height="40" fill="#7A4F00" opacity="0.50"/>
 
-    <!-- NFC contactless rings -->
-    <circle cx="204" cy="-122" r="13" fill="none" stroke="white" stroke-width="2.5" opacity="0.28"/>
-    <circle cx="204" cy="-122" r="22" fill="none" stroke="white" stroke-width="2" opacity="0.18"/>
-    <circle cx="204" cy="-122" r="32" fill="none" stroke="white" stroke-width="1.5" opacity="0.10"/>
+    <!-- Subtle bluetooth / signal arcs (top right) -->
+    <path d="M178 -120 Q188 -110 178 -100" stroke="white" stroke-width="2.2" fill="none" opacity="0.18"/>
+    <path d="M188 -132 Q206 -110 188 -88" stroke="white" stroke-width="1.8" fill="none" opacity="0.12"/>
+    <path d="M198 -144 Q224 -110 198 -76" stroke="white" stroke-width="1.4" fill="none" opacity="0.07"/>
 
-    <!-- Card number dots -->
-    <circle cx="-170" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-151" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-132" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-113" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-79" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-60" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-41" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="-22" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="12" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="31" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="50" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="69" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="103" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="122" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="141" cy="36" r="5" fill="white" opacity="0.22"/>
-    <circle cx="160" cy="36" r="5" fill="white" opacity="0.22"/>
+    <!-- Horizontal divider line -->
+    <line x1="-218" y1="72" x2="218" y2="72" stroke="white" stroke-width="0.6" opacity="0.10"/>
 
-    <!-- Separator -->
-    <line x1="-223" y1="92" x2="223" y2="92" stroke="white" stroke-width="0.6" opacity="0.12"/>
-
-    <!-- Brand name — LARGE enough to read on mobile -->
-    <text x="-220" y="124" font-family="'Arial Black', Arial, sans-serif" font-size="36" font-weight="900" fill="white" opacity="0.92" direction="ltr">FindCard</text>
-    <!-- PRO badge -->
-    <rect x="-6" y="105" width="48" height="22" rx="11" fill="white" opacity="0.16"/>
-    <text x="18" y="121" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="white" opacity="0.88" text-anchor="middle" direction="ltr">PRO</text>
-
-    <!-- Bottom detail strip -->
-    <rect x="-223" y="136" width="130" height="10" rx="5" fill="white" opacity="0.08"/>
-    <!-- Hologram -->
-    <circle cx="204" cy="128" r="22" fill="none" stroke="white" stroke-width="1.2" opacity="0.08"/>
-    <circle cx="204" cy="128" r="14" fill="none" stroke="white" stroke-width="1" opacity="0.06"/>
-    <circle cx="204" cy="128" r="6" fill="white" opacity="0.04"/>
+    <!-- Tiny FC logo bottom-right -->
+    <circle cx="188" cy="110" r="16" fill="#1D4ED8" opacity="0.80"/>
+    <text x="188" y="115"
+          font-family="'Arial Black', Arial, sans-serif"
+          font-size="10" font-weight="900"
+          fill="white" text-anchor="middle"
+          direction="ltr" opacity="0.96">FC</text>
+    <!-- "FindCard" label tiny -->
+    <text x="166" y="132"
+          font-family="Arial, sans-serif"
+          font-size="9" fill="white"
+          text-anchor="middle"
+          direction="ltr" opacity="0.28" letter-spacing="1">FindCard</text>
   </g>
+
+  <!-- Ground reflection/shadow -->
+  <ellipse cx="408" cy="675" rx="200" ry="14" fill="black" opacity="0.10"/>
+  <ellipse cx="408" cy="672" rx="160" ry="8" fill="black" opacity="0.07"/>
 </svg>
