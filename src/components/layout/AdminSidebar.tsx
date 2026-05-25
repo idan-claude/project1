@@ -19,6 +19,7 @@ const NAV = [
     group: 'שיווק ומכירות',
     items: [
       { href: '/admin/marketing', label: 'שיווק', icon: '◆', sub: 'קופונים וקמפיינים' },
+      { href: '/admin/campaigns', label: 'קמפיינים', icon: '✉', sub: 'מיילים שיווקיים' },
       { href: '/admin/funnels', label: 'משפכים', icon: '▽', sub: 'ניתוח המרות' },
       { href: '/admin/automations', label: 'אוטומציות', icon: '⟳', sub: 'תזרים אוטומטי' },
       { href: '/admin/whatsapp', label: 'וואטסאפ', icon: '◌', sub: 'תבניות הודעות' },
