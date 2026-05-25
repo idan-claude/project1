@@ -338,8 +338,7 @@ export function failedDeliveryEmail(ctx: Ctx): { subject: string; html: string }
     ${infoBox(`
       📞 <strong>מה לעשות עכשיו?</strong><br/>
       1. צור/י קשר איתנו מיידית ב-<a href="mailto:findcardsupport@gmail.com" style="color:#1e40af;">findcardsupport@gmail.com</a><br/>
-      2. נתאם מסירה חוזרת בזמן המתאים לך<br/>
-      3. ניתן גם לאסוף מנקודת חלוקה קרובה
+      2. נתאם מסירה חוזרת בזמן המתאים לך
     `, '#fef2f2', '#fca5a5')}
 
     <p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#6b7280;margin:16px 0;">
