@@ -5,7 +5,7 @@ import Product from '@/lib/db/models/Product'
 
 export const dynamic = 'force-dynamic'
 
-export const POST = withAdminAuth(async (_req: NextRequest, { params }: { params: { id: string } }) => {
+export const POST = withAdminAuth(async (_req: NextRequest, { params }) => {
   await connectDB()
   const source = await Product.findById(params.id).lean() as Record<string, unknown> | null
   if (!source) return NextResponse.json({ error: 'מוצר לא נמצא' }, { status: 404 })
