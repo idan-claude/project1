@@ -405,7 +405,7 @@ export default function ProductPage() {
                 <div className="relative bg-[#0C1020] rounded-3xl overflow-hidden select-none aspect-square">
                   <img src={gallery[activeImg]} alt="FindCard PRO" className="w-full h-full object-cover" />
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
-                    {GALLERY.map((_, i) => (
+                    {gallery.map((_, i) => (
                       <button
                         key={i}
                         onClick={() => setActiveImg(i)}
