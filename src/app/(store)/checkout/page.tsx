@@ -171,6 +171,40 @@ export default function CheckoutPage() {
               </div>
             </div>
 
+            {/* Coupon code */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h2 className="font-bold text-gray-900 text-base mb-4 flex items-center gap-2">
+                <span className="bg-blue-100 text-blue-600 rounded-full w-7 h-7 flex items-center justify-center text-sm">🏷️</span>
+                קוד קופון (אופציונלי)
+              </h2>
+              {couponApplied ? (
+                <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+                  <div>
+                    <p className="text-green-700 font-bold text-sm">קופון {couponApplied.code} הופעל!</p>
+                    <p className="text-green-600 text-xs">חסכת {formatPrice(couponApplied.discount)}</p>
+                  </div>
+                  <button type="button" onClick={() => { setCouponApplied(null); setCouponCode('') }}
+                    className="text-red-500 text-xs font-semibold hover:underline">הסר</button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={e => setCouponCode(e.target.value.toUpperCase())}
+                    onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), applyCoupon())}
+                    placeholder="הכנס קוד קופון"
+                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button type="button" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}
+                    className="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-50 hover:bg-blue-700 transition-colors">
+                    {couponLoading ? '...' : 'החל'}
+                  </button>
+                </div>
+              )}
+              {couponError && <p className="text-red-500 text-xs mt-2">{couponError}</p>}
+            </div>
+
             {/* Payment method */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <h2 className="font-bold text-gray-900 text-base mb-5 flex items-center gap-2">
