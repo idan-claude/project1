@@ -1,6 +1,22 @@
 # NEXT_STEPS.md — Where to Resume
 Last updated: 2026-05-25
 
+## Sprint 2 Complete — Where to go next
+
+### Immediate (requires credentials — 10 min each):
+1. **Cloudinary images** — Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET to Vercel
+2. **Cardcom payments** — Add CARDCOM_TERMINAL_NUMBER, CARDCOM_API_USERNAME, CARDCOM_API_PASSWORD to Vercel
+3. **Email automations** — Add SMTP_USER, SMTP_PASSWORD to Vercel → automations will fire on order confirm
+4. **WhatsApp automations** — Add TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM to Vercel
+
+### Sprint 3 Candidates:
+1. **Customer auth** — login/register for customers, saved addresses, order history
+2. **Order status flow** — Admin can mark orders shipped, enter tracking number
+3. **Multi-product** — Product variants visible in storefront, cart supports variant selection
+4. **IP blocking UI** — /admin/security: block IPs, whitelist, suspicious detection
+5. **Visitor analytics granular** — scroll depth, rage clicks, heatmap data collection
+6. **A/B testing** — product page headline/CTA variants tracked via VisitorEvent
+
 ## Resume Point (start here after any reset)
 
 ### Step 1 — Check git status
