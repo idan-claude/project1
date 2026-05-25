@@ -199,7 +199,7 @@ export default function ProductPage() {
   const [showAllReviews, setShowAllReviews] = useState(false)
   const [productId, setProductId] = useState<string>(PRODUCT_SLUG)
   const [productName, setProductName] = useState('כרטיס מעקב FindCard PRO')
-  const [tiers, setTiers] = useState(() => buildTiers(19990, 29890))
+  const [tiers, setTiers] = useState(() => buildTiers(19990, 29990))
   const [gallery, setGallery] = useState(GALLERY)
   const [inStock, setInStock] = useState(true)
   const imgTouchStart = useRef(0)
