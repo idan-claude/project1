@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useCartStore } from '@/store/cartStore'
 import { useRouter } from 'next/navigation'
+import { track } from '@/lib/tracking/tracker'
 
 function priceDisplay(agorot: number): string {
   const n = agorot / 100
