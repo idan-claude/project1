@@ -42,6 +42,7 @@ interface ISeo {
 }
 
 export interface IProduct extends Document {
+  storeId: string  // multi-store scaffold — default 'default'
   slug: string
   nameHe: string
   nameEn: string
