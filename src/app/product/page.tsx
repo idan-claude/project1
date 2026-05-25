@@ -12,17 +12,15 @@ function priceDisplay(agorot: number): string {
   return `₪${Number.isInteger(n) ? n.toLocaleString('he-IL') : n.toFixed(2)}`
 }
 
-const PRODUCT = {
-  id: 'kartis-maakav-smart-pro',
-  slug: 'kartis-maakav-smart-pro',
-  nameHe: 'כרטיס מעקב FindCard PRO',
-}
+const PRODUCT_SLUG = 'kartis-maakav-smart-pro'
 
-const TIERS = [
-  { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: 19990, compareAt: 29890, badge: null as string | null, badgeColor: '' },
-  { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: 'סה"כ 3 כרטיסים', price: 29990, compareAt: 59890, badge: '72% מהלקוחות', badgeColor: 'bg-blue-600' },
-  { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: 'סה"כ 4 כרטיסים', price: 37990, compareAt: 79890, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500' },
-]
+function buildTiers(basePrice: number, compareAtPrice: number) {
+  return [
+    { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: basePrice, compareAt: compareAtPrice || Math.round(basePrice * 1.5), badge: null as string | null, badgeColor: '' },
+    { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: 'סה"כ 3 כרטיסים', price: Math.round(basePrice * 1.5), compareAt: compareAtPrice ? compareAtPrice * 2 : Math.round(basePrice * 3), badge: '72% מהלקוחות', badgeColor: 'bg-blue-600' },
+    { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: 'סה"כ 4 כרטיסים', price: Math.round(basePrice * 1.9), compareAt: compareAtPrice ? compareAtPrice * 2.67 : Math.round(basePrice * 4), badge: 'הכי משתלם!', badgeColor: 'bg-orange-500' },
+  ]
+}
 
 const FEATURES = [
   { icon: '📡', label: 'רשת Apple Find My', desc: 'מעל 500 מיליון מכשיר' },
