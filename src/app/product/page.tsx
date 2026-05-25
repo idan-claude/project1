@@ -312,7 +312,7 @@ export default function ProductPage() {
             onTouchEnd={e => imgSwipe(e, 'end')}
           >
             <img
-              src={GALLERY[activeImg]}
+              src={gallery[activeImg]}
               alt="FindCard PRO"
               className="w-full aspect-square object-cover"
             />
@@ -403,7 +403,7 @@ export default function ProductPage() {
               {/* Left: image sticky */}
               <div className="sticky top-24 space-y-4">
                 <div className="relative bg-[#0C1020] rounded-3xl overflow-hidden select-none aspect-square">
-                  <img src={GALLERY[activeImg]} alt="FindCard PRO" className="w-full h-full object-cover" />
+                  <img src={gallery[activeImg]} alt="FindCard PRO" className="w-full h-full object-cover" />
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
                     {GALLERY.map((_, i) => (
                       <button
