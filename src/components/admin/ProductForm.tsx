@@ -101,6 +101,7 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
 
   const [images, setImages] = useState<ProductImage[]>(init?.images || [])
   const [variants, setVariants] = useState<Variant[]>(init?.variants || [])
+  const [beforeAfter, setBeforeAfter] = useState<{ before: string; after: string; label: string }[]>(init?.beforeAfter || [])
   const [bundles, setBundles] = useState<Bundle[]>(
     init?.bundles?.map(b => ({
       title: b.title || '',
