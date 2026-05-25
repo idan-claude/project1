@@ -62,7 +62,8 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
     beforeAfter?: { before: string; after: string; label: string }[]
   } | undefined
 
-  const [tab, setTab] = useState<'basic' | 'images' | 'bundles' | 'pricing' | 'content' | 'seo' | 'shipping'>('basic')
+  const [tab, setTab] = useState<'basic' | 'funnel' | 'images' | 'bundles' | 'pricing' | 'content' | 'seo' | 'shipping'>('basic')
+  const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'ok' | 'taken'>('idle')
 
   const [form, setForm] = useState({
     nameHe: init?.nameHe as string || '',
