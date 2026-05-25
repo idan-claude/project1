@@ -54,6 +54,43 @@ const FALLBACK_REVIEWS: ReviewItem[] = [
   { photo: 'https://i.pravatar.cc/80?img=68', name: 'טל ר.', location: 'אילת', detail: 'לקוח 6 חודשים', rating: 5, text: 'גרתי באילת ואיבדתי ארנק בים. חששתי שהמים יהרסו אותו אבל IP67 — הכרטיס חי! הוא צפצף גם אחרי שעה במים. מדהים ממש.' },
 ]
 
+export async function generateMetadata(): Promise<Metadata> {
+  await connectDB()
+  const p = await Product.findOne({ slug: PRODUCT_SLUG, status: 'active' })
+    .select('nameHe descriptionShort ogImage seo pricing')
+    .lean() as {
+      nameHe: string
+      descriptionShort?: string
+      ogImage?: string
+      seo?: { metaTitle?: string; metaDescription?: string }
+      pricing: { sellingPrice: number }
+    } | null
+
+  if (!p) return { title: 'מוצר לא נמצא' }
+
+  const title = p.seo?.metaTitle || p.nameHe
+  const description = p.seo?.metaDescription || p.descriptionShort || ''
+  const image = p.ogImage || FALLBACK_GALLERY[0]
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [{ url: image }],
+      type: 'website',
+      locale: 'he_IL',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  }
+}
+
 // Round to nearest ₪x.90 for psychological pricing defaults
 function psychoPrice(n: number): number {
   return Math.round(n / 1000) * 1000 - 10
