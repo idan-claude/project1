@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface IEmailCampaign extends Document {
+  storeId: string
   name: string
   subject: string
   bodyHtml: string
@@ -24,6 +25,7 @@ export interface IEmailCampaign extends Document {
 
 const EmailCampaignSchema = new Schema<IEmailCampaign>(
   {
+    storeId: { type: String, default: 'default', index: true },
     name: { type: String, required: true },
     subject: { type: String, required: true },
     bodyHtml: { type: String, default: '' },
