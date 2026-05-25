@@ -1,116 +1,107 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
   <defs>
-    <radialGradient id="p3bg" cx="50%" cy="46%" r="72%">
-      <stop offset="0%" stop-color="#1A1C24"/>
-      <stop offset="60%" stop-color="#0F1018"/>
-      <stop offset="100%" stop-color="#080810"/>
-    </radialGradient>
-    <radialGradient id="p3glow" cx="50%" cy="46%" r="48%">
-      <stop offset="0%" stop-color="#1E3A5F" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#1E3A5F" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="p3card" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2C2C30"/>
-      <stop offset="45%" stop-color="#1C1C20"/>
-      <stop offset="100%" stop-color="#0E0E12"/>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181A22"/>
+      <stop offset="100%" stop-color="#0C0E14"/>
     </linearGradient>
-    <radialGradient id="p3gloss" cx="22%" cy="14%" r="68%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.14"/>
-      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.03"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="p3shadowL" x="-30%" y="-30%" width="160%" height="180%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="20" result="blur"/>
-      <feOffset dx="-10" dy="28" in="blur" result="ob"/>
-      <feComponentTransfer in="ob" result="s">
-        <feFuncA type="linear" slope="0.60"/>
-      </feComponentTransfer>
-      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="p3shadowC" x="-30%" y="-30%" width="160%" height="180%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="blur"/>
-      <feOffset dx="0" dy="32" in="blur" result="ob"/>
-      <feComponentTransfer in="ob" result="s">
-        <feFuncA type="linear" slope="0.65"/>
-      </feComponentTransfer>
-      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="p3shadowR" x="-30%" y="-30%" width="160%" height="180%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="20" result="blur"/>
-      <feOffset dx="10" dy="28" in="blur" result="ob"/>
-      <feComponentTransfer in="ob" result="s">
-        <feFuncA type="linear" slope="0.60"/>
-      </feComponentTransfer>
-      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <linearGradient id="p3chip" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F5E27A"/>
-      <stop offset="50%" stop-color="#C4940F"/>
+    <linearGradient id="cardL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#28282C"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <linearGradient id="cardC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#323236"/>
+      <stop offset="100%" stop-color="#18181A"/>
+    </linearGradient>
+    <linearGradient id="cardR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#28282C"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <linearGradient id="chip3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0D060"/>
+      <stop offset="50%" stop-color="#C8960A"/>
       <stop offset="100%" stop-color="#8B6508"/>
     </linearGradient>
+    <linearGradient id="shine3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4060FF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#4060FF" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <!-- Dark background -->
-  <rect width="800" height="800" fill="url(#p3bg)"/>
+  <rect width="900" height="900" fill="url(#bg3)"/>
   <!-- Center glow -->
-  <ellipse cx="400" cy="400" rx="300" ry="240" fill="url(#p3glow)"/>
-  <!-- Subtle dot pattern -->
-  <pattern id="p3dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
-    <circle cx="15" cy="15" r="0.8" fill="white" opacity="0.04"/>
-  </pattern>
-  <rect width="800" height="800" fill="url(#p3dots)"/>
+  <ellipse cx="450" cy="450" rx="320" ry="220" fill="url(#glow3)"/>
 
-  <!-- LEFT card (rotated more) -->
-  <g filter="url(#p3shadowL)" transform="translate(270, 420) rotate(-20)">
-    <rect x="-200" y="-126" width="400" height="252" rx="22" fill="url(#p3card)"/>
-    <rect x="-200" y="-126" width="400" height="252" rx="22" fill="url(#p3gloss)"/>
-    <rect x="-200" y="-126" width="400" height="5" rx="2.5" fill="white" opacity="0.18"/>
-    <rect x="-200" y="-121" width="2" height="242" rx="1" fill="white" opacity="0.08"/>
-    <rect x="-178" y="-78" width="40" height="32" rx="5" fill="url(#p3chip)" opacity="0.80"/>
-    <circle cx="142" cy="90" r="11" fill="#1D4ED8" opacity="0.70"/>
-    <text x="142" y="95" font-family="'Arial Black', Arial, sans-serif" font-size="8" font-weight="900" fill="white" text-anchor="middle" direction="ltr" opacity="0.90">FC</text>
+  <!-- Left card (-22°) -->
+  <g transform="translate(300 455) rotate(-22)">
+    <rect x="-210" y="-133" width="420" height="266" rx="22" fill="#000" opacity="0.4" transform="translate(6,10)"/>
+    <rect x="-210" y="-133" width="420" height="266" rx="22" fill="url(#cardL)"/>
+    <rect x="-210" y="-133" width="420" height="266" rx="22" fill="url(#shine3)"/>
+    <rect x="-210" y="-133" width="420" height="5" rx="2.5" fill="white" opacity="0.14"/>
+    <rect x="-148" y="-65" width="44" height="36" rx="6" fill="url(#chip3)" opacity="0.85"/>
+    <g fill="none" stroke="white" stroke-linecap="round" opacity="0.5">
+      <path d="M80,-28 A28,28 0 0,1 110,-28" stroke-width="3"/>
+      <path d="M87,-17 A18,18 0 0,1 103,-17" stroke-width="2.5"/>
+      <circle cx="95" cy="-8" r="3" fill="white"/>
+    </g>
+    <g fill="white" opacity="0.22">
+      <circle cx="-148" cy="48" r="3"/><circle cx="-138" cy="48" r="3"/><circle cx="-128" cy="48" r="3"/><circle cx="-118" cy="48" r="3"/>
+    </g>
   </g>
 
-  <!-- RIGHT card (rotated the other way) -->
-  <g filter="url(#p3shadowR)" transform="translate(530, 420) rotate(20)">
-    <rect x="-200" y="-126" width="400" height="252" rx="22" fill="url(#p3card)"/>
-    <rect x="-200" y="-126" width="400" height="252" rx="22" fill="url(#p3gloss)"/>
-    <rect x="-200" y="-126" width="400" height="5" rx="2.5" fill="white" opacity="0.18"/>
-    <rect x="198" y="-121" width="2" height="242" rx="1" fill="white" opacity="0.06"/>
-    <rect x="-178" y="-78" width="40" height="32" rx="5" fill="url(#p3chip)" opacity="0.80"/>
-    <circle cx="142" cy="90" r="11" fill="#1D4ED8" opacity="0.70"/>
-    <text x="142" y="95" font-family="'Arial Black', Arial, sans-serif" font-size="8" font-weight="900" fill="white" text-anchor="middle" direction="ltr" opacity="0.90">FC</text>
+  <!-- Right card (+22°) -->
+  <g transform="translate(600 455) rotate(22)">
+    <rect x="-210" y="-133" width="420" height="266" rx="22" fill="#000" opacity="0.4" transform="translate(6,10)"/>
+    <rect x="-210" y="-133" width="420" height="266" rx="22" fill="url(#cardR)"/>
+    <rect x="-210" y="-133" width="420" height="266" rx="22" fill="url(#shine3)"/>
+    <rect x="-210" y="-133" width="420" height="5" rx="2.5" fill="white" opacity="0.14"/>
+    <rect x="-148" y="-65" width="44" height="36" rx="6" fill="url(#chip3)" opacity="0.85"/>
+    <g fill="none" stroke="white" stroke-linecap="round" opacity="0.5">
+      <path d="M80,-28 A28,28 0 0,1 110,-28" stroke-width="3"/>
+      <path d="M87,-17 A18,18 0 0,1 103,-17" stroke-width="2.5"/>
+      <circle cx="95" cy="-8" r="3" fill="white"/>
+    </g>
+    <g fill="white" opacity="0.22">
+      <circle cx="-148" cy="48" r="3"/><circle cx="-138" cy="48" r="3"/><circle cx="-128" cy="48" r="3"/><circle cx="-118" cy="48" r="3"/>
+    </g>
   </g>
 
-  <!-- CENTER card (front, straight) -->
-  <g filter="url(#p3shadowC)" transform="translate(400, 400) rotate(0)">
-    <rect x="-210" y="-132" width="420" height="264" rx="24" fill="url(#p3card)"/>
-    <rect x="-210" y="-132" width="420" height="264" rx="24" fill="url(#p3gloss)"/>
-    <rect x="-210" y="-132" width="420" height="5" rx="2.5" fill="white" opacity="0.22"/>
-    <rect x="-210" y="-127" width="2.5" height="254" rx="1.2" fill="white" opacity="0.10"/>
+  <!-- Center card (front) -->
+  <g transform="translate(450 445) rotate(0)">
+    <rect x="-218" y="-138" width="436" height="276" rx="24" fill="#000" opacity="0.35" transform="translate(5,10)"/>
+    <rect x="-218" y="-138" width="436" height="276" rx="24" fill="url(#cardC)"/>
+    <rect x="-218" y="-138" width="436" height="276" rx="24" fill="url(#shine3)"/>
+    <rect x="-218" y="-138" width="436" height="6" rx="3" fill="white" opacity="0.16"/>
     <!-- Chip -->
-    <rect x="-186" y="-84" width="44" height="34" rx="6" fill="url(#p3chip)"/>
-    <rect x="-186" y="-73" width="44" height="1.1" fill="#7A4F00" opacity="0.50"/>
-    <rect x="-186" y="-63" width="44" height="1.1" fill="#7A4F00" opacity="0.50"/>
-    <rect x="-173" y="-84" width="1.1" height="34" fill="#7A4F00" opacity="0.50"/>
-    <rect x="-162" y="-84" width="1.1" height="34" fill="#7A4F00" opacity="0.50"/>
-    <!-- Signal arcs -->
-    <path d="M150 -100 Q158 -92 150 -84" stroke="white" stroke-width="2" fill="none" opacity="0.18"/>
-    <path d="M158 -110 Q172 -92 158 -74" stroke="white" stroke-width="1.6" fill="none" opacity="0.12"/>
-    <path d="M166 -120 Q186 -92 166 -64" stroke="white" stroke-width="1.2" fill="none" opacity="0.08"/>
-    <!-- Divider -->
-    <line x1="-200" y1="60" x2="200" y2="60" stroke="white" stroke-width="0.5" opacity="0.09"/>
-    <!-- FC badge -->
-    <circle cx="158" cy="96" r="15" fill="#1D4ED8" opacity="0.80"/>
-    <text x="158" y="101" font-family="'Arial Black', Arial, sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" direction="ltr" opacity="0.96">FC</text>
-    <text x="136" y="116" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle" direction="ltr" opacity="0.25" letter-spacing="1">FindCard</text>
+    <rect x="-155" y="-72" width="52" height="42" rx="7" fill="url(#chip3)"/>
+    <line x1="-155" y1="-60" x2="-103" y2="-60" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <line x1="-155" y1="-48" x2="-103" y2="-48" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <line x1="-136" y1="-72" x2="-136" y2="-30" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <line x1="-122" y1="-72" x2="-122" y2="-30" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <!-- NFC -->
+    <g fill="none" stroke="white" stroke-linecap="round">
+      <path d="M100,-40 A40,40 0 0,1 148,-40" stroke-width="4" opacity="0.5"/>
+      <path d="M110,-26 A26,26 0 0,1 138,-26" stroke-width="3.5" opacity="0.65"/>
+      <path d="M118,-13 A13,13 0 0,1 130,-13" stroke-width="3" opacity="0.8"/>
+      <circle cx="124" cy="-5" r="4" fill="white" opacity="0.8"/>
+    </g>
+    <!-- Dots -->
+    <g fill="white" opacity="0.28">
+      <circle cx="-155" cy="55" r="4"/><circle cx="-143" cy="55" r="4"/><circle cx="-131" cy="55" r="4"/><circle cx="-119" cy="55" r="4"/>
+      <circle cx="-84" cy="55" r="4"/><circle cx="-72" cy="55" r="4"/><circle cx="-60" cy="55" r="4"/><circle cx="-48" cy="55" r="4"/>
+    </g>
+    <!-- FC -->
+    <circle cx="172" cy="105" r="20" fill="none" stroke="white" stroke-width="1.5" opacity="0.3"/>
+    <text x="172" y="110" font-family="Arial" font-size="11" font-weight="700" fill="white" opacity="0.7" text-anchor="middle">FC</text>
   </g>
 
-  <!-- "3 כרטיסים" label -->
-  <rect x="296" y="600" width="208" height="36" rx="18" fill="white" opacity="0.08"/>
-  <text x="400" y="623" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="white" text-anchor="middle" opacity="0.70" direction="rtl">3 כרטיסי מעקב</text>
+  <!-- "3 כרטיסים" badge -->
+  <rect x="350" y="700" width="200" height="46" rx="23" fill="none" stroke="white" stroke-width="1.5" opacity="0.25"/>
+  <text x="450" y="729" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="white" opacity="0.85" text-anchor="middle">חבילת 3 כרטיסים</text>
 
-  <!-- Ground shadow -->
-  <ellipse cx="400" cy="685" rx="185" ry="10" fill="black" opacity="0.45"/>
+  <text x="450" y="800" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle" opacity="0.9">FindCard PRO — שמור על כולם</text>
+  <text x="450" y="824" font-family="Arial, sans-serif" font-size="13" fill="#8899BB" text-anchor="middle">למשפחה, לרכב, למזוודה</text>
 </svg>
