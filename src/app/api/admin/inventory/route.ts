@@ -38,7 +38,7 @@ export const GET = withAdminAuth(async () => {
 })
 
 export const PATCH = withAdminAuth(async (req: NextRequest) => {
-  await dbConnect()
+  await connectDB()
   const { productId, quantity, adjustment } = await req.json()
   if (!productId) return NextResponse.json({ error: 'productId required' }, { status: 400 })
 
