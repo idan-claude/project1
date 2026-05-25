@@ -34,7 +34,7 @@ export default function SecurityPage() {
 
   const successCount = logs.filter(l => l.type === 'login_success').length
   const failCount = logs.filter(l => l.type === 'login_fail').length
-  const uniqueIPs = [...new Set(logs.map(l => l.ip).filter(Boolean))].length
+  const uniqueIPs = Array.from(new Set(logs.map(l => l.ip).filter(Boolean))).length
 
   return (
     <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
