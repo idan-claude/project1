@@ -24,17 +24,10 @@ export default function ShippingPolicyPage() {
           <div className="bg-white rounded-2xl border shadow-sm p-6">
             <h2 className="text-xl font-extrabold text-gray-900 mb-4">1. זמני משלוח</h2>
             <div className="space-y-4 text-sm text-gray-700">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-gray-50 rounded-xl p-4 border">
-                  <p className="font-bold text-gray-900 mb-1">📦 משלוח רגיל</p>
-                  <p className="text-2xl font-extrabold text-blue-600">7-14</p>
-                  <p className="text-gray-500 text-xs">ימי עסקים</p>
-                </div>
-                <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                  <p className="font-bold text-gray-900 mb-1">⚡ משלוח מהיר</p>
-                  <p className="text-2xl font-extrabold text-blue-600">6-12</p>
-                  <p className="text-gray-500 text-xs">ימי עסקים</p>
-                </div>
+              <div className="bg-gray-50 rounded-xl p-4 border inline-block">
+                <p className="font-bold text-gray-900 mb-1">📦 משלוח חינם לכל הארץ</p>
+                <p className="text-2xl font-extrabold text-blue-600">7-14</p>
+                <p className="text-gray-500 text-xs">ימי עסקים</p>
               </div>
               <p className="bg-orange-50 border border-orange-200 rounded-xl p-3 text-orange-700">
                 ⚠️ <strong>שימו לב:</strong> עקב המצב הביטחוני יתכנו עיכובים קלים. זמני המשלוח הנ"ל הם הערכות ולא מובטחים.
