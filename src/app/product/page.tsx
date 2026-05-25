@@ -298,7 +298,7 @@ export default function ProductPage() {
               className="w-full aspect-square object-cover"
             />
             {/* Thumbnail strip */}
-            <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-2 pt-6 bg-gradient-to-t from-[#0C1020]/80 to-transparent">
+            <div dir="ltr" className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-2 pt-6 bg-gradient-to-t from-[#0C1020]/80 to-transparent">
               {GALLERY.map((src, i) => (
                 <button
                   key={i}
