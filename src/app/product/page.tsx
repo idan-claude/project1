@@ -431,8 +431,8 @@ export default function ProductPage() {
                     <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי ✓</span>
                     <span className="text-xs text-gray-400">⭐ 4.9 · 312 ביקורות</span>
                   </div>
-                  <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">כרטיס מעקב FindCard PRO</h1>
-                  <p className="text-gray-500 leading-relaxed text-sm">כרטיס מעקב חכם תואם Apple Find My. דק בדיוק 1.8 מ"מ — נכנס לכל ארנק ומוצא את המפתחות, הארנק וכל דבר אחר תוך שניות.</p>
+                  <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">כרטיס מעקב <span dir="ltr">FindCard PRO</span></h1>
+                  <p className="text-gray-500 leading-relaxed text-sm">כרטיס מעקב חכם, תואם רשת <span dir="ltr">Apple Find My</span>. עובי 1.8 מ"מ בדיוק — נכנס לכל ארנק ומוצא את המפתחות, הארנק וכל דבר אחר תוך שניות.</p>
                 </div>
 
                 {/* Review strip desktop — swipeable, no auto-play */}
