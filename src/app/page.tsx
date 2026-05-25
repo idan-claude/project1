@@ -245,7 +245,7 @@ export default function HomePage() {
                   מצא את כל מה{' '}<br className="hidden md:block" /><span className="text-white">שאיבדת</span>
                 </h1>
                 <p className="text-blue-100 text-lg md:text-xl mb-6 max-w-lg mx-auto md:mx-0">
-                  FindCard נכנס לארנק שלך ומאתר אותו תוך שניות דרך רשת Apple Find My. דק כמו כרטיס אשראי, עובד בכל מקום בעולם.
+                  הכרטיס נכנס לארנק שלך ומאתר אותו תוך שניות. דק כמו כרטיס אשראי, עובד בכל מקום בעולם.
                 </p>
                 <div className="flex flex-wrap items-center gap-2 mb-8 justify-center md:justify-start text-sm">
                   <span className="bg-white/15 rounded-full px-3 py-1 font-medium">✅ Apple MFI מאושר</span>
