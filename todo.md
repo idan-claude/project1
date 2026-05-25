@@ -1,62 +1,60 @@
-# FindCard Project - Task Tracker
+# TODO.md — FindCard EOS
+Last updated: 2026-05-25
 
-## Completed ✅
-- [x] Product SVG images redesigned (bright blue card, Spotminders style)
-  - product-1-hero.svg — bright blue card tilted, light blue bg, gold chip, WiFi arcs
-  - product-2-wallet.svg — blue card in front of two other cards (fanned)
-  - product-3-bundle.svg — 3 blue cards fanned, dark background
-  - product-4-features.svg — blue card with Hebrew callout annotations
-- [x] Homepage product preview section: replaced emoji with product-2-wallet.svg
-- [x] Feature carousel labels fixed (8 חודשי סוללה not just "8")
-- [x] All yellow colors removed → blue/white only
-- [x] Announcement bar: "משלוח חינם על כל הזמנה"
-- [x] WhatsApp bubble (fixed bottom-left, 9720525884463)
-- [x] Product gallery (4 images + main display)
-- [x] Add to Cart button: white bg, blue text
-- [x] Tier pricing: "1 כרטיס" → "כרטיס 1" + removed all gift mentions
-- [x] Return policy: marketing + legal split
-- [x] Reviews: added 3-star + typos/slang for authenticity (10 reviews total)
-- [x] Customer count: 2,000+ | Reviews: 312
-- [x] Android product removed from seed
-- [x] Hero image: product-1-hero.svg (blue card)
-- [x] Feature carousel label: 1.8mm → "דק — נכנס לכל מקום"
-- [x] Hebrew text review: fixed AI-sounding phrases throughout site
-  - Feature descriptions rewritten in colloquial Hebrew
-  - FAQ Android answer shortened + natural
-  - Guarantee text made more natural
-  - Delivery note more conversational
+## 🔴 CRITICAL (breaks store functionality)
 
-## Admin Panel - COMPLETED ✅
-- [x] AdminSidebar full redesign:
-  - Logo (FC badge + FindCard name)
-  - Live visitor counter with pulsing green dot (polls every 8s)
-  - Sectioned menu: ניהול + חנות
-  - All new menu items
-  - Better visual design (dark sidebar)
-- [x] Admin Dashboard full redesign:
-  - Global search bar
-  - Live visitor counter
-  - 4 KPI cards row 1 (revenue today/month, new customers, avg order)
-  - 4 metric cards row 2 (conversion %, cart %, open orders, abandoned carts)
-  - Hourly revenue SVG bar chart
-  - Order funnel visualization
-  - Today's orders + abandoned carts count cards
-  - Quick actions card
-  - Recent orders table
-  - Live activity feed (auto-refreshes every 12s with fake activity)
-- [x] Dashboard API updated: newCustomersToday, avgOrderValue, conversionRate, cartRate
-- [x] /admin/reviews — Approve/reject reviews, filter by status
-- [x] /admin/coupons — Create/manage discount codes (toggle active, delete)
-- [x] /admin/abandoned-carts — View + send reminder per cart or all at once
-- [x] /admin/reports — Weekly/monthly bar charts, top products, KPI summary
-- [x] /admin/whatsapp — Message templates, editor, preview, send via wa.me, log
-- [x] /admin/invoices — Invoice list + browser print function
-- [x] /admin/payments — Transaction list, summary cards, filter by status
+- [ ] **Inventory decrement** — `src/app/api/orders/route.ts`: after creating order, reduce `Product.quantity` by items ordered. Currently quantity never decrements.
+- [ ] **Coupon at checkout** — checkout form (`src/app/checkout/`) never validates or applies coupons. Coupon model exists but is disconnected from checkout.
+- [ ] **MongoDB Atlas URI** — `.env.local` `MONGODB_URI` points to `localhost:27017`. Production on Vercel needs Atlas connection string.
 
-## Pending ⏳
-- [ ] Social media links in Footer (waiting for user to provide Instagram/TikTok links)
+## 🟠 HIGH (admin panel incomplete)
 
-## Notes
-- Admin panel: all new pages have full Hebrew UI with mock data (ready for real API integration)
-- Images: all 4 SVGs now use bright blue card style (Spotminders-inspired)
-- Hebrew: reviewed and fixed AI-sounding phrases throughout homepage and product page
+- [ ] **Review model + API** — `src/app/admin/reviews/page.tsx` shows mock data. Create `Review.ts` model + `/api/admin/reviews/route.ts`.
+- [ ] **Reports API** — `src/app/admin/reports/page.tsx` shows mock data. Build real aggregation from Order model: revenue by day/week/month, top products, conversion rate.
+- [ ] **Cron for scheduled emails** — `src/lib/db/models/CommLog.ts` has `processPendingScheduled()` but nothing calls it. Add cron job.
+
+## 🟡 MEDIUM (CTO/EOS features)
+
+- [ ] **Executive dashboard** — `/admin/page.tsx` needs real KPIs: today's revenue, orders, conversion, AOV from DB
+- [ ] **Customer auth** — NextAuth configured (`src/app/api/auth/`) but no customer login/register UI
+- [ ] **Customer 360** — `/admin/customers/` page: full purchase history, LTV, last seen per customer
+- [ ] **17Track integration** — `src/lib/shipment/17track.ts` coded but needs `TRACK17_API_KEY` env var
+- [ ] **WhatsApp automation** — Twilio configured, needs active templates + triggers on order events
+
+## 🟢 LOW (nice to have)
+
+- [ ] **Autosave admin** — settings/product edits should auto-save with debounce
+- [ ] **A/B testing** — product page variant testing
+- [ ] **Fraud detection** — flag suspicious orders (multiple failures, address mismatch)
+- [ ] **Session analytics** — visitor tracking, funnel analysis
+
+## ✅ DONE (latest session)
+
+- [x] NEXTAUTH_URL updated to `https://project1-flame-phi.vercel.app`
+- [x] ADMIN_EMAIL_TO updated to `findcardsupport@gmail.com`
+- [x] Admin coupons — real DB persistence (no more reset on refresh)
+- [x] Admin payments — real API from Order model
+- [x] Admin invoices — real API from Order model + print popup
+- [x] Admin abandoned-carts — clean empty state
+- [x] Admin settings — rewritten with correct FindCard branding
+- [x] Product page — 3-review carousel with auto-advance + dots
+- [x] Product SVGs — original black card design (not competitor images)
+- [x] Shipping always free — hardcoded in API + cart UI
+- [x] Removed fast delivery / door-to-door mentions
+- [x] Auto-backup script: `scripts/auto-backup.sh`
+
+## Quick Reference — Key Files
+
+| Feature | File |
+|---|---|
+| Admin auth | `src/lib/auth/adminAuth.ts` |
+| Order creation | `src/app/api/orders/route.ts` |
+| Payment initiate | `src/app/api/payment/initiate/route.ts` |
+| Coupon model | `src/lib/db/models/Coupon.ts` |
+| Product model | `src/lib/db/models/Product.ts` |
+| Settings model | `src/lib/db/models/Settings.ts` |
+| CommLog model | `src/lib/db/models/CommLog.ts` |
+| Email templates | `src/lib/email/templates.ts` |
+| Product page | `src/app/product/page.tsx` |
+| Cart drawer | `src/components/cart/CartDrawer.tsx` |
+| Auto-backup | `scripts/auto-backup.sh` |
