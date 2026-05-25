@@ -262,7 +262,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" dir="rtl">
       <Header />
 
       {/* Sticky buy bar — mobile only */}
