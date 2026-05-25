@@ -2,95 +2,194 @@
 import { useEffect, useState } from 'react'
 import { formatPrice } from '@/lib/utils/formatPrice'
 
-interface DashData {
-  revenueMonth: number
-  orderCountMonth: number
-  openOrders: number
-  avgOrderValue: number
-  lowStockProducts: Array<{ nameHe: string; inventory: { quantity: number } }>
+interface Insight {
+  severity: 'critical' | 'warning' | 'info'
+  title: string
+  detail: string
+  action: string
+}
+
+interface ConversionData {
+  funnel: {
+    productViews: number
+    cartEvents: number
+    checkoutStarts: number
+    paidOrders: number
+  }
+  rates: {
+    cartConversion: number
+    checkoutConversion: number
+    purchaseConversion: number
+    overallConversion: number
+  }
+  revenue: {
+    totalRevenue: number
+    avgOrderValue: number
+    paidOrders: number
+  }
+  exitPages: Array<{ _id: string; exits: number }>
+  insights: Insight[]
+}
+
+const SEV_CLR: Record<string, string> = {
+  critical: 'border-red-500/30 bg-red-500/10',
+  warning: 'border-amber-500/30 bg-amber-500/10',
+  info: 'border-blue-500/30 bg-blue-500/10',
+}
+const SEV_TEXT: Record<string, string> = {
+  critical: 'text-red-400',
+  warning: 'text-amber-400',
+  info: 'text-blue-400',
+}
+const SEV_ICON: Record<string, string> = {
+  critical: '🔴',
+  warning: '🟡',
+  info: '💡',
 }
 
 export default function AIInsightsPage() {
-  const [data, setData] = useState<DashData | null>(null)
+  const [data, setData] = useState<ConversionData | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/admin/dashboard')
+    fetch('/api/admin/conversion')
       .then(r => r.json())
-      .then(setData)
+      .then(d => setData(d))
+      .catch(() => setData(null))
+      .finally(() => setLoading(false))
   }, [])
 
-  const insights = data ? [
-    data.openOrders > 5 && {
-      type: 'urgent',
-      title: `${data.openOrders} הזמנות ממתינות לטיפול`,
-      body: 'יש הזמנות פתוחות זמן רב — שקול לעדכן לקוחות על מצב המשלוח.',
-      action: '/admin/orders',
-      actionLabel: 'לטיפול בהזמנות',
-    },
-    data.lowStockProducts.length > 0 && {
-      type: 'warning',
-      title: `${data.lowStockProducts.length} מוצרים עם מלאי נמוך`,
-      body: `כולל: ${data.lowStockProducts.slice(0, 2).map(p => p.nameHe).join(', ')}`,
-      action: '/admin/inventory',
-      actionLabel: 'ניהול מלאי',
-    },
-    data.avgOrderValue > 0 && {
-      type: 'tip',
-      title: `ממוצע הזמנה: ${formatPrice(data.avgOrderValue)}`,
-      body: 'הגדלת ממוצע הזמנה ב-20% תגדיל הכנסות משמעותית. שקול bundle offers או upsell.',
-      action: '/admin/marketing',
-      actionLabel: 'קמפיין שיווקי',
-    },
-    {
-      type: 'info',
-      title: 'ניתוח שיא שעות',
-      body: 'עבור לאנליטיקה לראות באיזה שעות מגיעות רוב ההזמנות — שם כדאי לשלוח קמפיינים.',
-      action: '/admin/analytics',
-      actionLabel: 'לאנליטיקה',
-    },
-  ].filter(Boolean) : []
-
-  const TYPE_STYLE: Record<string, string> = {
-    urgent: 'border-red-500/30 bg-red-500/5',
-    warning: 'border-amber-500/30 bg-amber-500/5',
-    tip: 'border-blue-500/30 bg-blue-500/5',
-    info: 'border-white/10 bg-white/[0.02]',
-  }
-  const TYPE_ICON: Record<string, string> = {
-    urgent: '🔴', warning: '🟡', tip: '💡', info: 'ℹ️',
-  }
+  if (loading) return (
+    <div className="p-6 min-h-screen bg-[#080C16] space-y-3">
+      {[...Array(5)].map((_, i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+    </div>
+  )
 
   return (
     <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-white">תובנות AI</h1>
-        <p className="text-sm text-gray-500 mt-0.5">המלצות חכמות מבוססות נתוני החנות</p>
+        <h1 className="text-xl font-bold text-white">תובנות חכמות</h1>
+        <p className="text-sm text-gray-500 mt-0.5">ניתוח המרות ועצות לשיפור הכנסות — מבוסס על נתוני מסד הנתונים בלבד</p>
       </div>
 
-      {!data ? (
-        <div className="text-gray-600 text-sm animate-pulse">מנתח נתונים...</div>
-      ) : (
-        <div className="space-y-3">
-          {insights.map((ins: any, i) => (
-            <div key={i} className={`border rounded-xl p-5 ${TYPE_STYLE[ins.type]}`}>
-              <div className="flex items-start gap-3">
-                <span className="text-lg flex-shrink-0">{TYPE_ICON[ins.type]}</span>
-                <div className="flex-1">
-                  <p className="text-sm font-bold text-white">{ins.title}</p>
-                  <p className="text-xs text-gray-400 mt-1">{ins.body}</p>
-                  <a href={ins.action} className="inline-block mt-2 text-xs text-blue-400 hover:underline">{ins.actionLabel} →</a>
-                </div>
-              </div>
+      {data && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          {[
+            {
+              label: 'המרה כוללת',
+              value: data.rates.overallConversion > 0 ? `${data.rates.overallConversion}%` : '—',
+              sub: 'ביקור → רכישה',
+              color: data.rates.overallConversion > 2 ? 'text-emerald-400' : data.rates.overallConversion > 0.5 ? 'text-amber-400' : 'text-gray-500',
+            },
+            {
+              label: 'הכנסה 30 יום',
+              value: data.revenue.totalRevenue > 0 ? formatPrice(data.revenue.totalRevenue) : '—',
+              sub: 'הזמנות ששולמו',
+              color: 'text-white',
+            },
+            {
+              label: 'ממוצע הזמנה',
+              value: data.revenue.avgOrderValue > 0 ? formatPrice(data.revenue.avgOrderValue) : '—',
+              sub: 'AOV',
+              color: 'text-blue-400',
+            },
+            {
+              label: 'נטישת עגלה',
+              value: data.funnel.cartEvents > 0
+                ? `${Math.round(((data.funnel.cartEvents - data.funnel.paidOrders) / data.funnel.cartEvents) * 100)}%`
+                : '—',
+              sub: `${data.funnel.cartEvents} הוסיפו לסל`,
+              color: data.funnel.cartEvents > data.funnel.paidOrders * 1.5 ? 'text-red-400' : 'text-emerald-400',
+            },
+          ].map((kpi, i) => (
+            <div key={i} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+              <p className="text-xs text-gray-500">{kpi.label}</p>
+              <p className={`text-xl font-black mt-1 ${kpi.color}`}>{kpi.value}</p>
+              <p className="text-xs text-gray-600 mt-0.5">{kpi.sub}</p>
             </div>
           ))}
-          {insights.length === 0 && (
-            <div className="text-center py-12 text-gray-600">
-              <p className="text-3xl mb-2">✦</p>
-              <p className="text-sm">אין תובנות לעת עתה — הנתונים ייאספו עם הזמן</p>
-            </div>
-          )}
         </div>
       )}
+
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold text-white mb-1">המלצות לפעולה</h2>
+        <p className="text-xs text-gray-600 mb-4">מבוסס על ניתוח נתוני החנות האמיתיים — לא כללי</p>
+        {!data || data.insights.length === 0 ? (
+          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-8 text-center">
+            <p className="text-3xl mb-3">📊</p>
+            <p className="text-gray-400 font-semibold">אין מספיק נתונים עדיין</p>
+            <p className="text-xs text-gray-600 mt-1">ככל שיותר גולשים יגיעו לחנות, התובנות יהיו מדויקות יותר</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {data.insights.map((insight, i) => (
+              <div key={i} className={`border rounded-2xl p-4 ${SEV_CLR[insight.severity]}`}>
+                <div className="flex items-start gap-3">
+                  <span className="text-lg flex-shrink-0">{SEV_ICON[insight.severity]}</span>
+                  <div className="flex-1">
+                    <p className={`text-sm font-bold ${SEV_TEXT[insight.severity]}`}>{insight.title}</p>
+                    <p className="text-xs text-gray-400 mt-1">{insight.detail}</p>
+                    <div className="mt-2 bg-black/20 rounded-lg px-3 py-2">
+                      <p className="text-xs font-semibold text-gray-300">✅ פעולה מומלצת:</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{insight.action}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {data && (
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+          <h2 className="text-sm font-semibold text-white mb-1">משפך 30 יום</h2>
+          <p className="text-xs text-gray-600 mb-4">נתונים אמיתיים מ-VisitorEvent ו-Orders</p>
+          {[
+            { label: 'ביקורי דף מוצר', val: data.funnel.productViews, color: 'bg-blue-500' },
+            { label: 'הוסיפו לסל', val: data.funnel.cartEvents, color: 'bg-indigo-500' },
+            { label: 'התחילו תשלום', val: data.funnel.checkoutStarts, color: 'bg-violet-500' },
+            { label: 'השלימו רכישה', val: data.funnel.paidOrders, color: 'bg-emerald-500' },
+          ].map((step, i) => {
+            const base = Math.max(data.funnel.productViews, 1)
+            const pct = Math.round((step.val / base) * 100)
+            return (
+              <div key={i} className="mb-3">
+                <div className="flex items-center justify-between mb-1 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-gray-400 text-[10px]">{i + 1}</span>
+                    <span className="text-gray-300">{step.label}</span>
+                  </div>
+                  <span className="text-white font-bold">{step.val.toLocaleString('he-IL')}</span>
+                </div>
+                <div className="bg-white/5 rounded-full h-2.5 overflow-hidden">
+                  <div className={`h-full ${step.color} rounded-full`} style={{ width: `${Math.max(2, pct)}%` }} />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+
+      {data && data.exitPages.length > 0 && (
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+          <h2 className="text-sm font-semibold text-white mb-1">דפי יציאה</h2>
+          <p className="text-xs text-gray-600 mb-4">מקומות שמשם גולשים עוזבים בלי לקנות</p>
+          <div className="space-y-2">
+            {data.exitPages.map((page, i) => (
+              <div key={i} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+                <span className="text-xs text-gray-400">{page._id || '/'}</span>
+                <span className="text-xs font-semibold text-red-400">{page.exits} יציאות</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+        <span className="text-blue-400 text-base flex-shrink-0">ℹ</span>
+        <p className="text-xs text-gray-600">כל ניתוח מבוסס על נתוני VisitorEvent ו-Orders ממסד הנתונים. אין נתוני demo. ככל שיותר תנועה, הדיוק גבוה יותר.</p>
+      </div>
     </div>
   )
 }

@@ -1,3 +1,35 @@
+# TODO.md — FindCard Sprint 2
+Last updated: 2026-05-25
+
+## 🔴 SPRINT 2 — IN PROGRESS
+
+### Phase 1 — Fix Broken Things
+- [ ] Cloudinary image upload API (`/api/admin/upload`)
+- [ ] ProductForm full rebuild — images upload, variants, SEO, shipping, upsells
+- [ ] Admin products page — dark theme, status filters, duplicate button
+- [ ] Fix Cardcom baseUrl bug (falls back to localhost if NEXTAUTH_URL unset)
+- [ ] Admin payments page — Cardcom settings + transaction logs + refund
+- [ ] Visitor analytics page (`/admin/analytics/visitors`)
+- [ ] Remove ALL "בפיתוח" / "בקרוב" labels from automations/funnels/team
+- [ ] Automations page — real DB-backed with Automation model
+- [ ] Funnels page — real VisitorEvent aggregation
+- [ ] Team page — clean up, no dead placeholders
+
+### Phase 2 — Conversion Optimization
+- [ ] Conversion dashboard — real funnel from VisitorEvent + Orders
+- [ ] Cart abandonment detection
+- [ ] Checkout friction alerts
+
+### Phase 3 — Email + WhatsApp Automation
+- [ ] Automation model in MongoDB
+- [ ] Automation CRUD API
+- [ ] Email/WhatsApp trigger hooks on order events
+- [ ] Campaign analytics
+
+### Phase 4 — Multi-store Foundation
+- [ ] storeId scaffold on Product, Order, Settings
+
+---
 # TODO.md — FindCard EOS
 Last updated: 2026-05-25
 
