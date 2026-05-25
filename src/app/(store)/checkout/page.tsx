@@ -72,6 +72,7 @@ export default function CheckoutPage() {
           customer: { name: form.name, email: form.email, phone: form.phone },
           shippingAddress: { street: form.street, city: form.city, zip: form.zip },
           items: items.map(i => ({ productId: i.productId, nameHe: i.nameHe, variantLabel: i.variantLabel, quantity: i.quantity })),
+          couponCode: couponApplied?.code ?? undefined,
         }),
       })
       const orderData = await orderRes.json()
