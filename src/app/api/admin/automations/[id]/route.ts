@@ -5,7 +5,7 @@ import Automation from '@/lib/db/models/Automation'
 
 export const dynamic = 'force-dynamic'
 
-export const PATCH = withAdminAuth(async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const PATCH = withAdminAuth(async (req: NextRequest, { params }) => {
   await connectDB()
   const body = await req.json()
   const automation = await Automation.findByIdAndUpdate(params.id, { $set: body }, { new: true })
@@ -13,7 +13,7 @@ export const PATCH = withAdminAuth(async (req: NextRequest, { params }: { params
   return NextResponse.json({ automation })
 })
 
-export const DELETE = withAdminAuth(async (_req: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = withAdminAuth(async (_req: NextRequest, { params }) => {
   await connectDB()
   await Automation.findByIdAndDelete(params.id)
   return NextResponse.json({ ok: true })
