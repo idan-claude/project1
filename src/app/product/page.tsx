@@ -14,11 +14,18 @@ function priceDisplay(agorot: number): string {
 
 const PRODUCT_SLUG = 'kartis-maakav-smart-pro'
 
+function roundTo10(n: number): number {
+  return Math.round(n / 1000) * 1000
+}
+
 function buildTiers(basePrice: number, compareAtPrice: number) {
+  const c1 = compareAtPrice || Math.round(basePrice * 1.5)
   return [
-    { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: basePrice, compareAt: compareAtPrice || Math.round(basePrice * 1.5), badge: null as string | null, badgeColor: '' },
-    { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: 'סה"כ 3 כרטיסים', price: Math.round(basePrice * 1.5), compareAt: compareAtPrice ? compareAtPrice * 2 : Math.round(basePrice * 3), badge: '72% מהלקוחות', badgeColor: 'bg-blue-600' },
-    { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: 'סה"כ 4 כרטיסים', price: Math.round(basePrice * 1.9), compareAt: compareAtPrice ? compareAtPrice * 2.67 : Math.round(basePrice * 4), badge: 'הכי משתלם!', badgeColor: 'bg-orange-500' },
+    { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: basePrice, compareAt: c1, badge: null as string | null, badgeColor: '' },
+    // 2 buy + 1 free = 3 total. Compare: 3 individual cards at selling price
+    { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: 'סה"כ 3 כרטיסים', price: roundTo10(basePrice * 1.5), compareAt: 3 * basePrice, badge: '72% מהלקוחות', badgeColor: 'bg-blue-600' },
+    // 3 buy + 1 free = 4 total. Compare: 4 individual cards at selling price
+    { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: 'סה"כ 4 כרטיסים', price: roundTo10(basePrice * 1.9), compareAt: 4 * basePrice, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500' },
   ]
 }
 
