@@ -14,11 +14,18 @@ export default function AdminProductsPage() {
 
   async function load(q = '') {
     setLoading(true)
-    const res = await fetch(`/api/admin/products?search=${q}&limit=50`)
-    const data = await res.json()
-    setProducts(data.products || [])
-    setTotal(data.total || 0)
-    setLoading(false)
+    try {
+      const res = await fetch(`/api/admin/products?search=${q}&limit=50`)
+      if (!res.ok) { setProducts([]); setTotal(0); return }
+      const data = await res.json()
+      setProducts(data.products || [])
+      setTotal(data.total || 0)
+    } catch {
+      setProducts([])
+      setTotal(0)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => { load() }, [])
