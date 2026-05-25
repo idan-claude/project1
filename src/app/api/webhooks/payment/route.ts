@@ -46,6 +46,16 @@ export async function POST(req: NextRequest) {
     // Fire notifications (non-blocking)
     sendOrderWhatsApp(order).catch(console.error)
     sendOrderConfirmationEmail(order).catch(console.error)
+
+    // Fire automation triggers
+    triggerAutomation('order_confirm', {
+      customerName: order.customer.name,
+      customerEmail: order.customer.email,
+      customerPhone: order.customer.phone,
+      orderNumber: order.orderNumber,
+      orderId: order._id.toString(),
+      orderTotal: order.pricing.total,
+    }).catch(console.error)
   } else {
     order.payment.status = 'failed'
     order.payment.gatewayResponse = body as Record<string, unknown>
