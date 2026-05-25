@@ -243,7 +243,7 @@ export default function ProductPage() {
   function TierSelector() {
     return (
       <div className="space-y-2.5">
-        {TIERS.map((t, i) => {
+        {tiers.map((t, i) => {
           const sel = tierIndex === i
           const pct = Math.round(((t.compareAt - t.price) / t.compareAt) * 100)
           return (
