@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose'
 
 export interface IVisitorEvent extends Document {
+  storeId: string
   sessionId: string
   visitorId: string        // stable across sessions via cookie
   event: 'pageview' | 'add_to_cart' | 'checkout_start' | 'checkout_complete' | 'product_view' | 'custom'
@@ -30,6 +31,7 @@ export interface IVisitorEvent extends Document {
 }
 
 const VisitorEventSchema = new Schema<IVisitorEvent>({
+    storeId: { type: String, default: 'default', index: true },
   sessionId:  { type: String, required: true, index: true },
   visitorId:  { type: String, required: true, index: true },
   event:      { type: String, required: true, index: true },
