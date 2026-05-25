@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 import { sendOrderWhatsApp } from '@/lib/notifications/whatsapp'
 import { sendOrderConfirmationEmail } from '@/lib/notifications/email'
+import { triggerAutomation } from '@/lib/automation/trigger'
 
 export const dynamic = 'force-dynamic'
 
