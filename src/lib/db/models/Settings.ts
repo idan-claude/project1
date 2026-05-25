@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface ISettings extends Document {
+  storeId: string
   key: string
   value: Record<string, unknown>
   updatedAt: Date
@@ -8,6 +9,7 @@ export interface ISettings extends Document {
 
 const SettingsSchema = new Schema<ISettings>(
   {
+    storeId: { type: String, default: 'default', index: true },
     key: { type: String, required: true, unique: true },
     value: { type: Schema.Types.Mixed, default: {} },
   },
