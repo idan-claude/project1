@@ -34,6 +34,32 @@ export default function CheckoutPage() {
     return Object.keys(e).length === 0
   }
 
+  async function applyCoupon() {
+    const code = couponCode.trim().toUpperCase()
+    if (!code) return
+    setCouponLoading(true)
+    setCouponError('')
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotal: subtotalAmount }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setCouponError(data.error || 'קוד לא תקין')
+        setCouponApplied(null)
+      } else {
+        setCouponApplied({ code, discount: data.discount })
+        setCouponError('')
+      }
+    } catch {
+      setCouponError('שגיאה בבדיקת הקופון')
+    } finally {
+      setCouponLoading(false)
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!validate()) return
