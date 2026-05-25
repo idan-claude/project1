@@ -2,11 +2,11 @@
 import Link from 'next/link'
 
 const INTEGRATIONS = [
-  { name: 'Cardcom', desc: 'שער תשלומים ישראלי — כרטיסי אשראי', icon: '💳', status: 'pending', href: '/admin/settings' },
-  { name: 'Twilio', desc: 'שליחת WhatsApp ו-SMS ללקוחות', icon: '📱', status: 'pending', href: '/admin/settings' },
+  { name: 'Cardcom', desc: 'שער תשלומים ישראלי — כרטיסי אשראי', icon: '💳', status: 'pending', href: '/admin/payments' },
+  { name: 'Twilio', desc: 'שליחת WhatsApp ו-SMS ללקוחות', icon: '📱', status: 'pending', href: '/admin/whatsapp' },
   { name: 'Cloudinary', desc: 'אחסון ועיבוד תמונות', icon: '🖼️', status: 'pending', href: '/admin/settings' },
   { name: 'AliExpress', desc: 'ייבוא מוצרים מ-AliExpress', icon: '📦', status: 'pending', href: '/admin/import' },
-  { name: 'SMTP Email', desc: 'שליחת מיילים ללקוחות (Gmail/Mailgun)', icon: '📧', status: 'pending', href: '/admin/settings' },
+  { name: 'SMTP Email', desc: 'שליחת מיילים ללקוחות (Gmail/Mailgun)', icon: '📧', status: 'pending', href: '/admin/automations' },
   { name: 'Google Analytics', desc: 'מעקב ביקורים ומשפכי המרה', icon: '📊', status: 'soon', href: '#' },
   { name: 'Facebook Pixel', desc: 'פרסום ממוקד ברשתות חברתיות', icon: '📣', status: 'soon', href: '#' },
   { name: 'Meshulam', desc: 'שער תשלומים חלופי', icon: '💰', status: 'soon', href: '#' },
