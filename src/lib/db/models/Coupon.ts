@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface ICoupon extends Document {
+  storeId: string
   code: string
   type: 'percent' | 'fixed'
   value: number
@@ -15,6 +16,7 @@ export interface ICoupon extends Document {
 
 const CouponSchema = new Schema<ICoupon>(
   {
+    storeId: { type: String, default: 'default', index: true },
     code: { type: String, required: true, unique: true, uppercase: true, trim: true },
     type: { type: String, enum: ['percent', 'fixed'], required: true },
     value: { type: Number, required: true },
