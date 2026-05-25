@@ -762,17 +762,39 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
 
       {/* ── SEO ── */}
       {tab === 'seo' && (
-        <div className={cardCls}>
-          <h3 className="text-sm font-semibold text-white">הגדרות SEO</h3>
-          <div>
-            <label className={labelCls}>כותרת META (עד 60 תווים)</label>
-            <input className={inputCls} value={form.metaTitle} onChange={e => set('metaTitle', e.target.value)} placeholder={`${form.nameHe} — FindCard`} maxLength={60} />
-            <p className="text-xs text-gray-600 mt-1">{form.metaTitle.length}/60</p>
+        <div className="space-y-4">
+          <div className={cardCls}>
+            <h3 className="text-sm font-semibold text-white">הגדרות SEO</h3>
+            <div>
+              <label className={labelCls}>כותרת META (עד 60 תווים)</label>
+              <input className={inputCls} value={form.metaTitle} onChange={e => set('metaTitle', e.target.value)} placeholder={`${form.nameHe} — FindCard`} maxLength={60} />
+              <p className="text-xs text-gray-600 mt-1">{form.metaTitle.length}/60</p>
+            </div>
+            <div>
+              <label className={labelCls}>תיאור META (עד 160 תווים)</label>
+              <textarea className={`${inputCls} resize-none`} rows={3} value={form.metaDescription} onChange={e => set('metaDescription', e.target.value)} placeholder="תיאור קצר..." maxLength={160} />
+              <p className="text-xs text-gray-600 mt-1">{form.metaDescription.length}/160</p>
+            </div>
           </div>
-          <div>
-            <label className={labelCls}>תיאור META (עד 160 תווים)</label>
-            <textarea className={`${inputCls} resize-none`} rows={3} value={form.metaDescription} onChange={e => set('metaDescription', e.target.value)} placeholder="תיאור קצר..." maxLength={160} />
-            <p className="text-xs text-gray-600 mt-1">{form.metaDescription.length}/160</p>
+          <div className={cardCls}>
+            <h3 className="text-sm font-semibold text-white">Open Graph / שיתוף ברשתות חברתיות</h3>
+            <div>
+              <label className={labelCls}>תמונת OG (URL — 1200×630px מומלץ)</label>
+              <input className={inputCls} value={form.ogImage} onChange={e => set('ogImage', e.target.value)} placeholder="https://..." dir="ltr" />
+              {form.ogImage && <img src={form.ogImage} alt="OG preview" className="mt-2 rounded-lg h-20 object-cover" />}
+            </div>
+            <div className="bg-[#080C16] rounded-xl p-3 border border-white/5">
+              <p className="text-xs text-gray-500 mb-1">תצוגה מקדימה — שיתוף בפייסבוק / וואטסאפ:</p>
+              <div className="flex items-center gap-3">
+                {form.ogImage
+                  ? <img src={form.ogImage} alt="" className="w-16 h-10 object-cover rounded" />
+                  : <div className="w-16 h-10 bg-gray-800 rounded flex items-center justify-center text-gray-600 text-xs">תמונה</div>}
+                <div>
+                  <p className="text-xs font-semibold text-white">{form.metaTitle || form.nameHe || 'כותרת המוצר'}</p>
+                  <p className="text-xs text-gray-500 truncate max-w-[200px]">{form.metaDescription || form.descriptionShort || 'תיאור המוצר...'}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
