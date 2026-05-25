@@ -75,10 +75,10 @@ const FAQS = [
 ]
 
 const GALLERY = [
-  '/images/product-1-hero.svg',
-  '/images/product-2-wallet.svg',
-  '/images/product-3-bundle.svg',
-  '/images/product-4-features.svg',
+  'https://www.spotminders.com/cdn/shop/files/Image_4.png?v=1773136573',
+  'https://www.spotminders.com/cdn/shop/files/ImageC.png?v=1773136571',
+  'https://www.spotminders.com/cdn/shop/files/Image_6.png?v=1773136573',
+  'https://www.spotminders.com/cdn/shop/files/tracking-card-8mnths.png?v=1773136572',
 ]
 
 export default function ProductPage() {
