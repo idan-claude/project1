@@ -180,16 +180,36 @@ export default async function ProductPage() {
       }))
     : FALLBACK_REVIEWS
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.nameHe,
+    description: product.descriptionShort || '',
+    image: gallery[0],
+    offers: {
+      '@type': 'Offer',
+      price: (product.pricing.sellingPrice / 100).toFixed(2),
+      priceCurrency: 'ILS',
+      availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    },
+  }
+
   return (
-    <ProductClient
-      productId={product._id.toString()}
-      slug={product.slug}
-      nameHe={product.nameHe}
-      gallery={gallery}
-      bundles={bundles}
-      inStock={inStock}
-      pageContent={pageContent}
-      reviews={reviews}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductClient
+        productId={product._id.toString()}
+        slug={product.slug}
+        nameHe={product.nameHe}
+        gallery={gallery}
+        bundles={bundles}
+        inStock={inStock}
+        pageContent={pageContent}
+        reviews={reviews}
+      />
+    </>
   )
 }
