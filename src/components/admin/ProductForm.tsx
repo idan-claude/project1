@@ -332,6 +332,20 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
               <input className={inputCls} value={form.nameHe} onChange={e => set('nameHe', e.target.value)} placeholder="כרטיס מעקב FindCard PRO" required />
             </div>
             <div>
+              <label className={labelCls}>כתובת URL (slug)</label>
+              <div className="flex items-center gap-2">
+                <input className={inputCls} value={form.slug} onChange={e => { set('slug', e.target.value); setSlugStatus('idle') }} onBlur={checkSlug} placeholder="my-product-slug" dir="ltr" />
+                <button type="button" onClick={() => { const s = slugify(form.nameHe); set('slug', s); setSlugStatus('idle') }}
+                  className="whitespace-nowrap text-xs bg-white/5 hover:bg-white/10 text-gray-400 px-3 py-2.5 rounded-xl border border-white/10 transition-colors">
+                  צור אוטומטי
+                </button>
+              </div>
+              {slugStatus === 'checking' && <p className="text-xs text-gray-500 mt-1">בודק זמינות...</p>}
+              {slugStatus === 'ok' && <p className="text-xs text-emerald-400 mt-1">✓ Slug פנוי</p>}
+              {slugStatus === 'taken' && <p className="text-xs text-red-400 mt-1">✕ Slug תפוס — בחר אחר</p>}
+              {form.slug && <p className="text-xs text-gray-600 mt-1 dir-ltr" dir="ltr">/product/{form.slug}</p>}
+            </div>
+            <div>
               <label className={labelCls}>שם באנגלית</label>
               <input className={inputCls} value={form.nameEn} onChange={e => set('nameEn', e.target.value)} placeholder="FindCard PRO Tracking Card" />
             </div>
@@ -353,12 +367,95 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
                 </select>
               </div>
             </div>
+            {form.status === 'draft' && (
+              <div>
+                <label className={labelCls}>פרסום מתוזמן (אופציונלי)</label>
+                <input className={inputCls} type="datetime-local" value={form.scheduledAt} onChange={e => set('scheduledAt', e.target.value)} />
+                <p className="text-xs text-gray-600 mt-1">המוצר יפורסם אוטומטית בתאריך זה</p>
+              </div>
+            )}
             <label className="flex items-center gap-3 cursor-pointer">
               <div className={`relative w-10 h-5 rounded-full transition-colors ${form.featured ? 'bg-blue-600' : 'bg-gray-700'}`} onClick={() => set('featured', !form.featured)}>
                 <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${form.featured ? 'translate-x-5' : 'translate-x-0.5'}`} />
               </div>
               <span className="text-sm text-gray-300">הצג בדף הבית (מוצר מומלץ)</span>
             </label>
+          </div>
+        </div>
+      )}
+
+      {/* ── Funnel ── */}
+      {tab === 'funnel' && (
+        <div className="space-y-4">
+          <div className={cardCls}>
+            <h3 className="text-sm font-semibold text-white">כותרות וטקסטים שיווקיים</h3>
+            <div>
+              <label className={labelCls}>תת-כותרת (subtitle)</label>
+              <input className={inputCls} value={form.subtitle} onChange={e => set('subtitle', e.target.value)} placeholder="כרטיס מעקב הדק בעולם — נכנס לכל ארנק" />
+              <p className="text-xs text-gray-600 mt-1">מוצג מתחת לשם המוצר בדף המוצר</p>
+            </div>
+            <div>
+              <label className={labelCls}>תיאור קצר (לכרטיסיות ו-SEO)</label>
+              <textarea className={`${inputCls} resize-none`} rows={2} value={form.descriptionShort} onChange={e => set('descriptionShort', e.target.value)} placeholder="אל תאבד שוב ארנק, מפתחות או תיק — FindCard מאתר הכל דרך Apple Find My" />
+            </div>
+            <div>
+              <label className={labelCls}>יתרונות עיקריים (שורה לכל יתרון)</label>
+              <textarea className={`${inputCls} resize-none`} rows={4} value={form.benefitsList} onChange={e => set('benefitsList', e.target.value)} placeholder="עובי 1.8 מ&quot;מ — נכנס לכל ארנק&#10;סוללה 8 חודשים&#10;עמיד מים IP67&#10;רשת Find My עם 500M+ מכשיר" />
+              <p className="text-xs text-gray-600 mt-1">מוצגים כרשימה נקודות ליד תמונת המוצר</p>
+            </div>
+            <div>
+              <label className={labelCls}>טקסט CTA ראשי</label>
+              <input className={inputCls} value={form.ctaText} onChange={e => set('ctaText', e.target.value)} placeholder="הזמן עכשיו — מגיע תוך 7 ימים" />
+              <p className="text-xs text-gray-600 mt-1">כותרת מעל כפתור הרכישה</p>
+            </div>
+            <div>
+              <label className={labelCls}>טקסט כפתור הוסף לעגלה</label>
+              <input className={inputCls} value={form.addToCartText} onChange={e => set('addToCartText', e.target.value)} placeholder="הוסף לעגלה" />
+            </div>
+          </div>
+
+          <div className={cardCls}>
+            <h3 className="text-sm font-semibold text-white">מדיה נוספת</h3>
+            <div>
+              <label className={labelCls}>URL סרטון YouTube / Vimeo</label>
+              <input className={inputCls} value={form.videoUrl} onChange={e => set('videoUrl', e.target.value)} placeholder="https://www.youtube.com/embed/..." dir="ltr" />
+            </div>
+          </div>
+
+          <div className={cardCls}>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-semibold text-white">לפני ואחרי</h3>
+                <p className="text-xs text-gray-500">גלריית השוואה — לפני / אחרי שימוש במוצר</p>
+              </div>
+              <button type="button" onClick={() => setBeforeAfter(prev => [...prev, { before: '', after: '', label: '' }])}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                + הוסף
+              </button>
+            </div>
+            {beforeAfter.length === 0 && <p className="text-xs text-gray-600 py-2">אין תמונות לפני/אחרי</p>}
+            {beforeAfter.map((ba, i) => (
+              <div key={i} className="bg-[#080C16] rounded-xl p-3 space-y-2 border border-white/5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-500">פריט {i + 1}</span>
+                  <button type="button" onClick={() => setBeforeAfter(prev => prev.filter((_, j) => j !== i))} className="text-red-400 text-sm px-2">✕</button>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className={labelCls}>לפני (URL)</label>
+                    <input className={inputCls} value={ba.before} onChange={e => setBeforeAfter(prev => prev.map((x, j) => j === i ? { ...x, before: e.target.value } : x))} placeholder="https://..." dir="ltr" />
+                  </div>
+                  <div>
+                    <label className={labelCls}>אחרי (URL)</label>
+                    <input className={inputCls} value={ba.after} onChange={e => setBeforeAfter(prev => prev.map((x, j) => j === i ? { ...x, after: e.target.value } : x))} placeholder="https://..." dir="ltr" />
+                  </div>
+                </div>
+                <div>
+                  <label className={labelCls}>כיתוב</label>
+                  <input className={inputCls} value={ba.label} onChange={e => setBeforeAfter(prev => prev.map((x, j) => j === i ? { ...x, label: e.target.value } : x))} placeholder="מציאת ארנק תוך 30 שניות" />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
