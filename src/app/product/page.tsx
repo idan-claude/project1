@@ -135,6 +135,8 @@ const GALLERY = [
   '/images/product-4-features.svg',
 ]
 
+// TIERS is now dynamic via buildTiers() — static const removed
+
 function ReviewCarousel() {
   const [idx, setIdx] = useState(0)
   const touchStart = useRef(0)
