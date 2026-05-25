@@ -25,12 +25,12 @@ const TIERS = [
 ]
 
 const FEATURES = [
-  { icon: '📡', label: 'Apple Find My', desc: '500 מיליון+ מכשיר ברשת' },
+  { icon: '📡', label: 'רשת Apple Find My', desc: 'מעל 500 מיליון מכשיר' },
   { icon: '💳', label: 'עובי 1.8 מ"מ', desc: 'נכנס לכל ארנק' },
-  { icon: '🔋', label: '8 חודשי סוללה', desc: 'טעינה אלחוטית Qi' },
-  { icon: '🌊', label: 'IP67 עמיד מים', desc: 'גשם, שלג, לחות' },
+  { icon: '🔋', label: 'סוללה 8 חודשים', desc: 'טעינה אלחוטית' },
+  { icon: '🌊', label: 'עמיד מים IP67', desc: 'גשם, שלג, לחות' },
   { icon: '🔊', label: 'התראה קולית', desc: 'עד 30 מטר' },
-  { icon: '⚡', label: 'הגדרה 30 שניות', desc: 'בלי הורדות' },
+  { icon: '⚡', label: 'הגדרה תוך 30 שניות', desc: 'בלי הורדות' },
 ]
 
 const REVIEWS = [
