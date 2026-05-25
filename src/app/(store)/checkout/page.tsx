@@ -20,7 +20,8 @@ export default function CheckoutPage() {
   const [couponError, setCouponError] = useState('')
   const [couponLoading, setCouponLoading] = useState(false)
 
-  const orderTotal = total() // always free shipping
+  const subtotalAmount = total()
+  const orderTotal = Math.max(0, subtotalAmount - (couponApplied?.discount ?? 0))
 
   function validate() {
     const e: Record<string, string> = {}
