@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  const shippingCost = subtotal >= 30000 ? 0 : 2500 // free shipping over ₪300 (30000 agorot)
+  const shippingCost = 0
   const total = subtotal + shippingCost
 
   const order = await Order.create({
