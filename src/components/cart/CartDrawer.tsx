@@ -74,14 +74,10 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
 
             <div className="px-5 py-4 border-t bg-gray-50 space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">סה"כ לפני משלוח</span>
+                <span className="text-gray-600">סה"כ</span>
                 <span className="font-bold">{formatPrice(total())}</span>
               </div>
-              {total() < 30000 && (
-                <p className="text-xs text-gray-500">
-                  הוסף עוד {formatPrice(30000 - total())} לקבלת משלוח חינם
-                </p>
-              )}
+              <p className="text-xs text-green-600 font-medium">🚚 משלוח חינם</p>
               <Link href="/checkout" onClick={onClose}>
                 <Button className="w-full" size="lg">המשך לתשלום</Button>
               </Link>
