@@ -296,6 +296,7 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
 
   const tabs = [
     { id: 'basic', label: 'פרטים' },
+    { id: 'funnel', label: 'פאנל מכירה' },
     { id: 'images', label: `תמונות${images.length > 0 ? ` (${images.length})` : ''}` },
     { id: 'bundles', label: `חבילות${bundles.length > 0 ? ` (${bundles.length})` : ''}` },
     { id: 'pricing', label: 'מחיר ומלאי' },
