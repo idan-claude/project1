@@ -470,30 +470,49 @@ export default function ProductPage() {
         </section>
 
         {/* Reviews */}
-        <section className="py-10 px-4 bg-gray-50 border-t">
+        <section className="py-12 px-4 bg-white border-t">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-lg font-extrabold text-center text-gray-900 mb-1">מה הלקוחות אומרים</h2>
-            <p className="text-center text-gray-400 text-xs mb-5">⭐ 4.9 / 5 · מעל 312 ביקורות מאומתות</p>
+            {/* Header with rating summary */}
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-extrabold text-gray-900 mb-2">מה הלקוחות אומרים</h2>
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="text-yellow-400 text-2xl tracking-tight">★★★★★</span>
+                <span className="text-3xl font-black text-gray-900">4.9</span>
+                <span className="text-gray-400 text-sm">מתוך 5 · 312 ביקורות מאומתות</span>
+              </div>
+              <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
+                <span className="flex items-center gap-1"><span className="text-yellow-400">★★★★★</span> 89%</span>
+                <span className="flex items-center gap-1"><span className="text-yellow-400">★★★★</span> 8%</span>
+                <span className="flex items-center gap-1"><span className="text-yellow-400">★★★</span> 3%</span>
+              </div>
+            </div>
 
-            {/* Horizontal scroll on mobile, grid on desktop */}
-            <div className="flex gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
-              {REVIEWS.slice(0, 3).map(({ photo, name, location, text, detail, stars }) => (
-                <div
-                  key={name + location}
-                  className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex-shrink-0 w-72 md:w-auto"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <img src={photo} alt={name} className="w-9 h-9 rounded-full object-cover flex-shrink-0 border border-gray-100" />
-                    <div className="min-w-0">
-                      <p className="font-bold text-xs text-gray-900 truncate">{name} · {location}</p>
-                      <span className="text-yellow-400 text-xs">{'★'.repeat(stars)}{'☆'.repeat(5 - stars)}</span>
+            {/* Reviews grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {REVIEWS.map(({ photo, name, location, text, detail, stars }) => (
+                <div key={name + location} className="bg-gray-50 border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-3 mb-3">
+                    <img src={photo} alt={name} className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 border-white shadow-sm" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="font-bold text-sm text-gray-900">{name}</p>
+                        <span className="text-xs text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full font-medium">✓ מאומת</span>
+                      </div>
+                      <p className="text-xs text-gray-400">{location} · {detail}</p>
+                      <div className="text-yellow-400 text-sm mt-0.5">
+                        {'★'.repeat(stars)}{'☆'.repeat(5 - stars)}
+                      </div>
                     </div>
-                    <span className="mr-auto text-xs text-green-600 font-medium flex-shrink-0">מאומת ✓</span>
                   </div>
-                  <p className="text-gray-700 text-xs leading-relaxed line-clamp-4">"{text}"</p>
-                  <p className="text-xs text-gray-400 mt-2">{detail}</p>
+                  <p className="text-gray-700 text-sm leading-relaxed">"{text}"</p>
                 </div>
               ))}
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="text-center mt-8 p-5 bg-blue-50 rounded-2xl border border-blue-100">
+              <p className="text-sm font-bold text-blue-900 mb-1">מצטרף לאלפי לקוחות מרוצים</p>
+              <p className="text-xs text-blue-600">100 יום החזר כסף מלא · אחריות לכל החיים · משלוח חינם</p>
             </div>
           </div>
         </section>
