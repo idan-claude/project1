@@ -242,8 +242,7 @@ export default function HomePage() {
                   🎉 מבצע — קנה 2, קבל 1 חינם · נגמר בקרוב!
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-5">
-                  מצא את כל מה<br className="hidden md:block" />
-                  <span className="text-white">שאיבדת</span>
+                  מצא את כל מה{' '}<br className="hidden md:block" /><span className="text-white">שאיבדת</span>
                 </h1>
                 <p className="text-blue-100 text-lg md:text-xl mb-6 max-w-lg mx-auto md:mx-0">
                   FindCard נכנס לארנק שלך ומוצא אותו תוך שניות דרך Find My. דק כמו כרטיס אשראי, עובד בכל מקום בעולם.
