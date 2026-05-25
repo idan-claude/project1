@@ -13,6 +13,8 @@ interface DashboardData {
   totalCustomers: number
   newCustomersToday: number
   avgOrderValue: number
+  conversionRate: number
+  cartRate: number
   recentOrders: Array<{
     _id: string
     orderNumber: string
