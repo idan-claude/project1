@@ -18,9 +18,9 @@ interface IImage {
 }
 
 interface IPricing {
-  costPrice: number      // agorot (int)
-  sellingPrice: number   // agorot (int)
-  compareAtPrice: number // agorot (int), 0 = no strikethrough
+  costPrice: number
+  sellingPrice: number
+  compareAtPrice: number
   vatIncluded: boolean
 }
 
@@ -41,8 +41,43 @@ interface ISeo {
   metaDescription: string
 }
 
+export interface IBundle {
+  title: string
+  quantity: number
+  price: number           // agorot, exact — admin sets this, no rounding applied
+  compareAtPrice: number  // agorot, exact
+  badge: string
+  badgeColor: string
+  isRecommended: boolean
+  benefits: string[]
+  imageOverride: string
+  active: boolean
+}
+
+interface IPageFeature {
+  icon: string
+  label: string
+  desc: string
+}
+
+interface IPageFaq {
+  q: string
+  a: string
+}
+
+export interface IPageContent {
+  features: IPageFeature[]
+  faqs: IPageFaq[]
+  urgencyText: string
+  shippingText: string
+  guaranteeText: string
+  reviewRating: number
+  reviewCount: number
+  trustBadges: { icon: string; text: string }[]
+}
+
 export interface IProduct extends Document {
-  storeId: string  // multi-store scaffold — default 'default'
+  storeId: string
   slug: string
   nameHe: string
   nameEn: string
@@ -52,6 +87,8 @@ export interface IProduct extends Document {
   tags: string[]
   pricing: IPricing
   inventory: IInventory
+  bundles: IBundle[]
+  pageContent: IPageContent
   variants: IVariant[]
   sku: string
   status: 'active' | 'draft' | 'archived'
@@ -83,6 +120,46 @@ const ProductSchema = new Schema<IProduct>(
       trackQuantity: { type: Boolean, default: true },
       quantity: { type: Number, default: 0 },
       lowStockThreshold: { type: Number, default: 5 },
+    },
+    bundles: [
+      {
+        title: { type: String, default: '' },
+        quantity: { type: Number, default: 1 },
+        price: { type: Number, required: true },
+        compareAtPrice: { type: Number, default: 0 },
+        badge: { type: String, default: '' },
+        badgeColor: { type: String, default: 'bg-blue-600' },
+        isRecommended: { type: Boolean, default: false },
+        benefits: [String],
+        imageOverride: { type: String, default: '' },
+        active: { type: Boolean, default: true },
+      },
+    ],
+    pageContent: {
+      features: [
+        {
+          icon: { type: String, default: '' },
+          label: { type: String, default: '' },
+          desc: { type: String, default: '' },
+        },
+      ],
+      faqs: [
+        {
+          q: { type: String, default: '' },
+          a: { type: String, default: '' },
+        },
+      ],
+      urgencyText: { type: String, default: '' },
+      shippingText: { type: String, default: '' },
+      guaranteeText: { type: String, default: '' },
+      reviewRating: { type: Number, default: 0 },
+      reviewCount: { type: Number, default: 0 },
+      trustBadges: [
+        {
+          icon: { type: String, default: '' },
+          text: { type: String, default: '' },
+        },
+      ],
     },
     variants: [
       {
