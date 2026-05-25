@@ -370,12 +370,12 @@ export default function HomePage() {
                 <tbody className="divide-y">
                   {[
                     ['עובי 1.8 מ"מ (כמו כרטיס אשראי)', '✅', '❌'],
-                    ['Apple Find My מאושר', '✅', '✅'],
-                    ['טעינה אלחוטית (Qi)', '✅', '❌'],
+                    ['מאושר Apple Find My', '✅', '✅'],
+                    ['טעינה אלחוטית Qi', '✅', '❌'],
                     ['ללא החלפת סוללה לעולם', '✅', '❌'],
                     ['מחיר', '₪199.90', '₪350+'],
                     ['אחריות לכל החיים', '✅', '❌'],
-                    ['IP67 עמיד במים', '✅', '⚠️ חלקי'],
+                    ['עמיד מים IP67', '✅', '⚠️ חלקי'],
                   ].map(([feature, us, them]) => (
                     <tr key={String(feature)} className="hover:bg-gray-50">
                       <td className="px-6 py-3 text-gray-700">{feature}</td>
