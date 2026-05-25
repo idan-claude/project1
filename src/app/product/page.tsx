@@ -228,7 +228,7 @@ export default function ProductPage() {
     addCartItem()
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
-    track('add_to_cart', { product: PRODUCT.slug, tier: tier.label, price: tier.price })
+    track('add_to_cart', { product: PRODUCT_SLUG, tier: tier.label, price: tier.price })
   }
   function handleBuyNow() { addCartItem(); router.push('/checkout') }
 
