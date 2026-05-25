@@ -1,99 +1,102 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
   <defs>
-    <radialGradient id="p4bg" cx="50%" cy="46%" r="72%">
-      <stop offset="0%" stop-color="#0D1526"/>
-      <stop offset="60%" stop-color="#080F1C"/>
-      <stop offset="100%" stop-color="#040810"/>
-    </radialGradient>
-    <radialGradient id="p4glow" cx="50%" cy="48%" r="45%">
-      <stop offset="0%" stop-color="#1E3A6E" stop-opacity="0.60"/>
-      <stop offset="100%" stop-color="#1E3A6E" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="p4card" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2A2A2E"/>
-      <stop offset="45%" stop-color="#1A1A1E"/>
-      <stop offset="100%" stop-color="#0C0C10"/>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E1525"/>
+      <stop offset="100%" stop-color="#060B16"/>
     </linearGradient>
-    <radialGradient id="p4gloss" cx="22%" cy="14%" r="68%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.14"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="p4shadow" x="-30%" y="-30%" width="160%" height="190%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="22" result="blur"/>
-      <feOffset dx="0" dy="30" in="blur" result="ob"/>
-      <feComponentTransfer in="ob" result="s">
-        <feFuncA type="linear" slope="0.70"/>
-      </feComponentTransfer>
-      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <linearGradient id="p4chip" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F5E27A"/>
-      <stop offset="50%" stop-color="#C4940F"/>
+    <linearGradient id="card4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2E2E34"/>
+      <stop offset="60%" stop-color="#18181C"/>
+      <stop offset="100%" stop-color="#0C0C0E"/>
+    </linearGradient>
+    <linearGradient id="chip4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0D060"/>
+      <stop offset="50%" stop-color="#C8960A"/>
       <stop offset="100%" stop-color="#8B6508"/>
     </linearGradient>
-    <filter id="p4lineglow">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
-    </filter>
+    <linearGradient id="shine4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="cardGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2244AA" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2244AA" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="800" height="800" fill="url(#p4bg)"/>
-  <ellipse cx="400" cy="420" rx="280" ry="220" fill="url(#p4glow)"/>
+  <rect width="900" height="900" fill="url(#bg4)"/>
+  <ellipse cx="450" cy="450" rx="280" ry="280" fill="url(#cardGlow)"/>
 
-  <!-- Card centered with shadow -->
-  <g filter="url(#p4shadow)" transform="translate(400, 420)">
-    <rect x="-220" y="-138" width="440" height="276" rx="24" fill="url(#p4card)"/>
-    <rect x="-220" y="-138" width="440" height="276" rx="24" fill="url(#p4gloss)"/>
-    <rect x="-220" y="-138" width="440" height="5" rx="2.5" fill="white" opacity="0.22"/>
-    <rect x="-220" y="-133" width="2.5" height="266" rx="1.2" fill="white" opacity="0.10"/>
+  <!-- Card (center, slight rotation) -->
+  <g transform="translate(450 460) rotate(-4)">
+    <rect x="-205" y="-130" width="410" height="260" rx="24" fill="#000" opacity="0.5" transform="translate(6,12)"/>
+    <rect x="-205" y="-130" width="410" height="260" rx="24" fill="url(#card4)"/>
+    <rect x="-205" y="-130" width="410" height="260" rx="24" fill="url(#shine4)"/>
+    <rect x="-205" y="-130" width="410" height="5" rx="2.5" fill="white" opacity="0.17"/>
+    <rect x="-205" y="-130" width="5" height="260" rx="2.5" fill="white" opacity="0.09"/>
+
     <!-- Chip -->
-    <rect x="-196" y="-88" width="46" height="36" rx="6" fill="url(#p4chip)"/>
-    <rect x="-196" y="-76" width="46" height="1.1" fill="#7A4F00" opacity="0.50"/>
-    <rect x="-196" y="-65" width="46" height="1.1" fill="#7A4F00" opacity="0.50"/>
-    <rect x="-182" y="-88" width="1.1" height="36" fill="#7A4F00" opacity="0.50"/>
-    <rect x="-170" y="-88" width="1.1" height="36" fill="#7A4F00" opacity="0.50"/>
-    <!-- Signal arcs -->
-    <path d="M155 -94 Q164 -84 155 -74" stroke="white" stroke-width="2.2" fill="none" opacity="0.20"/>
-    <path d="M164 -106 Q180 -84 164 -62" stroke="white" stroke-width="1.7" fill="none" opacity="0.13"/>
-    <path d="M173 -118 Q196 -84 173 -50" stroke="white" stroke-width="1.3" fill="none" opacity="0.08"/>
-    <!-- Divider -->
-    <line x1="-208" y1="68" x2="208" y2="68" stroke="white" stroke-width="0.6" opacity="0.10"/>
-    <!-- FC badge -->
-    <circle cx="162" cy="100" r="16" fill="#1D4ED8" opacity="0.80"/>
-    <text x="162" y="106" font-family="'Arial Black', Arial, sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" direction="ltr" opacity="0.96">FC</text>
-    <text x="140" y="122" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle" direction="ltr" opacity="0.24" letter-spacing="1">FindCard</text>
+    <rect x="-145" y="-68" width="52" height="42" rx="7" fill="url(#chip4)"/>
+    <line x1="-145" y1="-56" x2="-93" y2="-56" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <line x1="-145" y1="-44" x2="-93" y2="-44" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <line x1="-126" y1="-68" x2="-126" y2="-26" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+    <line x1="-112" y1="-68" x2="-112" y2="-26" stroke="#7A5200" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- NFC -->
+    <g fill="none" stroke="white" stroke-linecap="round">
+      <path d="M92,-38 A38,38 0 0,1 136,-38" stroke-width="4" opacity="0.45"/>
+      <path d="M100,-24 A24,24 0 0,1 128,-24" stroke-width="3.5" opacity="0.60"/>
+      <path d="M108,-11 A12,12 0 0,1 120,-11" stroke-width="3" opacity="0.75"/>
+      <circle cx="114" cy="-3" r="4" fill="white" opacity="0.75"/>
+    </g>
+
+    <!-- Number dots -->
+    <g fill="white" opacity="0.25">
+      <circle cx="-145" cy="52" r="3.5"/><circle cx="-135" cy="52" r="3.5"/><circle cx="-125" cy="52" r="3.5"/><circle cx="-115" cy="52" r="3.5"/>
+      <circle cx="-82" cy="52" r="3.5"/><circle cx="-72" cy="52" r="3.5"/><circle cx="-62" cy="52" r="3.5"/><circle cx="-52" cy="52" r="3.5"/>
+      <circle cx="-19" cy="52" r="3.5"/><circle cx="-9" cy="52" r="3.5"/><circle cx="1" cy="52" r="3.5"/><circle cx="11" cy="52" r="3.5"/>
+      <circle cx="44" cy="52" r="3.5"/><circle cx="54" cy="52" r="3.5"/><circle cx="64" cy="52" r="3.5"/><circle cx="74" cy="52" r="3.5"/>
+    </g>
+
+    <!-- FC logo -->
+    <circle cx="160" cy="98" r="20" fill="none" stroke="white" stroke-width="1.5" opacity="0.28"/>
+    <text x="160" y="103" font-family="Arial" font-size="11" font-weight="700" fill="white" opacity="0.65" text-anchor="middle">FC</text>
   </g>
 
-  <!-- ── Callout: TOP-LEFT — Apple Find My ── -->
-  <line x1="248" y1="316" x2="160" y2="232" stroke="#3B82F6" stroke-width="1.2" opacity="0.55"/>
-  <circle cx="248" cy="316" r="3" fill="#3B82F6" opacity="0.70"/>
-  <rect x="50" y="186" width="196" height="54" rx="12" fill="white" opacity="0.08"/>
-  <rect x="50" y="186" width="196" height="54" rx="12" fill="none" stroke="#3B82F6" stroke-width="1" opacity="0.30"/>
-  <text x="148" y="207" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle" opacity="0.90" direction="ltr">Apple Find My</text>
-  <text x="148" y="228" font-family="Arial, sans-serif" font-size="10" fill="#93C5FD" text-anchor="middle" opacity="0.80" direction="rtl">500 מיליון מכשיר</text>
+  <!-- Feature callout boxes -->
+  <!-- Top-left: Apple Find My -->
+  <g transform="translate(115 245)">
+    <rect x="0" y="0" width="178" height="68" rx="14" fill="#1C2E50" stroke="#2A4880" stroke-width="1.5"/>
+    <text x="14" y="26" font-family="Arial" font-size="13" font-weight="700" fill="white">📡 Apple Find My</text>
+    <text x="14" y="45" font-family="Arial" font-size="11" fill="#7B9CCF">500M+ מכשירים ברשת</text>
+    <!-- Connector line to card -->
+    <line x1="178" y1="34" x2="230" y2="340" stroke="#2A4880" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+  </g>
 
-  <!-- ── Callout: TOP-RIGHT — סוללה ── -->
-  <line x1="552" y1="316" x2="640" y2="232" stroke="#3B82F6" stroke-width="1.2" opacity="0.55"/>
-  <circle cx="552" cy="316" r="3" fill="#3B82F6" opacity="0.70"/>
-  <rect x="554" y="186" width="196" height="54" rx="12" fill="white" opacity="0.08"/>
-  <rect x="554" y="186" width="196" height="54" rx="12" fill="none" stroke="#3B82F6" stroke-width="1" opacity="0.30"/>
-  <text x="652" y="207" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle" opacity="0.90" direction="rtl">🔋 8 חודשי סוללה</text>
-  <text x="652" y="228" font-family="Arial, sans-serif" font-size="10" fill="#93C5FD" text-anchor="middle" opacity="0.80" direction="rtl">טעינה אלחוטית Qi</text>
+  <!-- Top-right: Battery -->
+  <g transform="translate(607 245)">
+    <rect x="0" y="0" width="178" height="68" rx="14" fill="#1C3828" stroke="#2A5838" stroke-width="1.5"/>
+    <text x="14" y="26" font-family="Arial" font-size="13" font-weight="700" fill="white">🔋 8 חודשי סוללה</text>
+    <text x="14" y="45" font-family="Arial" font-size="11" fill="#7BC49A">טעינה אלחוטית Qi</text>
+    <line x1="0" y1="34" x2="-38" y2="335" stroke="#2A5838" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+  </g>
 
-  <!-- ── Callout: BOTTOM-LEFT — עובי ── -->
-  <line x1="248" y1="524" x2="160" y2="594" stroke="#3B82F6" stroke-width="1.2" opacity="0.55"/>
-  <circle cx="248" cy="524" r="3" fill="#3B82F6" opacity="0.70"/>
-  <rect x="50" y="566" width="196" height="54" rx="12" fill="white" opacity="0.08"/>
-  <rect x="50" y="566" width="196" height="54" rx="12" fill="none" stroke="#3B82F6" stroke-width="1" opacity="0.30"/>
-  <text x="148" y="587" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle" opacity="0.90" direction="rtl">💳 עובי 1.8 מ״מ</text>
-  <text x="148" y="608" font-family="Arial, sans-serif" font-size="10" fill="#93C5FD" text-anchor="middle" opacity="0.80" direction="rtl">נכנס לכל ארנק</text>
+  <!-- Bottom-left: Thickness -->
+  <g transform="translate(115 580)">
+    <rect x="0" y="0" width="178" height="68" rx="14" fill="#2E1C50" stroke="#4A2A80" stroke-width="1.5"/>
+    <text x="14" y="26" font-family="Arial" font-size="13" font-weight="700" fill="white">💳 עובי 1.8 מ״מ</text>
+    <text x="14" y="45" font-family="Arial" font-size="11" fill="#B07CF0">נכנס לכל ארנק</text>
+    <line x1="178" y1="34" x2="228" y2="530" stroke="#4A2A80" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+  </g>
 
-  <!-- ── Callout: BOTTOM-RIGHT — עמיד מים ── -->
-  <line x1="552" y1="524" x2="640" y2="594" stroke="#3B82F6" stroke-width="1.2" opacity="0.55"/>
-  <circle cx="552" cy="524" r="3" fill="#3B82F6" opacity="0.70"/>
-  <rect x="554" y="566" width="196" height="54" rx="12" fill="white" opacity="0.08"/>
-  <rect x="554" y="566" width="196" height="54" rx="12" fill="none" stroke="#3B82F6" stroke-width="1" opacity="0.30"/>
-  <text x="652" y="587" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle" opacity="0.90" direction="rtl">🌊 IP67 עמיד מים</text>
-  <text x="652" y="608" font-family="Arial, sans-serif" font-size="10" fill="#93C5FD" text-anchor="middle" opacity="0.80" direction="rtl">גשם, שלג, לחות</text>
+  <!-- Bottom-right: Waterproof -->
+  <g transform="translate(607 580)">
+    <rect x="0" y="0" width="178" height="68" rx="14" fill="#1C2E40" stroke="#1A4A60" stroke-width="1.5"/>
+    <text x="14" y="26" font-family="Arial" font-size="13" font-weight="700" fill="white">🌊 IP67 עמיד מים</text>
+    <text x="14" y="45" font-family="Arial" font-size="11" fill="#5AAED0">גשם · שלג · לחות</text>
+    <line x1="0" y1="34" x2="-36" y2="530" stroke="#1A4A60" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+  </g>
+
+  <text x="450" y="800" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle" opacity="0.9">FindCard PRO — פיצ׳רים מלאים</text>
+  <text x="450" y="824" font-family="Arial, sans-serif" font-size="13" fill="#5577AA" text-anchor="middle">הטכנולוגיה הטובה ביותר בפורמט הכי דק</text>
 </svg>
