@@ -245,7 +245,7 @@ export default function ProductPage() {
             </div>
 
             {/* Review strip */}
-            <ReviewStrip />
+            <ReviewCarousel />
 
             {/* Tier selector */}
             <div>
@@ -344,7 +344,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* Review strip desktop */}
-                <ReviewStrip />
+                <ReviewCarousel />
 
                 {/* Tier selector */}
                 <div>
