@@ -124,6 +124,26 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
     setForm(p => ({ ...p, [key]: value }))
   }
 
+  async function checkSlug() {
+    const s = form.slug.trim()
+    if (!s || s === (init?.slug as string)) { setSlugStatus('idle'); return }
+    setSlugStatus('checking')
+    try {
+      const res = await fetch(`/api/admin/products/slug-check?slug=${encodeURIComponent(s)}&exclude=${init?._id as string || ''}`)
+      const data = await res.json()
+      setSlugStatus(data.available ? 'ok' : 'taken')
+    } catch { setSlugStatus('idle') }
+  }
+
+  function slugify(text: string) {
+    return text.toLowerCase().trim()
+      .replace(/[\s_]+/g, '-')
+      .replace(/[^\x00-\x7F]/g, '')
+      .replace(/[^a-z0-9-]/g, '')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+  }
+
   // ─── Image upload ───
   async function uploadFile(file: File, idx?: number) {
     if (!file.type.startsWith('image/')) return
