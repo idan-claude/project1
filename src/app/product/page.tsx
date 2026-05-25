@@ -81,6 +81,39 @@ const GALLERY = [
   'https://www.spotminders.com/cdn/shop/files/tracking-card-8mnths.png?v=1773136572',
 ]
 
+function ReviewCarousel() {
+  const [idx, setIdx] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % 3), 4500)
+    return () => clearInterval(t)
+  }, [])
+  const r = REVIEWS[idx]
+  return (
+    <div className="bg-amber-50 border border-amber-100 rounded-xl px-3 py-2.5">
+      <div className="flex items-start gap-2.5">
+        <img src={r.photo} alt={r.name} className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-white shadow-sm" />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <span className="text-yellow-400 text-xs">★★★★★</span>
+            <span className="text-xs text-gray-600 font-semibold">{r.name}</span>
+            <span className="text-xs text-green-600 font-medium">מאומת ✓</span>
+          </div>
+          <p className="text-xs text-gray-700 leading-snug line-clamp-2">"{r.text}"</p>
+        </div>
+      </div>
+      <div className="flex justify-center gap-1.5 mt-2">
+        {[0, 1, 2].map(i => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            className={`rounded-full transition-all duration-200 ${idx === i ? 'w-4 h-1.5 bg-amber-500' : 'w-1.5 h-1.5 bg-amber-300/70'}`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function ProductPage() {
   const [tierIndex, setTierIndex] = useState(1)
   const [added, setAdded] = useState(false)
