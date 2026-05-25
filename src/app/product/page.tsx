@@ -188,19 +188,38 @@ export default function ProductPage() {
   const [activeImg, setActiveImg] = useState(0)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showAllReviews, setShowAllReviews] = useState(false)
+  const [productId, setProductId] = useState<string>(PRODUCT_SLUG)
+  const [productName, setProductName] = useState('כרטיס מעקב FindCard PRO')
+  const [tiers, setTiers] = useState(() => buildTiers(19990, 29890))
+  const [gallery, setGallery] = useState(GALLERY)
+  const [inStock, setInStock] = useState(true)
   const imgTouchStart = useRef(0)
   const addItem = useCartStore(s => s.addItem)
   const router = useRouter()
 
-  useEffect(() => { track('product_view', { product: PRODUCT.slug }) }, [])
+  useEffect(() => {
+    fetch(`/api/products/${PRODUCT_SLUG}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data?.product) return
+        const p = data.product
+        setProductId(p._id)
+        setProductName(p.nameHe)
+        setTiers(buildTiers(p.pricing.sellingPrice, p.pricing.compareAtPrice))
+        if (p.images?.length) setGallery(p.images.map((img: { url: string }) => img.url))
+        if (p.inventory?.trackQuantity) setInStock(p.inventory.quantity > 0)
+      })
+      .catch(() => {})
+    track('product_view', { product: PRODUCT_SLUG })
+  }, [])
 
-  const tier = TIERS[tierIndex]
+  const tier = tiers[tierIndex]
   const saveAmount = tier.compareAt - tier.price
   const savePercent = Math.round((saveAmount / tier.compareAt) * 100)
   const pricePerUnit = Math.round(tier.price / tier.actualCards)
 
   function addCartItem() {
-    addItem({ productId: PRODUCT.id, slug: PRODUCT.slug, nameHe: `${PRODUCT.nameHe} — ${tier.label}`, image: '', sellingPrice: tier.price, quantity: 1, variantLabel: tier.label })
+    addItem({ productId, slug: PRODUCT_SLUG, nameHe: `${productName} — ${tier.label}`, image: gallery[0] ?? '', sellingPrice: tier.price, quantity: 1, variantLabel: tier.label })
   }
 
   function handleAdd() {
