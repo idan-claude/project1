@@ -397,7 +397,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* Thumbnail strip */}
-                <div className="flex gap-2">
+                <div dir="ltr" className="flex gap-2">
                   {GALLERY.map((src, i) => (
                     <button
                       key={i}
