@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { withAdminAuth } from '@/lib/admin/withAdminAuth'
-import dbConnect from '@/lib/db/dbConnect'
+import { withAdminAuth } from '@/lib/auth/adminAuth'
+import { connectDB } from '@/lib/db/mongoose'
 import Product from '@/lib/db/models/Product'
 
 export const GET = withAdminAuth(async () => {
