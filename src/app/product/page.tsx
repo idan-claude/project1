@@ -18,9 +18,9 @@ const PRODUCT = {
 }
 
 const TIERS = [
-  { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: 19990, compareAt: 29900, badge: null as string | null, badgeColor: '' },
-  { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: 'סה"כ 3 כרטיסים', price: 29990, compareAt: 59900, badge: '72% מהלקוחות', badgeColor: 'bg-blue-600' },
-  { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: 'סה"כ 4 כרטיסים', price: 37990, compareAt: 79900, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500' },
+  { actualCards: 1, label: 'כרטיס 1', sublabel: '', price: 19990, compareAt: 29890, badge: null as string | null, badgeColor: '' },
+  { actualCards: 3, label: '2 כרטיסים + 1 חינם', sublabel: 'סה"כ 3 כרטיסים', price: 29990, compareAt: 59890, badge: '72% מהלקוחות', badgeColor: 'bg-blue-600' },
+  { actualCards: 4, label: '3 כרטיסים + 1 חינם', sublabel: 'סה"כ 4 כרטיסים', price: 37990, compareAt: 79890, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500' },
 ]
 
 const FEATURES = [
