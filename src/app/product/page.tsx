@@ -119,6 +119,9 @@ export default async function ProductPage() {
     _id: { toString(): string }
     slug: string
     nameHe: string
+    descriptionShort?: string
+    ogImage?: string
+    seo?: { metaTitle?: string; metaDescription?: string }
     pricing: { sellingPrice: number; compareAtPrice: number }
     images?: { url: string }[]
     inventory?: { trackQuantity: boolean; quantity: number }
