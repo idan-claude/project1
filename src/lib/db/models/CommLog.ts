@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface ICommLog extends Document {
+  storeId: string
   orderId: mongoose.Types.ObjectId
   orderNumber: string
   customerEmail: string
@@ -19,6 +20,7 @@ export interface ICommLog extends Document {
 
 const CommLogSchema = new Schema<ICommLog>(
   {
+    storeId: { type: String, default: 'default', index: true },
     orderId: {
       type: Schema.Types.ObjectId,
       ref: 'Order',
