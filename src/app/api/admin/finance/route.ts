@@ -4,7 +4,7 @@ import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 
 export const GET = withAdminAuth(async () => {
-  await dbConnect()
+  await connectDB()
   const now = new Date()
   const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
