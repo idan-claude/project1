@@ -182,23 +182,6 @@ export default function ProductPage() {
     )
   }
 
-  // Compact 1-review strip
-  const r0 = REVIEWS[0]
-  function ReviewStrip() {
-    return (
-      <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2.5">
-        <img src={r0.photo} alt={r0.name} className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-white shadow-sm" />
-        <div className="min-w-0">
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <span className="text-yellow-400 text-xs">★★★★★</span>
-            <span className="text-xs text-gray-600 font-semibold">{r0.name}</span>
-            <span className="text-xs text-green-600 font-medium">מאומת ✓</span>
-          </div>
-          <p className="text-xs text-gray-700 leading-snug line-clamp-2">"{r0.text}"</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen flex flex-col">
