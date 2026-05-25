@@ -42,7 +42,7 @@ export default function ShippingPolicyPage() {
                 { step: '01', title: 'אישור הזמנה', desc: 'תקבל/י מייל אישור עם פרטי ההזמנה מיד לאחר הרכישה.' },
                 { step: '02', title: 'עיבוד ושליחה', desc: 'ההזמנה מוכנה ונשלחת תוך 1-3 ימי עסקים.' },
                 { step: '03', title: 'מספר מעקב', desc: 'תקבל/י מספר מעקב למייל ברגע שהחבילה יוצאת לדרך.' },
-                { step: '04', title: 'קבלת החבילה', desc: 'החבילה מגיעה אל פתח ביתך תוך 7-14 ימי עסקים.' },
+                { step: '04', title: 'קבלת החבילה', desc: 'החבילה מגיעה אליך תוך 7-14 ימי עסקים.' },
               ].map(({ step, title, desc }) => (
                 <div key={step} className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">
