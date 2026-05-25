@@ -36,88 +36,93 @@ const REVIEWS = [
   {
     photo: 'https://i.pravatar.cc/80?img=9', name: 'דנה כ.', location: 'תל אביב',
     stars: 5, detail: 'לקוחה 4 חודשים',
-    text: 'שנתיים הייתי מאבדת את הארנק שלי בבית — לפחות פעמיים בשבוע. מאז שהכנסתי את FindCard לא חיפשתי אותו ולו פעם אחת. פשוט פותחת Find My ותוך 10 שניות מוצאת. שינה לי את החיים!',
+    text: 'שנתיים ממש הייתי מאבדת ארנק כל שבוע, פעמיים שלוש פעמים. מאז שהכנסתי את FindCard? לא חיפשתי פעם אחת. ממש ממליצה 🙏',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=33', name: 'אבי מ.', location: 'חיפה',
     stars: 5, detail: 'קנה 3 יחידות · לקוח 6 חודשים',
-    text: 'קניתי שלושה — לי, לאשתי ולבן ה-14 שמאבד כל דבר. הבן שלי "איבד" את הילקוט בבית הספר ומצאנו אותו תוך דקה! ממליץ בחום.',
+    text: 'קניתי 3 — לי, לאשה ולבן שמאבד הכל. הבן "איבד" ילקוט בבית ספר ומצאנו אותו תוך דקה!! ממליץ בחום לכל המשפחה.',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=26', name: 'שירה ל.', location: 'ירושלים',
     stars: 5, detail: 'לקוחה 5 חודשים',
-    text: 'טסתי לאמסטרדם ואיבדתי את המזוודה בפרנקפורט. ידעתי בדיוק שהיא בשדה התעופה הגרמני! הראיתי לשירות לקוחות את המפה ושלחו אותה אלי. הציל לי את החופשה ממש.',
+    text: 'טסתי לאמסטרדם ואיבדתי מזוודה בפרנקפורט. ידעתי בדיוק שהיא שם! הראיתי לשירות לקוחות את המפה ושלחו אליי. הציל לי את החופשה ממש.',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=44', name: 'מרים ה.', location: 'נתניה',
     stars: 5, detail: 'קנתה לאמא · לקוחה 5 חודשים',
-    text: 'קניתי לאמא שלי בת ה-78 שמאבדת את הארנק כל יום. פשוט מתקשרים אליה ומוצאים דרך הטלפון שלנו. שלום נפשי לכל המשפחה!',
+    text: 'קניתי לאמא שלי בת ה-78 שמאבדת ארנק כל יום. פשוט מתקשרים אליה ומוצאים דרך הטלפון שלנו. שלום נפשי לכל המשפחה!',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=63', name: 'נועה ג.', location: 'הרצליה',
     stars: 4, detail: 'לקוחה 3 חודשים',
-    text: 'קיבלתי במתנה ולא הייתי בטוחה שאשתמש. חודש אחרי — הארנק נפל מהתיק בקניון, Find My הראה שהוא עדיין שם. חזרתי ומצאתי. חסכתי כ-750 שקל!',
+    text: 'קיבלתי במתנה ולא ידעתי אם אשתמש. חודש אחרי — ארנק נפל מהתיק בקניון, Find My הראה שהוא עדיין שם. חזרתי ומצאתי. חסכתי כ-750 שקל.',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=17', name: 'תומר ז.', location: 'גבעתיים',
     stars: 3, detail: 'לקוח חודשיים',
-    text: 'עובד כמו שאמרו. ההגדרה הייתה קצת מבלבלת בהתחלה אבל אחרי 5 דקות הסתדרתי. המשלוח לקח כשבועיים. בסך הכל מרוצה.',
+    text: 'עובד כמו שאמרו. ההגדרה הייתה קצת מבלבלת בהתחלה אבל אחרי 5 דקות הסתדרתי. המשלוח לקח כשבועיים. בסך הכל מרוצה',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=5', name: 'יוסי ב.', location: 'ראשון לציון',
     stars: 5, detail: 'קנה 2 יחידות · לקוח 7 חודשים',
-    text: 'אני מאבד מפתחות כל יום בחיים. מאז ה-FindCard — פשוט לוחץ חיפוש ושומע צפצוף. חסך לי כבר 3 כפילים !!!',
+    text: 'בחיים מאבד מפתחות, רציני. אחרי FindCard לוחץ וביפ! מצא. חסך לי כבר 3 כפילות (כל אחד 150 שח אז תחשבו...) שווה כל אגורה',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=12', name: 'רחל ס.', location: 'באר שבע',
     stars: 5, detail: 'לקוחה 8 חודשים',
-    text: 'הכרטיס ממש דק ולא מורגש בכלל בארנק. שכחתי שהוא שם עד שפתאום הארנק נפל בסופר ומצאתי אותו תוך 30 שניות. שירות מעולה!',
+    text: 'הכרטיס ממש דק ולא מורגש בכלל בארנק. שכחתי שהוא שם עד שארנק נפל בסופר ומצאתי אותו תוך 30 שניות. מעולה.',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=21', name: 'גל ד.', location: 'פתח תקווה',
     stars: 5, detail: 'לקוחה 3 חודשים',
-    text: 'קניתי לבעל שלי שמאבד כל דבר תמיד. השינוי דרמטי. הוא אפילו לא מאמין שמצא את הארנק לבד :-) תודה רבה!',
+    text: 'קניתי לבעל שלי שמאבד הכל תמיד. השינוי דרמטי. הוא אפילו לא מאמין שמצא את הארנק לבד :-) תודה רבה!',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=52', name: 'עמית כ.', location: 'כפר סבא',
     stars: 4, detail: 'לקוח 5 חודשים',
-    text: 'מוצר טוב מאוד. הייתי סקפטי בהתחלה אבל זה באמת עובד. פעם אחת ה-Find My הראה שהארנק ב"מרחק 50 מטר" ומצאתי אותו בין כריות הספה.',
+    text: 'מוצר טוב מאוד. הייתי סקפטי בהתחלה אבל זה באמת עובד. פעם אחת הצג הראה שהארנק "50 מטר" ומצאתי אותו בין כריות הספה 😅',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=38', name: 'ליאת מ.', location: 'רמת גן',
     stars: 5, detail: 'קנתה לבן זוג · לקוחה 6 חודשים',
-    text: 'קניתי לבן זוג ליום הולדת — הוא היה מרוגז בהתחלה שזה "מתנה פרקטית" אבל אחרי שבוע שלח לי תודה עם 3 לבבות כי מצא את הארנק שאיבד.',
+    text: 'קניתי לבן זוג ליום הולדת — הוא היה מרוגז ש"קיבל מתנה פרקטית" אבל אחרי שבוע שלח לי תודה עם 3 לבבות כי מצא ארנק שאיבד 😄',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=57', name: 'ניר ש.', location: 'אשדוד',
     stars: 5, detail: 'לקוח 4 חודשים',
-    text: 'אני נהג מסירות ומאבד מפתחות רכב כמה פעמים בחודש. מאז ה-FindCard לא היו לי עיכובים בגלל מפתחות. ממליץ לכל מי שעובד בשטח.',
+    text: 'אני נהג מסירות ומאבד מפתחות רכב כמה פעמים בחודש. מאז FindCard לא היו לי עיכובים בגלל מפתחות. ממליץ לכל מי שעובד בשטח',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=41', name: 'חנה א.', location: 'חולון',
     stars: 5, detail: 'קנתה לאבא · לקוחה 9 חודשים',
-    text: 'קניתי לאבא שלי בן ה-82. כל שבוע היינו מחפשים לו את הארנק בכל הבית. עכשיו הוא לוחץ על הכפתור והכרטיס מצפצף. הוא כל כך מאושר.',
+    text: 'קניתי לאבא בן ה-82. כל שבוע היינו מחפשים לו ארנק בכל הבית. עכשיו הוא לוחץ על הכפתור והכרטיס מצפצף. הוא כל כך מאושר.',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=48', name: 'בן ל.', location: 'מודיעין',
     stars: 4, detail: 'לקוח חודשיים',
-    text: 'עובד מעולה. הגעתי אליו דרך חבר שהמליץ ולא מצטער. אולי קצת יקר אבל שווה כל שקל אם אתה מאבד דברים.',
+    text: 'עובד מעולה. הגעתי דרך חבר שהמליץ ולא מצטער. אולי קצת יקר אבל שווה כל שקל אם אתה מאבד דברים',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=30', name: 'יעל פ.', location: 'גבעת שמואל',
     stars: 5, detail: 'לקוחה 5 חודשים',
-    text: 'ה-AirTag היה גדול מדי לארנק שלי. ה-FindCard נכנס כמו כרטיס אשראי רגיל. כבר 5 חודשים ולא הפסדתי ארנק אחד.',
+    text: 'AirTag היה גדול מדי לארנק שלי. FindCard נכנס כמו כרטיס אשראי רגיל. 5 חודשים ולא הפסדתי ארנק אחד. זהו. תגמרו לחשוב ותקנו.',
   },
   {
     photo: 'https://i.pravatar.cc/80?img=13', name: 'ערן ט.', location: 'נס ציונה',
     stars: 5, detail: 'לקוח שנה',
     text: 'שנה שלמה ועדיין עובד מצוין. הסוללה עדיין מחזיקה חזק. המוצר הכי שווה שקניתי השנה בלי ספק. 10/10',
   },
+  {
+    photo: 'https://i.pravatar.cc/80?img=68', name: 'טל ר.', location: 'אילת',
+    stars: 5, detail: 'לקוח 6 חודשים',
+    text: 'גרתי באילת ואיבדתי ארנק בים. חששתי שהמים יהרסו אותו אבל IP67 — הכרטיס חי! הוא צפצף גם אחרי שעה במים. מדהים ממש.',
+  },
 ]
 
 const FAQS = [
-  { q: 'איך FindCard עובד?', a: 'FindCard משתמש ב-Bluetooth 5.1 ומתחבר לרשת ה-Find My של Apple. כל iPhone בסביבה מדווח על מיקום הכרטיס לשרתי Apple — ואתה מקבל את המיקום המדויק דרך האפליקציה.' },
-  { q: 'האם זה עובד עם אנדרואיד?', a: 'כרגע רק עם Apple — iPhone ו-iPad עם iOS 14.5 ומעלה. גרסת אנדרואיד בדרך.' },
+  { q: 'איך FindCard עובד?', a: 'FindCard משתמש ב-Bluetooth 5.1 ומתחבר לרשת ה-Find My של Apple. כל iPhone בסביבה מדווח על מיקום הכרטיס לשרתי Apple, ואתה מקבל את המיקום המדויק דרך האפליקציה.' },
+  { q: 'האם זה עובד עם אנדרואיד?', a: 'כרגע רק עם Apple — iPhone ו-iPad עם iOS 14.5 ומעלה. גרסת אנדרואיד בפיתוח.' },
   { q: 'כמה עבה הכרטיס?', a: 'בדיוק 1.8 מ"מ — אותו עובי של כרטיס אשראי. נכנס לכל תא כרטיסים, בכל ארנק.' },
   { q: 'כמה זמן הסוללה מחזיקה?', a: 'עד 8 חודשים בשימוש יומיומי. טעינה אלחוטית Qi — מניחים על משטח ותוך שעתיים מלא.' },
   { q: 'האם הכרטיס עמיד במים?', a: 'כן! IP67 — עמיד בשקיעה עד 1 מטר למשך 30 דקות. עמיד גם בגשם, שלג ולחות.' },
@@ -133,13 +138,27 @@ const GALLERY = [
 
 function ReviewCarousel() {
   const [idx, setIdx] = useState(0)
-  useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % 3), 4500)
-    return () => clearInterval(t)
-  }, [])
+  const touchStart = useRef(0)
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStart.current = e.touches[0].clientX
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    const diff = touchStart.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 35) {
+      if (diff > 0) setIdx(i => (i + 1) % 3)
+      else setIdx(i => (i - 1 + 3) % 3)
+    }
+  }
+
   const r = REVIEWS[idx]
   return (
-    <div className="bg-amber-50 border border-amber-100 rounded-xl px-3 py-2.5">
+    <div
+      className="bg-amber-50 border border-amber-100 rounded-xl px-3 py-2.5 select-none"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="flex items-start gap-2.5">
         <img src={r.photo} alt={r.name} className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-white shadow-sm" />
         <div className="min-w-0 flex-1">
@@ -169,6 +188,7 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false)
   const [activeImg, setActiveImg] = useState(0)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [showAllReviews, setShowAllReviews] = useState(false)
   const imgTouchStart = useRef(0)
   const addItem = useCartStore(s => s.addItem)
   const router = useRouter()
@@ -191,7 +211,8 @@ export default function ProductPage() {
     if (Math.abs(diff) > 40) setActiveImg(i => diff > 0 ? (i + 1) % GALLERY.length : (i - 1 + GALLERY.length) % GALLERY.length)
   }
 
-  // Shared tier selector used in both mobile and desktop layouts
+  const visibleReviews = showAllReviews ? REVIEWS : REVIEWS.slice(0, 6)
+
   function TierSelector() {
     return (
       <div className="space-y-2.5">
@@ -232,7 +253,6 @@ export default function ProductPage() {
     )
   }
 
-
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -260,29 +280,30 @@ export default function ProductPage() {
 
           {/* Image with dot nav */}
           <div
-            className="relative bg-gray-50 select-none"
+            className="relative bg-[#0C1020] select-none"
             onTouchStart={e => imgSwipe(e, 'start')}
             onTouchEnd={e => imgSwipe(e, 'end')}
           >
             <img
               src={GALLERY[activeImg]}
               alt="FindCard PRO"
-              className="w-full"
-              style={{ aspectRatio: '800/500', objectFit: 'contain' }}
+              className="w-full aspect-square object-cover"
             />
-            {/* Dot nav overlaid at bottom of image */}
-            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5">
-              {GALLERY.map((_, i) => (
+            {/* Thumbnail strip */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-2 pt-6 bg-gradient-to-t from-[#0C1020]/80 to-transparent">
+              {GALLERY.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImg(i)}
-                  className={`rounded-full transition-all duration-200 ${activeImg === i ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-gray-400/60'}`}
-                />
+                  className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${activeImg === i ? 'border-blue-400 opacity-100' : 'border-transparent opacity-50'}`}
+                >
+                  <img src={src} alt="" className="w-full h-full object-cover bg-[#0C1020]" />
+                </button>
               ))}
             </div>
           </div>
 
-          <div className="px-4 pt-3 space-y-3">
+          <div className="px-4 pt-4 space-y-3">
 
             {/* Stars + title */}
             <div>
@@ -294,7 +315,7 @@ export default function ProductPage() {
               <h1 className="text-xl font-extrabold text-gray-900 leading-snug">כרטיס מעקב FindCard PRO</h1>
             </div>
 
-            {/* Review strip */}
+            {/* Review strip — swipeable, no auto-play */}
             <ReviewCarousel />
 
             {/* Tier selector */}
@@ -303,7 +324,7 @@ export default function ProductPage() {
               <TierSelector />
             </div>
 
-            {/* Urgency — below bundles */}
+            {/* Urgency */}
             <div className="flex items-center gap-2 text-xs text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-3 py-2">
               <span>🔥</span>
               <span><strong>מבצע מוגבל:</strong> 24 שעות אחרונות למחיר הזה!</span>
@@ -354,17 +375,30 @@ export default function ProductPage() {
 
               {/* Left: image sticky */}
               <div className="sticky top-24 space-y-4">
-                <div className="relative bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl overflow-hidden select-none">
-                  <img src={GALLERY[activeImg]} alt="FindCard PRO" className="w-full" />
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                <div className="relative bg-[#0C1020] rounded-3xl overflow-hidden select-none aspect-square">
+                  <img src={GALLERY[activeImg]} alt="FindCard PRO" className="w-full h-full object-cover" />
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
                     {GALLERY.map((_, i) => (
                       <button
                         key={i}
                         onClick={() => setActiveImg(i)}
-                        className={`rounded-full transition-all duration-200 ${activeImg === i ? 'w-6 h-2.5 bg-blue-600' : 'w-2.5 h-2.5 bg-gray-400/50 hover:bg-gray-600/60'}`}
+                        className={`rounded-full transition-all duration-200 ${activeImg === i ? 'w-6 h-2.5 bg-blue-400' : 'w-2.5 h-2.5 bg-white/30 hover:bg-white/50'}`}
                       />
                     ))}
                   </div>
+                </div>
+
+                {/* Thumbnail strip */}
+                <div className="flex gap-2">
+                  {GALLERY.map((src, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveImg(i)}
+                      className={`flex-1 aspect-square rounded-xl overflow-hidden border-2 transition-all bg-[#0C1020] ${activeImg === i ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-75'}`}
+                    >
+                      <img src={src} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
                 </div>
 
                 {/* Trust badges */}
@@ -393,7 +427,7 @@ export default function ProductPage() {
                   <p className="text-gray-500 leading-relaxed text-sm">כרטיס מעקב חכם תואם Apple Find My. דק בדיוק 1.8 מ"מ — נכנס לכל ארנק ומוצא את המפתחות, הארנק וכל דבר אחר תוך שניות.</p>
                 </div>
 
-                {/* Review strip desktop */}
+                {/* Review strip desktop — swipeable, no auto-play */}
                 <ReviewCarousel />
 
                 {/* Tier selector */}
@@ -402,7 +436,7 @@ export default function ProductPage() {
                   <TierSelector />
                 </div>
 
-                {/* Urgency — below bundles */}
+                {/* Urgency */}
                 <div className="flex items-center gap-2 text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-4 py-2.5">
                   <span>🔥</span>
                   <span><strong>מבצע מוגבל:</strong> 24 שעות אחרונות למחיר הזה!</span>
@@ -470,9 +504,9 @@ export default function ProductPage() {
         </section>
 
         {/* Reviews */}
-        <section className="py-12 px-4 bg-white border-t">
+        <section className="py-12 px-4 bg-gray-50 border-t">
           <div className="max-w-5xl mx-auto">
-            {/* Header with rating summary */}
+            {/* Header */}
             <div className="text-center mb-8">
               <h2 className="text-2xl font-extrabold text-gray-900 mb-2">מה הלקוחות אומרים</h2>
               <div className="flex items-center justify-center gap-3 mb-3">
@@ -480,38 +514,60 @@ export default function ProductPage() {
                 <span className="text-3xl font-black text-gray-900">4.9</span>
                 <span className="text-gray-400 text-sm">מתוך 5 · 312 ביקורות מאומתות</span>
               </div>
-              <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-                <span className="flex items-center gap-1"><span className="text-yellow-400">★★★★★</span> 89%</span>
-                <span className="flex items-center gap-1"><span className="text-yellow-400">★★★★</span> 8%</span>
-                <span className="flex items-center gap-1"><span className="text-yellow-400">★★★</span> 3%</span>
+              <div className="flex flex-col gap-1.5 max-w-xs mx-auto text-xs">
+                {[
+                  { stars: 5, pct: 89, label: '5 כוכבים' },
+                  { stars: 4, pct: 8, label: '4 כוכבים' },
+                  { stars: 3, pct: 3, label: '3 כוכבים' },
+                ].map(r => (
+                  <div key={r.stars} className="flex items-center gap-2">
+                    <span className="text-gray-500 w-16 text-right flex-shrink-0">{r.label}</span>
+                    <div className="flex-1 bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                      <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${r.pct}%` }} />
+                    </div>
+                    <span className="text-gray-500 w-8 flex-shrink-0">{r.pct}%</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Reviews grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {REVIEWS.map(({ photo, name, location, text, detail, stars }) => (
-                <div key={name + location} className="bg-gray-50 border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-3 mb-3">
-                    <img src={photo} alt={name} className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 border-white shadow-sm" />
+              {visibleReviews.map(({ photo, name, location, text, detail, stars }) => (
+                <div key={name + location} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3 mb-3">
+                    <img src={photo} alt={name} className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 border-gray-100" />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <p className="font-bold text-sm text-gray-900">{name}</p>
-                        <span className="text-xs text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full font-medium">✓ מאומת</span>
+                        <span className="text-xs text-green-600 bg-green-50 border border-green-100 px-1.5 py-0.5 rounded-full font-medium leading-none">✓ מאומת</span>
                       </div>
-                      <p className="text-xs text-gray-400">{location} · {detail}</p>
-                      <div className="text-yellow-400 text-sm mt-0.5">
-                        {'★'.repeat(stars)}{'☆'.repeat(5 - stars)}
-                      </div>
+                      <p className="text-xs text-gray-400 mt-0.5">{location} · {detail}</p>
                     </div>
+                  </div>
+                  <div className="text-yellow-400 text-sm mb-2">
+                    {'★'.repeat(stars)}{'☆'.repeat(5 - stars)}
                   </div>
                   <p className="text-gray-700 text-sm leading-relaxed">"{text}"</p>
                 </div>
               ))}
             </div>
 
+            {/* Load more */}
+            {!showAllReviews && REVIEWS.length > 6 && (
+              <div className="text-center mt-6">
+                <button
+                  onClick={() => setShowAllReviews(true)}
+                  className="bg-white border border-gray-200 text-gray-700 font-semibold text-sm px-6 py-3 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm"
+                >
+                  הצג עוד {REVIEWS.length - 6} ביקורות ↓
+                </button>
+              </div>
+            )}
+
             {/* Bottom CTA */}
             <div className="text-center mt-8 p-5 bg-blue-50 rounded-2xl border border-blue-100">
-              <p className="text-sm font-bold text-blue-900 mb-1">מצטרף לאלפי לקוחות מרוצים</p>
+              <p className="text-sm font-bold text-blue-900 mb-1">הצטרף לאלפי לקוחות מרוצים...</p>
               <p className="text-xs text-blue-600">100 יום החזר כסף מלא · אחריות לכל החיים · משלוח חינם</p>
             </div>
           </div>
