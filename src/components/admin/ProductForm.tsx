@@ -59,6 +59,7 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
       reviewRating?: number; reviewCount?: number
       trustBadges?: { icon: string; text: string }[]
     }
+    beforeAfter?: { before: string; after: string; label: string }[]
   } | undefined
 
   const [tab, setTab] = useState<'basic' | 'images' | 'bundles' | 'pricing' | 'content' | 'seo' | 'shipping'>('basic')
