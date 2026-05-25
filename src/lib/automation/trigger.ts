@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/db/mongoose'
 import Automation from '@/lib/db/models/Automation'
 
-interface TriggerPayload {
+interface TriggerPayload extends Record<string, unknown> {
   customerName: string
   customerEmail: string
   customerPhone?: string
