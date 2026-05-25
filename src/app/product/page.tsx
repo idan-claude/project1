@@ -447,7 +447,7 @@ export default function ProductPage() {
               <div className="space-y-5">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי ✓</span>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{inStock ? 'במלאי ✓' : 'אזל המלאי'}</span>
                     <span className="text-xs text-gray-400">⭐ 4.9 · 312 ביקורות</span>
                   </div>
                   <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">כרטיס מעקב <span dir="ltr">FindCard PRO</span></h1>
