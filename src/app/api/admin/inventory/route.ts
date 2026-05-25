@@ -4,7 +4,7 @@ import { connectDB } from '@/lib/db/mongoose'
 import Product from '@/lib/db/models/Product'
 
 export const GET = withAdminAuth(async () => {
-  await dbConnect()
+  await connectDB()
   const products = await Product.find({}, {
     nameHe: 1, slug: 1, sku: 1, status: 1,
     'inventory.quantity': 1, 'inventory.lowStockThreshold': 1, 'inventory.trackQuantity': 1,
