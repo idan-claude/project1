@@ -318,7 +318,7 @@ export default function ProductPage() {
             />
             {/* Thumbnail strip */}
             <div dir="ltr" className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-2 pt-6 bg-gradient-to-t from-[#0C1020]/80 to-transparent">
-              {GALLERY.map((src, i) => (
+              {gallery.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImg(i)}
@@ -417,7 +417,7 @@ export default function ProductPage() {
 
                 {/* Thumbnail strip */}
                 <div dir="ltr" className="flex gap-2">
-                  {GALLERY.map((src, i) => (
+                  {gallery.map((src, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveImg(i)}
