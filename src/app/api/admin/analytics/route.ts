@@ -5,7 +5,7 @@ import Order from '@/lib/db/models/Order'
 import Product from '@/lib/db/models/Product'
 
 export const GET = withAdminAuth(async () => {
-  await dbConnect()
+  await connectDB()
 
   const [
     totalStats,
