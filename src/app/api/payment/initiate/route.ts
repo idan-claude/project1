@@ -15,7 +15,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'הזמנה כבר שולמה' }, { status: 400 })
   }
 
-  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+  const baseUrl = process.env.NEXTAUTH_URL
+    || process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`
+    || 'https://project1-flame-phi.vercel.app'
 
   const result = await initiateCardcomPayment({
     orderId: order._id.toString(),
