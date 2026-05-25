@@ -498,7 +498,7 @@ export default function ProductPage() {
         {/* Feature icons strip */}
         <section className="py-10 px-4 bg-white border-t">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">למה FindCard?</h2>
+            <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">למה <span dir="ltr">FindCard</span>?</h2>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
               {FEATURES.map(f => (
                 <div key={f.label} className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
