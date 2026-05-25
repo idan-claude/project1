@@ -1,11 +1,12 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCartStore } from '@/store/cartStore'
 import { formatPrice } from '@/lib/utils/formatPrice'
 import { Input } from '@/components/ui/Input'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
+import { track } from '@/lib/tracking/tracker'
 
 const WA_NUMBER = '9720525884463'
 
