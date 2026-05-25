@@ -260,6 +260,12 @@ export default function CheckoutPage() {
                   <span>משלוח</span>
                   <span className="text-green-600 font-semibold">חינם 🎁</span>
                 </div>
+                {couponApplied && (
+                  <div className="flex justify-between text-green-600">
+                    <span>הנחת קופון ({couponApplied.code})</span>
+                    <span className="font-semibold">−{formatPrice(couponApplied.discount)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between font-extrabold text-lg border-t pt-2 mt-2">
                   <span>סה"כ לתשלום</span>
                   <span className="text-blue-700">{formatPrice(orderTotal)}</span>
