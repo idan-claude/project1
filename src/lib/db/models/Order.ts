@@ -27,6 +27,7 @@ interface IPayment {
 }
 
 export interface IOrder extends Document {
+  storeId: string
   orderNumber: string
   customer: {
     userId: mongoose.Types.ObjectId | null
