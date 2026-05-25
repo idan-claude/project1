@@ -320,7 +320,7 @@ export default function ProductPage() {
                 <span className="text-xs text-gray-500">4.9 · 312 ביקורות</span>
                 <span className="mr-auto text-xs bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full">במלאי ✓</span>
               </div>
-              <h1 className="text-xl font-extrabold text-gray-900 leading-snug">כרטיס מעקב FindCard PRO</h1>
+              <h1 className="text-xl font-extrabold text-gray-900 leading-snug">כרטיס מעקב <span dir="ltr">FindCard PRO</span></h1>
             </div>
 
             {/* Review strip — swipeable, no auto-play */}
