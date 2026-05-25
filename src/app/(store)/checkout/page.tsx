@@ -15,6 +15,10 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', phone: '', street: '', city: '', zip: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [couponCode, setCouponCode] = useState('')
+  const [couponApplied, setCouponApplied] = useState<{ code: string; discount: number } | null>(null)
+  const [couponError, setCouponError] = useState('')
+  const [couponLoading, setCouponLoading] = useState(false)
 
   const orderTotal = total() // always free shipping
 
