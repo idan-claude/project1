@@ -15,6 +15,7 @@ export type AutomationType =
 export type AutomationChannel = 'email' | 'whatsapp' | 'sms' | 'both'
 
 export interface IAutomation extends Document {
+  storeId: string
   name: string
   type: AutomationType
   channel: AutomationChannel
@@ -46,6 +47,7 @@ export interface IAutomation extends Document {
 
 const AutomationSchema = new Schema<IAutomation>(
   {
+    storeId: { type: String, default: 'default', index: true },
     name: { type: String, required: true },
     type: {
       type: String,
