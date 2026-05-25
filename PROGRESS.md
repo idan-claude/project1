@@ -1,6 +1,35 @@
 # PROGRESS.md — FindCard EOS Build Log
 Last updated: 2026-05-25
 
+## Sprint 2 — COMPLETED ✅ (2026-05-25)
+
+### Phase 1 — Fixed Core Systems
+- ✅ ProductForm full rebuild — Cloudinary upload, drag-drop gallery, variants management, SEO, shipping tabs
+- ✅ Admin products page — dark theme, status filters (all/active/draft/archived), duplicate button
+- ✅ /api/admin/upload — Cloudinary image upload (handles missing credentials gracefully)
+- ✅ /api/admin/products/[id]/duplicate — duplicate product as draft
+- ✅ Cardcom baseUrl fix — uses VERCEL_URL fallback, no longer points to localhost
+- ✅ Admin payments page rebuilt — Cardcom settings (save to DB), transaction logs, webhook URLs, provider list
+- ✅ /admin/analytics/visitors — full real visitor analytics (funnel, devices, referrers, hourly chart)
+- ✅ Automations page — real DB-backed with Automation model, create/toggle/edit/delete, seed defaults
+- ✅ Funnels page — real data from VisitorEvent + Orders, drop-off analysis, AI recommendations
+- ✅ Team page — shows real audit log activity, removes all placeholder labels
+- ✅ Product page — dir="rtl" explicit, thumbnail strips dir="ltr", FEATURES Hebrew-first, ltr spans for brand names
+
+### Phase 2 — Conversion Optimization
+- ✅ /api/admin/conversion — funnel analysis, exit pages, friction detection, revenue stats
+- ✅ AI Insights page — real actionable recommendations based on actual DB data
+
+### Phase 3 — Email + WhatsApp Automation
+- ✅ Automation model in MongoDB
+- ✅ /api/admin/automations + /[id] — full CRUD
+- ✅ triggerAutomation() utility — fires on order_confirm after payment webhook
+- ✅ Abandoned cart detection API + page (real VisitorEvent aggregation)
+
+### Phase 4 — Multi-store Foundation
+- ✅ storeId field on Product model (default: 'default', indexed)
+- ✅ storeId field on Order model (default: 'default', indexed)
+
 ## COMPLETED ✅
 
 ### Core Infrastructure
