@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface ICategory extends Document {
+  storeId: string
   nameHe: string
   slug: string
   description: string
@@ -13,6 +14,7 @@ export interface ICategory extends Document {
 
 const CategorySchema = new Schema<ICategory>(
   {
+    storeId: { type: String, default: 'default', index: true },
     nameHe: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     description: { type: String, default: '' },
