@@ -150,17 +150,34 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Avg order value (only when there's real data) */}
-      {data.avgOrderValue > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm mb-5 flex items-center gap-4">
-          <div className="w-10 h-10 bg-violet-50 rounded-xl flex items-center justify-center text-lg flex-shrink-0">📊</div>
+      {/* Conversion metrics row */}
+      <div className="grid grid-cols-3 gap-3 mb-5">
+        {data.avgOrderValue > 0 && (
+          <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex items-center gap-3">
+            <div className="w-9 h-9 bg-violet-50 rounded-xl flex items-center justify-center text-base flex-shrink-0">📊</div>
+            <div>
+              <p className="text-xl font-black text-violet-600">{formatPrice(data.avgOrderValue)}</p>
+              <p className="text-xs font-semibold text-gray-700">ממוצע הזמנה</p>
+            </div>
+          </div>
+        )}
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center text-base flex-shrink-0">🎯</div>
           <div>
-            <p className="text-2xl font-black text-violet-600">{formatPrice(data.avgOrderValue)}</p>
-            <p className="text-xs font-semibold text-gray-700">ממוצע הזמנה</p>
-            <p className="text-xs text-gray-400">לפי כל ההזמנות שנקלטו במערכת</p>
+            <p className="text-xl font-black text-green-600">{data.conversionRate > 0 ? `${data.conversionRate}%` : '—'}</p>
+            <p className="text-xs font-semibold text-gray-700">אחוז המרה</p>
+            <p className="text-xs text-gray-400">30 יום אחרונים</p>
           </div>
         </div>
-      )}
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 bg-orange-50 rounded-xl flex items-center justify-center text-base flex-shrink-0">🛒</div>
+          <div>
+            <p className="text-xl font-black text-orange-600">{data.cartRate > 0 ? `${data.cartRate}%` : '—'}</p>
+            <p className="text-xs font-semibold text-gray-700">הוספה לסל</p>
+            <p className="text-xs text-gray-400">מכל מבקרי המוצר</p>
+          </div>
+        </div>
+      </div>
 
       {/* Quick actions */}
       <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm mb-5">
