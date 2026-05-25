@@ -81,7 +81,16 @@ export interface IProduct extends Document {
   slug: string
   nameHe: string
   nameEn: string
+  subtitle: string
   descriptionHe: string
+  descriptionShort: string
+  benefitsList: string[]
+  ctaText: string
+  addToCartText: string
+  videoUrl: string
+  ogImage: string
+  scheduledAt: Date | null
+  beforeAfter: { before: string; after: string; label: string }[]
   images: IImage[]
   category: mongoose.Types.ObjectId
   tags: string[]
