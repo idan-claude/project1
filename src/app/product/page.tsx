@@ -209,7 +209,7 @@ export default async function ProductPage() {
   const pc = product.pageContent ?? {}
   const pageContent: ProductPageContent = {
     features: pc.features?.length ? pc.features : FALLBACK_FEATURES,
-    faqs: pc.faqs?.length ? pc.faqs : globalFaqs,
+    faqs: mergeFaqs(pc.faqs || [], globalFaqs),
     urgencyText: pc.urgencyText || '',
     shippingText: pc.shippingText || '',
     guaranteeText: pc.guaranteeText || '',
