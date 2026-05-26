@@ -17,7 +17,8 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
   return NextResponse.json({
     entries: entries.map(e => ({
       _id: String(e._id),
-      ipMasked: e.ipMasked || maskIpDisplay(e.ip),
+      ip: e.ip, // Full IP — admin has full visibility
+      ipMasked: e.ipMasked || maskIpDisplay(e.ip), // Legacy field, kept for compatibility
       type: e.type,
       reason: e.reason,
       expiresAt: e.expiresAt,
