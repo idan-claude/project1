@@ -128,7 +128,14 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
 
   useEffect(() => {
     track('product_view', { product: slug })
-    return trackScrollDepth()
+    const cleanScroll = trackScrollDepth()
+    const cleanRage = trackRageClicks()
+    const cleanInactive = trackInactivity(30000)
+    return () => {
+      cleanScroll?.()
+      cleanRage?.()
+      cleanInactive?.()
+    }
   }, [slug])
 
   const bundle = bundles[bundleIndex]
