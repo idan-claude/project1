@@ -31,40 +31,48 @@ function getVercelGeo(req: NextRequest): { country: string; city: string; region
   return { country: '', city: '', region: '', geoTimezone: '', confidence: 0 }
 }
 
-async function geoLookup(ip: string, req: NextRequest): Promise<{ country: string; city: string; region: string; isp: string; geoTimezone: string; confidence: number }> {
-  // Priority 1: Vercel edge headers (most accurate, zero latency)
-  const vercel = getVercelGeo(req)
-  if (vercel.country) {
-    return { ...vercel, isp: '' }
+async function geoLookup(ip: string, req: NextRequest): Promise<{ country: string; city: string; region: string; isp: string; geoTimezone: string; asn: string; confidence: number }> {
+  const isPrivate = !ip || ip === '0.0.0.0' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('::1')
+  const empty = { country: '', city: '', region: '', isp: '', geoTimezone: '', asn: '', confidence: 0 }
+
+  // Priority 1: ip-api.com — city-level accuracy is better than Vercel's MaxMind for Israeli ISPs
+  if (!isPrivate) {
+    try {
+      const controller = new AbortController()
+      const timeout = setTimeout(() => controller.abort(), 1200)
+      const res = await fetch(
+        `http://ip-api.com/json/${ip}?fields=status,country,countryCode,regionName,city,isp,org,timezone,as`,
+        { signal: controller.signal }
+      )
+      clearTimeout(timeout)
+      if (res.ok) {
+        const data = await res.json()
+        if (data.status === 'success' && data.city) {
+          // Translate country name for Israeli origin
+          const countryName = COUNTRY_NAMES[data.countryCode] || data.country || ''
+          return {
+            country: countryName,
+            city: data.city || '',
+            region: data.regionName || '',
+            isp: data.isp || '',
+            geoTimezone: data.timezone || '',
+            asn: data.as || '',
+            confidence: 80,
+          }
+        }
+      }
+    } catch {
+      // fallthrough to Vercel headers
+    }
   }
 
-  // Priority 2: ip-api.com fallback
-  if (!ip || ip === '0.0.0.0' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.')) {
-    return { country: '', city: '', region: '', isp: '', geoTimezone: '', confidence: 0 }
+  // Priority 2: Vercel edge headers — good for country, acceptable for region
+  const vercel = getVercelGeo(req)
+  if (vercel.country) {
+    return { ...vercel, isp: '', asn: '' }
   }
-  try {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 800)
-    const res = await fetch(
-      `http://ip-api.com/json/${ip}?fields=status,country,regionName,city,isp,timezone`,
-      { signal: controller.signal }
-    )
-    clearTimeout(timeout)
-    const data = await res.json()
-    if (data.status === 'success') {
-      return {
-        country: data.country || '',
-        city: data.city || '',
-        region: data.regionName || '',
-        isp: data.isp || '',
-        geoTimezone: data.timezone || '',
-        confidence: 65,
-      }
-    }
-  } catch {
-    // geo lookup failure is non-fatal
-  }
-  return { country: '', city: '', region: '', isp: '', geoTimezone: '', confidence: 0 }
+
+  return empty
 }
 
 export async function POST(req: NextRequest) {
