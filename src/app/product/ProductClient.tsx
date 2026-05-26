@@ -449,8 +449,49 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
             </section>
           )
 
-        {reviews.length > 0 && (
-          <section className="py-12 px-4 bg-gray-50 border-t">
+          if (sType === 'video' && videoUrl) return (
+            <section key="video" className="py-10 px-4 bg-white border-t">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">צפה בסרטון</h2>
+                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg bg-black">
+                  <iframe
+                    src={toEmbedUrl(videoUrl)}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
+                </div>
+              </div>
+            </section>
+          )
+
+          if (sType === 'before_after' && beforeAfter && beforeAfter.length > 0) return (
+            <section key="before_after" className="py-10 px-4 bg-gray-50 border-t">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-lg font-extrabold text-center text-gray-900 mb-6">לפני ואחרי</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {beforeAfter.map((item, i) => (
+                    <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                      <div className="grid grid-cols-2 divide-x divide-x-reverse divide-gray-100">
+                        <div className="p-3 text-center">
+                          <p className="text-xs font-bold text-gray-400 mb-2">לפני</p>
+                          <img src={item.before} alt="לפני" className="w-full h-36 object-cover rounded-xl" />
+                        </div>
+                        <div className="p-3 text-center">
+                          <p className="text-xs font-bold text-emerald-600 mb-2">אחרי</p>
+                          <img src={item.after} alt="אחרי" className="w-full h-36 object-cover rounded-xl" />
+                        </div>
+                      </div>
+                      {item.label && <p className="text-xs text-center text-gray-500 px-4 pb-3 font-medium">{item.label}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )
+
+          if (sType === 'reviews' && reviews.length > 0) return (
+          <section key="reviews" className="py-12 px-4 bg-gray-50 border-t">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-extrabold text-gray-900 mb-2">מה הלקוחות אומרים</h2>
