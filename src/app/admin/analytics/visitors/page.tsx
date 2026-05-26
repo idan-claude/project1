@@ -151,7 +151,7 @@ export default function VisitorAnalyticsPage() {
           { label: 'ביקורים', value: totalVisitors.toLocaleString('he-IL'), sub: range === 'today' ? 'היום' : '7 ימים', color: 'text-white' },
           { label: 'מבקרים ייחודיים', value: uniqueVisitors.toLocaleString('he-IL'), sub: range === 'today' ? 'היום' : '7 ימים', color: 'text-blue-400' },
           { label: 'נטישת עגלה', value: cartAbandonment === '—' ? '—' : `${cartAbandonment}%`, sub: `${stats.cartEvents} הוסיפו לסל`, color: cartAbandonment === '—' ? 'text-gray-500' : Number(cartAbandonment) > 70 ? 'text-red-400' : 'text-emerald-400' },
-          { label: 'המרה', value: `${convRate}%`, sub: `${stats.checkoutCompletes} רכישות`, color: Number(convRate) > 1 ? 'text-emerald-400' : 'text-gray-400' },
+          { label: 'המרה', value: `${convRate}%`, sub: `${stats.paidOrderCount} הזמנות ששולמו`, color: Number(convRate) > 1 ? 'text-emerald-400' : 'text-gray-400' },
         ].map((kpi, i) => (
           <div key={i} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
             <p className="text-xs text-gray-500 mb-1">{kpi.label}</p>
