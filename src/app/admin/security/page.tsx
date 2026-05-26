@@ -582,7 +582,7 @@ function SuspiciousTab() {
                         <span>{s.sessions} סשנים</span>
                         <span>{s.rageClicks} rage clicks</span>
                         <span>{s.checkoutStarts} ניסיונות תשלום</span>
-                        <span>{s.purchases} רכישות</span>
+                        <span>{s.purchases} checkout_complete</span>
                       </div>
                     </div>
                     <span className="text-[10px] text-gray-700 flex-shrink-0">{new Date(s.lastSeen).toLocaleString('he-IL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>
@@ -623,7 +623,7 @@ function SuspiciousTab() {
                       <div className="flex gap-4 mt-2 text-[10px] text-gray-600">
                         <span>{s.checkoutStarts} ניסיונות תשלום</span>
                         <span>{s.rageClicks} rage clicks</span>
-                        <span>{s.purchases} רכישות</span>
+                        <span>{s.purchases} checkout_complete</span>
                       </div>
                     </div>
                     <span className="text-[10px] text-gray-700 flex-shrink-0">{new Date(s.lastSeen).toLocaleString('he-IL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>
