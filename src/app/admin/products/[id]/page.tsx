@@ -58,10 +58,16 @@ export default function EditProductPage() {
           <span className="text-gray-700">/</span>
           <h1 className="text-lg font-bold text-white truncate max-w-xs">{product.nameHe as string}</h1>
         </div>
-        <a href="/product" target="_blank" rel="noopener noreferrer"
-          className="text-xs text-blue-400 hover:text-blue-300 border border-blue-400/30 px-3 py-1.5 rounded-lg transition-colors">
-          תצוגה מקדימה ↗
-        </a>
+        <div className="flex items-center gap-2">
+          <Link href={`/admin/products/${id}/layout`}
+            className="text-xs text-purple-400 hover:text-purple-300 border border-purple-400/30 px-3 py-1.5 rounded-lg transition-colors">
+            🧩 עורך עמוד
+          </Link>
+          <a href="/product" target="_blank" rel="noopener noreferrer"
+            className="text-xs text-blue-400 hover:text-blue-300 border border-blue-400/30 px-3 py-1.5 rounded-lg transition-colors">
+            תצוגה מקדימה ↗
+          </a>
+        </div>
       </div>
       <div className="max-w-2xl">
         <ProductForm initial={product} onSave={handleSave} />
