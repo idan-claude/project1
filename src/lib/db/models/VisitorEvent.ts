@@ -64,6 +64,7 @@ const VisitorEventSchema = new Schema<IVisitorEvent>({
     city:        { type: String, default: '' },
     region:      { type: String, default: '' },
     isp:         { type: String, default: '' },
+    asn:         { type: String, default: '' },
     geoTimezone: { type: String, default: '' },
     confidence:  { type: Number, default: 0 },
   },
