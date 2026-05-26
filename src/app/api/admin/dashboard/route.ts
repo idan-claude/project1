@@ -56,8 +56,8 @@ export const GET = withAdminAuth(async () => {
     VisitorEvent.distinct('sessionId', { event: 'product_view', createdAt: { $gte: thirtyDaysAgo } }),
     // Unique sessions that added to cart in last 30 days
     VisitorEvent.distinct('sessionId', { event: 'add_to_cart', createdAt: { $gte: thirtyDaysAgo } }),
-    // Paid orders in last 30 days
-    Order.countDocuments({ 'payment.status': 'paid', createdAt: { $gte: thirtyDaysAgo } }),
+    // Paid, non-test orders in last 30 days
+    Order.countDocuments({ createdAt: { $gte: thirtyDaysAgo }, ...PAID_FILTER }),
   ])
 
   const productViews = productViewSessions.length
