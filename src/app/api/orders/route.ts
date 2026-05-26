@@ -106,10 +106,10 @@ export async function POST(req: NextRequest) {
     payment: { method: 'cardcom', status: 'pending' },
   })
 
-  // Decrement inventory for each item
-  for (const item of pricedItems) {
-    await Product.findByIdAndUpdate(item.productId, {
-      $inc: { 'inventory.quantity': -item.quantity },
+  // Decrement inventory using physical units (bundles consume bundle.quantity units per selection)
+  for (const { productId, qty } of inventoryDecrements) {
+    await Product.findByIdAndUpdate(productId, {
+      $inc: { 'inventory.quantity': -qty },
     })
   }
 
