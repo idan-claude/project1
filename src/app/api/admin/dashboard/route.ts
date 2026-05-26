@@ -49,7 +49,7 @@ export const GET = withAdminAuth(async () => {
       $expr: { $lte: ['$inventory.quantity', '$inventory.lowStockThreshold'] },
     }).select('nameHe inventory.quantity inventory.lowStockThreshold slug'),
     Order.aggregate([
-      { $match: { 'payment.status': 'paid' } },
+      { $match: PAID_FILTER },
       { $group: { _id: null, avg: { $avg: '$pricing.total' } } },
     ]),
     // Unique sessions that viewed the product page in last 30 days
