@@ -44,6 +44,17 @@ export const PUT = withAdminAuth(async (req, { params }) => {
     if (existing) return NextResponse.json({ error: 'Slug כבר קיים' }, { status: 409 })
   }
 
+  // Safe merge: preserve existing FAQs and features if payload sends empty array (prevents accidental deletion)
+  if (body.pageContent) {
+    const existingContent = (before as { pageContent?: { faqs?: unknown[]; features?: unknown[] } })?.pageContent
+    if (Array.isArray(body.pageContent.faqs) && body.pageContent.faqs.length === 0 && existingContent?.faqs?.length) {
+      body.pageContent.faqs = existingContent.faqs
+    }
+    if (Array.isArray(body.pageContent.features) && body.pageContent.features.length === 0 && existingContent?.features?.length) {
+      body.pageContent.features = existingContent.features
+    }
+  }
+
   const product = await Product.findByIdAndUpdate(params.id, body, { new: true, runValidators: true })
   if (!product) return NextResponse.json({ error: 'לא נמצא' }, { status: 404 })
   return NextResponse.json({ product })
