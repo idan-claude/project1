@@ -273,7 +273,7 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
               {subtitle && <p className="text-sm text-gray-500 mt-1 leading-snug">{subtitle}</p>}
             </div>
 
-            {reviews.length > 0 && <ReviewCarousel reviews={reviews} />}
+            {(carouselReviews?.length ?? 0) > 0 && <ReviewCarousel reviews={carouselReviews!} />}
 
             {benefitsList && benefitsList.length > 0 && (
               <ul className="space-y-1">
