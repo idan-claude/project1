@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { formatPrice } from '@/lib/utils/formatPrice'
+import AnalyticsConsistencyBanner from '@/components/admin/AnalyticsConsistencyBanner'
 
 interface Insight {
   severity: 'critical' | 'warning' | 'info'
