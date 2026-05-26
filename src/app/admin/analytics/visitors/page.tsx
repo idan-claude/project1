@@ -201,7 +201,7 @@ export default function VisitorAnalyticsPage() {
           { label: 'ביקורי דף מוצר', value: stats.byEvent['product_view'] || 0, color: 'bg-blue-500' },
           { label: 'הוספה לסל', value: stats.cartEvents, color: 'bg-indigo-500' },
           { label: 'התחלת תשלום', value: stats.checkoutStarts, color: 'bg-violet-500' },
-          { label: 'רכישה הושלמה', value: stats.checkoutCompletes, color: 'bg-emerald-500' },
+          { label: 'הזמנות ששולמו', value: stats.paidOrderCount, color: 'bg-emerald-500' },
         ].map((step, i, arr) => {
           const base = arr[0].value || 1
           const pct = Math.round((step.value / base) * 100)
