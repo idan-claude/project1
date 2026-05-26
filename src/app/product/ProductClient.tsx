@@ -61,6 +61,7 @@ export interface ProductData {
   inStock: boolean
   pageContent: ProductPageContent
   reviews: ReviewItem[]
+  carouselReviews?: ReviewItem[]
   sections?: ProductSection[]
 }
 
