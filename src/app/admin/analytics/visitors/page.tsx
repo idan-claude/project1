@@ -100,13 +100,15 @@ export default function VisitorAnalyticsPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const convRate = stats && stats.checkoutCompletes > 0 && stats.totalWeek > 0
-    ? ((stats.checkoutCompletes / stats.totalWeek) * 100).toFixed(1)
+  // convRate uses paidOrderCount (real paid orders only), NOT checkout_complete VisitorEvents
+  const convRate = stats && stats.paidOrderCount > 0 && stats.totalWeek > 0
+    ? ((stats.paidOrderCount / stats.totalWeek) * 100).toFixed(1)
     : '0.0'
 
+  // cartAbandonment: sessions that added to cart but did NOT result in a paid order
   const cartAbandonment = stats && stats.cartEvents > 0
-    ? stats.checkoutCompletes > 0
-      ? (((stats.cartEvents - stats.checkoutCompletes) / stats.cartEvents) * 100).toFixed(0)
+    ? stats.paidOrderCount > 0
+      ? (((stats.cartEvents - stats.paidOrderCount) / stats.cartEvents) * 100).toFixed(0)
       : '100'
     : '—'
 
