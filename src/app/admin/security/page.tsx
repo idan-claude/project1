@@ -454,7 +454,7 @@ function BlocklistTab() {
                 <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${entry.type === 'block' ? 'bg-red-500/15 text-red-400' : 'bg-emerald-500/15 text-emerald-400'}`}>
                   {entry.type === 'block' ? 'חסום' : 'מאושר'}
                 </span>
-                <span className="font-mono text-gray-300 text-xs">{entry.ipMasked}</span>
+                <code className="font-mono text-gray-300 text-xs select-all">{entry.ip || entry.ipMasked}</code>
                 <span className="flex-1 text-gray-600 text-xs truncate">{entry.reason || '—'}</span>
                 <span className="text-gray-700 text-[10px] flex-shrink-0">{new Date(entry.createdAt).toLocaleDateString('he-IL')}</span>
                 <button onClick={() => handleDelete(entry._id)} className="text-gray-700 hover:text-red-400 text-xs flex-shrink-0 transition-colors px-1">✕</button>
