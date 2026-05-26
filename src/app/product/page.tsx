@@ -120,8 +120,14 @@ export default async function ProductPage() {
     _id: { toString(): string }
     slug: string
     nameHe: string
+    subtitle?: string
     descriptionShort?: string
+    benefitsList?: string[]
+    ctaText?: string
+    addToCartText?: string
+    videoUrl?: string
     ogImage?: string
+    beforeAfter?: { before: string; after: string; label: string }[]
     seo?: { metaTitle?: string; metaDescription?: string }
     pricing: { sellingPrice: number; compareAtPrice: number }
     images?: { url: string }[]
