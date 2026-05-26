@@ -209,19 +209,49 @@ function FeatureCarousel() {
   )
 }
 
+interface ProductPricing {
+  sellingPrice: number
+  compareAtPrice: number
+  nameHe: string
+  image: string
+}
+
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const [pricing, setPricing] = useState<ProductPricing | null>(null)
   const addItem = useCartStore((s) => s.addItem)
 
+  useEffect(() => {
+    fetch(`/api/products/${PRODUCT_SLUG}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (d?.product) {
+          setPricing({
+            sellingPrice: d.product.pricing?.sellingPrice ?? 0,
+            compareAtPrice: d.product.pricing?.compareAtPrice ?? 0,
+            nameHe: d.product.nameHe ?? 'כרטיס מעקב FindCard PRO',
+            image: d.product.images?.[0]?.url ?? '',
+          })
+        }
+      })
+      .catch(() => null)
+  }, [])
+
+  const sellingPrice = pricing?.sellingPrice ?? 0
+  const compareAtPrice = pricing?.compareAtPrice ?? 0
+  const productName = pricing?.nameHe ?? 'כרטיס מעקב FindCard PRO'
+  const productImage = pricing?.image ?? ''
+
   function addToCart() {
+    if (!sellingPrice) return
     addItem({
       productId: PRODUCT_SLUG,
       slug: PRODUCT_SLUG,
-      nameHe: 'כרטיס מעקב FindCard PRO',
-      image: '',
-      sellingPrice: SELLING_PRICE,
+      nameHe: productName,
+      image: productImage,
+      sellingPrice,
       quantity: 1,
       variantLabel: '',
     })
