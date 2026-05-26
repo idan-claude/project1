@@ -129,6 +129,9 @@ export default function VisitorProfilePage() {
   const fraudCount = Object.values(profile.fraudSignals).filter(Boolean).length
   const intentColor = profile.purchaseIntentScore >= 70 ? 'bg-emerald-500' : profile.purchaseIntentScore >= 40 ? 'bg-amber-500' : 'bg-gray-600'
   const engageColor = profile.engagementScore >= 70 ? 'bg-blue-500' : profile.engagementScore >= 30 ? 'bg-indigo-500' : 'bg-gray-600'
+  const hesitationColor = profile.hesitationScore >= 70 ? 'bg-red-500' : profile.hesitationScore >= 40 ? 'bg-amber-500' : 'bg-emerald-500'
+  const frustrationColor = profile.frustrationScore >= 60 ? 'bg-red-500' : profile.frustrationScore >= 30 ? 'bg-amber-500' : 'bg-gray-600'
+  const attentionColor = profile.attentionScore >= 70 ? 'bg-emerald-500' : profile.attentionScore >= 40 ? 'bg-blue-500' : 'bg-gray-600'
 
   return (
     <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
