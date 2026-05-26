@@ -147,101 +147,75 @@ export default function PaymentsPage() {
         </>
       )}
 
-      {/* CARDCOM SETTINGS */}
+      {/* CARDCOM SETTINGS — status only, credentials come from Vercel env vars */}
       {tab === 'settings' && (
-        <div className="max-w-lg">
-          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 space-y-4">
-            <div className="flex items-center gap-3 mb-2">
+        <div className="max-w-lg space-y-4">
+          {/* Status card */}
+          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+            <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">💳</span>
               <div>
                 <h2 className="text-base font-bold text-white">Cardcom</h2>
-                <p className="text-xs text-gray-600">שער תשלום ישראלי — קרדקום</p>
+                <p className="text-xs text-gray-500">שער תשלום ישראלי — קרדקום</p>
               </div>
             </div>
-
-            {loadingSettings ? (
-              <div className="space-y-2">{[...Array(3)].map((_, i) => <div key={i} className="h-11 bg-white/5 rounded-xl animate-pulse" />)}</div>
-            ) : (
-              <>
-                <div>
-                  <label className="text-xs text-gray-400 block mb-1.5">מספר מסוף (Terminal Number)</label>
-                  <input className={inputCls} value={cardcomSettings.terminal}
-                    onChange={e => setCardcomSettings(p => ({ ...p, terminal: e.target.value }))}
-                    placeholder="1234" />
-                </div>
-                <div>
-                  <label className="text-xs text-gray-400 block mb-1.5">שם משתמש API</label>
-                  <input className={inputCls} value={cardcomSettings.username}
-                    onChange={e => setCardcomSettings(p => ({ ...p, username: e.target.value }))}
-                    placeholder="user@cardcom.co.il" />
-                </div>
-                <div>
-                  <label className="text-xs text-gray-400 block mb-1.5">סיסמת API</label>
-                  <input className={inputCls} type="password" value={cardcomSettings.password}
-                    onChange={e => setCardcomSettings(p => ({ ...p, password: e.target.value }))}
-                    placeholder="••••••••" />
-                </div>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <div className={`relative w-10 h-5 rounded-full transition-colors ${cardcomSettings.testMode ? 'bg-amber-500' : 'bg-emerald-600'}`}
-                    onClick={() => setCardcomSettings(p => ({ ...p, testMode: !p.testMode }))}>
-                    <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${cardcomSettings.testMode ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                  </div>
-                  <div>
-                    <span className="text-sm text-gray-300">{cardcomSettings.testMode ? 'מצב בדיקה (Test Mode)' : 'מצב ייצור (Live Mode)'}</span>
-                    <p className="text-xs text-gray-600">{cardcomSettings.testMode ? 'עסקאות לא אמיתיות' : 'עסקאות אמיתיות'}</p>
-                  </div>
-                </label>
-
-                <div className="pt-2 border-t border-white/5">
-                  <button onClick={saveSettings} disabled={savingSettings}
-                    className={`bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors ${settingsSaved ? 'bg-emerald-600' : ''}`}>
-                    {savingSettings ? '⏳ שומר...' : settingsSaved ? '✓ נשמר' : 'שמור הגדרות'}
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className="bg-[#0E1525] border border-amber-500/20 rounded-2xl p-4 mt-4 flex items-start gap-3">
-            <span className="text-amber-400 text-lg flex-shrink-0">⚠️</span>
-            <div>
-              <p className="text-xs font-semibold text-amber-400">הגדרות נשמרות למסד הנתונים</p>
-              <p className="text-xs text-gray-600 mt-0.5">
-                לאבטחה מירבית, הגדר את הפרטים גם ב-Vercel Environment Variables:
-                CARDCOM_TERMINAL_NUMBER, CARDCOM_API_USERNAME, CARDCOM_API_PASSWORD.
-                הערכים מ-Vercel גוברים על אלה שנשמרו כאן.
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-4">
+              <p className="text-xs font-semibold text-blue-400 mb-1">הגדרת פרטי חיבור</p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                פרטי ה-API של Cardcom מוגדרים דרך <strong className="text-white">Vercel Environment Variables</strong> בלבד — לא נשמרים במסד הנתונים.
+                זה אבטחה מכוונת: מניעת חשיפת פרטים רגישים בממשק הניהול.
               </p>
             </div>
+
+            <div className="space-y-2.5">
+              {[
+                { key: 'CARDCOM_TERMINAL_NUMBER', label: 'מספר מסוף' },
+                { key: 'CARDCOM_API_USERNAME', label: 'שם משתמש API' },
+                { key: 'CARDCOM_API_PASSWORD', label: 'סיסמת API' },
+              ].map(({ key, label }) => (
+                <div key={key} className="flex items-center justify-between gap-3 py-2 border-b border-white/5">
+                  <div>
+                    <p className="text-xs text-gray-300 font-medium">{label}</p>
+                    <code className="text-[10px] text-gray-600 font-mono">{key}</code>
+                  </div>
+                  <span className="text-[10px] font-bold border px-2 py-0.5 rounded-full border-amber-500/30 text-amber-400 bg-amber-500/10 whitespace-nowrap">
+                    בדוק ב-Vercel
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="https://vercel.com/dashboard"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+            >
+              פתח Vercel Dashboard לעדכון משתנים ↗
+            </a>
           </div>
 
-          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mt-4">
-            <h3 className="text-sm font-semibold text-white mb-3">Webhook URLs</h3>
-            <div className="space-y-2">
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Payment Callback (IndicatorUrl)</p>
-                <div className="flex items-center gap-2">
-                  <code className="flex-1 bg-[#080C16] text-blue-400 text-xs px-3 py-2 rounded-lg font-mono truncate">
-                    https://project1-flame-phi.vercel.app/api/webhooks/payment
-                  </code>
-                  <button
-                    onClick={() => navigator.clipboard.writeText('https://project1-flame-phi.vercel.app/api/webhooks/payment')}
-                    className="text-xs text-gray-500 hover:text-gray-300 bg-white/5 px-2 py-2 rounded-lg transition-colors">
-                    העתק
-                  </button>
+          {/* Webhook URLs */}
+          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+            <h3 className="text-sm font-semibold text-white mb-3">Webhook URLs להגדרה ב-Cardcom</h3>
+            <div className="space-y-3">
+              {[
+                { label: 'Payment Callback (IndicatorUrl)', url: 'https://project1-flame-phi.vercel.app/api/webhooks/payment', color: 'text-blue-400' },
+                { label: 'Success Redirect', url: 'https://project1-flame-phi.vercel.app/checkout/success', color: 'text-green-400' },
+                { label: 'Cancel/Error Redirect', url: 'https://project1-flame-phi.vercel.app/checkout/cancel', color: 'text-red-400' },
+              ].map(({ label, url, color }) => (
+                <div key={url}>
+                  <p className="text-xs text-gray-500 mb-1">{label}</p>
+                  <div className="flex items-center gap-2">
+                    <code className={`flex-1 bg-[#080C16] ${color} text-xs px-3 py-2 rounded-lg font-mono truncate`}>{url}</code>
+                    <button
+                      onClick={() => navigator.clipboard.writeText(url)}
+                      className="text-xs text-gray-500 hover:text-gray-300 bg-white/5 px-2 py-2 rounded-lg transition-colors flex-shrink-0">
+                      העתק
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Success Redirect</p>
-                <code className="block bg-[#080C16] text-green-400 text-xs px-3 py-2 rounded-lg font-mono truncate">
-                  https://project1-flame-phi.vercel.app/checkout/success
-                </code>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Cancel/Error Redirect</p>
-                <code className="block bg-[#080C16] text-red-400 text-xs px-3 py-2 rounded-lg font-mono truncate">
-                  https://project1-flame-phi.vercel.app/checkout/cancel
-                </code>
-              </div>
+              ))}
             </div>
           </div>
         </div>
