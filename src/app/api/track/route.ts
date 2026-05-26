@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     const ip = getClientIP(req)
     const ua = req.headers.get('user-agent') || ''
     const { browser, os, type: deviceType } = parseUserAgent(ua)
-    const geo = await geoLookup(ip)
+    const geo = await geoLookup(ip, req)
 
     await VisitorEvent.create({
       sessionId,
@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
         term:     utm.utm_term     || utm.term     || '',
       },
       device: { type: deviceType, browser, os, userAgent: ua.slice(0, 512) },
-      geo: { ip, ...geo },
+      geo: { ip, country: geo.country, city: geo.city, region: geo.region, isp: geo.isp, geoTimezone: geo.geoTimezone, confidence: geo.confidence },
       language: (language || '').slice(0, 20),
       timezone: (timezone || '').slice(0, 60),
       scroll: typeof scroll === 'number' ? scroll : 0,
