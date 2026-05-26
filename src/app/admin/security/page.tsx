@@ -651,7 +651,13 @@ function SuspiciousTab() {
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function SecurityPage() {
-  const [tab, setTab] = useState<ActiveTab>('logins')
+  const [tab, setTab] = useState<ActiveTab>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('block') || params.get('search')) return 'blocklist'
+    }
+    return 'logins'
+  })
 
   const tabs: { id: ActiveTab; label: string }[] = [
     { id: 'logins', label: 'היסטוריית כניסות' },
