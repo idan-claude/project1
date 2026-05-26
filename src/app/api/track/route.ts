@@ -5,15 +5,48 @@ import { getClientIP, parseUserAgent } from '@/lib/utils/ipParser'
 
 export const dynamic = 'force-dynamic'
 
-async function geoLookup(ip: string): Promise<{ country: string; city: string; isp: string }> {
+// ISO 3166-1 country code → full name (most relevant)
+const COUNTRY_NAMES: Record<string, string> = {
+  IL: 'ישראל', US: 'ארצות הברית', GB: 'בריטניה', DE: 'גרמניה', FR: 'צרפת',
+  IT: 'איטליה', ES: 'ספרד', NL: 'הולנד', BE: 'בלגיה', SE: 'שוודיה',
+  CH: 'שווייץ', AT: 'אוסטריה', PL: 'פולין', CZ: 'צ׳כיה', PT: 'פורטוגל',
+  CA: 'קנדה', AU: 'אוסטרליה', JP: 'יפן', CN: 'סין', IN: 'הודו',
+  BR: 'ברזיל', MX: 'מקסיקו', RU: 'רוסיה', UA: 'אוקראינה', TR: 'טורקיה',
+}
+
+function getVercelGeo(req: NextRequest): { country: string; city: string; region: string; geoTimezone: string; confidence: number } {
+  const code = req.headers.get('x-vercel-ip-country') || ''
+  const city = decodeURIComponent(req.headers.get('x-vercel-ip-city') || '')
+  const region = req.headers.get('x-vercel-ip-region') || ''
+  const geoTimezone = req.headers.get('x-vercel-ip-timezone') || ''
+  if (code) {
+    return {
+      country: COUNTRY_NAMES[code] || code,
+      city,
+      region,
+      geoTimezone,
+      confidence: 85,
+    }
+  }
+  return { country: '', city: '', region: '', geoTimezone: '', confidence: 0 }
+}
+
+async function geoLookup(ip: string, req: NextRequest): Promise<{ country: string; city: string; region: string; isp: string; geoTimezone: string; confidence: number }> {
+  // Priority 1: Vercel edge headers (most accurate, zero latency)
+  const vercel = getVercelGeo(req)
+  if (vercel.country) {
+    return { ...vercel, isp: '' }
+  }
+
+  // Priority 2: ip-api.com fallback
   if (!ip || ip === '0.0.0.0' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.')) {
-    return { country: '', city: '', isp: '' }
+    return { country: '', city: '', region: '', isp: '', geoTimezone: '', confidence: 0 }
   }
   try {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 800)
     const res = await fetch(
-      `http://ip-api.com/json/${ip}?fields=status,country,city,isp`,
+      `http://ip-api.com/json/${ip}?fields=status,country,regionName,city,isp,timezone`,
       { signal: controller.signal }
     )
     clearTimeout(timeout)
@@ -22,13 +55,16 @@ async function geoLookup(ip: string): Promise<{ country: string; city: string; i
       return {
         country: data.country || '',
         city: data.city || '',
+        region: data.regionName || '',
         isp: data.isp || '',
+        geoTimezone: data.timezone || '',
+        confidence: 65,
       }
     }
   } catch {
     // geo lookup failure is non-fatal
   }
-  return { country: '', city: '', isp: '' }
+  return { country: '', city: '', region: '', isp: '', geoTimezone: '', confidence: 0 }
 }
 
 export async function POST(req: NextRequest) {
