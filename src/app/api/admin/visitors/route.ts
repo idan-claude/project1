@@ -211,4 +211,8 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     // Purchase truth: paid Orders only — NOT checkout_complete VisitorEvents
     paidOrderCount,
   })
+  } catch (err) {
+    console.error('[visitors] route error:', err)
+    return NextResponse.json({ error: 'Internal server error', detail: String(err) }, { status: 500 })
+  }
 })
