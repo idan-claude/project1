@@ -208,9 +208,11 @@ export const GET = withAdminAuth(async () => {
     const checks: HealthCheck[] = [
       mongoCheck,
       orderCheck,
+      lastOrderCheck,
       visitorCheck,
       cardcomCheck,
       analyticsCheck,
+      inventoryCheck,
       ...envChecks,
     ]
 
