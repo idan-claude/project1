@@ -3,8 +3,8 @@ import mongoose, { Schema, Document } from 'mongoose'
 export interface IVisitorEvent extends Document {
   storeId: string
   sessionId: string
-  visitorId: string        // stable across sessions via cookie
-  event: 'pageview' | 'add_to_cart' | 'checkout_start' | 'checkout_complete' | 'product_view' | 'custom'
+  visitorId: string
+  event: 'pageview' | 'add_to_cart' | 'checkout_start' | 'checkout_complete' | 'product_view' | 'scroll_depth' | 'rage_click' | 'exit_page' | 'custom'
   path: string
   referrer: string
   utm: {
@@ -24,8 +24,12 @@ export interface IVisitorEvent extends Document {
     ip: string
     country: string
     city: string
+    isp: string
   }
-  meta: Record<string, unknown>  // custom event data (e.g. product added, tier selected)
+  language: string
+  timezone: string
+  scroll: number  // scroll depth percentage (0-100), set on scroll_depth events
+  meta: Record<string, unknown>
   orderId: string | null
   createdAt: Date
 }
