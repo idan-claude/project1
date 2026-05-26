@@ -3,6 +3,7 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import VisitorEvent from '@/lib/db/models/VisitorEvent'
 import Order from '@/lib/db/models/Order'
+import Product from '@/lib/db/models/Product'
 import { PAID_FILTER, validateAnalyticsConsistency } from '@/lib/analytics/sourceOfTruth'
 
 export const dynamic = 'force-dynamic'
