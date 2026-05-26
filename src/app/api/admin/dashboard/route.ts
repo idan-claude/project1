@@ -33,11 +33,11 @@ export const GET = withAdminAuth(async () => {
     paidOrders30d,
   ] = await Promise.all([
     Order.aggregate([
-      { $match: { createdAt: { $gte: today }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: today }, ...PAID_FILTER } },
       { $group: { _id: null, total: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
     Order.aggregate([
-      { $match: { createdAt: { $gte: firstOfMonth }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: firstOfMonth }, ...PAID_FILTER } },
       { $group: { _id: null, total: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
     Order.countDocuments({ status: { $in: ['new', 'processing'] } }),
