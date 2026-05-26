@@ -35,8 +35,7 @@ interface VisitorProfile {
   confidence: number
   isp: string
   asn: string
-  ipFull: string
-  ipMasked: string
+  ip: string
   language: string
   timezone: string
   utmSource: string
