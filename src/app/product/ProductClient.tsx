@@ -131,10 +131,19 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
     const cleanScroll = trackScrollDepth()
     const cleanRage = trackRageClicks()
     const cleanInactive = trackInactivity(30000)
+
+    function onVisibilityChange() {
+      if (document.visibilityState === 'hidden') {
+        track('exit_page', { product: slug, path: window.location.pathname })
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
     return () => {
       cleanScroll?.()
       cleanRage?.()
       cleanInactive?.()
+      document.removeEventListener('visibilitychange', onVisibilityChange)
     }
   }, [slug])
 
