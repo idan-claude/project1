@@ -538,27 +538,30 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
               </div>
             </div>
           </section>
-        )}
+          )
 
-        {pageContent.faqs?.length > 0 && (
-          <section className="py-10 px-4 bg-white border-t">
-            <div className="max-w-2xl mx-auto">
-              <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">שאלות נפוצות</h2>
-              <div className="space-y-2">
-                {pageContent.faqs.map(({ q, a }, i) => (
-                  <div key={i} className="bg-gray-50 border border-gray-100 rounded-xl overflow-hidden">
-                    <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                      className="w-full flex items-center justify-between px-4 py-3.5 text-right font-semibold text-gray-900 text-sm hover:bg-gray-100 transition-colors">
-                      <span>{q}</span>
-                      <span className={`text-gray-400 text-xl transition-transform duration-200 flex-shrink-0 mr-3 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
-                    </button>
-                    {openFaq === i && <div className="px-4 pb-4 text-xs text-gray-600 leading-relaxed border-t border-gray-100 pt-3">{a}</div>}
-                  </div>
-                ))}
+          if (sType === 'faq' && pageContent.faqs?.length > 0) return (
+            <section key="faq" className="py-10 px-4 bg-white border-t">
+              <div className="max-w-2xl mx-auto">
+                <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">שאלות נפוצות</h2>
+                <div className="space-y-2">
+                  {pageContent.faqs.map(({ q, a }, i) => (
+                    <div key={i} className="bg-gray-50 border border-gray-100 rounded-xl overflow-hidden">
+                      <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        className="w-full flex items-center justify-between px-4 py-3.5 text-right font-semibold text-gray-900 text-sm hover:bg-gray-100 transition-colors">
+                        <span>{q}</span>
+                        <span className={`text-gray-400 text-xl transition-transform duration-200 flex-shrink-0 mr-3 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+                      </button>
+                      {openFaq === i && <div className="px-4 pb-4 text-xs text-gray-600 leading-relaxed border-t border-gray-100 pt-3">{a}</div>}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )
+
+          return null
+        })}
       </main>
       <Footer />
     </div>
