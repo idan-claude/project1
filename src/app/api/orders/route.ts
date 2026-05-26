@@ -104,6 +104,7 @@ export async function POST(req: NextRequest) {
     items: pricedItems,
     pricing: { subtotal, shippingCost, discount, total },
     payment: { method: 'cardcom', status: 'pending' },
+    testMode: process.env.PAYMENT_TEST_MODE === 'true',
   })
 
   // Decrement inventory using physical units (bundles consume bundle.quantity units per selection)
