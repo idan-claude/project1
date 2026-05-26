@@ -17,7 +17,7 @@ export const GET = withAdminAuth(async () => {
     cartEvents,
     checkoutStarts,
     checkoutCompletes,
-    orders30,
+    paidOrders30,
     orderStats,
     pagePerf,
     exitPages,
