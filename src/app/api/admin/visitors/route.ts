@@ -207,5 +207,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     returningRate,
     totalSessions,
     dropoffByEvent,
+    // Purchase truth: paid Orders only — NOT checkout_complete VisitorEvents
+    paidOrderCount,
   })
 })
