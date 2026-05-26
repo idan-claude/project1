@@ -161,8 +161,8 @@ export default function VisitorProfilePage() {
         </div>
       </div>
 
-      {/* Score cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+      {/* Score cards — row 1 */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
         <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">כוונת רכישה</p>
           <p className={`text-2xl font-black ${profile.purchaseIntentScore >= 70 ? 'text-emerald-400' : profile.purchaseIntentScore >= 40 ? 'text-amber-400' : 'text-gray-400'}`}>
@@ -188,6 +188,38 @@ export default function VisitorProfilePage() {
             {profile.bounceProbability}%
           </p>
           <p className="text-xs text-gray-600 mt-1">הסתברות</p>
+        </div>
+      </div>
+
+      {/* Score cards — row 2: behavioral intelligence */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">היסוס</p>
+          <p className={`text-2xl font-black ${profile.hesitationScore >= 70 ? 'text-red-400' : profile.hesitationScore >= 40 ? 'text-amber-400' : 'text-emerald-400'}`}>
+            {profile.hesitationScore}
+          </p>
+          <ScoreBar value={profile.hesitationScore} color={hesitationColor} />
+        </div>
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">תסכול</p>
+          <p className={`text-2xl font-black ${profile.frustrationScore >= 60 ? 'text-red-400' : profile.frustrationScore >= 30 ? 'text-amber-400' : 'text-gray-400'}`}>
+            {profile.frustrationScore}
+          </p>
+          <ScoreBar value={profile.frustrationScore} color={frustrationColor} />
+        </div>
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">קשב</p>
+          <p className={`text-2xl font-black ${profile.attentionScore >= 70 ? 'text-emerald-400' : profile.attentionScore >= 40 ? 'text-blue-400' : 'text-gray-400'}`}>
+            {profile.attentionScore}
+          </p>
+          <ScoreBar value={profile.attentionScore} color={attentionColor} />
+        </div>
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">עיכוב CTA</p>
+          <p className="text-2xl font-black text-white">
+            {profile.ctaHesitationSec != null ? fmtDuration(profile.ctaHesitationSec) : '—'}
+          </p>
+          <p className="text-xs text-gray-600 mt-1">מביקור ללחיצה</p>
         </div>
       </div>
 
