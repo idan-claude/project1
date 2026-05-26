@@ -319,6 +319,7 @@ function VisitorsTab() {
 // ── Blocklist Tab ─────────────────────────────────────────────────────────────
 interface BlockEntry {
   _id: string
+  ip: string
   ipMasked: string
   type: 'block' | 'whitelist'
   reason: string
