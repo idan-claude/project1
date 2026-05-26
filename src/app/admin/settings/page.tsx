@@ -60,6 +60,10 @@ export default function AdminSettingsPage() {
   const [cloudinary, setCloudinary] = useState({ cloudName: '', apiKey: '', apiSecret: '' })
   const [smtp, setSmtp] = useState({ smtpUser: '', smtpPassword: '' })
   const [twilio, setTwilio] = useState({ accountSid: '', authToken: '', whatsappFrom: '' })
+  const [globalFaqs, setGlobalFaqs] = useState<{ q: string; a: string }[]>([])
+  const [faqLoading, setFaqLoading] = useState(true)
+  const [faqSaving, setFaqSaving] = useState(false)
+  const [faqSaved, setFaqSaved] = useState(false)
 
   useEffect(() => {
     const keys = ['store', 'cloudinary', 'smtp', 'twilio']
@@ -75,7 +79,30 @@ export default function AdminSettingsPage() {
         })
         .catch(() => {})
     })
+    // Load global FAQs
+    fetch('/api/admin/global-faq')
+      .then(r => r.json())
+      .then(d => { if (d.faqs) setGlobalFaqs(d.faqs) })
+      .catch(() => {})
+      .finally(() => setFaqLoading(false))
   }, [])
+
+  async function saveGlobalFaqs() {
+    setFaqSaving(true)
+    try {
+      const res = await fetch('/api/admin/global-faq', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ faqs: globalFaqs }),
+      })
+      const d = await res.json()
+      if (d.faqs) setGlobalFaqs(d.faqs)
+      setFaqSaved(true)
+      setTimeout(() => setFaqSaved(false), 2500)
+    } finally {
+      setFaqSaving(false)
+    }
+  }
 
   async function save(key: string, value: object) {
     setSaving(true)
