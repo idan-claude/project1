@@ -132,11 +132,12 @@ export default async function ProductPage() {
 
   const STORE_ID = 'default'
 
-  const [productRaw, reviewsRaw, layoutRaw, globalFaqSettings] = await Promise.all([
+  const [productRaw, reviewsRaw, layoutRaw, globalFaqSettings, carouselSettings] = await Promise.all([
     Product.findOne({ slug: PRODUCT_SLUG, status: 'active' }).lean(),
     Review.find({ status: 'approved' }).sort({ createdAt: -1 }).limit(20).lean(),
     PageLayout.findOne({ storeId: STORE_ID, productId: null }).lean().catch(() => null),
     Settings.findOne({ storeId: STORE_ID, key: 'global_faqs' }).lean().catch(() => null),
+    Settings.findOne({ storeId: STORE_ID, key: 'carousel_reviews' }).lean().catch(() => null),
   ])
 
   if (!productRaw) notFound()
