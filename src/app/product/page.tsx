@@ -155,6 +155,18 @@ export default async function ProductPage() {
     globalFaqs = seedFaqs
   }
 
+  // Carousel reviews: dedicated short/social-proof reviews, never overlaps with bottom reviews
+  const rawCarouselValue = (carouselSettings as { value?: unknown } | null)?.value as { reviews?: ReviewItem[] } | undefined
+  let carouselReviews: ReviewItem[] = rawCarouselValue?.reviews || []
+  if (!carouselReviews.length) {
+    await Settings.findOneAndUpdate(
+      { storeId: STORE_ID, key: 'carousel_reviews' },
+      { $setOnInsert: { storeId: STORE_ID, key: 'carousel_reviews', value: { reviews: FALLBACK_CAROUSEL } } },
+      { upsert: true }
+    )
+    carouselReviews = FALLBACK_CAROUSEL
+  }
+
   // Fetch product-specific layout (overrides global)
   const productLayoutRaw = await PageLayout.findOne({ storeId: STORE_ID, productId: productRaw._id }).lean().catch(() => null)
   const activeLayout = productLayoutRaw ?? layoutRaw
