@@ -51,6 +51,7 @@ export interface IOrder extends Document {
     whatsappSent: boolean
     emailSent: boolean
   }
+  testMode: boolean
   createdAt: Date
   updatedAt: Date
 }
