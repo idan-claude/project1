@@ -84,9 +84,10 @@ export const GET = withAdminAuth(async () => {
     })
   }
 
-  const totalConverted   = enriched.filter(s => s.converted).length
+  // Use actual paid Order count as authoritative purchase truth (not VisitorEvent signals)
+  const paidOrderCount = await Order.countDocuments({ 'payment.status': 'paid', createdAt: { $gte: last30 } })
   const totalAtc         = enriched.filter(s => s.addedToCart).length
-  const overallConvRate  = totalSessions > 0 ? (totalConverted / totalSessions) * 100 : 0
+  const overallConvRate  = totalSessions > 0 ? (paidOrderCount / totalSessions) * 100 : 0
   const overallAtcRate   = totalSessions > 0 ? (totalAtc / totalSessions) * 100 : 0
 
   // Conversion by UTM source
