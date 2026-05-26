@@ -401,24 +401,28 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
 
                 <div className="flex flex-col gap-3">
                   <button onClick={handleBuyNow} className="w-full bg-blue-700 text-white font-extrabold py-4 rounded-xl hover:bg-blue-800 transition-colors text-lg shadow-lg">
-                    קנה עכשיו ← {priceDisplay(bundle.price)}
+                    {buyNowText} {priceDisplay(bundle.price)}
                   </button>
                   <button onClick={handleAdd} className="w-full bg-white text-blue-600 border-2 border-blue-600 font-bold py-4 rounded-xl hover:bg-blue-50 transition-colors text-lg">
-                    {added ? '✓ נוסף לסל! 🛒' : 'הוסף לסל 🛒'}
+                    {added ? '✓ נוסף לסל! 🛒' : addToCartLabel}
                   </button>
                 </div>
 
-                <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl px-4 py-3 border">
-                  <span className="text-xl">🚚</span>
-                  <div>
-                    <p className="font-semibold text-gray-900">משלוח חינם לכל הארץ</p>
-                    <p className="text-xs text-gray-500">{shippingText}</p>
+                {isSectionEnabled('shipping') && (
+                  <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl px-4 py-3 border">
+                    <span className="text-xl">🚚</span>
+                    <div>
+                      <p className="font-semibold text-gray-900">משלוח חינם לכל הארץ</p>
+                      <p className="text-xs text-gray-500">{shippingText}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 bg-gray-900 text-white rounded-xl px-4 py-3 text-sm">
-                  <span className="text-2xl flex-shrink-0">🛡️</span>
-                  <p><strong>ביטחון בקנייה:</strong> {guaranteeText}</p>
-                </div>
+                )}
+                {isSectionEnabled('guarantee') && (
+                  <div className="flex items-center gap-3 bg-gray-900 text-white rounded-xl px-4 py-3 text-sm">
+                    <span className="text-2xl flex-shrink-0">🛡️</span>
+                    <p><strong>ביטחון בקנייה:</strong> {guaranteeText}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
