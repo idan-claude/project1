@@ -107,7 +107,7 @@ export default function AnalyticsPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
             {[
               { label: 'הכנסה כוללת', val: formatPrice(data.totals.revenue), sub: 'מכל הזמנים', cls: 'text-blue-400' },
-              { label: 'סה"כ הזמנות', val: data.totals.orders, sub: 'לא בוטלו', cls: 'text-emerald-400' },
+              { label: 'סה"כ הזמנות', val: data.totals.orders, sub: 'שולמו בלבד', cls: 'text-emerald-400' },
               { label: 'ממוצע הזמנה', val: formatPrice(data.totals.avgOrder), sub: 'AOV', cls: 'text-violet-400' },
               { label: 'לקוחות ייחודיים', val: data.totals.uniqueCustomers, sub: 'לפי אימייל', cls: 'text-amber-400' },
             ].map(k => (
