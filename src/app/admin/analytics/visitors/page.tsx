@@ -441,7 +441,9 @@ export default function VisitorAnalyticsPage() {
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs text-gray-400 font-mono truncate">{journey.visitorId.slice(0, 8)}...</span>
+                        <Link href={`/admin/visitors/${journey.visitorId}`} className="text-xs text-blue-400 hover:underline font-mono truncate" onClick={e => e.stopPropagation()}>
+                          {journey.visitorId.slice(0, 8)}...
+                        </Link>
                         <span className="text-[10px] text-gray-600">{journey.device || 'unknown'}</span>
                         {journey.country && <span className="text-[10px] text-gray-600">{journey.country}</span>}
                         {journey.language && <span className="text-[10px] text-gray-600">{journey.language}</span>}
