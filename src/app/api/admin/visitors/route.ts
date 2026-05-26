@@ -9,6 +9,7 @@ export const dynamic = 'force-dynamic'
 const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
 
 export const GET = withAdminAuth(async (req: NextRequest) => {
+  try {
   await connectDB()
 
   const now = new Date()
