@@ -322,9 +322,21 @@ export default function HomePage() {
                   כרטיס מעקב <span className="text-blue-600">FindCard PRO</span>
                 </h2>
                 <div className="flex items-baseline gap-3 mb-6">
-                  <span className="text-4xl font-black text-blue-600">₪199.90</span>
-                  <span className="text-xl text-gray-400 line-through">₪299</span>
-                  <span className="bg-red-100 text-red-600 text-sm font-bold px-2 py-0.5 rounded">חסוך 33%</span>
+                  {sellingPrice ? (
+                    <>
+                      <span className="text-4xl font-black text-blue-600">{formatPrice(sellingPrice)}</span>
+                      {compareAtPrice > sellingPrice && (
+                        <>
+                          <span className="text-xl text-gray-400 line-through">{formatPrice(compareAtPrice)}</span>
+                          <span className="bg-red-100 text-red-600 text-sm font-bold px-2 py-0.5 rounded">
+                            חסוך {Math.round((1 - sellingPrice / compareAtPrice) * 100)}%
+                          </span>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <span className="h-10 w-32 bg-gray-100 rounded animate-pulse inline-block" />
+                  )}
                 </div>
                 <ul className="space-y-3 mb-8">
                   {[
