@@ -361,7 +361,19 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                     {ratingDisplay && <span className="text-xs text-gray-400">⭐ {ratingDisplay} · {reviewCount} ביקורות</span>}
                   </div>
                   <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">{nameHe}</h1>
+                  {subtitle && <p className="text-base text-gray-500 mt-1">{subtitle}</p>}
                 </div>
+
+                {benefitsList && benefitsList.length > 0 && (
+                  <ul className="space-y-1.5">
+                    {benefitsList.map((b, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="text-emerald-500 flex-shrink-0 mt-0.5 font-bold">✓</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 {reviews.length > 0 && <ReviewCarousel reviews={reviews} />}
 
@@ -370,10 +382,12 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                   <BundleSelector />
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-4 py-2.5">
-                  <span>🔥</span>
-                  <span><strong>מבצע מוגבל:</strong> {urgencyText}</span>
-                </div>
+                {isSectionEnabled('urgency') && (
+                  <div className="flex items-center gap-2 text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-4 py-2.5">
+                    <span>🔥</span>
+                    <span><strong>מבצע מוגבל:</strong> {urgencyText}</span>
+                  </div>
+                )}
 
                 {bundle.compareAtPrice > 0 && (
                   <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm">
