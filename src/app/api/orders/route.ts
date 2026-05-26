@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
 
   // Validate and price items from DB
   const pricedItems = []
+  const inventoryDecrements: { productId: string; qty: number }[] = []
   let subtotal = 0
 
   for (const item of items) {
@@ -25,11 +26,26 @@ export async function POST(req: NextRequest) {
     if (!product || product.status !== 'active') {
       return NextResponse.json({ error: `מוצר "${item.nameHe}" אינו זמין` }, { status: 400 })
     }
-    // Check stock if tracking is enabled
-    if (product.inventory.trackQuantity && product.inventory.quantity < item.quantity) {
+
+    // Resolve price: if a bundle is selected, use bundle.price as authoritative total for quantity=1 bundle unit
+    let unitPrice = product.pricing.sellingPrice
+    let physicalQty = item.quantity  // actual inventory units consumed
+    if (item.variantLabel) {
+      const bundle = product.bundles?.find(
+        (b: { title: string; active?: boolean; price: number; quantity: number }) =>
+          b.title === item.variantLabel && b.active !== false
+      )
+      if (bundle) {
+        unitPrice = bundle.price
+        physicalQty = bundle.quantity * item.quantity
+      }
+    }
+
+    // Check stock against physical units the bundle consumes
+    if (product.inventory.trackQuantity && product.inventory.quantity < physicalQty) {
       return NextResponse.json({ error: `${product.nameHe} — אין מלאי מספיק` }, { status: 400 })
     }
-    const unitPrice = product.pricing.sellingPrice
+
     const totalPrice = unitPrice * item.quantity
     subtotal += totalPrice
     pricedItems.push({
@@ -42,6 +58,7 @@ export async function POST(req: NextRequest) {
       unitPrice,
       totalPrice,
     })
+    inventoryDecrements.push({ productId: String(product._id), qty: physicalQty })
   }
 
   // Validate coupon if provided
