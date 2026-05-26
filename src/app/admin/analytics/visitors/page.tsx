@@ -44,6 +44,10 @@ const EVENT_LABELS: Record<string, string> = {
   scroll_depth: 'גלילה',
   rage_click: 'לחיצות כעס',
   exit_page: 'יציאה',
+  faq_open: 'פתח שאלה',
+  gallery_view: 'גלריה',
+  cta_click: 'לחץ CTA',
+  inactive: 'לא פעיל',
   custom: 'מותאם',
 }
 
@@ -56,6 +60,10 @@ const EVENT_ICONS: Record<string, string> = {
   scroll_depth: '📜',
   rage_click: '😤',
   exit_page: '🚪',
+  faq_open: '❓',
+  gallery_view: '🖼',
+  cta_click: '🎯',
+  inactive: '💤',
   custom: '📍',
 }
 
