@@ -111,7 +111,7 @@ function ReviewCarousel({ reviews }: { reviews: ReviewItem[] }) {
   )
 }
 
-export default function ProductClient({ productId, slug, nameHe, gallery, bundles, inStock, pageContent, reviews }: ProductData) {
+export default function ProductClient({ productId, slug, nameHe, subtitle, benefitsList, ctaText, addToCartText, videoUrl, beforeAfter, gallery, bundles, inStock, pageContent, reviews, sections }: ProductData) {
   const [bundleIndex, setBundleIndex] = useState(() => {
     const recommended = bundles.findIndex(b => b.isRecommended)
     return recommended >= 0 ? recommended : Math.min(1, bundles.length - 1)
