@@ -236,6 +236,7 @@ export default function VisitorProfilePage() {
               { label: 'שאלות FAQ', value: profile.faqOpens, icon: '❓', highlight: false },
               { label: 'לחיצות CTA', value: profile.ctaClicks, icon: '🎯', highlight: profile.ctaClicks > 0 },
               { label: 'גלילה מרבית', value: `${profile.maxScrollPct}%`, icon: '📜', highlight: profile.maxScrollPct >= 75 },
+              { label: 'יציאות מדף', value: profile.exitPages, icon: '🚪', highlight: false },
               { label: 'לחיצות כעס', value: profile.rageClicks, icon: '😤', highlight: profile.rageClicks > 2 },
             ].map((item, i) => (
               <div key={i} className="flex items-center justify-between">
