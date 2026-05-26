@@ -746,7 +746,7 @@ export default function ProductForm({ initial, onSave }: ProductFormProps) {
               </div>
               <button type="button" onClick={addFaq} className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">+ הוסף שאלה</button>
             </div>
-            {faqs.length === 0 && <p className="text-xs text-gray-600 py-2">ריק — יופיעו ברירות מחדל (6 שאלות)</p>}
+            {faqs.length === 0 && <p className="text-xs text-gray-600 py-2">ריק — יופיעו השאלות הגלובליות (מהגדרות האדמין)</p>}
             {faqs.map((f, i) => (
               <div key={i} className="bg-[#080C16] rounded-xl p-3 space-y-2">
                 <div className="flex items-center gap-2">
