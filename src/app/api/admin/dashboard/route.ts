@@ -5,10 +5,9 @@ import Order from '@/lib/db/models/Order'
 import User from '@/lib/db/models/User'
 import Product from '@/lib/db/models/Product'
 import VisitorEvent from '@/lib/db/models/VisitorEvent'
+import { PAID_FILTER } from '@/lib/analytics/sourceOfTruth'
 
 export const dynamic = 'force-dynamic'
-
-const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
 
 export const GET = withAdminAuth(async () => {
   await connectDB()
