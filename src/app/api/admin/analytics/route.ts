@@ -72,9 +72,9 @@ export const GET = withAdminAuth(async () => {
       { $sort: { revenue: -1 } },
       { $limit: 5 },
     ]),
-    // Orders by hour of day — paid orders only
+    // Orders by hour of day — paid, non-test orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, ...PAID_FILTER } },
       {
         $group: {
           _id: { $hour: '$createdAt' },
