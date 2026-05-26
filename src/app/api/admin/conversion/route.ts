@@ -53,7 +53,7 @@ export const GET = withAdminAuth(async () => {
 
   const totalRevenue = orderStats[0]?.totalRevenue || 0
   const avgOrderValue = orderStats[0]?.avgOrderValue || 0
-  const paidOrders = orders30
+  const paidOrders = paidOrders30
 
   // Funnel drop-off analysis
   const cartConversion = productViews > 0 ? (cartEvents / productViews) * 100 : 0
