@@ -574,7 +574,11 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                 <div className="space-y-2">
                   {pageContent.faqs.map(({ q, a }, i) => (
                     <div key={i} className="bg-gray-50 border border-gray-100 rounded-xl overflow-hidden">
-                      <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      <button onClick={() => {
+                        const isOpening = openFaq !== i
+                        setOpenFaq(openFaq === i ? null : i)
+                        if (isOpening) track('faq_open', { faqIndex: i, question: q.slice(0, 80), product: slug })
+                      }}
                         className="w-full flex items-center justify-between px-4 py-3.5 text-right font-semibold text-gray-900 text-sm hover:bg-gray-100 transition-colors">
                         <span>{q}</span>
                         <span className={`text-gray-400 text-xl transition-transform duration-200 flex-shrink-0 mr-3 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
