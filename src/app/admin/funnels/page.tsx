@@ -45,7 +45,7 @@ export default function FunnelsPage() {
         productViews,
         addToCart,
         checkoutStart,
-        checkoutComplete: Math.max(checkoutComplete, totalOrders),
+        checkoutComplete: totalOrders,
         totalOrders,
         paidOrders: totalOrders,
         avgOrderValue,
