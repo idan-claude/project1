@@ -277,7 +277,7 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
             <img src={displayImage} alt={nameHe} className="w-full aspect-square object-cover" />
             <div dir="ltr" className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-2 pt-6 bg-gradient-to-t from-[#0C1020]/80 to-transparent">
               {gallery.map((src, i) => (
-                <button key={i} onClick={() => setActiveImg(i)}
+                <button key={i} onClick={() => setActiveImgTracked(i)}
                   className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${activeImg === i ? 'border-blue-400 opacity-100' : 'border-transparent opacity-50'}`}>
                   <img src={src} alt="" className="w-full h-full object-cover bg-[#0C1020]" />
                 </button>
@@ -358,14 +358,14 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                   <img src={displayImage} alt={nameHe} className="w-full h-full object-cover" />
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
                     {gallery.map((_, i) => (
-                      <button key={i} onClick={() => setActiveImg(i)}
+                      <button key={i} onClick={() => setActiveImgTracked(i)}
                         className={`rounded-full transition-all duration-200 ${activeImg === i ? 'w-6 h-2.5 bg-blue-400' : 'w-2.5 h-2.5 bg-white/30 hover:bg-white/50'}`} />
                     ))}
                   </div>
                 </div>
                 <div dir="ltr" className="flex gap-2">
                   {gallery.map((src, i) => (
-                    <button key={i} onClick={() => setActiveImg(i)}
+                    <button key={i} onClick={() => setActiveImgTracked(i)}
                       className={`flex-1 aspect-square rounded-xl overflow-hidden border-2 transition-all bg-[#0C1020] ${activeImg === i ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-75'}`}>
                       <img src={src} alt="" className="w-full h-full object-cover" />
                     </button>
