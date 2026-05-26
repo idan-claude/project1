@@ -218,6 +218,8 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
       region,
       confidence,
       isp,
+      asn,
+      ipFull,
       ipMasked,
       language: firstEvent.language || '',
       timezone: firstEvent.timezone || '',
