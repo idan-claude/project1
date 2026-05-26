@@ -80,6 +80,7 @@ export default function FunnelsPage() {
 
   return (
     <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+      <AnalyticsConsistencyBanner />
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">משפכי המרה</h1>
