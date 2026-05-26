@@ -192,11 +192,101 @@ Full Claude-powered insights can be added once the API key is configured.
 
 ---
 
+## SPRINT 5A EXTENDED — ADDED 2026-05-27
+
+### PHASE 0 — ANALYTICS TRUTH LOCK ✅
+
+**PAID_FILTER consolidated:** All 6 API routes (`dashboard`, `visitors`, `analytics`, `conversion`, `finance`, `analytics/conversion`) now import `PAID_FILTER` from `src/lib/analytics/sourceOfTruth.ts`. Zero local re-definitions remain.
+
+**Runtime consistency validator:** `validateAnalyticsConsistency()` in `sourceOfTruth.ts` cross-checks paid orders vs checkout_complete events and returns structured warnings.
+
+**Consistency API:** `GET /api/admin/analytics/consistency` — callable by any admin page to detect purchase metric drift.
+
+**AnalyticsConsistencyBanner component:** Shown on `/admin/analytics/visitors`, `/admin/ai-insights`, `/admin/funnels` when warnings are detected. Hidden when analytics are consistent.
+
+---
+
+### PHASE 2 — VISITOR INTELLIGENCE V2 ✅
+
+New behavioral scores in `/api/admin/visitors/[id]`:
+
+| Score | Formula | Range |
+|-------|---------|-------|
+| hesitationScore | Time from first product_view to first add_to_cart (0=instant, 100=60+ min or never added) | 0–100 |
+| frustrationScore | rageClicks×20 + exitPages×10 + bounce bonus | 0–100 |
+| attentionScore | scrollDepth×0.4 + duration×0.4 + returning×0.2 | 0–100 |
+| ctaHesitationSec | Seconds from first product_view to first CTA click | seconds |
+
+Visitor profile page now shows two score rows: intent/engagement/sessions/bounce + hesitation/frustration/attention/CTA-delay.
+
+---
+
+### PHASE 6 — HEALTH MONITOR EXTENDED ✅
+
+Two new health checks added:
+- **מלאי מוצרים**: Detects active products with 0 inventory (CRITICAL) or low stock (WARNING)
+- **הזמנה אחרונה**: Shows age of last real paid order — warns if > 7 days old
+
+Existing analytics consistency check now calls shared `validateAnalyticsConsistency()` instead of duplicating logic.
+
+---
+
+### GEO PRECISION FIX ✅
+
+**Problem**: Vercel's MaxMind database was showing wrong Israeli cities (Rishon LeZion instead of Rosh HaAyin for some ISPs).
+
+**Fix**: Swapped geo lookup priority:
+- **Priority 1**: ip-api.com (80% confidence, city-level accuracy better for Israeli ISPs like Partner/Hot/Bezeq). Fields: `country`, `city`, `region`, `isp`, `org`, `timezone`, `as` (ASN).
+- **Priority 2**: Vercel edge headers fallback (country/region only when ip-api fails).
+
+New field `asn` added to `VisitorEvent.geo` schema and stored in MongoDB.
+
+---
+
+### FULL IP VISIBILITY ✅
+
+**Admin sees full IP — no masking:**
+- `/admin/visitors/[id]`: Shows exact IP in copyable code block + "חסום IP" and "חפש ב-Security" buttons
+- `/admin/analytics/visitors`: Journey list now shows IP address per session
+- `/admin/security` → Blocklist tab: Shows full IP in code element
+
+**Storage**: Full IP was always stored in MongoDB (`VisitorEvent.geo.ip`). Masking was only in API response layer — now removed from admin APIs.
+
+---
+
+### REAL IP BLOCKING ✅
+
+**Architecture:**
+1. `IpBlock` model (MongoDB): stores `{ ip, type: 'block'|'whitelist', reason, expiresAt }`
+2. `/api/internal/ip-check`: Internal endpoint with 60-second in-process cache, checks IpBlock collection
+3. `src/middleware.ts`: Extended to cover all storefront routes — extracts visitor IP, calls ip-check endpoint (500ms timeout, fail-open), redirects blocked IPs to `/blocked`
+4. `/blocked` page: Hebrew blocked access page
+
+**Block flow:**
+- Admin visits `/admin/visitors/[id]` → clicks "חסום IP"
+- Navigates to `/admin/security?block=1.2.3.4` → blocklist tab pre-fills with IP
+- Admin submits → IP written to MongoDB IpBlock collection
+- Next visitor request from that IP → middleware redirects to `/blocked`
+- Cache TTL: 60 seconds (blocks take effect within 1 minute)
+
+**Fail-open**: If MongoDB check fails, visitor is NOT blocked (availability > security by default).
+
+**Admin actions available:**
+- Block IP (permanent or with expiry)
+- Whitelist IP
+- Unblock (delete from blocklist)
+- Copy IP to clipboard (visitor profile page)
+- Search in Security page
+
+---
+
 ## PENDING (requires user action)
 
 1. **Cardcom**: Add `CARDCOM_TERMINAL_NUMBER`, `CARDCOM_API_USERNAME`, `CARDCOM_API_PASSWORD` to Vercel env vars
 2. **Cloudinary**: Add `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` for image uploads
 3. **SMTP**: Add email server credentials for notification emails
 4. **AI Insights**: Add `ANTHROPIC_API_KEY` for Claude-powered insights
+5. **Deploy**: Push to remote and run `npx vercel --prod --yes` to put all Sprint 5A Extended changes live
 
-All health checks are visible at: `/admin/health`
+All health checks visible at: `/admin/health`
+Consistency API: `/api/admin/analytics/consistency`
