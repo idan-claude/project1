@@ -85,8 +85,8 @@ export const GET = withAdminAuth(async () => {
     })
   }
 
-  // Use actual paid Order count as authoritative purchase truth (not VisitorEvent signals)
-  const paidOrderCount = await Order.countDocuments({ 'payment.status': 'paid', createdAt: { $gte: last30 } })
+  // Use actual paid, non-test Order count as authoritative purchase truth
+  const paidOrderCount = await Order.countDocuments({ createdAt: { $gte: last30 }, ...PAID_FILTER })
   const totalAtc         = enriched.filter(s => s.addedToCart).length
   const overallConvRate  = totalSessions > 0 ? (paidOrderCount / totalSessions) * 100 : 0
   const overallAtcRate   = totalSessions > 0 ? (totalAtc / totalSessions) * 100 : 0
