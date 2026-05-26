@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import AnalyticsConsistencyBanner from '@/components/admin/AnalyticsConsistencyBanner'
 
 interface FunnelData {
   productViews: number
