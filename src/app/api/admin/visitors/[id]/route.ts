@@ -50,7 +50,14 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
     let checkoutCompletes = 0
     let faqOpens = 0
     let ctaClicks = 0
+    let exitPages = 0
     let totalDuration = 0
+
+    // Track timestamps for hesitation measurement
+    let firstProductViewTime: number | null = null
+    let firstCartAddTime: number | null = null
+    let firstCheckoutStartTime: number | null = null
+    let firstCtaClickTime: number | null = null
 
     for (const session of sessions) {
       const sorted = [...session].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
@@ -62,14 +69,28 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
 
     for (const e of events) {
       rawEngagement += eventWeights[e.event] || 0
+      const t = new Date(e.createdAt).getTime()
       if (e.event === 'rage_click') rageClicks++
+      if (e.event === 'exit_page') exitPages++
       if (e.event === 'scroll_depth' && e.scroll > maxScrollPct) maxScrollPct = e.scroll
-      if (e.event === 'product_view') productViews++
-      if (e.event === 'add_to_cart') cartAdds++
-      if (e.event === 'checkout_start') checkoutStarts++
+      if (e.event === 'product_view') {
+        productViews++
+        if (!firstProductViewTime) firstProductViewTime = t
+      }
+      if (e.event === 'add_to_cart') {
+        cartAdds++
+        if (!firstCartAddTime) firstCartAddTime = t
+      }
+      if (e.event === 'checkout_start') {
+        checkoutStarts++
+        if (!firstCheckoutStartTime) firstCheckoutStartTime = t
+      }
       if (e.event === 'checkout_complete') checkoutCompletes++
       if (e.event === 'faq_open') faqOpens++
-      if (e.event === 'cta_click') ctaClicks++
+      if (e.event === 'cta_click') {
+        ctaClicks++
+        if (!firstCtaClickTime) firstCtaClickTime = t
+      }
     }
     const engagementScore = Math.min(100, Math.max(0, rawEngagement))
 
@@ -85,6 +106,37 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
     // Bounce probability: sessions with only 1-2 events
     const bouncedSessions = sessions.filter(s => s.length <= 2).length
     const bounceProbability = sessions.length > 0 ? Math.round((bouncedSessions / sessions.length) * 100) : 0
+
+    // Hesitation score (0–100): how long it took from viewing to acting
+    // High hesitation = long gap between product_view → cart add → checkout
+    let hesitationScore = 0
+    if (firstProductViewTime && firstCartAddTime) {
+      const gapMinutes = (firstCartAddTime - firstProductViewTime) / 60000
+      // Cap at 60 minutes. 0 min = no hesitation (0 score), 60+ min = max hesitation (100)
+      hesitationScore = Math.min(100, Math.round((gapMinutes / 60) * 100))
+    } else if (firstProductViewTime && !firstCartAddTime) {
+      // Viewed but never added — high hesitation
+      hesitationScore = 75
+    }
+
+    // Frustration score (0–100): rage clicks + exit pages + bounce sessions
+    const frustrationScore = Math.min(100,
+      rageClicks * 20 +
+      exitPages * 10 +
+      (bounceProbability > 60 ? 20 : 0)
+    )
+
+    // Attention score (0–100): scroll depth + session duration + returning
+    const attentionScore = Math.min(100, Math.round(
+      (maxScrollPct * 0.4) +
+      (Math.min(totalDuration, 600) / 600 * 40) +
+      (sessionCount > 1 ? 20 : 0)
+    ))
+
+    // CTA hesitation: time from first product view to first CTA click (seconds)
+    const ctaHesitationSec = firstProductViewTime && firstCtaClickTime
+      ? Math.round((firstCtaClickTime - firstProductViewTime) / 1000)
+      : null
 
     // First/last device and location
     const firstEvent = events[0]
