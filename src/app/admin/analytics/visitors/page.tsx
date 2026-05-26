@@ -23,6 +23,8 @@ interface VisitorStats {
     device: string
     country: string
     city: string
+    ip: string
+    isp: string
     language: string
     firstSeen: string
     lastSeen: string
