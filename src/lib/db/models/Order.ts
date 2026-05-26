@@ -107,6 +107,7 @@ const OrderSchema = new Schema<IOrder>(
       whatsappSent: { type: Boolean, default: false },
       emailSent: { type: Boolean, default: false },
     },
+    testMode: { type: Boolean, default: false, index: true },
   },
   { timestamps: true }
 )
