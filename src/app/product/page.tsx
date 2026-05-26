@@ -109,16 +109,18 @@ function buildDefaultBundles(sellingPrice: number, compareAtPrice: number): Prod
 export default async function ProductPage() {
   await connectDB()
 
+  const STORE_ID = 'default'
+
   const [productRaw, reviewsRaw, layoutRaw] = await Promise.all([
     Product.findOne({ slug: PRODUCT_SLUG, status: 'active' }).lean(),
     Review.find({ status: 'approved' }).sort({ createdAt: -1 }).limit(20).lean(),
-    PageLayout.findOne({ productId: null }).lean().catch(() => null), // global default first
+    PageLayout.findOne({ storeId: STORE_ID, productId: null }).lean().catch(() => null),
   ])
 
   if (!productRaw) notFound()
 
   // Fetch product-specific layout (overrides global)
-  const productLayoutRaw = await PageLayout.findOne({ productId: productRaw._id }).lean().catch(() => null)
+  const productLayoutRaw = await PageLayout.findOne({ storeId: STORE_ID, productId: productRaw._id }).lean().catch(() => null)
   const activeLayout = productLayoutRaw ?? layoutRaw
   const sections: ProductSection[] = activeLayout?.sections?.length
     ? (activeLayout.sections as ProductSection[])
