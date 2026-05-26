@@ -236,7 +236,7 @@ export default async function ProductPage() {
     trustBadges: pc.trustBadges?.length ? pc.trustBadges : [],
   }
 
-  // Reviews: use approved DB reviews if any, fall back to hardcoded samples
+  // Bottom reviews: approved DB reviews or fallback (no carousel people in this set)
   const reviews: ReviewItem[] = reviewsRaw.length > 0
     ? (reviewsRaw as { customer: { name: string }; rating: number; text: string }[]).map(r => ({
         name: r.customer.name,
