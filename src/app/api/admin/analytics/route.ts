@@ -14,9 +14,9 @@ export const GET = withAdminAuth(async () => {
     topProducts,
     conversionByHour,
   ] = await Promise.all([
-    // All-time totals
+    // All-time totals — paid orders only
     Order.aggregate([
-      { $match: { status: { $ne: 'cancelled' } } },
+      { $match: { 'payment.status': 'paid' } },
       {
         $group: {
           _id: null,
@@ -27,9 +27,9 @@ export const GET = withAdminAuth(async () => {
         },
       },
     ]),
-    // Last 7 days by day
+    // Last 7 days by day — paid orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 7 * 86400000) }, status: { $ne: 'cancelled' } } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 7 * 86400000) }, 'payment.status': 'paid' } },
       {
         $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
@@ -39,9 +39,9 @@ export const GET = withAdminAuth(async () => {
       },
       { $sort: { _id: 1 } },
     ]),
-    // Last 30 days by day
+    // Last 30 days by day — paid orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, status: { $ne: 'cancelled' } } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, 'payment.status': 'paid' } },
       {
         $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
@@ -51,9 +51,9 @@ export const GET = withAdminAuth(async () => {
       },
       { $sort: { _id: 1 } },
     ]),
-    // Top products by revenue
+    // Top products by revenue — paid orders only
     Order.aggregate([
-      { $match: { status: { $ne: 'cancelled' } } },
+      { $match: { 'payment.status': 'paid' } },
       { $unwind: '$items' },
       {
         $group: {
@@ -67,9 +67,9 @@ export const GET = withAdminAuth(async () => {
       { $sort: { revenue: -1 } },
       { $limit: 5 },
     ]),
-    // Orders by hour of day (to find peak hours)
+    // Orders by hour of day — paid orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) } } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, 'payment.status': 'paid' } },
       {
         $group: {
           _id: { $hour: '$createdAt' },
