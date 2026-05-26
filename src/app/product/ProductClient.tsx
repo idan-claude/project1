@@ -39,15 +39,28 @@ export interface ReviewItem {
   text: string
 }
 
+export interface ProductSection {
+  type: string
+  enabled: boolean
+  order: number
+}
+
 export interface ProductData {
   productId: string
   slug: string
   nameHe: string
+  subtitle?: string
+  benefitsList?: string[]
+  ctaText?: string
+  addToCartText?: string
+  videoUrl?: string
+  beforeAfter?: { before: string; after: string; label: string }[]
   gallery: string[]
   bundles: ProductBundle[]
   inStock: boolean
   pageContent: ProductPageContent
   reviews: ReviewItem[]
+  sections?: ProductSection[]
 }
 
 function priceDisplay(agorot: number): string {
