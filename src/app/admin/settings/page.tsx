@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 const TABS = [
   { id: 'store', label: 'פרטי חנות', icon: '🏪' },
+  { id: 'faq', label: 'שאלות נפוצות', icon: '❓' },
   { id: 'cloudinary', label: 'Cloudinary', icon: '🖼️' },
   { id: 'smtp', label: 'אימייל SMTP', icon: '📧' },
   { id: 'twilio', label: 'Twilio WhatsApp', icon: '📱' },
