@@ -56,9 +56,9 @@ export const GET = withAdminAuth(async () => {
       },
       { $sort: { _id: 1 } },
     ]),
-    // Top products by revenue — paid orders only
+    // Top products by revenue — paid, non-test orders only
     Order.aggregate([
-      { $match: { 'payment.status': 'paid' } },
+      { $match: PAID_FILTER },
       { $unwind: '$items' },
       {
         $group: {
