@@ -4,6 +4,11 @@ import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 import Product from '@/lib/db/models/Product'
 
+export const dynamic = 'force-dynamic'
+
+// PAID_FILTER: only real, non-test paid orders. testMode orders are sandbox/test transactions.
+const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
+
 export const GET = withAdminAuth(async () => {
   await connectDB()
 
