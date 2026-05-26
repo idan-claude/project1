@@ -44,9 +44,9 @@ export const GET = withAdminAuth(async () => {
       },
       { $sort: { _id: 1 } },
     ]),
-    // Last 30 days by day — paid orders only
+    // Last 30 days by day — paid, non-test orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, ...PAID_FILTER } },
       {
         $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
