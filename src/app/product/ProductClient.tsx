@@ -265,19 +265,33 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                 <span className={`${ratingDisplay ? 'mr-auto' : ''} text-xs font-bold px-2 py-0.5 rounded-full ${inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{inStock ? 'במלאי ✓' : 'אזל המלאי'}</span>
               </div>
               <h1 className="text-xl font-extrabold text-gray-900 leading-snug">{nameHe}</h1>
+              {subtitle && <p className="text-sm text-gray-500 mt-1 leading-snug">{subtitle}</p>}
             </div>
 
             {reviews.length > 0 && <ReviewCarousel reviews={reviews} />}
+
+            {benefitsList && benefitsList.length > 0 && (
+              <ul className="space-y-1">
+                {benefitsList.map((b, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                    <span className="text-emerald-500 flex-shrink-0 mt-0.5">✓</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <div>
               <p className="text-sm font-bold text-gray-700 mb-2">בחר חבילה:</p>
               <BundleSelector />
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-3 py-2">
-              <span>🔥</span>
-              <span><strong>מבצע מוגבל:</strong> {urgencyText}</span>
-            </div>
+            {isSectionEnabled('urgency') && (
+              <div className="flex items-center gap-2 text-xs text-orange-700 bg-orange-50 border border-orange-200 rounded-xl px-3 py-2">
+                <span>🔥</span>
+                <span><strong>מבצע מוגבל:</strong> {urgencyText}</span>
+              </div>
+            )}
 
             <div>
               <div className="flex items-baseline gap-2 mb-2.5">
@@ -285,10 +299,10 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                 {bundle.compareAtPrice > 0 && <><span className="text-gray-400 line-through text-base">{priceDisplay(bundle.compareAtPrice)}</span><span className="text-sm font-bold text-green-600">חסכת {priceDisplay(saveAmount)}</span></>}
               </div>
               <button onClick={handleBuyNow} className="w-full bg-blue-700 text-white font-extrabold py-4 rounded-2xl text-lg shadow-lg mb-2 hover:bg-blue-800 transition-colors">
-                קנה עכשיו ← {priceDisplay(bundle.price)}
+                {buyNowText} {priceDisplay(bundle.price)}
               </button>
               <button onClick={handleAdd} className="w-full bg-white text-blue-600 border-2 border-blue-600 font-bold py-3 rounded-2xl text-base hover:bg-blue-50 transition-colors">
-                {added ? '✓ נוסף לסל! 🛒' : '🛒 הוסף לסל'}
+                {added ? '✓ נוסף לסל! 🛒' : addToCartLabel}
               </button>
             </div>
 
