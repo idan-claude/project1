@@ -26,7 +26,7 @@ export const GET = withAdminAuth(async () => {
     VisitorEvent.countDocuments({ event: 'add_to_cart', createdAt: { $gte: d30 } }),
     VisitorEvent.countDocuments({ event: 'checkout_start', createdAt: { $gte: d30 } }),
     VisitorEvent.countDocuments({ event: 'checkout_complete', createdAt: { $gte: d30 } }),
-    Order.countDocuments({ createdAt: { $gte: d30 } }),
+    Order.countDocuments({ createdAt: { $gte: d30 }, 'payment.status': 'paid' }),
     Order.aggregate([
       { $match: { createdAt: { $gte: d30 }, 'payment.status': 'paid' } },
       { $group: { _id: null, totalRevenue: { $sum: '$pricing.total' }, avgOrderValue: { $avg: '$pricing.total' } } },
