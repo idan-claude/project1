@@ -449,7 +449,11 @@ export default function VisitorAnalyticsPage() {
                           {journey.visitorId.slice(0, 8)}...
                         </Link>
                         <span className="text-[10px] text-gray-600">{journey.device || 'unknown'}</span>
-                        {journey.country && <span className="text-[10px] text-gray-600">{journey.country}</span>}
+                        {journey.city && <span className="text-[10px] text-gray-600">{journey.city}</span>}
+                        {journey.country && !journey.city && <span className="text-[10px] text-gray-600">{journey.country}</span>}
+                        {journey.ip && (
+                          <code className="text-[10px] text-gray-700 font-mono select-all">{journey.ip}</code>
+                        )}
                         {journey.language && <span className="text-[10px] text-gray-600">{journey.language}</span>}
                       </div>
                       <div className="flex items-center gap-1 mt-1 flex-wrap">
