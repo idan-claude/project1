@@ -182,12 +182,16 @@ export const GET = withAdminAuth(async () => {
       visitorCheck,
       cardcomCheck,
       analyticsCheck,
+      inventoryCheck,
+      lastOrderCheck,
     ] = await Promise.all([
       checkMongoDB(),
       checkOrderTracking(),
       checkVisitorTracking(),
       checkCardcom(),
       checkAnalyticsConsistency(),
+      checkInventory(),
+      checkRecentOrderAge(),
     ])
 
     const envChecks: HealthCheck[] = [
