@@ -454,6 +454,10 @@ export default function VisitorAnalyticsPage() {
                     <div className="text-left flex-shrink-0">
                       <p className="text-[10px] text-gray-600">{timeAgo(journey.lastSeen)}</p>
                       <p className="text-[10px] text-gray-700">{journey.events.length} אירועים</p>
+                      {journey.firstSeen && journey.lastSeen && (() => {
+                        const dur = Math.round((new Date(journey.lastSeen).getTime() - new Date(journey.firstSeen).getTime()) / 1000)
+                        return dur > 5 ? <p className="text-[10px] text-gray-700">{fmtDuration(dur)}</p> : null
+                      })()}
                     </div>
                     <span className={`text-gray-500 text-xs flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}>▼</span>
                   </button>
