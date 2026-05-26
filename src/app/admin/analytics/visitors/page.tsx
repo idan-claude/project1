@@ -131,6 +131,7 @@ export default function VisitorAnalyticsPage() {
 
   return (
     <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+      <AnalyticsConsistencyBanner />
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
         <div>
