@@ -237,7 +237,7 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
             <p className="text-xs text-gray-400 truncate">{bundle.title}</p>
             <p className="text-lg font-black text-blue-700 leading-tight">{priceDisplay(bundle.price)}</p>
           </div>
-          <button onClick={handleBuyNow} className="bg-blue-700 text-white font-extrabold px-5 py-3 rounded-xl text-sm shadow-lg flex-shrink-0">קנה עכשיו ←</button>
+          <button onClick={handleBuyNow} className="bg-blue-700 text-white font-extrabold px-5 py-3 rounded-xl text-sm shadow-lg flex-shrink-0">{buyNowText}</button>
           <button onClick={handleAdd} className="bg-white border-2 border-blue-600 text-blue-600 font-bold px-4 py-3 rounded-xl text-sm flex-shrink-0">{added ? '✓' : '🛒'}</button>
         </div>
       </div>
