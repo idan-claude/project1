@@ -155,6 +155,75 @@ export default function AdminSettingsPage() {
         </div>
       )}
 
+      {/* Global FAQ tab */}
+      {tab === 'faq' && (
+        <div className="max-w-2xl">
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-4">
+            <p className="text-xs font-semibold text-blue-400 mb-1">שאלות נפוצות גלובליות</p>
+            <p className="text-xs text-gray-400 leading-relaxed">
+              שאלות אלה מוצגות ב<strong className="text-white">דף המוצר</strong> ו<strong className="text-white">בדף הבית</strong>.
+              אם למוצר ספציפי יש שאלות משלו — הן יגברו על השאלות הגלובליות.
+              השינויים נשמרים ב-MongoDB ומסונכרנים מיידית ללא deploy.
+            </p>
+          </div>
+          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-6 space-y-4">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-sm font-semibold text-white">שאלות נפוצות ({globalFaqs.length})</h2>
+              <button
+                onClick={() => setGlobalFaqs(f => [...f, { q: '', a: '' }])}
+                className="text-xs text-blue-400 hover:text-blue-300 border border-blue-400/30 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                + הוסף שאלה
+              </button>
+            </div>
+            {faqLoading ? (
+              <div className="space-y-2">{[...Array(3)].map((_, i) => <div key={i} className="h-14 bg-white/5 rounded-xl animate-pulse" />)}</div>
+            ) : globalFaqs.length === 0 ? (
+              <p className="text-xs text-gray-600 text-center py-6">אין שאלות עדיין — לחץ "+ הוסף שאלה"</p>
+            ) : (
+              <div className="space-y-3">
+                {globalFaqs.map((faq, i) => (
+                  <div key={i} className="bg-[#080C16] border border-white/5 rounded-xl p-3 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-600 w-4 flex-shrink-0">{i + 1}.</span>
+                      <input
+                        value={faq.q}
+                        onChange={e => setGlobalFaqs(f => f.map((x, j) => j === i ? { ...x, q: e.target.value } : x))}
+                        placeholder="שאלה..."
+                        className="flex-1 bg-transparent border-b border-white/10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 pb-1"
+                      />
+                      <button
+                        onClick={() => setGlobalFaqs(f => f.filter((_, j) => j !== i))}
+                        className="text-xs text-red-500 hover:text-red-400 flex-shrink-0"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <textarea
+                      value={faq.a}
+                      onChange={e => setGlobalFaqs(f => f.map((x, j) => j === i ? { ...x, a: e.target.value } : x))}
+                      placeholder="תשובה..."
+                      rows={2}
+                      className="w-full bg-transparent text-xs text-gray-400 placeholder-gray-600 focus:outline-none resize-none leading-relaxed pr-6"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="flex items-center gap-3 pt-2 border-t border-white/5">
+              <button
+                onClick={saveGlobalFaqs}
+                disabled={faqSaving}
+                className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
+              >
+                {faqSaving ? 'שומר...' : 'שמור שאלות'}
+              </button>
+              {faqSaved && <span className="text-green-400 text-sm font-medium">✓ נשמר — מסונכרן מיידית</span>}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Cloudinary tab */}
       {tab === 'cloudinary' && (
         <div className="space-y-4 max-w-2xl">
