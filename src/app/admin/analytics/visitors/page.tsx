@@ -67,6 +67,13 @@ const EVENT_ICONS: Record<string, string> = {
   custom: '📍',
 }
 
+function fmtDuration(s: number): string {
+  if (s < 60) return `${s}ש׳`
+  const m = Math.floor(s / 60)
+  const sec = s % 60
+  return `${m}:${String(sec).padStart(2, '0')}ד׳`
+}
+
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime()
   const m = Math.floor(diff / 60000)
