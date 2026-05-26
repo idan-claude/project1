@@ -117,6 +117,13 @@ export default async function ProductPage() {
 
   if (!productRaw) notFound()
 
+  // Fetch product-specific layout (overrides global)
+  const productLayoutRaw = await PageLayout.findOne({ productId: productRaw._id }).lean().catch(() => null)
+  const activeLayout = productLayoutRaw ?? layoutRaw
+  const sections: ProductSection[] = activeLayout?.sections?.length
+    ? (activeLayout.sections as ProductSection[])
+    : DEFAULT_SECTIONS
+
   const product = productRaw as {
     _id: { toString(): string }
     slug: string
