@@ -57,8 +57,6 @@ export default function PaymentsPage() {
   const failedCount = payments.filter(p => p.status === 'failed').length
   const pendingCount = payments.filter(p => p.status === 'pending').length
 
-  const inputCls = 'w-full bg-[#080C16] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/60'
-
   return (
     <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
       {/* Header */}
