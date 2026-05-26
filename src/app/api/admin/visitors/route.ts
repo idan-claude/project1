@@ -124,6 +124,9 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     ]),
   ])
 
+  // Real paid order count — the ONLY source of truth for purchases
+  const paidOrderCount = await Order.countDocuments({ createdAt: { $gte: last7 }, ...PAID_FILTER })
+
   // Derived metrics from session summaries
   interface SessionSummary {
     _id: string
