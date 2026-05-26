@@ -216,6 +216,8 @@ interface ProductPricing {
   image: string
 }
 
+type FaqItem = { q: string; a: string }
+
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [email, setEmail] = useState('')
