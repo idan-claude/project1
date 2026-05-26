@@ -337,6 +337,16 @@ function BlocklistTab() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
+  // Pre-fill block form if ?block=IP is in the URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const blockIp = params.get('block')
+    if (blockIp) {
+      setForm(f => ({ ...f, ip: blockIp }))
+      setAdding(true)
+    }
+  }, [])
+
   const load = useCallback(() => {
     const params = filter !== 'all' ? `?type=${filter}` : ''
     fetch(`/api/admin/security/blocklist${params}`)
