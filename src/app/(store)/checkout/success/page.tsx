@@ -1,14 +1,16 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import Link from 'next/link'
 import { formatPrice } from '@/lib/utils/formatPrice'
+import { track } from '@/lib/tracking/tracker'
 
 function SuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('orderId')
   const [order, setOrder] = useState<{ status: string; orderNumber: string; total: number } | null>(null)
   const [polling, setPolling] = useState(true)
+  const trackedRef = useRef(false)
 
   useEffect(() => {
     if (!orderId) return
@@ -23,6 +25,10 @@ function SuccessContent() {
         setOrder(data)
         setPolling(false)
         clearInterval(interval)
+        if (!trackedRef.current) {
+          trackedRef.current = true
+          track('checkout_complete', { orderNumber: data.orderNumber, total: data.total }, orderId)
+        }
       } else if (attempts > 12) {
         setPolling(false)
         clearInterval(interval)
