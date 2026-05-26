@@ -150,8 +150,7 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
     const confidence = lastEvent.geo?.confidence || firstEvent.geo?.confidence || 0
     const isp = lastEvent.geo?.isp || firstEvent.geo?.isp || ''
     const asn = lastEvent.geo?.asn || firstEvent.geo?.asn || ''
-    const ipFull = firstEvent.geo?.ip || ''
-    const ipMasked = ipFull ? ipFull.replace(/(\d+)$/, '***').replace(/([0-9a-f]{4}):([0-9a-f]{4})$/, '****:****') : ''
+    const ip = firstEvent.geo?.ip || ''
 
     // Is returning (more than 1 session)
     const isReturning = sessionCount > 1
