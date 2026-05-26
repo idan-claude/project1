@@ -3,6 +3,10 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 
+export const dynamic = 'force-dynamic'
+
+const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
+
 export const GET = withAdminAuth(async () => {
   await connectDB()
   const now = new Date()
@@ -13,20 +17,20 @@ export const GET = withAdminAuth(async () => {
 
   const [todayData, monthData, lastMonthData, byDay, byStatus] = await Promise.all([
     Order.aggregate([
-      { $match: { createdAt: { $gte: startOfToday }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: startOfToday }, ...PAID_FILTER } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
     Order.aggregate([
-      { $match: { createdAt: { $gte: startOfMonth }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: startOfMonth }, ...PAID_FILTER } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
     Order.aggregate([
-      { $match: { createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }, ...PAID_FILTER } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
-    // Revenue by day for last 30 days — paid orders only
+    // Revenue by day for last 30 days — paid, non-test orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, 'payment.status': 'paid' } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, ...PAID_FILTER } },
       {
         $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
