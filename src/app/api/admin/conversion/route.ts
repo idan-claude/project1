@@ -3,10 +3,9 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import VisitorEvent from '@/lib/db/models/VisitorEvent'
 import Order from '@/lib/db/models/Order'
+import { PAID_FILTER } from '@/lib/analytics/sourceOfTruth'
 
 export const dynamic = 'force-dynamic'
-
-const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
 
 export const GET = withAdminAuth(async () => {
   await connectDB()
