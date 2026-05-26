@@ -514,6 +514,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        )}
 
         {/* ── NEWSLETTER ── */}
         <section className="bg-blue-50 border-t border-blue-100 py-14 px-4">
