@@ -281,6 +281,7 @@ export default async function ProductPage() {
         inStock={inStock}
         pageContent={pageContent}
         reviews={reviews}
+        carouselReviews={carouselReviews}
         sections={sections}
       />
     </>
