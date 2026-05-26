@@ -38,9 +38,9 @@ export async function GET(req: NextRequest) {
     // Evict old cache entries periodically
     if (cache.size > 500) {
       const cutoff = Date.now() - CACHE_TTL_MS * 2
-      for (const [key, val] of cache.entries()) {
+      cache.forEach((val, key) => {
         if (val.ts < cutoff) cache.delete(key)
-      }
+      })
     }
 
     return NextResponse.json({ blocked: result.blocked, reason: result.reason })
