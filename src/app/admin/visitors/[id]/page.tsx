@@ -267,7 +267,7 @@ export default function VisitorProfilePage() {
               { label: 'שפה', value: profile.language || '—' },
               { label: 'אזור זמן', value: profile.timezone || '—' },
               { label: 'ISP', value: profile.isp || '—' },
-              { label: 'IP (מוסתר)', value: profile.ipMasked || '—' },
+              { label: 'ASN', value: profile.asn || '—' },
             ].filter(i => i.value !== '—' || true).map((item, i) => (
               <div key={i} className="flex items-center justify-between">
                 <span className="text-xs text-gray-500">{item.label}</span>
