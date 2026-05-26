@@ -142,8 +142,8 @@ export default function VisitorAnalyticsPage() {
         </div>
       </div>
 
-      {/* KPI row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+      {/* KPI row — traffic */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
         {[
           { label: 'ביקורים', value: totalVisitors.toLocaleString('he-IL'), sub: range === 'today' ? 'היום' : '7 ימים', color: 'text-white' },
           { label: 'מבקרים ייחודיים', value: uniqueVisitors.toLocaleString('he-IL'), sub: range === 'today' ? 'היום' : '7 ימים', color: 'text-blue-400' },
@@ -156,6 +156,38 @@ export default function VisitorAnalyticsPage() {
             <p className="text-xs text-gray-600 mt-0.5">{kpi.sub}</p>
           </div>
         ))}
+      </div>
+
+      {/* KPI row — engagement */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">שיעור נטישה</p>
+          <p className={`text-xl font-black ${stats.bounceRate > 60 ? 'text-red-400' : stats.bounceRate > 40 ? 'text-amber-400' : 'text-emerald-400'}`}>
+            {stats.bounceRate > 0 ? `${stats.bounceRate}%` : '—'}
+          </p>
+          <p className="text-xs text-gray-600 mt-0.5">{stats.totalSessions} סשנים</p>
+        </div>
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">משך סשן ממוצע</p>
+          <p className="text-xl font-black text-purple-400">
+            {stats.avgSessionDuration > 0 ? fmtDuration(stats.avgSessionDuration) : '—'}
+          </p>
+          <p className="text-xs text-gray-600 mt-0.5">ללא קצוות חריגים</p>
+        </div>
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">מבקרים חוזרים</p>
+          <p className={`text-xl font-black ${stats.returningRate > 20 ? 'text-emerald-400' : 'text-gray-400'}`}>
+            {stats.returningRate > 0 ? `${stats.returningRate}%` : '—'}
+          </p>
+          <p className="text-xs text-gray-600 mt-0.5">30 ימים אחרונים</p>
+        </div>
+        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 mb-1">גלילה ממוצעת</p>
+          <p className={`text-xl font-black ${stats.avgScrollDepth >= 70 ? 'text-emerald-400' : stats.avgScrollDepth >= 40 ? 'text-amber-400' : 'text-gray-400'}`}>
+            {stats.avgScrollDepth > 0 ? `${stats.avgScrollDepth}%` : '—'}
+          </p>
+          <p className="text-xs text-gray-600 mt-0.5">עומק גלילה מרבי לסשן</p>
+        </div>
       </div>
 
       {/* Funnel */}
