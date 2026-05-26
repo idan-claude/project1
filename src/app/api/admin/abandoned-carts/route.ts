@@ -46,7 +46,7 @@ export const GET = withAdminAuth(async () => {
       { $group: { _id: '$sessionId' } },
       { $count: 'count' },
     ]).then(r => r[0]?.count || 0),
-    Order.countDocuments({ createdAt: { $gte: d30 } }),
+    Order.countDocuments({ createdAt: { $gte: d30 }, 'payment.status': 'paid', testMode: { $ne: true } }),
   ])
 
   const abandonRate = totalAbandoned > 0
