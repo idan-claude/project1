@@ -414,7 +414,7 @@ export default function HomePage() {
                     ['מאושר Apple Find My', '✅', '✅'],
                     ['טעינה אלחוטית Qi', '✅', '❌'],
                     ['ללא החלפת סוללה לעולם', '✅', '❌'],
-                    ['מחיר', '₪199.90', '₪350+'],
+                    ['מחיר', sellingPrice ? formatPrice(sellingPrice) : '...', '₪350+'],
                     ['אחריות לכל החיים', '✅', '❌'],
                     ['עמיד מים IP67', '✅', '⚠️ חלקי'],
                   ].map(([feature, us, them]) => (
