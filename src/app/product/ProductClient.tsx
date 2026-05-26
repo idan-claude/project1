@@ -155,7 +155,11 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
     setTimeout(() => setAdded(false), 2000)
     track('add_to_cart', { product: slug, bundle: bundle.title, price: bundle.price })
   }
-  function handleBuyNow() { addCartItem(); router.push('/checkout') }
+  function handleBuyNow() {
+    track('cta_click', { button: 'buy_now', bundle: bundle.title, price: bundle.price, product: slug })
+    addCartItem()
+    router.push('/checkout')
+  }
 
   function setActiveImgTracked(i: number) {
     setActiveImg(i)
