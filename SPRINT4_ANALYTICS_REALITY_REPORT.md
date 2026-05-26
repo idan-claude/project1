@@ -1,179 +1,195 @@
 # SPRINT 4 ANALYTICS REALITY REPORT
-Generated: 2026-05-26
+Generated: 2026-05-26 (Updated — Test Order Contamination Fix)
 Production URL: https://project1-flame-phi.vercel.app
 Mandate: TRUTH FIRST — no mock data, no fake positivity, no inflated metrics
 
 ---
 
-## CRITICAL BUG FIXES (HARD FAIL → FIXED)
+## ROOT CAUSE ANALYSIS — "2 purchases, 3.3% conversion" when zero real orders
 
-### Bug 1: Analytics counting non-paid orders as revenue
+### What was happening
+The analytics code was querying `Order.countDocuments({ 'payment.status': 'paid' })` — which is correct.
+BUT: 2 MongoDB Order documents had `payment.status: 'paid'` from **Cardcom sandbox testing**.
+
+When the payment flow was tested:
+1. An order was created → `payment.status: 'pending'`
+2. User was redirected to Cardcom sandbox
+3. Sandbox returned `Operation: '2'` (same success signal as production)
+4. Webhook at `/api/webhooks/payment` set `payment.status = 'paid'` (correct behavior)
+5. These 2 "test paid" orders polluted ALL analytics queries
+
+The analytics code was **technically correct** — it was truthfully reporting 2 paid orders.
+The problem was the data: sandbox test transactions look identical to real paid orders in MongoDB.
+
+### Why previous sprint fix was insufficient
+The previous fix changed `status: { $ne: 'cancelled' }` → `'payment.status': 'paid'`.
+This was correct but **did not protect against test/sandbox orders** because:
+- Cardcom sandbox fires the exact same webhook as production
+- No test marker existed on orders
+- No `force-dynamic` on analytics route → possible cached response
+
+---
+
+## ALL FIXES IN THIS SPRINT
+
+### Fix 1: Added `testMode: boolean` to Order schema
+**File:** `src/lib/db/models/Order.ts`
+**Added:** `testMode: { type: Boolean, default: false, index: true }` to schema + IOrder interface
+
+### Fix 2: Order creation stamps `testMode` from env var
+**File:** `src/app/api/orders/route.ts`
+**Added:** `testMode: process.env.PAYMENT_TEST_MODE === 'true'` at order creation
+**Usage:** Set `PAYMENT_TEST_MODE=true` in Vercel env vars when using Cardcom sandbox.
+Orders created in test mode will be permanently flagged and excluded from all analytics.
+
+### Fix 3: All analytics routes exclude `testMode: true` orders
+**PAID_FILTER** (applied in all 6 routes):
+```typescript
+const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
+```
+This correctly:
+- Includes existing orders (no testMode field → `undefined !== true` → included)
+- Excludes future sandbox orders (testMode: true → excluded)
+- Includes real paid orders (testMode: false → `false !== true` → included)
+
+### Fix 4: Added `force-dynamic` to analytics/route.ts
 **File:** `src/app/api/admin/analytics/route.ts`
-**Before (WRONG):** `{ $match: { status: { $ne: 'cancelled' } } }` — counted pending/failed/draft orders as revenue
-**After (CORRECT):** `{ $match: { 'payment.status': 'paid' } }` — only real paid orders
+**Before:** Missing `export const dynamic = 'force-dynamic'` — Next.js could serve cached response
+**After:** `export const dynamic = 'force-dynamic'` — always fresh from MongoDB
 
-**Affected queries:** All 5 aggregations (totals, last7days, last30days, topProducts, conversionByHour)
+### Fix 5: Added `force-dynamic` to finance/route.ts
+Same as above.
 
-### Bug 2: Finance page counting non-paid orders as revenue
-**File:** `src/app/api/admin/finance/route.ts`
-**Before (WRONG):** All 4 date-range aggregations used `status: { $ne: 'cancelled' }`
-**After (CORRECT):** All 4 use `'payment.status': 'paid'`
+### Fix 6: Built test-order cleanup endpoint
+**File:** `src/app/api/admin/orders/test-purge/route.ts`
+- `GET /api/admin/orders/test-purge` — lists all paid orders with Cardcom transaction details
+- `DELETE /api/admin/orders/test-purge` with body `{ "action": "mark-test", "all": true }` — marks all as testMode
+- `DELETE /api/admin/orders/test-purge` with body `{ "action": "delete", "all": true }` — deletes all paid orders
 
-### Bug 3: Conversion funnel counting all orders as purchases
-**File:** `src/app/api/admin/conversion/route.ts`
-**Before (WRONG):** `Order.countDocuments({ createdAt: { $gte: d30 } })` — no payment filter
-**After (CORRECT):** `Order.countDocuments({ createdAt: { $gte: d30 }, 'payment.status': 'paid' })`
+### Fix 7: Built cleanup script
+**File:** `scripts/cleanup-test-orders.ts`
+```bash
+# Dry run (inspect what's in the DB):
+! npx ts-node scripts/cleanup-test-orders.ts
 
-### Bug 4: Conversion funnel inflating `checkoutCompletes` with `Math.max`
-**File:** `src/app/api/admin/conversion/route.ts`
-**Before (WRONG):** `checkoutCompletes: Math.max(checkoutCompletes, paidOrders)` — took max of event count and all-order count, inflating both
-**After (CORRECT):** `checkoutCompletes` — actual VisitorEvent count only; `paidOrders` — actual paid Order count
-
-### Bug 5: Conversion intelligence using VisitorEvent count as purchase truth
-**File:** `src/app/api/admin/analytics/conversion/route.ts`
-**Before (WRONG):** `totalConverted = enriched.filter(s => s.converted).length` — counted sessions with `checkout_complete` VisitorEvent (polluted by test/synthetic events)
-**After (CORRECT):** `paidOrderCount = await Order.countDocuments({ 'payment.status': 'paid', createdAt: { $gte: last30 } })` — only real confirmed paid orders
-
-### Bug 6: UI label "לא בוטלו" implied all non-cancelled = revenue
-**File:** `src/app/admin/analytics/page.tsx`
-**Before:** sub: 'לא בוטלו'
-**After:** sub: 'שולמו בלבד'
-
-### Bug 7: Sidebar missing `/admin/analytics/visitors` link
-**File:** `src/components/layout/AdminSidebar.tsx`
-**Fixed:** Added `{ href: '/admin/analytics/visitors', label: 'מבקרים', icon: '◉', sub: 'תנועה ומסעות' }` under "נתונים ואנליטיקה" group
+# Delete all paid orders (only run when ALL paid orders are sandbox tests):
+! npx ts-node scripts/cleanup-test-orders.ts --delete
+```
 
 ---
 
-## PASS/FAIL TABLE
+## HOW TO CLEAN THE EXISTING 2 TEST ORDERS
 
-| # | Metric | Source Before Fix | Source After Fix | Status |
-|---|--------|------------------|-----------------|--------|
-| 1 | Revenue (all-time) | `status: { $ne: 'cancelled' }` — includes pending/failed | `'payment.status': 'paid'` | ✅ FIXED |
-| 2 | Order count (all-time) | Same wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 3 | Revenue (7 days) | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 4 | Revenue (30 days) | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 5 | Top products revenue | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 6 | Finance today revenue | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 7 | Finance month revenue | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 8 | Finance last month revenue | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 9 | Finance daily chart | Wrong filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 10 | Conversion paidOrders count | No payment filter | `'payment.status': 'paid'` | ✅ FIXED |
-| 11 | Conversion Math.max inflation | `Math.max(events, orders)` | Separate values | ✅ FIXED |
-| 12 | Analytics/conversion totalConverted | VisitorEvent count | `Order` paid count | ✅ FIXED |
-| 13 | Dashboard revenue today/month | Already used `'payment.status': 'paid'` | Unchanged — was correct | ✅ PASS |
-| 14 | Dashboard conversionRate | `paidOrders30d / productViews` — correct | Unchanged — was correct | ✅ PASS |
-| 15 | Sidebar visitors link | Missing | Added `/admin/analytics/visitors` | ✅ FIXED |
-| 16 | UI label implying non-paid counted | "לא בוטלו" | "שולמו בלבד" | ✅ FIXED |
+The `testMode` filter alone does NOT remove the existing 2 orders (they were created before the testMode field existed). You must delete or mark them.
 
----
+**Option A — Use the admin API (easiest):**
+```bash
+# Step 1: Inspect what's there
+curl -b "admin_token=<YOUR_TOKEN>" https://project1-flame-phi.vercel.app/api/admin/orders/test-purge
 
-## EXACT MONGO QUERIES (AFTER FIX)
+# Step 2: Delete all paid orders (confirm they're all sandbox tests first)
+curl -X DELETE -H "Content-Type: application/json" \
+  -b "admin_token=<YOUR_TOKEN>" \
+  -d '{"action":"delete","all":true}' \
+  https://project1-flame-phi.vercel.app/api/admin/orders/test-purge
+```
 
-### Revenue and Order Counts
+**Option B — MongoDB Atlas console query:**
 ```javascript
-// Correct: paid orders only
-Order.aggregate([{ $match: { 'payment.status': 'paid' } }, ...])
+// In MongoDB Atlas Data Explorer > Orders collection:
+// First: inspect
+db.orders.find({ "payment.status": "paid" }, { orderNumber: 1, "customer.email": 1, "pricing.total": 1, "payment.transactionId": 1 })
 
-// Wrong (before): status filter allowed pending/failed
-Order.aggregate([{ $match: { status: { $ne: 'cancelled' } } }, ...])
+// Then: delete all paid orders (only if confirmed to be test orders)
+db.orders.deleteMany({ "payment.status": "paid" })
 ```
 
-### Purchase Truth Hierarchy
-```
-1. Order.countDocuments({ 'payment.status': 'paid' })  ← single source of truth
-2. VisitorEvent checkout_complete  ← behavioral signal only, NOT purchase count
-3. NEVER: Order.countDocuments() with no payment filter
-4. NEVER: Math.max(eventCount, orderCount)
+**Option C — Local script (requires .env.local with MONGODB_URI):**
+```bash
+! npx ts-node scripts/cleanup-test-orders.ts          # inspect
+! npx ts-node scripts/cleanup-test-orders.ts --delete  # delete
 ```
 
-### Empty State Truth
-If no paid orders exist, the dashboard MUST show:
-- Revenue: ₪0
-- Orders: 0
-- Conversion: 0%
-- AOV: —
-
-The code now returns `0` / `null` for all these when there are no paid orders.
-
 ---
 
-## TESTED URLS (PRODUCTION)
-
-| URL | Expected | Verified |
-|-----|---------|---------|
-| `https://project1-flame-phi.vercel.app/api/admin/analytics` | HTTP 401 | ✅ |
-| `https://project1-flame-phi.vercel.app/api/admin/finance` | HTTP 401 | ✅ |
-| `https://project1-flame-phi.vercel.app/api/admin/conversion` | HTTP 401 | ✅ |
-| `https://project1-flame-phi.vercel.app/api/admin/analytics/conversion` | HTTP 401 | ✅ |
-| `https://project1-flame-phi.vercel.app/api/admin/visitors` | HTTP 401 | ✅ |
-| `https://project1-flame-phi.vercel.app/api/faq` | HTTP 200 + 8 FAQs | ✅ |
-| `https://project1-flame-phi.vercel.app/api/track` (POST, all 12 events) | HTTP 200 | ✅ |
-
----
-
-## VISITOR TRACKING — CONFIRMED WORKING
-
-All 12 event types accept HTTP 200 from `/api/track`:
-
-| Event | Fired From | Persisted |
-|-------|-----------|----------|
-| `pageview` | automatic, every page | MongoDB VisitorEvent ✅ |
-| `product_view` | ProductClient mount | MongoDB VisitorEvent ✅ |
-| `add_to_cart` | ProductClient addCartItem | MongoDB VisitorEvent ✅ |
-| `checkout_start` | checkout/page.tsx useEffect | MongoDB VisitorEvent ✅ |
-| `checkout_complete` | checkout/success/page.tsx on paid confirmation | MongoDB VisitorEvent ✅ |
-| `scroll_depth` | trackScrollDepth() at 25/50/75/100% | MongoDB VisitorEvent ✅ |
-| `rage_click` | trackRageClicks() 3+ clicks <800ms | MongoDB VisitorEvent ✅ |
-| `exit_page` | visibilitychange → hidden | MongoDB VisitorEvent ✅ |
-| `faq_open` | FAQ accordion click | MongoDB VisitorEvent ✅ |
-| `gallery_view` | image thumbnail/swipe | MongoDB VisitorEvent ✅ |
-| `cta_click` | buy_now button | MongoDB VisitorEvent ✅ |
-| `inactive` | trackInactivity(30000) | MongoDB VisitorEvent ✅ |
-
----
-
-## VISITOR PAGE — `/admin/analytics/visitors`
-
-- Page exists: ✅
-- Sidebar link added: ✅ ("מבקרים" under "נתונים ואנליטיקה")
-- Data source: Real MongoDB VisitorEvent aggregations only
-- Metrics shown:
-  - Unique visitors today/week
-  - Bounce rate (computed from sessionSummaries)
-  - Avg session duration (seconds, outliers >1hr excluded)
-  - Returning visitor % (visitorIds with >1 session in 30d)
-  - Avg scroll depth (mean maxScroll per session)
-  - Drop-off by event (last event for non-converting sessions)
-  - Full journey timeline (last 20 sessions, expandable)
-  - Scroll depth by page
-  - Device breakdown
-  - Geographic distribution
-  - Hourly activity chart
-
----
-
-## RULES COMPLIANCE
-
-- ✅ Purchases = 0 if no paid orders → `Order.countDocuments({ 'payment.status': 'paid' })` returns 0
-- ✅ Revenue = ₪0 if no paid orders → `orderStats[0]?.totalRevenue ?? 0`
-- ✅ Conversion = 0% if no paid orders → numerator is 0, formula correctly returns 0
-- ✅ AOV = ₪0 if no paid orders → `avgOrderValue[0]?.avg ?? 0`
-- ✅ No mock data, no seeded analytics, no hardcoded fallback numbers
-- ✅ Every metric from MongoDB persisted data only
-- ✅ Empty states shown as Hebrew text: "אין מספיק נתונים" / "אין נתוני מכירות"
-- ✅ TypeScript: 0 errors
-- ✅ Build: ✓ Compiled successfully
-- ✅ Deployed to production
-
----
-
-## WHAT ZERO PURCHASES LOOKS LIKE
+## EXPECTED STATE AFTER CLEANUP
 
 | Dashboard | Shows |
 |-----------|-------|
 | Main analytics | הכנסה כוללת: ₪0 · הזמנות: 0 (שולמו בלבד) |
 | Finance | ₪0 today / ₪0 month |
-| Conversion tab | "אין מספיק נתונים עדיין" (totalSessions === 0) or conversion 0% |
+| Conversion tab | "אין מספיק נתונים עדיין" (if sessions=0) OR רכישות: 0, שיעור המרה: 0% |
 | Funnel page | paidOrders: 0, purchaseConversion: 0% |
-| Visitors page | Shows traffic without checkout conversion |
+
+---
+
+## PREVENTION GOING FORWARD
+
+When testing with Cardcom sandbox, set in Vercel environment variables:
+```
+PAYMENT_TEST_MODE=true
+```
+All orders created with this env var will have `testMode: true` and will be **permanently excluded** from all analytics (purchases, revenue, conversion, AOV, dashboard KPIs).
+
+When going live with real Cardcom terminal, remove or set to:
+```
+PAYMENT_TEST_MODE=false
+```
+
+---
+
+## PASS/FAIL TABLE (FULL HISTORY)
+
+| # | Metric | Issue | Fix Applied | Status |
+|---|--------|-------|-------------|--------|
+| 1 | Revenue (all-time) | `status: { $ne: 'cancelled' }` | `PAID_FILTER` | ✅ FIXED |
+| 2 | Order count (all-time) | Same wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 3 | Revenue (7 days) | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 4 | Revenue (30 days) | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 5 | Top products revenue | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 6 | Finance today revenue | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 7 | Finance month revenue | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 8 | Finance last month revenue | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 9 | Finance daily chart | Wrong filter | `PAID_FILTER` | ✅ FIXED |
+| 10 | Conversion paidOrders count | No payment filter | `PAID_FILTER` | ✅ FIXED |
+| 11 | Conversion Math.max inflation | `Math.max(events, orders)` | Separate values | ✅ FIXED |
+| 12 | Analytics/conversion totalConverted | VisitorEvent count | `Order` paid count | ✅ FIXED |
+| 13 | Dashboard revenue today/month | Already correct | Unchanged | ✅ PASS |
+| 14 | Dashboard conversionRate | Already correct | Unchanged | ✅ PASS |
+| 15 | Sidebar visitors link | Missing | Added | ✅ FIXED |
+| 16 | UI label implying non-paid counted | "לא בוטלו" | "שולמו בלבד" | ✅ FIXED |
+| 17 | Sandbox test orders counted as purchases | No testMode protection | `PAID_FILTER` with `testMode: { $ne: true }` | ✅ FIXED |
+| 18 | analytics/route.ts missing force-dynamic | Cache risk | Added `force-dynamic` | ✅ FIXED |
+| 19 | finance/route.ts missing force-dynamic | Cache risk | Added `force-dynamic` | ✅ FIXED |
+| 20 | Existing test paid orders in MongoDB | Need manual cleanup | Script + API endpoint provided | ⚠️ ACTION REQUIRED |
+
+---
+
+## PURCHASE TRUTH HIERARCHY (FINAL)
+
+```
+1. Order.countDocuments({ 'payment.status': 'paid', testMode: { $ne: true } })
+   ← ONLY valid source for purchase/revenue metrics
+
+2. VisitorEvent checkout_complete
+   ← behavioral signal ONLY (sessions clicked "complete payment"), NOT purchase count
+
+3. NEVER: Order.countDocuments() with no payment filter
+4. NEVER: Math.max(eventCount, orderCount)
+5. NEVER: count pending/failed/draft/cancelled orders as revenue
+6. NEVER: count testMode:true orders (Cardcom sandbox transactions) as revenue
+```
+
+---
+
+## ACTION REQUIRED
+
+Row #20 above: **You must manually delete the 2 existing test orders** using one of the three methods above (API endpoint, MongoDB Atlas console, or local script).
+
+After deletion, the dashboard will show:
+- Purchases: **0**
+- Revenue: **₪0**
+- Conversion: **0%**
+- AOV: **—**
+
+This is the correct, truthful state with zero real paid orders.
