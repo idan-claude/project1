@@ -24,7 +24,10 @@ export interface IVisitorEvent extends Document {
     ip: string
     country: string
     city: string
+    region: string
     isp: string
+    geoTimezone: string
+    confidence: number
   }
   language: string
   timezone: string
