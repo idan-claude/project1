@@ -157,10 +157,21 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
   }
   function handleBuyNow() { addCartItem(); router.push('/checkout') }
 
+  function setActiveImgTracked(i: number) {
+    setActiveImg(i)
+    track('gallery_view', { imageIndex: i, product: slug })
+  }
+
   function imgSwipe(e: React.TouchEvent, type: 'start' | 'end') {
     if (type === 'start') { imgTouchStart.current = e.touches[0].clientX; return }
     const diff = imgTouchStart.current - e.changedTouches[0].clientX
-    if (Math.abs(diff) > 40) setActiveImg(i => diff > 0 ? (i + 1) % gallery.length : (i - 1 + gallery.length) % gallery.length)
+    if (Math.abs(diff) > 40) {
+      setActiveImg(i => {
+        const next = diff > 0 ? (i + 1) % gallery.length : (i - 1 + gallery.length) % gallery.length
+        track('gallery_view', { imageIndex: next, product: slug })
+        return next
+      })
+    }
   }
 
   const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 6)
