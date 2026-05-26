@@ -50,6 +50,7 @@ export interface ProductData {
   slug: string
   nameHe: string
   subtitle?: string
+  descriptionShort?: string
   benefitsList?: string[]
   ctaText?: string
   addToCartText?: string
