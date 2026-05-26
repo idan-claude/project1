@@ -34,11 +34,11 @@ export default function FunnelsPage() {
       const productViews = visitors?.byEvent?.['product_view'] || 0
       const addToCart = visitors?.cartEvents || 0
       const checkoutStart = visitors?.checkoutStarts || 0
-      const checkoutComplete = visitors?.checkoutCompletes || 0
       const totalOrders = dashboard?.orderCountMonth || 0
       const avgOrderValue = dashboard?.avgOrderValue || 0
-
-      const abandonedCarts = Math.max(0, addToCart - checkoutComplete)
+      // Use real paid orders for abandonment — not checkout_complete VisitorEvents
+      const paidOrders = visitors?.paidOrderCount ?? totalOrders
+      const abandonedCarts = Math.max(0, addToCart - paidOrders)
       const abandonRate = addToCart > 0 ? Math.round((abandonedCarts / addToCart) * 100) : 0
 
       setData({
