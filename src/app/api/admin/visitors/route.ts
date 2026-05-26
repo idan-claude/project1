@@ -121,6 +121,61 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     ]),
   ])
 
+  // Derived metrics from session summaries
+  interface SessionSummary {
+    _id: string
+    visitorId: string
+    eventCount: number
+    events: string[]
+    firstEvent: string
+    lastEvent: string
+    firstSeen: Date
+    lastSeen: Date
+    maxScroll: number
+  }
+
+  const sessions = sessionSummaries as SessionSummary[]
+  const totalSessions = sessions.length
+
+  // Bounce: session with only 1 distinct event type or only pageview
+  const bouncedSessions = sessions.filter(s =>
+    s.eventCount <= 1 || (s.eventCount <= 2 && s.events.every(e => e === 'pageview'))
+  ).length
+  const bounceRate = totalSessions > 0 ? +((bouncedSessions / totalSessions) * 100).toFixed(1) : 0
+
+  // Avg session duration (seconds)
+  const durations = sessions
+    .map(s => (new Date(s.lastSeen).getTime() - new Date(s.firstSeen).getTime()) / 1000)
+    .filter(d => d > 0 && d < 3600) // exclude outliers > 1hr
+  const avgSessionDuration = durations.length > 0
+    ? Math.round(durations.reduce((a, b) => a + b, 0) / durations.length)
+    : 0
+
+  // Avg max scroll depth
+  const scrollValues = sessions.filter(s => s.maxScroll > 0).map(s => s.maxScroll)
+  const avgScrollDepth = scrollValues.length > 0
+    ? Math.round(scrollValues.reduce((a, b) => a + b, 0) / scrollValues.length)
+    : 0
+
+  // Returning visitor %
+  const returningCount = (returningVisitorIds as { _id: string }[]).length
+  const returningRate = weekUnique.length > 0
+    ? +((returningCount / weekUnique.length) * 100).toFixed(1)
+    : 0
+
+  // Drop-off analysis: for non-converting sessions, what was the LAST event before exit?
+  const dropoffMap = new Map<string, number>()
+  for (const s of sessions) {
+    if (!s.events.includes('checkout_complete')) {
+      const lastEv = s.lastEvent || 'unknown'
+      dropoffMap.set(lastEv, (dropoffMap.get(lastEv) || 0) + 1)
+    }
+  }
+  const dropoffByEvent = Array.from(dropoffMap.entries())
+    .map(([event, count]) => ({ event, count, pct: +((count / Math.max(totalSessions, 1)) * 100).toFixed(1) }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8)
+
   return NextResponse.json({
     totalToday: todayEvents,
     uniqueVisitorsToday: todayUnique.length,
@@ -139,5 +194,12 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       path: s._id, avgScroll: Math.round(s.avgScroll), count: s.count,
     })),
     byCountry: byCountryRaw.map((c: { _id: string; count: number }) => ({ country: c._id, count: c.count })),
+    // New metrics
+    bounceRate,
+    avgSessionDuration,
+    avgScrollDepth,
+    returningRate,
+    totalSessions,
+    dropoffByEvent,
   })
 })
