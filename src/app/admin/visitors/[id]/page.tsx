@@ -283,6 +283,39 @@ export default function VisitorProfilePage() {
               </div>
             )}
           </div>
+
+          {/* IP + Block controls */}
+          {profile.ip && (
+            <div className="mt-4 pt-4 border-t border-white/5">
+              <p className="text-xs text-gray-500 mb-2">כתובת IP מלאה</p>
+              <div className="flex items-center gap-2">
+                <code className="text-xs text-white bg-black/20 px-2 py-1 rounded font-mono flex-1 select-all">
+                  {profile.ip}
+                </code>
+                <button
+                  onClick={() => navigator.clipboard.writeText(profile.ip)}
+                  className="text-[10px] text-gray-500 hover:text-gray-300 px-2 py-1 bg-white/5 rounded transition-colors flex-shrink-0"
+                >
+                  העתק
+                </button>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <a
+                  href={`/admin/security?block=${encodeURIComponent(profile.ip)}`}
+                  className="text-[10px] px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded hover:bg-red-500/30 transition-colors"
+                >
+                  חסום IP
+                </a>
+                <a
+                  href={`/admin/security?search=${encodeURIComponent(profile.ip)}`}
+                  className="text-[10px] px-2 py-1 bg-white/5 text-gray-400 border border-white/10 rounded hover:bg-white/10 transition-colors"
+                >
+                  חפש ב-Security
+                </a>
+              </div>
+            </div>
+          )}
+
           {(profile.utmSource) && (
             <div className="mt-4 pt-4 border-t border-white/5">
               <p className="text-xs text-gray-500 mb-2">מקור תנועה</p>
