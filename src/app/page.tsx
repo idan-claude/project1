@@ -223,6 +223,7 @@ export default function HomePage() {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const [pricing, setPricing] = useState<ProductPricing | null>(null)
+  const [faqs, setFaqs] = useState<FaqItem[]>([])
   const addItem = useCartStore((s) => s.addItem)
 
   useEffect(() => {
@@ -236,6 +237,14 @@ export default function HomePage() {
             nameHe: d.product.nameHe ?? 'כרטיס מעקב FindCard PRO',
             image: d.product.images?.[0]?.url ?? '',
           })
+          // Use product FAQs if available, otherwise fetch global FAQs
+          if (d.product.pageContent?.faqs?.length) {
+            setFaqs(d.product.pageContent.faqs)
+          } else {
+            fetch('/api/faq').then(r => r.ok ? r.json() : null).then(fd => {
+              if (fd?.faqs?.length) setFaqs(fd.faqs)
+            }).catch(() => null)
+          }
         }
       })
       .catch(() => null)
