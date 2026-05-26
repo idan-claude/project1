@@ -381,6 +381,38 @@ export default function VisitorAnalyticsPage() {
         </div>
       </div>
 
+      {/* Drop-off analysis */}
+      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+        <h2 className="text-sm font-semibold text-white mb-1">ניתוח נטישה — איפה יוצאים</h2>
+        <p className="text-xs text-gray-600 mb-4">האירוע האחרון לפני יציאה, עבור סשנים שלא הסתיימו ברכישה · 7 ימים</p>
+        {!stats.dropoffByEvent?.length ? (
+          <p className="text-gray-600 text-xs text-center py-6">אין נתונים עדיין</p>
+        ) : (
+          <div className="space-y-2.5">
+            {stats.dropoffByEvent.map((d, i) => (
+              <div key={i}>
+                <div className="flex justify-between text-xs mb-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">{EVENT_ICONS[d.event] || '•'}</span>
+                    <span className="text-gray-300">{EVENT_LABELS[d.event] || d.event}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-500">{d.count} סשנים</span>
+                    <span className={`font-bold ${d.pct >= 30 ? 'text-red-400' : d.pct >= 15 ? 'text-amber-400' : 'text-gray-400'}`}>{d.pct}%</span>
+                  </div>
+                </div>
+                <div className="bg-white/5 rounded-full h-2">
+                  <div
+                    className={`h-full rounded-full ${d.pct >= 30 ? 'bg-red-500' : d.pct >= 15 ? 'bg-amber-500' : 'bg-gray-600'}`}
+                    style={{ width: `${Math.min(100, d.pct * 2.5)}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Journey Timeline */}
       <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
         <h2 className="text-sm font-semibold text-white mb-1">מסעות מבקרים אחרונים</h2>
