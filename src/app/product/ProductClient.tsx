@@ -164,6 +164,29 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
     { icon: '🚚', text: 'משלוח חינם\nלכל הארץ' },
     { icon: '🔒', text: 'תשלום\nמאובטח SSL' },
   ]
+  const buyNowText = ctaText || 'קנה עכשיו ←'
+  const addToCartLabel = addToCartText || 'הוסף לסל 🛒'
+
+  // Section ordering helpers
+  const orderedSections = sections?.slice().sort((a, b) => a.order - b.order) ?? []
+  function isSectionEnabled(type: string): boolean {
+    if (!sections?.length) return true
+    const s = sections.find(x => x.type === type)
+    return s ? s.enabled : true
+  }
+  // Below-fold section types in their configured order
+  const belowFoldTypes = ['benefits', 'reviews', 'faq', 'video', 'before_after', 'custom_text']
+  const belowFoldOrder = orderedSections.length
+    ? orderedSections.filter(s => belowFoldTypes.includes(s.type) && s.enabled).map(s => s.type)
+    : belowFoldTypes
+
+  // YouTube/Vimeo: convert watch URL to embed URL
+  function toEmbedUrl(url: string): string {
+    if (!url) return ''
+    if (url.includes('youtube.com/watch')) return url.replace('watch?v=', 'embed/')
+    if (url.includes('youtu.be/')) return url.replace('youtu.be/', 'youtube.com/embed/')
+    return url
+  }
 
   function BundleSelector() {
     return (
