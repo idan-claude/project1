@@ -79,6 +79,8 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
           device: { $first: '$device.type' },
           country: { $first: '$geo.country' },
           city: { $first: '$geo.city' },
+          ip: { $first: '$geo.ip' },
+          isp: { $first: '$geo.isp' },
           language: { $first: '$language' },
           firstSeen: { $min: '$createdAt' },
           lastSeen: { $max: '$createdAt' },
