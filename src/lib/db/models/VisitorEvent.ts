@@ -4,7 +4,7 @@ export interface IVisitorEvent extends Document {
   storeId: string
   sessionId: string
   visitorId: string
-  event: 'pageview' | 'add_to_cart' | 'checkout_start' | 'checkout_complete' | 'product_view' | 'scroll_depth' | 'rage_click' | 'exit_page' | 'custom'
+  event: 'pageview' | 'add_to_cart' | 'checkout_start' | 'checkout_complete' | 'product_view' | 'scroll_depth' | 'rage_click' | 'exit_page' | 'faq_open' | 'gallery_view' | 'cta_click' | 'inactive' | 'custom'
   path: string
   referrer: string
   utm: {
