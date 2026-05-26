@@ -87,6 +87,11 @@ export const GET = withAdminAuth(async () => {
 
   // Use actual paid, non-test Order count as authoritative purchase truth
   const paidOrderCount = await Order.countDocuments({ createdAt: { $gte: last30 }, ...PAID_FILTER })
+
+  // When no real paid orders exist, per-session VisitorEvent checkout_complete signals
+  // are NOT purchases. Zero out all convRate to prevent false positives.
+  const hasRealPurchases = paidOrderCount > 0
+
   const totalAtc         = enriched.filter(s => s.addedToCart).length
   const overallConvRate  = totalSessions > 0 ? (paidOrderCount / totalSessions) * 100 : 0
   const overallAtcRate   = totalSessions > 0 ? (totalAtc / totalSessions) * 100 : 0
@@ -105,9 +110,9 @@ export const GET = withAdminAuth(async () => {
     .map(([source, d]) => ({
       source,
       sessions: d.sessions,
-      conversions: d.conversions,
+      conversions: hasRealPurchases ? d.conversions : 0,
       atc: d.atc,
-      convRate: d.sessions > 0 ? +((d.conversions / d.sessions) * 100).toFixed(1) : 0,
+      convRate: hasRealPurchases && d.sessions > 0 ? +((d.conversions / d.sessions) * 100).toFixed(1) : 0,
       atcRate:  d.sessions > 0 ? +((d.atc / d.sessions) * 100).toFixed(1) : 0,
     }))
     .sort((a, b) => b.sessions - a.sessions)
@@ -127,9 +132,9 @@ export const GET = withAdminAuth(async () => {
     .map(([device, d]) => ({
       device,
       sessions: d.sessions,
-      conversions: d.conversions,
+      conversions: hasRealPurchases ? d.conversions : 0,
       atc: d.atc,
-      convRate: d.sessions > 0 ? +((d.conversions / d.sessions) * 100).toFixed(1) : 0,
+      convRate: hasRealPurchases && d.sessions > 0 ? +((d.conversions / d.sessions) * 100).toFixed(1) : 0,
       atcRate:  d.sessions > 0 ? +((d.atc / d.sessions) * 100).toFixed(1) : 0,
     }))
     .sort((a, b) => b.sessions - a.sessions)
@@ -140,12 +145,12 @@ export const GET = withAdminAuth(async () => {
   const faqImpact = {
     withFaq: {
       sessions:   withFaq.length,
-      convRate:   withFaq.length > 0 ? +((withFaq.filter(s => s.converted).length / withFaq.length) * 100).toFixed(1) : 0,
+      convRate:   hasRealPurchases && withFaq.length > 0 ? +((withFaq.filter(s => s.converted).length / withFaq.length) * 100).toFixed(1) : 0,
       atcRate:    withFaq.length > 0 ? +((withFaq.filter(s => s.addedToCart).length / withFaq.length) * 100).toFixed(1) : 0,
     },
     withoutFaq: {
       sessions:   withoutFaq.length,
-      convRate:   withoutFaq.length > 0 ? +((withoutFaq.filter(s => s.converted).length / withoutFaq.length) * 100).toFixed(1) : 0,
+      convRate:   hasRealPurchases && withoutFaq.length > 0 ? +((withoutFaq.filter(s => s.converted).length / withoutFaq.length) * 100).toFixed(1) : 0,
       atcRate:    withoutFaq.length > 0 ? +((withoutFaq.filter(s => s.addedToCart).length / withoutFaq.length) * 100).toFixed(1) : 0,
     },
   }
@@ -156,12 +161,12 @@ export const GET = withAdminAuth(async () => {
   const galleryImpact = {
     withGallery: {
       sessions: withGallery.length,
-      convRate: withGallery.length > 0 ? +((withGallery.filter(s => s.converted).length / withGallery.length) * 100).toFixed(1) : 0,
+      convRate: hasRealPurchases && withGallery.length > 0 ? +((withGallery.filter(s => s.converted).length / withGallery.length) * 100).toFixed(1) : 0,
       atcRate:  withGallery.length > 0 ? +((withGallery.filter(s => s.addedToCart).length / withGallery.length) * 100).toFixed(1) : 0,
     },
     withoutGallery: {
       sessions: withoutGallery.length,
-      convRate: withoutGallery.length > 0 ? +((withoutGallery.filter(s => s.converted).length / withoutGallery.length) * 100).toFixed(1) : 0,
+      convRate: hasRealPurchases && withoutGallery.length > 0 ? +((withoutGallery.filter(s => s.converted).length / withoutGallery.length) * 100).toFixed(1) : 0,
       atcRate:  withoutGallery.length > 0 ? +((withoutGallery.filter(s => s.addedToCart).length / withoutGallery.length) * 100).toFixed(1) : 0,
     },
   }
@@ -179,7 +184,7 @@ export const GET = withAdminAuth(async () => {
     return {
       label:    band.label,
       sessions: group.length,
-      convRate: group.length > 0 ? +((group.filter(s => s.converted).length / group.length) * 100).toFixed(1) : 0,
+      convRate: hasRealPurchases && group.length > 0 ? +((group.filter(s => s.converted).length / group.length) * 100).toFixed(1) : 0,
       atcRate:  group.length > 0 ? +((group.filter(s => s.addedToCart).length / group.length) * 100).toFixed(1) : 0,
     }
   }).filter(b => b.sessions > 0)
