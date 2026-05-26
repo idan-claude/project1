@@ -104,27 +104,19 @@ function checkTestMode(): HealthCheck {
 
 async function checkAnalyticsConsistency(): Promise<HealthCheck> {
   try {
-    const last7 = new Date(Date.now() - 7 * 86400000)
-    const [paidOrders, checkoutEvents] = await Promise.all([
-      Order.countDocuments({ createdAt: { $gte: last7 }, ...PAID_FILTER }),
-      VisitorEvent.countDocuments({ event: 'checkout_complete', createdAt: { $gte: last7 } }),
-    ])
-
-    if (checkoutEvents > 0 && paidOrders === 0) {
+    const report = await validateAnalyticsConsistency()
+    if (report.warnings.length > 0) {
       return {
         name: 'עקביות אנליטיקה',
         status: 'warning',
-        detail: `${checkoutEvents} checkout_complete events אבל 0 הזמנות ששולמו — אירועי VisitorEvent לא מעידים על רכישות`,
+        detail: report.warnings[0],
       }
     }
-    if (paidOrders > checkoutEvents) {
-      return {
-        name: 'עקביות אנליטיקה',
-        status: 'warning',
-        detail: `${paidOrders} הזמנות ששולמו אבל רק ${checkoutEvents} checkout events — ייתכן חסר מעקב`,
-      }
+    return {
+      name: 'עקביות אנליטיקה',
+      status: 'healthy',
+      detail: `${report.paidOrders7d} הזמנות ששולמו, ${report.checkoutCompleteEvents7d} checkout events (7 ימים)`,
     }
-    return { name: 'עקביות אנליטיקה', status: 'healthy', detail: `${paidOrders} הזמנות, ${checkoutEvents} אירועים` }
   } catch (e) {
     return { name: 'עקביות אנליטיקה', status: 'critical', detail: String(e) }
   }
