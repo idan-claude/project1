@@ -29,6 +29,7 @@ const NAV = [
     group: 'נתונים ואנליטיקה',
     items: [
       { href: '/admin/analytics', label: 'אנליטיקה', icon: '▲', sub: 'ביצועים וטרנדים' },
+      { href: '/admin/analytics/visitors', label: 'מבקרים', icon: '◉', sub: 'תנועה ומסעות' },
       { href: '/admin/ai-insights', label: 'תובנות AI', icon: '✦', sub: 'המלצות חכמות' },
       { href: '/admin/reports', label: 'דוחות', icon: '◧', sub: 'גרפים ונתונים' },
       { href: '/admin/activity', label: 'יומן פעילות', icon: '◑', sub: 'לוג פעולות' },
