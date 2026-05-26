@@ -114,7 +114,7 @@ export const GET = withAdminAuth(async () => {
       productViews,
       cartEvents,
       checkoutStarts,
-      checkoutCompletes: Math.max(checkoutCompletes, paidOrders),
+      checkoutCompletes,
       paidOrders,
     },
     rates: {
