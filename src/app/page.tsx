@@ -490,13 +490,14 @@ export default function HomePage() {
         </section>
 
         {/* ── FAQ ── */}
+        {faqs.length > 0 && (
         <section className="bg-gray-50 py-16 px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-10">
               שאלות נפוצות
             </h2>
             <div className="space-y-3">
-              {FAQS.map(({ q, a }, i) => (
+              {faqs.map(({ q, a }, i) => (
                 <div key={i} className="bg-white border rounded-xl overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
