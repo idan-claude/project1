@@ -6,6 +6,8 @@ import Order from '@/lib/db/models/Order'
 
 export const dynamic = 'force-dynamic'
 
+const PAID_FILTER = { 'payment.status': 'paid', testMode: { $ne: true } }
+
 export const GET = withAdminAuth(async () => {
   await connectDB()
 
