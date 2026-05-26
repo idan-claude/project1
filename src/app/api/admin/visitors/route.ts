@@ -123,10 +123,9 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       { $match: { 'sessions.1': { $exists: true } } },
       { $project: { _id: 1 } },
     ]),
+    // Real paid order count — the ONLY source of truth for purchases (parallel with VisitorEvent queries)
+    Order.countDocuments({ createdAt: { $gte: last7 }, ...PAID_FILTER }),
   ])
-
-  // Real paid order count — the ONLY source of truth for purchases
-  const paidOrderCount = await Order.countDocuments({ createdAt: { $gte: last7 }, ...PAID_FILTER })
 
   // Derived metrics from session summaries
   interface SessionSummary {
