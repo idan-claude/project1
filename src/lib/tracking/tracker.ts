@@ -27,8 +27,13 @@ function getUTM(): Record<string, string> {
   }
 }
 
+export type TrackEvent =
+  | 'pageview' | 'product_view' | 'add_to_cart'
+  | 'checkout_start' | 'checkout_complete'
+  | 'scroll_depth' | 'rage_click' | 'exit_page' | 'custom'
+
 export async function track(
-  event: 'pageview' | 'product_view' | 'add_to_cart' | 'checkout_start' | 'checkout_complete' | 'custom',
+  event: TrackEvent,
   meta: Record<string, unknown> = {},
   orderId: string | null = null
 ) {
@@ -46,6 +51,9 @@ export async function track(
         path: window.location.pathname,
         referrer: document.referrer,
         utm: getUTM(),
+        language: navigator.language || '',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+        scroll: meta.scroll ?? 0,
         meta,
         orderId,
       }),
@@ -54,4 +62,27 @@ export async function track(
   } catch {
     // tracking failures are silent
   }
+}
+
+// Attach scroll depth tracking to a page — fires events at 25/50/75/100%
+export function trackScrollDepth() {
+  if (typeof window === 'undefined') return
+  const milestones = [25, 50, 75, 100]
+  const fired = new Set<number>()
+
+  function onScroll() {
+    const scrollTop = window.scrollY
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight
+    if (docHeight <= 0) return
+    const pct = Math.round((scrollTop / docHeight) * 100)
+    for (const m of milestones) {
+      if (!fired.has(m) && pct >= m) {
+        fired.add(m)
+        track('scroll_depth', { scroll: m, path: window.location.pathname })
+      }
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true })
+  return () => window.removeEventListener('scroll', onScroll)
 }
