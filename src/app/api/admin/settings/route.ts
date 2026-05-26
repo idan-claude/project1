@@ -9,16 +9,17 @@ export const GET = withAdminAuth(async (req) => {
   await connectDB()
   const { searchParams } = new URL(req.url)
   const key = searchParams.get('key') || 'store'
-  const settings = await Settings.findOne({ key })
+  const storeId = searchParams.get('storeId') || 'default'
+  const settings = await Settings.findOne({ storeId, key })
   return NextResponse.json({ settings: settings?.value ?? {} })
 })
 
 export const POST = withAdminAuth(async (req) => {
   await connectDB()
-  const { key, value } = await req.json()
+  const { key, value, storeId = 'default' } = await req.json()
   const settings = await Settings.findOneAndUpdate(
-    { key },
-    { key, value },
+    { storeId, key },
+    { storeId, key, value },
     { upsert: true, new: true }
   )
   return NextResponse.json({ settings: settings.value })
