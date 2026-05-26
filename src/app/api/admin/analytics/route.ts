@@ -19,9 +19,9 @@ export const GET = withAdminAuth(async () => {
     topProducts,
     conversionByHour,
   ] = await Promise.all([
-    // All-time totals — paid orders only
+    // All-time totals — paid, non-test orders only
     Order.aggregate([
-      { $match: { 'payment.status': 'paid' } },
+      { $match: PAID_FILTER },
       {
         $group: {
           _id: null,
