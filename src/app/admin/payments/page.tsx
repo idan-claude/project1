@@ -37,14 +37,8 @@ export default function PaymentsPage() {
   const [totalSuccess, setTotalSuccess] = useState(0)
   const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
-  const [cardcomSettings, setCardcomSettings] = useState({ terminal: '', username: '', password: '', testMode: true })
-  const [settingsSaved, setSettingsSaved] = useState(false)
-  const [savingSettings, setSavingSettings] = useState(false)
-  const [loadingSettings, setLoadingSettings] = useState(false)
-
   useEffect(() => {
     if (tab === 'transactions') loadPayments()
-    if (tab === 'settings') loadSettings()
   }, [tab, filter])
 
   async function loadPayments() {
@@ -56,39 +50,6 @@ export default function PaymentsPage() {
       setTotalSuccess(d.totalSuccess || 0)
     } finally {
       setLoading(false)
-    }
-  }
-
-  async function loadSettings() {
-    setLoadingSettings(true)
-    try {
-      const res = await fetch('/api/admin/settings?key=cardcom')
-      const d = await res.json()
-      if (d.settings) {
-        setCardcomSettings({
-          terminal: d.settings.terminal || '',
-          username: d.settings.username || '',
-          password: d.settings.password || '',
-          testMode: d.settings.testMode !== false,
-        })
-      }
-    } finally {
-      setLoadingSettings(false)
-    }
-  }
-
-  async function saveSettings() {
-    setSavingSettings(true)
-    try {
-      await fetch('/api/admin/settings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key: 'cardcom', value: cardcomSettings }),
-      })
-      setSettingsSaved(true)
-      setTimeout(() => setSettingsSaved(false), 3000)
-    } finally {
-      setSavingSettings(false)
     }
   }
 
