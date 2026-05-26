@@ -9,12 +9,14 @@ export interface ISettings extends Document {
 
 const SettingsSchema = new Schema<ISettings>(
   {
-    storeId: { type: String, default: 'default', index: true },
-    key: { type: String, required: true, unique: true },
+    storeId: { type: String, default: 'default' },
+    key: { type: String, required: true },
     value: { type: Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }
 )
+
+SettingsSchema.index({ storeId: 1, key: 1 }, { unique: true })
 
 const Settings: Model<ISettings> =
   mongoose.models.Settings || mongoose.model<ISettings>('Settings', SettingsSchema)
