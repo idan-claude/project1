@@ -37,6 +37,14 @@ const FALLBACK_FAQS = [
   { q: 'מה כוללת האחריות?', a: 'אחריות לכל החיים על פגמי ייצור + 100 יום החזר כסף מלא אם לא מרוצה מכל סיבה. בלי שאלות.' },
 ]
 
+// Carousel: short, punchy, social-proof style — NEVER overlaps with bottom reviews
+const FALLBACK_CAROUSEL: ReviewItem[] = [
+  { photo: 'https://i.pravatar.cc/80?img=12', name: 'רחל ס.', location: 'באר שבע', detail: 'לקוחה 8 חודשים', rating: 5, text: 'הכרטיס ממש דק ולא מורגש כלל בארנק. שכחתי שהוא שם עד שארנק נפל בסופר ומצאתי אותו תוך 30 שניות. מעולה.' },
+  { photo: 'https://i.pravatar.cc/80?img=30', name: 'יעל פ.', location: 'גבעת שמואל', detail: 'לקוחה 5 חודשים', rating: 5, text: 'AirTag היה גדול מדי לארנק שלי. FindCard נכנס כמו כרטיס אשראי רגיל. 5 חודשים ולא הפסדתי ארנק אחד. זהו. תגמרו לחשוב ותקנו.' },
+  { photo: 'https://i.pravatar.cc/80?img=13', name: 'ערן ט.', location: 'נס ציונה', detail: 'לקוח שנה', rating: 5, text: 'שנה שלמה ועדיין עובד מצוין. הסוללה עדיין מחזיקה חזק. המוצר הכי שווה שקניתי השנה בלי ספק. 10/10' },
+]
+
+// Bottom: longer, detailed stories — NEVER overlaps with carousel reviews (no shared names)
 const FALLBACK_REVIEWS: ReviewItem[] = [
   { photo: 'https://i.pravatar.cc/80?img=9', name: 'דנה כ.', location: 'תל אביב', detail: 'לקוחה 4 חודשים', rating: 5, text: 'שנתיים ממש הייתי מאבדת ארנק כל שבוע, פעמיים שלוש פעמים. מאז שהכנסתי את FindCard? לא חיפשתי פעם אחת. ממש ממליצה 🙏' },
   { photo: 'https://i.pravatar.cc/80?img=33', name: 'אבי מ.', location: 'חיפה', detail: 'קנה 3 יחידות · לקוח 6 חודשים', rating: 5, text: 'קניתי 3 — לי, לאשה ולבן שמאבד הכל. הבן "איבד" ילקוט בבית ספר ומצאנו אותו תוך דקה!! ממליץ בחום לכל המשפחה.' },
@@ -45,14 +53,11 @@ const FALLBACK_REVIEWS: ReviewItem[] = [
   { photo: 'https://i.pravatar.cc/80?img=63', name: 'נועה ג.', location: 'הרצליה', detail: 'לקוחה 3 חודשים', rating: 4, text: 'קיבלתי במתנה ולא ידעתי אם אשתמש. חודש אחרי — ארנק נפל מהתיק בקניון, Find My הראה שהוא עדיין שם. חזרתי ומצאתי. חסכתי כ-750 שקל.' },
   { photo: 'https://i.pravatar.cc/80?img=17', name: 'תומר ז.', location: 'גבעתיים', detail: 'לקוח חודשיים', rating: 3, text: 'עובד כמו שאמרו. ההגדרה הייתה קצת מבלבלת בהתחלה אבל אחרי 5 דקות הסתדרתי. המשלוח לקח כשבועיים. בסך הכל מרוצה' },
   { photo: 'https://i.pravatar.cc/80?img=5', name: 'יוסי ב.', location: 'ראשון לציון', detail: 'קנה 2 יחידות · לקוח 7 חודשים', rating: 5, text: 'בחיים מאבד מפתחות, רציני. אחרי FindCard לוחץ וביפ! מצא. חסך לי כבר 3 כפילות (כל אחד 150 שח אז תחשבו...) שווה כל אגורה' },
-  { photo: 'https://i.pravatar.cc/80?img=12', name: 'רחל ס.', location: 'באר שבע', detail: 'לקוחה 8 חודשים', rating: 5, text: 'הכרטיס ממש דק ולא מורגש כלל בארנק. שכחתי שהוא שם עד שארנק נפל בסופר ומצאתי אותו תוך 30 שניות. מעולה.' },
   { photo: 'https://i.pravatar.cc/80?img=21', name: 'גל ד.', location: 'פתח תקווה', detail: 'לקוחה 3 חודשים', rating: 5, text: 'קניתי לבעל שלי שמאבד הכל תמיד. השינוי דרמטי. הוא אפילו לא מאמין שמצא את הארנק לבד :-) תודה רבה!' },
   { photo: 'https://i.pravatar.cc/80?img=52', name: 'עמית כ.', location: 'כפר סבא', detail: 'לקוח 5 חודשים', rating: 4, text: 'מוצר טוב מאוד. הייתי סקפטי בהתחלה אבל זה באמת עובד. פעם אחת הצג הראה שהארנק "50 מטר" ומצאתי אותו בין כריות הספה 😅' },
   { photo: 'https://i.pravatar.cc/80?img=38', name: 'ליאת מ.', location: 'רמת גן', detail: 'קנתה לבן זוג · לקוחה 6 חודשים', rating: 5, text: 'קניתי לבן זוג ליום הולדת — הוא היה מרוגז ש"קיבל מתנה פרקטית" אבל אחרי שבוע שלח לי תודה עם 3 לבבות כי מצא ארנק שאיבד 😄' },
   { photo: 'https://i.pravatar.cc/80?img=57', name: 'ניר ש.', location: 'אשדוד', detail: 'לקוח 4 חודשים', rating: 5, text: 'אני נהג מסירות ומאבד מפתחות רכב כמה פעמים בחודש. מאז FindCard לא היו לי עיכובים בגלל מפתחות. ממליץ לכל מי שעובד בשטח' },
   { photo: 'https://i.pravatar.cc/80?img=41', name: 'חנה א.', location: 'חולון', detail: 'קנתה לאבא · לקוחה 9 חודשים', rating: 5, text: 'קניתי לאבא בן ה-82. כל שבוע היינו מחפשים לו ארנק בכל הבית. עכשיו הוא לוחץ על הכפתור והכרטיס מצפצף. הוא כל כך מאושר.' },
-  { photo: 'https://i.pravatar.cc/80?img=30', name: 'יעל פ.', location: 'גבעת שמואל', detail: 'לקוחה 5 חודשים', rating: 5, text: 'AirTag היה גדול מדי לארנק שלי. FindCard נכנס כמו כרטיס אשראי רגיל. 5 חודשים ולא הפסדתי ארנק אחד. זהו. תגמרו לחשוב ותקנו.' },
-  { photo: 'https://i.pravatar.cc/80?img=13', name: 'ערן ט.', location: 'נס ציונה', detail: 'לקוח שנה', rating: 5, text: 'שנה שלמה ועדיין עובד מצוין. הסוללה עדיין מחזיקה חזק. המוצר הכי שווה שקניתי השנה בלי ספק. 10/10' },
   { photo: 'https://i.pravatar.cc/80?img=68', name: 'טל ר.', location: 'אילת', detail: 'לקוח 6 חודשים', rating: 5, text: 'גרתי באילת ואיבדתי ארנק בים. חששתי שהמים יהרסו אותו אבל IP67 — הכרטיס חי! הוא צפצף גם אחרי שעה במים. מדהים ממש.' },
 ]
 
