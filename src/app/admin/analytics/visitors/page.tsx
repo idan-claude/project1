@@ -41,7 +41,7 @@ const EVENT_LABELS: Record<string, string> = {
   product_view: 'צפה במוצר',
   add_to_cart: 'הוסיף לסל',
   checkout_start: 'התחיל תשלום',
-  checkout_complete: 'השלים רכישה',
+  checkout_complete: 'הגיע לדף אישור',
   scroll_depth: 'גלילה',
   rage_click: 'לחיצות כעס',
   exit_page: 'יציאה',
