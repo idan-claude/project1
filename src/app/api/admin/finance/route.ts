@@ -13,20 +13,20 @@ export const GET = withAdminAuth(async () => {
 
   const [todayData, monthData, lastMonthData, byDay, byStatus] = await Promise.all([
     Order.aggregate([
-      { $match: { createdAt: { $gte: startOfToday }, status: { $ne: 'cancelled' } } },
+      { $match: { createdAt: { $gte: startOfToday }, 'payment.status': 'paid' } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
     Order.aggregate([
-      { $match: { createdAt: { $gte: startOfMonth }, status: { $ne: 'cancelled' } } },
+      { $match: { createdAt: { $gte: startOfMonth }, 'payment.status': 'paid' } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
     Order.aggregate([
-      { $match: { createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }, status: { $ne: 'cancelled' } } },
+      { $match: { createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }, 'payment.status': 'paid' } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ]),
-    // Revenue by day for last 30 days
+    // Revenue by day for last 30 days — paid orders only
     Order.aggregate([
-      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, status: { $ne: 'cancelled' } } },
+      { $match: { createdAt: { $gte: new Date(Date.now() - 30 * 86400000) }, 'payment.status': 'paid' } },
       {
         $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
@@ -36,7 +36,7 @@ export const GET = withAdminAuth(async () => {
       },
       { $sort: { _id: 1 } },
     ]),
-    // Orders by status
+    // Orders by status (status breakdown for pipeline visibility, not revenue)
     Order.aggregate([
       { $group: { _id: '$status', count: { $sum: 1 }, revenue: { $sum: '$pricing.total' } } },
     ]),
