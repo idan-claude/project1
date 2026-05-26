@@ -38,7 +38,7 @@ const VisitorEventSchema = new Schema<IVisitorEvent>({
   storeId:   { type: String, default: 'default', index: true },
   sessionId: { type: String, required: true, index: true },
   visitorId: { type: String, required: true, index: true },
-  event:     { type: String, required: true, index: true },
+  event:     { type: String, required: true, index: true, enum: ['pageview','add_to_cart','checkout_start','checkout_complete','product_view','scroll_depth','rage_click','exit_page','faq_open','gallery_view','cta_click','inactive','custom'] },
   path:      { type: String, default: '' },
   referrer:  { type: String, default: '' },
   utm: {
