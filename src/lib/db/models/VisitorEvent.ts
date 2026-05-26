@@ -35,12 +35,12 @@ export interface IVisitorEvent extends Document {
 }
 
 const VisitorEventSchema = new Schema<IVisitorEvent>({
-    storeId: { type: String, default: 'default', index: true },
-  sessionId:  { type: String, required: true, index: true },
-  visitorId:  { type: String, required: true, index: true },
-  event:      { type: String, required: true, index: true },
-  path:       { type: String, default: '' },
-  referrer:   { type: String, default: '' },
+  storeId:   { type: String, default: 'default', index: true },
+  sessionId: { type: String, required: true, index: true },
+  visitorId: { type: String, required: true, index: true },
+  event:     { type: String, required: true, index: true },
+  path:      { type: String, default: '' },
+  referrer:  { type: String, default: '' },
   utm: {
     source:   { type: String, default: '' },
     medium:   { type: String, default: '' },
@@ -58,9 +58,13 @@ const VisitorEventSchema = new Schema<IVisitorEvent>({
     ip:      { type: String, default: '' },
     country: { type: String, default: '' },
     city:    { type: String, default: '' },
+    isp:     { type: String, default: '' },
   },
-  meta:    { type: Schema.Types.Mixed, default: {} },
-  orderId: { type: String, default: null },
+  language: { type: String, default: '' },
+  timezone: { type: String, default: '' },
+  scroll:   { type: Number, default: 0 },
+  meta:     { type: Schema.Types.Mixed, default: {} },
+  orderId:  { type: String, default: null },
 }, { timestamps: { createdAt: true, updatedAt: false } })
 
 VisitorEventSchema.index({ createdAt: -1 })
