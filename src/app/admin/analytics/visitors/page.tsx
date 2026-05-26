@@ -27,6 +27,12 @@ interface VisitorStats {
   }>
   scrollDepth: Array<{ path: string; avgScroll: number; count: number }>
   byCountry: Array<{ country: string; count: number }>
+  bounceRate: number
+  avgSessionDuration: number
+  avgScrollDepth: number
+  returningRate: number
+  totalSessions: number
+  dropoffByEvent: Array<{ event: string; count: number; pct: number }>
 }
 
 const EVENT_LABELS: Record<string, string> = {
