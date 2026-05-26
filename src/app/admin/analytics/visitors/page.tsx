@@ -33,6 +33,7 @@ interface VisitorStats {
   returningRate: number
   totalSessions: number
   dropoffByEvent: Array<{ event: string; count: number; pct: number }>
+  paidOrderCount: number
 }
 
 const EVENT_LABELS: Record<string, string> = {
