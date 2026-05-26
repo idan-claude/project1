@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import AnalyticsConsistencyBanner from '@/components/admin/AnalyticsConsistencyBanner'
 
 interface VisitorStats {
   totalToday: number
