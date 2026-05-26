@@ -380,7 +380,7 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
                   </ul>
                 )}
 
-                {reviews.length > 0 && <ReviewCarousel reviews={reviews} />}
+                {(carouselReviews?.length ?? 0) > 0 && <ReviewCarousel reviews={carouselReviews!} />}
 
                 <div>
                   <p className="text-sm font-semibold text-gray-700 mb-3">בחר חבילה:</p>
