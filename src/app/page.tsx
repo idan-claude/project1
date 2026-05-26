@@ -4,10 +4,9 @@ import { useState, useEffect, useRef } from 'react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useCartStore } from '@/store/cartStore'
+import { formatPrice } from '@/lib/utils/formatPrice'
 
 const PRODUCT_SLUG = 'kartis-maakav-smart-pro'
-const SELLING_PRICE = 19990  // ₪199.90
-const COMPARE_PRICE = 29900  // ₪299
 
 const FEATURE_SLIDES = [
   {
