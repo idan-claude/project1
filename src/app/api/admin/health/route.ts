@@ -103,6 +103,55 @@ function checkTestMode(): HealthCheck {
   return { name: 'מצב בדיקה', status: 'healthy', detail: 'כבוי — הזמנות אמיתיות' }
 }
 
+async function checkInventory(): Promise<HealthCheck> {
+  try {
+    const outOfStock = await Product.countDocuments({
+      'inventory.trackQuantity': true,
+      'inventory.quantity': { $lte: 0 },
+      status: 'active',
+    })
+    const lowStock = await Product.countDocuments({
+      'inventory.trackQuantity': true,
+      $expr: { $lte: ['$inventory.quantity', '$inventory.lowStockThreshold'] },
+      'inventory.quantity': { $gt: 0 },
+      status: 'active',
+    })
+    if (outOfStock > 0) {
+      return { name: 'מלאי מוצרים', status: 'critical', detail: `${outOfStock} מוצרים פעילים חסרי מלאי — לקוחות לא יכולים לרכוש` }
+    }
+    if (lowStock > 0) {
+      return { name: 'מלאי מוצרים', status: 'warning', detail: `${lowStock} מוצרים עם מלאי נמוך` }
+    }
+    return { name: 'מלאי מוצרים', status: 'healthy', detail: 'כל המוצרים הפעילים זמינים' }
+  } catch (e) {
+    return { name: 'מלאי מוצרים', status: 'warning', detail: String(e) }
+  }
+}
+
+async function checkRecentOrderAge(): Promise<HealthCheck> {
+  try {
+    const lastOrder = await Order.findOne(PAID_FILTER).sort({ createdAt: -1 }).select('createdAt').lean()
+    if (!lastOrder) {
+      return { name: 'הזמנה אחרונה', status: 'warning', detail: 'אין הזמנות ששולמו עדיין — לא בהכרח בעיה בחנות חדשה' }
+    }
+    const ageHours = (Date.now() - new Date(lastOrder.createdAt).getTime()) / 3600000
+    if (ageHours > 24 * 7) {
+      return { name: 'הזמנה אחרונה', status: 'warning', detail: `לפני ${Math.round(ageHours / 24)} ימים — בדוק שהחנות נגישה ו-Cardcom פעיל` }
+    }
+    return {
+      name: 'הזמנה אחרונה',
+      status: 'healthy',
+      detail: ageHours < 1
+        ? 'לפני פחות משעה'
+        : ageHours < 24
+          ? `לפני ${Math.round(ageHours)} שעות`
+          : `לפני ${Math.round(ageHours / 24)} ימים`,
+    }
+  } catch (e) {
+    return { name: 'הזמנה אחרונה', status: 'warning', detail: String(e) }
+  }
+}
+
 async function checkAnalyticsConsistency(): Promise<HealthCheck> {
   try {
     const report = await validateAnalyticsConsistency()
