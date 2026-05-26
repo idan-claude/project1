@@ -125,7 +125,10 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
   const addItem = useCartStore(s => s.addItem)
   const router = useRouter()
 
-  useEffect(() => { track('product_view', { product: slug }) }, [slug])
+  useEffect(() => {
+    track('product_view', { product: slug })
+    return trackScrollDepth()
+  }, [slug])
 
   const bundle = bundles[bundleIndex]
   const saveAmount = bundle.compareAtPrice - bundle.price
