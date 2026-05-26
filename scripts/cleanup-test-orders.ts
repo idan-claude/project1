@@ -8,10 +8,17 @@
  * Requires MONGODB_URI in .env.local
  */
 import mongoose from 'mongoose'
-import * as dotenv from 'dotenv'
-import * as path from 'path'
+import { resolve } from 'path'
+import { readFileSync } from 'fs'
 
-dotenv.config({ path: path.resolve(__dirname, '../.env.local') })
+// Load .env.local manually without dotenv dependency
+try {
+  const envFile = readFileSync(resolve(__dirname, '../.env.local'), 'utf8')
+  for (const line of envFile.split('\n')) {
+    const match = line.match(/^([^#=]+)=(.*)$/)
+    if (match) process.env[match[1].trim()] = match[2].trim().replace(/^["']|["']$/g, '')
+  }
+} catch { /* .env.local not present */ }
 
 const MONGODB_URI = process.env.MONGODB_URI
 if (!MONGODB_URI) { console.error('❌ MONGODB_URI not set in .env.local'); process.exit(1) }
