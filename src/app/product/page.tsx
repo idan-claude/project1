@@ -219,11 +219,19 @@ export default async function ProductPage() {
         productId={product._id.toString()}
         slug={product.slug}
         nameHe={product.nameHe}
+        subtitle={product.subtitle}
+        descriptionShort={product.descriptionShort}
+        benefitsList={product.benefitsList}
+        ctaText={product.ctaText}
+        addToCartText={product.addToCartText}
+        videoUrl={product.videoUrl}
+        beforeAfter={product.beforeAfter}
         gallery={gallery}
         bundles={bundles}
         inStock={inStock}
         pageContent={pageContent}
         reviews={reviews}
+        sections={sections}
       />
     </>
   )
