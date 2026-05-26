@@ -275,7 +275,7 @@ export const GET = withAdminAuth(async () => {
     totalSessions,
     overallConversionRate: +overallConvRate.toFixed(1),
     overallAtcRate:        +overallAtcRate.toFixed(1),
-    totalConverted,
+    totalConverted: paidOrderCount,
     totalAtc,
     bySource,
     byDevice,
