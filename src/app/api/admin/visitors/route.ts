@@ -3,6 +3,8 @@ import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import VisitorEvent from '@/lib/db/models/VisitorEvent'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
 
@@ -27,6 +29,8 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     recentJourneys,
     scrollDepthRaw,
     byCountryRaw,
+    sessionSummaries,
+    returningVisitorIds,
   ] = await Promise.all([
     VisitorEvent.countDocuments({ createdAt: { $gte: today } }),
     VisitorEvent.distinct('visitorId', { createdAt: { $gte: today } }),
