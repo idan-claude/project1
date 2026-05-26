@@ -262,9 +262,9 @@ export const GET = withAdminAuth(async () => {
   const topCampaigns = Array.from(campaignMap.entries())
     .map(([campaign, d]) => ({
       campaign,
-      sessions:   d.sessions,
-      conversions: d.conversions,
-      convRate:   d.sessions > 0 ? +((d.conversions / d.sessions) * 100).toFixed(1) : 0,
+      sessions:    d.sessions,
+      conversions: hasRealPurchases ? d.conversions : 0,
+      convRate:    hasRealPurchases && d.sessions > 0 ? +((d.conversions / d.sessions) * 100).toFixed(1) : 0,
     }))
     .sort((a, b) => b.convRate - a.convRate)
     .slice(0, 5)
