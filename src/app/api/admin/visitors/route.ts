@@ -34,6 +34,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     byCountryRaw,
     sessionSummaries,
     returningVisitorIds,
+    paidOrderCount,
   ] = await Promise.all([
     VisitorEvent.countDocuments({ createdAt: { $gte: today } }),
     VisitorEvent.distinct('visitorId', { createdAt: { $gte: today } }),
