@@ -112,13 +112,27 @@ export default async function ProductPage() {
 
   const STORE_ID = 'default'
 
-  const [productRaw, reviewsRaw, layoutRaw] = await Promise.all([
+  const [productRaw, reviewsRaw, layoutRaw, globalFaqSettings] = await Promise.all([
     Product.findOne({ slug: PRODUCT_SLUG, status: 'active' }).lean(),
     Review.find({ status: 'approved' }).sort({ createdAt: -1 }).limit(20).lean(),
     PageLayout.findOne({ storeId: STORE_ID, productId: null }).lean().catch(() => null),
+    Settings.findOne({ storeId: STORE_ID, key: 'global_faqs' }).lean().catch(() => null),
   ])
 
   if (!productRaw) notFound()
+
+  // Seed global FAQs on first access if not in DB
+  const rawFaqValue = (globalFaqSettings as { value?: unknown } | null)?.value as { faqs?: { q: string; a: string }[] } | undefined
+  let globalFaqs: { q: string; a: string }[] = rawFaqValue?.faqs || []
+  if (!globalFaqs.length) {
+    const seedFaqs = FALLBACK_FAQS
+    await Settings.findOneAndUpdate(
+      { storeId: STORE_ID, key: 'global_faqs' },
+      { $setOnInsert: { storeId: STORE_ID, key: 'global_faqs', value: { faqs: seedFaqs } } },
+      { upsert: true }
+    )
+    globalFaqs = seedFaqs
+  }
 
   // Fetch product-specific layout (overrides global)
   const productLayoutRaw = await PageLayout.findOne({ storeId: STORE_ID, productId: productRaw._id }).lean().catch(() => null)
