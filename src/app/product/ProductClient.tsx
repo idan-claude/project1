@@ -428,24 +428,26 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
           </div>
         </div>
 
-        {/* ═══ BELOW FOLD ═══ */}
+        {/* ═══ BELOW FOLD — rendered in section order ═══ */}
 
-        {pageContent.features?.length > 0 && (
-          <section className="py-10 px-4 bg-white border-t">
-            <div className="max-w-5xl mx-auto">
-              <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">למה <span dir="ltr">FindCard</span>?</h2>
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-                {pageContent.features.map(f => (
-                  <div key={f.label} className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
-                    <div className="text-3xl mb-1.5">{f.icon}</div>
-                    <p className="text-xs font-bold text-gray-800 leading-tight">{f.label}</p>
-                    <p className="text-xs text-gray-400 mt-0.5 leading-tight">{f.desc}</p>
-                  </div>
-                ))}
+        {belowFoldOrder.map(sType => {
+
+          if (sType === 'benefits' && pageContent.features?.length > 0) return (
+            <section key="benefits" className="py-10 px-4 bg-white border-t">
+              <div className="max-w-5xl mx-auto">
+                <h2 className="text-lg font-extrabold text-center text-gray-900 mb-5">למה <span dir="ltr">FindCard</span>?</h2>
+                <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                  {pageContent.features.map(f => (
+                    <div key={f.label} className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
+                      <div className="text-3xl mb-1.5">{f.icon}</div>
+                      <p className="text-xs font-bold text-gray-800 leading-tight">{f.label}</p>
+                      <p className="text-xs text-gray-400 mt-0.5 leading-tight">{f.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )
 
         {reviews.length > 0 && (
           <section className="py-12 px-4 bg-gray-50 border-t">
