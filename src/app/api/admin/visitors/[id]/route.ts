@@ -1,0 +1,185 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { withAdminAuth } from '@/lib/auth/adminAuth'
+import { connectDB } from '@/lib/db/mongoose'
+import VisitorEvent from '@/lib/db/models/VisitorEvent'
+import Order from '@/lib/db/models/Order'
+import { PAID_FILTER } from '@/lib/analytics/sourceOfTruth'
+
+export const dynamic = 'force-dynamic'
+
+export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
+  const visitorId = ctx.params.id
+  if (!visitorId) return NextResponse.json({ error: 'Missing visitorId' }, { status: 400 })
+
+  try {
+    await connectDB()
+
+    const [events, orders] = await Promise.all([
+      VisitorEvent.find({ visitorId }).sort({ createdAt: 1 }).lean(),
+      Order.find({ 'customer.email': { $exists: true }, ...PAID_FILTER }).lean(),
+    ])
+
+    if (events.length === 0) {
+      return NextResponse.json({ error: 'Visitor not found' }, { status: 404 })
+    }
+
+    // Session grouping
+    const sessionMap = new Map<string, typeof events>()
+    for (const e of events) {
+      const s = sessionMap.get(e.sessionId) || []
+      s.push(e)
+      sessionMap.set(e.sessionId, s)
+    }
+    const sessions = Array.from(sessionMap.values())
+
+    const firstSeen = events[0].createdAt
+    const lastSeen = events[events.length - 1].createdAt
+    const sessionCount = sessions.length
+
+    // Engagement score (0–100)
+    const eventWeights: Record<string, number> = {
+      product_view: 3, add_to_cart: 15, checkout_start: 20, checkout_complete: 10,
+      scroll_depth: 2, faq_open: 5, gallery_view: 4, cta_click: 12, rage_click: -5,
+    }
+    let rawEngagement = 0
+    let rageClicks = 0
+    let maxScrollPct = 0
+    let productViews = 0
+    let cartAdds = 0
+    let checkoutStarts = 0
+    let checkoutCompletes = 0
+    let faqOpens = 0
+    let ctaClicks = 0
+    let totalDuration = 0
+
+    for (const session of sessions) {
+      const sorted = [...session].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+      const dur = sorted.length > 1
+        ? (new Date(sorted[sorted.length - 1].createdAt).getTime() - new Date(sorted[0].createdAt).getTime()) / 1000
+        : 0
+      if (dur > 0 && dur < 7200) totalDuration += dur
+    }
+
+    for (const e of events) {
+      rawEngagement += eventWeights[e.event] || 0
+      if (e.event === 'rage_click') rageClicks++
+      if (e.event === 'scroll_depth' && e.scroll > maxScrollPct) maxScrollPct = e.scroll
+      if (e.event === 'product_view') productViews++
+      if (e.event === 'add_to_cart') cartAdds++
+      if (e.event === 'checkout_start') checkoutStarts++
+      if (e.event === 'checkout_complete') checkoutCompletes++
+      if (e.event === 'faq_open') faqOpens++
+      if (e.event === 'cta_click') ctaClicks++
+    }
+    const engagementScore = Math.min(100, Math.max(0, rawEngagement))
+
+    // Purchase intent score (0–100)
+    const purchaseIntentScore = Math.min(100,
+      (cartAdds > 0 ? 30 : 0) +
+      (checkoutStarts > 0 ? 40 : 0) +
+      (ctaClicks * 5) +
+      (faqOpens * 3) +
+      (maxScrollPct >= 75 ? 10 : maxScrollPct >= 50 ? 5 : 0)
+    )
+
+    // Bounce probability: sessions with only 1-2 events
+    const bouncedSessions = sessions.filter(s => s.length <= 2).length
+    const bounceProbability = sessions.length > 0 ? Math.round((bouncedSessions / sessions.length) * 100) : 0
+
+    // First/last device and location
+    const firstEvent = events[0]
+    const lastEvent = events[events.length - 1]
+    const device = firstEvent.device?.type || 'unknown'
+    const browser = lastEvent.device?.browser || ''
+    const os = lastEvent.device?.os || ''
+    const country = lastEvent.geo?.country || firstEvent.geo?.country || ''
+    const city = lastEvent.geo?.city || firstEvent.geo?.city || ''
+    const region = lastEvent.geo?.region || firstEvent.geo?.region || ''
+    const confidence = lastEvent.geo?.confidence || firstEvent.geo?.confidence || 0
+    const isp = lastEvent.geo?.isp || firstEvent.geo?.isp || ''
+    const ipMasked = (firstEvent.geo?.ip || '').replace(/\.\d+$/, '.***')
+
+    // Is returning (more than 1 session)
+    const isReturning = sessionCount > 1
+
+    // UTM source from first session
+    const firstWithUtm = events.find(e => e.utm?.source)
+    const utmSource = firstWithUtm?.utm?.source || ''
+    const utmCampaign = firstWithUtm?.utm?.campaign || ''
+
+    // Session timeline (all sessions with events)
+    const sessionTimeline = sessions.map(sess => {
+      const sorted = [...sess].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+      const dur = sorted.length > 1
+        ? Math.round((new Date(sorted[sorted.length - 1].createdAt).getTime() - new Date(sorted[0].createdAt).getTime()) / 1000)
+        : 0
+      return {
+        sessionId: sorted[0].sessionId,
+        firstSeen: sorted[0].createdAt,
+        lastSeen: sorted[sorted.length - 1].createdAt,
+        duration: dur,
+        eventCount: sorted.length,
+        events: sorted.map(e => ({
+          event: e.event,
+          path: e.path,
+          scroll: e.scroll,
+          createdAt: e.createdAt,
+          meta: e.meta,
+        })),
+        device: sorted[0].device?.type,
+        converted: sorted.some(e => e.event === 'checkout_complete'),
+        addedToCart: sorted.some(e => e.event === 'add_to_cart'),
+        startedCheckout: sorted.some(e => e.event === 'checkout_start'),
+      }
+    }).sort((a, b) => new Date(b.firstSeen).getTime() - new Date(a.firstSeen).getTime())
+
+    return NextResponse.json({
+      visitorId,
+      firstSeen,
+      lastSeen,
+      sessionCount,
+      totalDuration: Math.round(totalDuration),
+      isReturning,
+      engagementScore,
+      purchaseIntentScore,
+      bounceProbability,
+      rageClicks,
+      maxScrollPct,
+      productViews,
+      cartAdds,
+      checkoutStarts,
+      checkoutCompletes,
+      faqOpens,
+      ctaClicks,
+      device,
+      browser,
+      os,
+      country,
+      city,
+      region,
+      confidence,
+      isp,
+      ipMasked,
+      language: firstEvent.language || '',
+      timezone: firstEvent.timezone || '',
+      utmSource,
+      utmCampaign,
+      sessionTimeline,
+      // Fraud signals
+      fraudSignals: {
+        rageClicks: rageClicks > 3,
+        tooFast: sessions.some(s => {
+          const sorted = [...s].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          const dur = sorted.length > 1
+            ? (new Date(sorted[sorted.length - 1].createdAt).getTime() - new Date(sorted[0].createdAt).getTime()) / 1000
+            : 999
+          return dur < 5 && s.some(e => e.event === 'checkout_complete')
+        }),
+        multipleCheckouts: checkoutCompletes > 2,
+      },
+    })
+  } catch (err) {
+    console.error('[visitors/[id]]', err)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+})
