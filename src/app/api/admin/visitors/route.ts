@@ -96,6 +96,29 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       { $sort: { count: -1 } },
       { $limit: 8 },
     ]),
+    // Per-session summaries for bounce/duration/dropoff (last 7 days)
+    VisitorEvent.aggregate([
+      { $match: { createdAt: { $gte: last7 } } },
+      { $sort: { createdAt: 1 } },
+      { $group: {
+          _id: '$sessionId',
+          visitorId:    { $first: '$visitorId' },
+          eventCount:   { $sum: 1 },
+          events:       { $push: '$event' },
+          firstEvent:   { $first: '$event' },
+          lastEvent:    { $last: '$event' },
+          firstSeen:    { $min: '$createdAt' },
+          lastSeen:     { $max: '$createdAt' },
+          maxScroll:    { $max: '$scroll' },
+      }},
+    ]),
+    // Returning visitor IDs (appear in >1 session during last 30 days)
+    VisitorEvent.aggregate([
+      { $match: { createdAt: { $gte: last30 } } },
+      { $group: { _id: '$visitorId', sessions: { $addToSet: '$sessionId' } } },
+      { $match: { 'sessions.1': { $exists: true } } },
+      { $project: { _id: 1 } },
+    ]),
   ])
 
   return NextResponse.json({
