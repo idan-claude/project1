@@ -13,6 +13,10 @@ interface VisitorProfile {
   engagementScore: number
   purchaseIntentScore: number
   bounceProbability: number
+  hesitationScore: number
+  frustrationScore: number
+  attentionScore: number
+  ctaHesitationSec: number | null
   rageClicks: number
   maxScrollPct: number
   productViews: number
@@ -21,6 +25,7 @@ interface VisitorProfile {
   checkoutCompletes: number
   faqOpens: number
   ctaClicks: number
+  exitPages: number
   device: string
   browser: string
   os: string
