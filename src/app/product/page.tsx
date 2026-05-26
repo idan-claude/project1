@@ -109,9 +109,10 @@ function buildDefaultBundles(sellingPrice: number, compareAtPrice: number): Prod
 export default async function ProductPage() {
   await connectDB()
 
-  const [productRaw, reviewsRaw] = await Promise.all([
+  const [productRaw, reviewsRaw, layoutRaw] = await Promise.all([
     Product.findOne({ slug: PRODUCT_SLUG, status: 'active' }).lean(),
     Review.find({ status: 'approved' }).sort({ createdAt: -1 }).limit(20).lean(),
+    PageLayout.findOne({ productId: null }).lean().catch(() => null), // global default first
   ])
 
   if (!productRaw) notFound()
