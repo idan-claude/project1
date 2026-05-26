@@ -93,6 +93,21 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+// Merge FAQs: global FAQs as base, product-specific FAQs override matching questions and add new ones
+function mergeFaqs(
+  productFaqs: { q: string; a: string }[],
+  globalFaqs: { q: string; a: string }[]
+): { q: string; a: string }[] {
+  if (!productFaqs.length) return globalFaqs
+  if (!globalFaqs.length) return productFaqs
+  const productMap = new Map(productFaqs.map(f => [f.q.trim(), f]))
+  const merged = globalFaqs.map(gf => productMap.get(gf.q.trim()) || gf)
+  for (const pf of productFaqs) {
+    if (!globalFaqs.some(gf => gf.q.trim() === pf.q.trim())) merged.push(pf)
+  }
+  return merged
+}
+
 // Round to nearest ₪x.90 for psychological pricing defaults
 function psychoPrice(n: number): number {
   return Math.round(n / 1000) * 1000 - 10
