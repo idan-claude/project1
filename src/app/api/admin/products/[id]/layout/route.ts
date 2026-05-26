@@ -5,9 +5,11 @@ import PageLayout, { DEFAULT_SECTIONS } from '@/lib/db/models/PageLayout'
 
 export const dynamic = 'force-dynamic'
 
+const STORE_ID = 'default'
+
 export const GET = withAdminAuth(async (_req: NextRequest, { params }) => {
   await connectDB()
-  const layout = await PageLayout.findOne({ productId: params.id })
+  const layout = await PageLayout.findOne({ storeId: STORE_ID, productId: params.id })
   const sections = layout?.sections?.length ? layout.sections : DEFAULT_SECTIONS
   return NextResponse.json({ sections, hasCustomLayout: !!layout })
 })
@@ -20,8 +22,8 @@ export const PUT = withAdminAuth(async (req: NextRequest, { params }) => {
   }
 
   const layout = await PageLayout.findOneAndUpdate(
-    { productId: params.id },
-    { productId: params.id, storeId: 'default', sections },
+    { storeId: STORE_ID, productId: params.id },
+    { storeId: STORE_ID, productId: params.id, sections },
     { upsert: true, new: true }
   )
   return NextResponse.json({ sections: layout.sections })
@@ -29,6 +31,6 @@ export const PUT = withAdminAuth(async (req: NextRequest, { params }) => {
 
 export const DELETE = withAdminAuth(async (_req: NextRequest, { params }) => {
   await connectDB()
-  await PageLayout.deleteOne({ productId: params.id })
+  await PageLayout.deleteOne({ storeId: STORE_ID, productId: params.id })
   return NextResponse.json({ sections: DEFAULT_SECTIONS, reset: true })
 })
