@@ -21,7 +21,10 @@ export default function CheckoutPage() {
   const [couponError, setCouponError] = useState('')
   const [couponLoading, setCouponLoading] = useState(false)
 
-  useEffect(() => { track('checkout_start', { items: items.length }) }, [])
+  useEffect(() => {
+    trackPageView()
+    track('checkout_start', { items: items.length })
+  }, [])
 
   const subtotalAmount = total()
   const orderTotal = Math.max(0, subtotalAmount - (couponApplied?.discount ?? 0))
