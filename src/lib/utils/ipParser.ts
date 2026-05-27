@@ -1,12 +1,18 @@
 import { NextRequest } from 'next/server'
 
+// Strip IPv6-mapped IPv4 so ::ffff:1.2.3.4 matches 1.2.3.4 stored in DB
+export function normalizeIP(ip: string): string {
+  if (ip.startsWith('::ffff:')) return ip.slice(7)
+  return ip
+}
+
 export function getClientIP(req: NextRequest): string {
-  return (
+  const raw =
     req.headers.get('x-real-ip') ||
     req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-    req.headers.get('cf-connecting-ip') ||    // Cloudflare
+    req.headers.get('cf-connecting-ip') ||
     '0.0.0.0'
-  )
+  return normalizeIP(raw)
 }
 
 export function parseUserAgent(ua: string): { browser: string; os: string; type: 'mobile' | 'tablet' | 'desktop' | 'unknown' } {
