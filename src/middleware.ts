@@ -19,8 +19,8 @@ function getCached(ip: string): boolean | null {
 function setCache(ip: string, blocked: boolean) {
   if (edgeCache.size >= CACHE_MAX_SIZE) {
     // Evict oldest 200 entries
-    const keys = [...edgeCache.keys()].slice(0, 200)
-    keys.forEach(k => edgeCache.delete(k))
+    let evicted = 0
+    edgeCache.forEach((_, k) => { if (evicted < 200) { edgeCache.delete(k); evicted++ } })
   }
   edgeCache.set(ip, {
     blocked,
