@@ -180,11 +180,14 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
     if (type === 'start') { imgTouchStart.current = e.touches[0].clientX; return }
     const diff = imgTouchStart.current - e.changedTouches[0].clientX
     if (Math.abs(diff) > 40) {
+      // Compute next outside setState to avoid double-firing in Strict Mode
       setActiveImg(i => {
         const next = diff > 0 ? (i + 1) % gallery.length : (i - 1 + gallery.length) % gallery.length
-        track('gallery_view', { imageIndex: next, product: slug })
         return next
       })
+      const currentImg = activeImg
+      const next = diff > 0 ? (currentImg + 1) % gallery.length : (currentImg - 1 + gallery.length) % gallery.length
+      track('gallery_view', { imageIndex: next, product: slug })
     }
   }
 
