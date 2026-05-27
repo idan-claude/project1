@@ -7,7 +7,8 @@ const NAV = [
   {
     group: 'ראשי',
     items: [
-      { href: '/admin', label: 'לוח בקרה', icon: '◈', sub: 'סקירת ביצועים', exact: true },
+      { href: '/admin/executive', label: 'Executive', icon: '◈', sub: 'Command Center' },
+      { href: '/admin', label: 'לוח בקרה', icon: '◎', sub: 'סקירת ביצועים', exact: true },
       { href: '/admin/orders', label: 'הזמנות', icon: '◎', sub: 'ניהול וטיפול' },
       { href: '/admin/products', label: 'מוצרים', icon: '⬡', sub: 'קטלוג וניהול' },
       { href: '/admin/inventory', label: 'מלאי', icon: '▤', sub: 'מעקב כמויות' },
@@ -19,6 +20,8 @@ const NAV = [
     group: 'שיווק ומכירות',
     items: [
       { href: '/admin/marketing', label: 'שיווק', icon: '◆', sub: 'קופונים וקמפיינים' },
+      { href: '/admin/marketing/meta', label: 'Meta Pixel', icon: '◌', sub: 'Pixel + CAPI' },
+      { href: '/admin/marketing/tiktok', label: 'TikTok Pixel', icon: '◌', sub: 'Pixel + Events API' },
       { href: '/admin/campaigns', label: 'קמפיינים', icon: '✉', sub: 'מיילים שיווקיים' },
       { href: '/admin/funnels', label: 'משפכים', icon: '▽', sub: 'ניתוח המרות' },
       { href: '/admin/automations', label: 'אוטומציות', icon: '⟳', sub: 'תזרים אוטומטי' },
@@ -30,6 +33,7 @@ const NAV = [
     items: [
       { href: '/admin/analytics', label: 'אנליטיקה', icon: '▲', sub: 'ביצועים וטרנדים' },
       { href: '/admin/analytics/visitors', label: 'מבקרים', icon: '◉', sub: 'תנועה ומסעות' },
+      { href: '/admin/products/intelligence', label: 'Product Intelligence', icon: '◆', sub: 'ביצועים לפי מוצר' },
       { href: '/admin/ai-insights', label: 'תובנות AI', icon: '✦', sub: 'המלצות חכמות' },
       { href: '/admin/reports', label: 'דוחות', icon: '◧', sub: 'גרפים ונתונים' },
       { href: '/admin/activity', label: 'יומן פעילות', icon: '◑', sub: 'לוג פעולות' },
