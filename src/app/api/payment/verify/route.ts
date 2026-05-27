@@ -10,12 +10,15 @@ export async function GET(req: NextRequest) {
   const orderId = searchParams.get('orderId')
   if (!orderId) return NextResponse.json({ error: 'Missing orderId' }, { status: 400 })
 
-  const order = await Order.findById(orderId).select('payment.status orderNumber pricing.total')
+  const order = await Order.findById(orderId).select('payment.status orderNumber pricing.total items tracking')
   if (!order) return NextResponse.json({ error: 'לא נמצא' }, { status: 404 })
 
   return NextResponse.json({
     status: order.payment.status,
     orderNumber: order.orderNumber,
     total: order.pricing.total,
+    metaEventId: order.tracking?.metaEventId || '',
+    tiktokEventId: order.tracking?.tiktokEventId || '',
+    items: order.items?.map(i => ({ slug: i.slug, quantity: i.quantity, unitPrice: i.unitPrice })) || [],
   })
 }
