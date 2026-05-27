@@ -29,6 +29,9 @@ export default function RootLayout({
       <body>
         {children}
         <WhatsAppBubble />
+        {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
+          <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+        )}
       </body>
     </html>
   )
