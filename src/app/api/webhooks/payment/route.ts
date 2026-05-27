@@ -4,6 +4,8 @@ import Order from '@/lib/db/models/Order'
 import { sendOrderWhatsApp } from '@/lib/notifications/whatsapp'
 import { sendOrderConfirmationEmail } from '@/lib/notifications/email'
 import { triggerAutomation } from '@/lib/automation/trigger'
+import { fireMetaPurchase } from '@/lib/marketing/meta/capi'
+import { fireTikTokPurchase } from '@/lib/marketing/tiktok/events-api'
 
 export const dynamic = 'force-dynamic'
 
