@@ -51,6 +51,7 @@ const NAV = [
     group: 'מערכת',
     items: [
       { href: '/admin/health', label: 'בריאות מערכת', icon: '◎', sub: 'MongoDB, API, אינטגרציות' },
+      { href: '/admin/anomalies', label: 'Anomaly Detection', icon: '⚡', sub: 'ניטור חריגות אוטומטי' },
       { href: '/admin/security', label: 'אבטחה', icon: '⬡', sub: 'IP, כניסות, הרשאות' },
       { href: '/admin/integrations', label: 'אינטגרציות', icon: '◌', sub: 'חיבורים חיצוניים' },
       { href: '/admin/team', label: 'צוות', icon: '◉', sub: 'משתמשים והרשאות' },
