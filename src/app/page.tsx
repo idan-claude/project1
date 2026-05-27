@@ -220,6 +220,11 @@ export default function HomePage() {
   const addItem = useCartStore((s) => s.addItem)
 
   useEffect(() => {
+    // Disable browser auto-scroll-restoration — we manage it manually
+    if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
+    }
+
     // Scroll memory: restore position when navigating back, or scroll to section from another page
     const scrollTo = sessionStorage.getItem(SCROLL_TO_KEY)
     const savedY   = sessionStorage.getItem(SCROLL_KEY)
