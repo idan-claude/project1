@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import WhatsAppBubble from '@/components/ui/WhatsAppBubble'
+import dynamic from 'next/dynamic'
+
+const MetaPixel = dynamic(() => import('@/components/marketing/MetaPixel'), { ssr: false })
 
 export const metadata: Metadata = {
   title: 'FindCard - כרטיס המעקב החכם',
