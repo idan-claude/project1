@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import IpBlock, { maskIpDisplay } from '@/lib/db/models/IpBlock'
+import { normalizeIP } from '@/lib/utils/ipParser'
 
 export const dynamic = 'force-dynamic'
 
