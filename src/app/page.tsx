@@ -293,7 +293,7 @@ export default function HomePage() {
       <main className="flex-1">
 
         {/* ── HERO ── */}
-        <section className="bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white">
+        <section id="hero" className="bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1 text-center md:text-right">
