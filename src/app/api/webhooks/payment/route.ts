@@ -49,6 +49,53 @@ export async function POST(req: NextRequest) {
     sendOrderWhatsApp(order).catch(console.error)
     sendOrderConfirmationEmail(order).catch(console.error)
 
+    // Fire CAPI Purchase — ONLY here, ONLY after payment.status === 'paid' confirmed
+    // Never fire from browser, thank-you page, or checkout_complete event
+    if (!order.testMode) {
+      const capiOpts = {
+        orderId: order._id.toString(),
+        sessionId: order.attribution?.sessionId || order._id.toString(),
+        totalAgorot: order.pricing.total,
+        items: order.items.map(i => ({
+          id: i.slug,
+          quantity: i.quantity,
+          unitPrice: i.unitPrice,
+        })),
+        email: order.customer.email,
+        phone: order.customer.phone,
+        fbp: order.attribution?.fbp || '',
+        fbc: order.attribution?.fbc || '',
+        existingEventId: order.tracking?.metaEventId || undefined,
+      }
+
+      fireMetaPurchase(capiOpts)
+        .then(result => {
+          if (result.ok) {
+            Order.findByIdAndUpdate(order._id, { 'tracking.metaCapiFired': true }).catch(() => {})
+          } else {
+            console.error('[Meta CAPI] Purchase failed:', result.error)
+          }
+        })
+        .catch(console.error)
+
+      fireTikTokPurchase({
+        ...capiOpts,
+        ttclid: order.attribution?.ttclid || '',
+        ip: '',
+        userAgent: '',
+        pageUrl: '',
+        eventId: order.tracking?.tiktokEventId || undefined,
+      })
+        .then(result => {
+          if (result.ok) {
+            Order.findByIdAndUpdate(order._id, { 'tracking.tiktokCapiFired': true }).catch(() => {})
+          } else {
+            console.error('[TikTok CAPI] Purchase failed:', result.error)
+          }
+        })
+        .catch(console.error)
+    }
+
     // Fire automation triggers
     triggerAutomation('order_confirm', {
       customerName: order.customer.name,
