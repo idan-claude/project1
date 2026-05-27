@@ -127,6 +127,7 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
   const router = useRouter()
 
   useEffect(() => {
+    trackPageView()
     track('product_view', { product: slug })
     const cleanScroll = trackScrollDepth()
     const cleanRage = trackRageClicks()
