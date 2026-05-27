@@ -51,6 +51,30 @@ export interface IOrder extends Document {
     whatsappSent: boolean
     emailSent: boolean
   }
+  attribution: {
+    sessionId: string
+    visitorId: string
+    source: string
+    medium: string
+    campaign: string
+    content: string
+    term: string
+    fbclid: string
+    fbp: string
+    fbc: string
+    ttclid: string
+    gclid: string
+    referrer: string
+    landingPage: string
+  }
+  tracking: {
+    metaPixelFired: boolean
+    metaCapiFired: boolean
+    tiktokPixelFired: boolean
+    tiktokCapiFired: boolean
+    metaEventId: string
+    tiktokEventId: string
+  }
   testMode: boolean
   createdAt: Date
   updatedAt: Date
