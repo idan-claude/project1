@@ -177,7 +177,7 @@ export async function POST(req: NextRequest) {
         term:     utm.utm_term     || utm.term     || '',
       },
       device: { type: deviceType, browser, os, userAgent: ua.slice(0, 512) },
-      geo: { ip, country: geo.country, city: geo.city, region: geo.region, isp: geo.isp, asn: geo.asn, geoTimezone: geo.geoTimezone, confidence: geo.confidence },
+      geo: { ip, country: geo.country, city: geo.city, region: geo.region, isp: geo.isp, asn: geo.asn, geoTimezone: geo.geoTimezone, confidence: geo.confidence, geoSource: geo.geoSource, cityAccuracy: geo.cityAccuracy },
       language: (language || '').slice(0, 20),
       timezone: (timezone || '').slice(0, 60),
       scroll: typeof scroll === 'number' ? scroll : 0,
