@@ -94,7 +94,7 @@ export const GET = withAdminAuth(async () => {
   }
 
   const suspiciousIps = ipStats.map((s: IpStat) => ({
-    ip: maskIpDisplay(s._id),
+    ip: s._id,
     sessions: s.sessions.length,
     visitors: s.visitors.length,
     rageClicks: s.rageClicks,
