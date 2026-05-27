@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { connectDB } from '@/lib/db/mongoose'
 import IpBlock from '@/lib/db/models/IpBlock'
+import { normalizeIP } from '@/lib/utils/ipParser'
 
 // Internal-only endpoint — not protected by admin auth, but:
 // 1. Only called from middleware (same deployment)
