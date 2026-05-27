@@ -5,7 +5,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useCartStore } from '@/store/cartStore'
 import { useRouter } from 'next/navigation'
-import { track, trackScrollDepth, trackRageClicks, trackInactivity } from '@/lib/tracking/tracker'
+import { track, trackPageView, trackScrollDepth, trackRageClicks, trackInactivity } from '@/lib/tracking/tracker'
 
 export interface ProductBundle {
   title: string
