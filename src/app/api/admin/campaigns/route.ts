@@ -40,7 +40,7 @@ export const POST = withAdminAuth(async (req: NextRequest) => {
 
 async function resolveSegment(segment: string): Promise<string[]> {
   if (segment === 'all' || segment === 'paid') {
-    const query = segment === 'paid' ? { 'payment.status': 'paid' } : {}
+    const query = segment === 'paid' ? { ...PAID_FILTER } : {}
     const orders = await Order.find(query).select('customer.email').lean()
     const emails = Array.from(new Set(orders.map((o: { customer?: { email?: string } }) => o.customer?.email).filter(Boolean) as string[]))
     return emails
