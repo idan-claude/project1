@@ -50,7 +50,7 @@ export const GET = withAdminAuth(async (req) => {
 
     // Top products (all time)
     const topProducts = await Order.aggregate([
-      { $match: { 'payment.status': 'paid' } },
+      { $match: { ...PAID_FILTER } },
       { $unwind: '$items' },
       {
         $group: {
