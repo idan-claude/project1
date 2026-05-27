@@ -6,6 +6,9 @@ import Footer from '@/components/layout/Footer'
 import { useCartStore } from '@/store/cartStore'
 import { formatPrice } from '@/lib/utils/formatPrice'
 
+const SCROLL_KEY = 'fc_scroll_home'
+const SCROLL_TO_KEY = 'fc_scroll_to'
+
 const PRODUCT_SLUG = 'kartis-maakav-smart-pro'
 
 const FEATURE_SLIDES = [
