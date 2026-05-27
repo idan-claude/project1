@@ -71,6 +71,7 @@ export default function CheckoutPage() {
     if (!validate()) return
     setLoading(true)
     try {
+      const attribution = getAttributionData()
       const orderRes = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -79,6 +80,7 @@ export default function CheckoutPage() {
           shippingAddress: { street: form.street, city: form.city, zip: form.zip },
           items: items.map(i => ({ productId: i.productId, nameHe: i.nameHe, variantLabel: i.variantLabel, quantity: i.quantity })),
           couponCode: couponApplied?.code ?? undefined,
+          attribution,
         }),
       })
       const orderData = await orderRes.json()
