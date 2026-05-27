@@ -265,6 +265,8 @@ export default function HomePage() {
         }
       })
       .catch(() => null)
+
+    return () => window.removeEventListener('beforeunload', saveScroll)
   }, [])
 
   const sellingPrice = pricing?.sellingPrice ?? 0
