@@ -93,6 +93,9 @@ export async function POST(req: NextRequest) {
   const shippingCost = 0
   const total = subtotal - discount + shippingCost
 
+  const metaEventId = `Purchase_${(attribution?.sessionId || 'x')}_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`
+  const tiktokEventId = `tt_PlaceAnOrder_${(attribution?.sessionId || 'x')}_${Date.now()}`
+
   const order = await Order.create({
     orderNumber: generateOrderNumber(),
     customer: {
@@ -106,6 +109,30 @@ export async function POST(req: NextRequest) {
     pricing: { subtotal, shippingCost, discount, total },
     payment: { method: 'cardcom', status: 'pending' },
     testMode: process.env.PAYMENT_TEST_MODE === 'true',
+    attribution: {
+      sessionId:   attribution?.sessionId   || '',
+      visitorId:   attribution?.visitorId   || '',
+      source:      attribution?.source      || '',
+      medium:      attribution?.medium      || '',
+      campaign:    attribution?.campaign    || '',
+      content:     attribution?.content     || '',
+      term:        attribution?.term        || '',
+      fbclid:      attribution?.fbclid      || '',
+      fbp:         attribution?.fbp         || '',
+      fbc:         attribution?.fbc         || '',
+      ttclid:      attribution?.ttclid      || '',
+      gclid:       attribution?.gclid       || '',
+      referrer:    attribution?.referrer    || '',
+      landingPage: attribution?.landingPage || '',
+    },
+    tracking: {
+      metaPixelFired:   false,
+      metaCapiFired:    false,
+      tiktokPixelFired: false,
+      tiktokCapiFired:  false,
+      metaEventId,
+      tiktokEventId,
+    },
   })
 
   // Decrement inventory using physical units (bundles consume bundle.quantity units per selection)
