@@ -47,7 +47,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
         _id: string; sessionCount: string[]; visitorIds: string[]; eventCount: number
         lastSeen: Date; firstSeen: Date; country: string; city: string; device: string; events: string[]
       }) => ({
-        ip: maskIpDisplay(r._id),
+        ip: r._id, // Full IP — admin visibility
         sessions: r.sessionCount.length,
         visitors: r.visitorIds.length,
         events: r.eventCount,
