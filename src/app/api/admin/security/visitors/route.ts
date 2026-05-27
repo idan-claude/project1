@@ -104,7 +104,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
     .map(s => ({
       sessionId: s.sessionId,
       visitorId: s.visitorId.slice(0, 8) + '...',
-      ip: maskIpDisplay(s.ip),
+      ip: s.ip,
       events: s.events.map(e => ({
         event: e.event,
         path: e.path,
