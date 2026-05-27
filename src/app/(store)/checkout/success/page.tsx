@@ -8,7 +8,10 @@ import { track } from '@/lib/tracking/tracker'
 function SuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('orderId')
-  const [order, setOrder] = useState<{ status: string; orderNumber: string; total: number } | null>(null)
+  const [order, setOrder] = useState<{
+    status: string; orderNumber: string; total: number
+    metaEventId?: string; tiktokEventId?: string; items?: Array<{ slug: string; quantity: number; unitPrice: number }>
+  } | null>(null)
   const [polling, setPolling] = useState(true)
   const trackedRef = useRef(false)
 
@@ -27,7 +30,19 @@ function SuccessContent() {
         clearInterval(interval)
         if (!trackedRef.current) {
           trackedRef.current = true
+          // checkout_complete = behavioral signal that user reached the paid confirmation page
+          // Meta/TikTok Purchase CAPI fires server-side from webhook — NOT from here
           track('checkout_complete', { orderNumber: data.orderNumber, total: data.total }, orderId)
+
+          // Fire browser-side pixel Purchase for deduplication with CAPI (matched by event_id)
+          if (typeof window !== 'undefined' && window.fbq && data.metaEventId) {
+            window.fbq('track', 'Purchase', {
+              value: data.total / 100,
+              currency: 'ILS',
+              content_ids: (data.items || []).map((i: { slug: string }) => i.slug),
+              content_type: 'product',
+            }, { eventID: data.metaEventId })
+          }
         }
       } else if (attempts > 12) {
         setPolling(false)
