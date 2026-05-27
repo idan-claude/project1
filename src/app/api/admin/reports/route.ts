@@ -65,7 +65,7 @@ export const GET = withAdminAuth(async (req) => {
 
     // Overall totals
     const totals = await Order.aggregate([
-      { $match: { 'payment.status': 'paid' } },
+      { $match: { ...PAID_FILTER } },
       { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
     ])
 
