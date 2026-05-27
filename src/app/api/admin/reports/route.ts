@@ -37,7 +37,7 @@ export const GET = withAdminAuth(async (req) => {
       }
 
       const agg = await Order.aggregate([
-        { $match: { createdAt: { $gte: start, $lt: end }, 'payment.status': 'paid' } },
+        { $match: { createdAt: { $gte: start, $lt: end }, ...PAID_FILTER } },
         { $group: { _id: null, revenue: { $sum: '$pricing.total' }, count: { $sum: 1 } } },
       ])
 
