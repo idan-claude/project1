@@ -37,12 +37,13 @@ export const POST = withAdminAuth(async (req: NextRequest) => {
     return NextResponse.json({ error: 'IP required' }, { status: 400 })
   }
 
+  const normalizedIp = normalizeIP(ip.trim())
   const entry = await IpBlock.findOneAndUpdate(
-    { storeId: 'default', ip: ip.trim() },
+    { storeId: 'default', ip: normalizedIp },
     {
       storeId: 'default',
-      ip: ip.trim(),
-      ipMasked: maskIpDisplay(ip.trim()),
+      ip: normalizedIp,
+      ipMasked: maskIpDisplay(normalizedIp),
       type,
       reason: reason.slice(0, 200),
       expiresAt: expiresAt ? new Date(expiresAt) : null,
