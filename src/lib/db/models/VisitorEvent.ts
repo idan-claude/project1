@@ -29,6 +29,8 @@ export interface IVisitorEvent extends Document {
     asn: string
     geoTimezone: string
     confidence: number
+    geoSource: string
+    cityAccuracy: string
   }
   language: string
   timezone: string
