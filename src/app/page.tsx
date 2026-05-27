@@ -515,7 +515,7 @@ export default function HomePage() {
 
         {/* ── FAQ ── */}
         {faqs.length > 0 && (
-        <section className="bg-gray-50 py-16 px-4">
+        <section id="faq" className="bg-gray-50 py-16 px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-10">
               שאלות נפוצות
