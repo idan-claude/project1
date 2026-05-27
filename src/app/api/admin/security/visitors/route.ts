@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { withAdminAuth } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import VisitorEvent from '@/lib/db/models/VisitorEvent'
-import IpBlock, { maskIpDisplay } from '@/lib/db/models/IpBlock'
+import IpBlock from '@/lib/db/models/IpBlock'
 
 export const dynamic = 'force-dynamic'
 
