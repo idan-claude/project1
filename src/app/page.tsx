@@ -220,6 +220,30 @@ export default function HomePage() {
   const addItem = useCartStore((s) => s.addItem)
 
   useEffect(() => {
+    // Scroll memory: restore position when navigating back, or scroll to section from another page
+    const scrollTo = sessionStorage.getItem(SCROLL_TO_KEY)
+    const savedY   = sessionStorage.getItem(SCROLL_KEY)
+    sessionStorage.removeItem(SCROLL_TO_KEY)
+    sessionStorage.removeItem(SCROLL_KEY)
+
+    if (scrollTo) {
+      // Defer until after paint so the DOM is ready
+      requestAnimationFrame(() => {
+        const el = document.getElementById(scrollTo)
+        if (el) {
+          const header = document.querySelector<HTMLElement>('[data-header]')
+          const offset = header ? header.offsetHeight : 96
+          window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - offset - 8), behavior: 'smooth' })
+        }
+      })
+    } else if (savedY) {
+      requestAnimationFrame(() => window.scrollTo(0, parseInt(savedY)))
+    }
+
+    // Save scroll position before leaving
+    const saveScroll = () => sessionStorage.setItem(SCROLL_KEY, String(window.scrollY))
+    window.addEventListener('beforeunload', saveScroll)
+
     fetch(`/api/products/${PRODUCT_SLUG}`)
       .then(r => r.ok ? r.json() : null)
       .then(d => {
