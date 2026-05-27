@@ -7,7 +7,10 @@ export function normalizeIP(ip: string): string {
 }
 
 export function getClientIP(req: NextRequest): string {
+  // req.ip is set by Vercel/Next.js Edge Runtime directly — authoritative source
+  // Fall back to headers for non-Vercel environments
   const raw =
+    req.ip ||
     req.headers.get('x-real-ip') ||
     req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
     req.headers.get('cf-connecting-ip') ||
