@@ -147,5 +147,11 @@ export async function POST(req: NextRequest) {
     await Coupon.findByIdAndUpdate(appliedCoupon._id, { $inc: { uses: 1 } })
   }
 
-  return NextResponse.json({ orderId: order._id.toString(), orderNumber: order.orderNumber, total })
+  return NextResponse.json({
+    orderId: order._id.toString(),
+    orderNumber: order.orderNumber,
+    total,
+    metaEventId: order.tracking.metaEventId,
+    tiktokEventId: order.tracking.tiktokEventId,
+  })
 }
