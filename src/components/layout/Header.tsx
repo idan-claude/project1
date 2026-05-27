@@ -61,11 +61,17 @@ export default function Header() {
   }, [isHome, onScroll])
 
   function handleSectionClick(id: string) {
-    setMenuOpen(false)
     if (isHome) {
-      smoothScrollTo(id)
+      setMenuOpen(false)
+      // Double RAF: first waits for React to commit menuOpen=false to DOM,
+      // second waits for browser to repaint the collapsed menu layout.
+      // Without this, getBoundingClientRect() sees the wrong element position.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          smoothScrollTo(id)
+        })
+      })
     } else {
-      // Navigate to homepage, then scroll after load
       sessionStorage.setItem('fc_scroll_to', id)
       window.location.href = '/'
     }
