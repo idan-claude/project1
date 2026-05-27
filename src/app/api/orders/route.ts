@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   await connectDB()
   const session = await getServerSession(authOptions)
   const body = await req.json()
-  const { customer, shippingAddress, items, couponCode } = body
+  const { customer, shippingAddress, items, couponCode, attribution } = body
 
   // Validate and price items from DB
   const pricedItems = []
