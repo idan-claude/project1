@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/Input'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
-import { track } from '@/lib/tracking/tracker'
+import { track, trackPageView, getAttributionData } from '@/lib/tracking/tracker'
 
 const WA_NUMBER = '9720525884463'
 
