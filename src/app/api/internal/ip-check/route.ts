@@ -9,7 +9,11 @@ import { normalizeIP } from '@/lib/utils/ipParser'
 // 3. No sensitive data exposed
 export const dynamic = 'force-dynamic'
 
-// Simple in-process cache to avoid hitting MongoDB on every request
+// Pre-warm DB connection at module load so cold-start latency hits the Lambda
+// startup, not the first middleware check
+connectDB().catch(() => {})
+
+// In-process cache (shared within a serverless container instance)
 const cache = new Map<string, { blocked: boolean; reason: string; ts: number }>()
 const CACHE_TTL_MS = 60_000 // 60 seconds
 
