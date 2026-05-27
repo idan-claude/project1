@@ -14,7 +14,7 @@ const cache = new Map<string, { blocked: boolean; reason: string; ts: number }>(
 const CACHE_TTL_MS = 60_000 // 60 seconds
 
 export async function GET(req: NextRequest) {
-  const ip = req.nextUrl.searchParams.get('ip') || ''
+  const ip = normalizeIP(req.nextUrl.searchParams.get('ip') || '')
   if (!ip) return NextResponse.json({ blocked: false })
 
   // Check in-process cache first
