@@ -111,7 +111,7 @@ export const GET = withAdminAuth(async () => {
       name: p.nameHe,
       image: Array.isArray(p.images) ? (p.images[0] || '') : '',
       stock: p.inventory?.quantity ?? null,
-      price: Math.round((p.pricing?.basePrice || 0) / 100),
+      price: Math.round((p.pricing?.sellingPrice || 0) / 100),
       views,
       productViews,
       addToCarts,
