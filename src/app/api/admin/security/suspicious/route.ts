@@ -114,7 +114,7 @@ export const GET = withAdminAuth(async () => {
   const suspiciousSessions = sessionStats.map((s: SessionStat) => ({
     sessionId: s._id.slice(0, 8) + '...',
     visitorId: s.visitorId.slice(0, 8) + '...',
-    ip: maskIpDisplay(s.ip || ''),
+    ip: s.ip || '',
     country: s.country,
     device: s.device,
     checkoutStarts: s.checkoutStarts,
