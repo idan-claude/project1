@@ -144,7 +144,7 @@ function FeatureCarousel() {
   const f = FEATURE_SLIDES[active]
 
   return (
-    <section id="features" className="py-16 px-4 bg-white overflow-hidden">
+    <section id="features" className="scroll-mt-28 py-16 px-4 bg-white overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-10">
           למה FindCard הוא הבחירה הנכונה?
