@@ -13,65 +13,61 @@ const SECTIONS = [
   { id: 'faq',      label: 'שאלות' },
 ]
 
-function smoothScrollTo(id: string) {
-  const el = document.getElementById(id)
-  if (!el) return
-  const header = document.querySelector<HTMLElement>('[data-header]')
-  const offset = header ? header.offsetHeight : 96
-  const top = el.getBoundingClientRect().top + window.scrollY - offset - 8
-  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+// CSS scroll-margin-top on the sections does the offset work — we just scrollIntoView.
+// This is the browser-native way to handle sticky headers; zero calculation bugs.
+function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 export default function Header() {
-  const pathname = usePathname()
-  const isHome = pathname === '/'
-
-  const [cartOpen, setCartOpen]     = useState(false)
-  const [menuOpen, setMenuOpen]     = useState(false)
+  const pathname  = usePathname()
+  const isHome    = pathname === '/'
+  const [cartOpen, setCartOpen]           = useState(false)
+  const [menuOpen, setMenuOpen]           = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const itemCount = useCartStore((s) => s.itemCount())
-  const rafRef = useRef<number>(0)
+  const rafRef    = useRef<number>(0)
 
-  // Scroll spy — only active on homepage
-  const onScroll = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    rafRef.current = requestAnimationFrame(() => {
-      const header = document.querySelector<HTMLElement>('[data-header]')
-      const offset = (header ? header.offsetHeight : 96) + 48
-      for (const { id } of [...SECTIONS].reverse()) {
-        const el = document.getElementById(id)
-        if (!el) continue
-        if (el.getBoundingClientRect().top <= offset) {
-          setActiveSection(id)
-          return
-        }
-      }
-      setActiveSection('hero')
-    })
-  }, [])
-
+  // Scroll spy — IntersectionObserver, one per section, only on homepage
   useEffect(() => {
     if (!isHome) return
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(rafRef.current)
-    }
-  }, [isHome, onScroll])
+    const observers: IntersectionObserver[] = []
+
+    SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) setActiveSection(id)
+          })
+        },
+        {
+          // rootMargin: negative top = section must be past sticky header; negative bottom = only top portion counts
+          rootMargin: '-104px 0px -75% 0px',
+          threshold: 0,
+        }
+      )
+      obs.observe(el)
+      observers.push(obs)
+    })
+
+    return () => observers.forEach((o) => o.disconnect())
+  }, [isHome])
+
+  // Close menu on route change
+  useEffect(() => { setMenuOpen(false) }, [pathname])
 
   function handleSectionClick(id: string) {
     if (isHome) {
+      // Close menu first; wait two frames so the menu DOM collapses before measuring
       setMenuOpen(false)
-      // Double RAF: first waits for React to commit menuOpen=false to DOM,
-      // second waits for browser to repaint the collapsed menu layout.
-      // Without this, getBoundingClientRect() sees the wrong element position.
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          smoothScrollTo(id)
-        })
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      rafRef.current = requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToSection(id))
       })
     } else {
+      // From a different page: navigate to homepage and scroll after load
       sessionStorage.setItem('fc_scroll_to', id)
       window.location.href = '/'
     }
@@ -90,18 +86,18 @@ export default function Header() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
 
-              {/* Logo — smooth scroll to hero when on homepage */}
+              {/* Logo */}
               <button
-                onClick={() => isHome ? smoothScrollTo('hero') : (window.location.href = '/')}
-                className="text-xl font-black tracking-tight focus:outline-none"
+                onClick={() => isHome ? scrollToSection('hero') : (window.location.href = '/')}
+                className="text-xl font-black tracking-tight focus-visible:outline-none"
+                aria-label="FindCard — scroll to top"
               >
                 <span className="text-blue-600">Find</span><span className="text-gray-900">Card</span>
               </button>
 
               {/* Desktop Nav */}
-              <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+              <nav className="hidden md:flex items-center gap-1 text-sm font-medium" aria-label="ניווט ראשי">
                 {isHome ? (
-                  // On homepage: section scroll links with active highlighting
                   SECTIONS.map(({ id, label }) => (
                     <button
                       key={id}
@@ -116,7 +112,6 @@ export default function Header() {
                     </button>
                   ))
                 ) : (
-                  // On other pages: standard page links
                   <>
                     <Link href="/" className="px-3 py-1.5 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">בית</Link>
                     <Link href="/product" className="px-3 py-1.5 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">המוצר שלנו</Link>
@@ -125,7 +120,6 @@ export default function Header() {
                 )}
               </nav>
 
-              {/* Cart + mobile hamburger */}
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setCartOpen(true)}
@@ -141,8 +135,7 @@ export default function Header() {
                     </span>
                   )}
                 </button>
-
-                <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setMenuOpen(!menuOpen)}>
+                <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setMenuOpen(!menuOpen)} aria-label="תפריט">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
@@ -154,7 +147,7 @@ export default function Header() {
 
           {/* Mobile menu */}
           {menuOpen && (
-            <div className="md:hidden border-t bg-white px-4 py-3 flex flex-col gap-1 text-sm font-medium text-gray-700">
+            <div className="md:hidden border-t bg-white px-4 py-3 flex flex-col gap-1 text-sm font-medium">
               {isHome ? (
                 SECTIONS.map(({ id, label }) => (
                   <button
@@ -163,7 +156,7 @@ export default function Header() {
                     className={`text-right w-full px-3 py-2.5 rounded-lg transition-colors ${
                       activeSection === id
                         ? 'text-blue-600 bg-blue-50 font-semibold'
-                        : 'hover:bg-gray-50'
+                        : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
                     {label}
@@ -171,9 +164,9 @@ export default function Header() {
                 ))
               ) : (
                 <>
-                  <Link href="/" className="px-3 py-2.5 rounded-lg hover:bg-gray-50" onClick={() => setMenuOpen(false)}>בית</Link>
-                  <Link href="/product" className="px-3 py-2.5 rounded-lg hover:bg-gray-50" onClick={() => setMenuOpen(false)}>המוצר שלנו</Link>
-                  <Link href="/track" className="px-3 py-2.5 rounded-lg hover:bg-gray-50" onClick={() => setMenuOpen(false)}>מעקב הזמנה</Link>
+                  <Link href="/" className="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>בית</Link>
+                  <Link href="/product" className="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>המוצר שלנו</Link>
+                  <Link href="/track" className="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>מעקב הזמנה</Link>
                 </>
               )}
             </div>
