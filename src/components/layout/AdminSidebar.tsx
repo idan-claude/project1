@@ -51,9 +51,11 @@ const NAV = [
     group: 'מערכת',
     items: [
       { href: '/admin/health', label: 'בריאות מערכת', icon: '◎', sub: 'MongoDB, API, אינטגרציות' },
+      { href: '/admin/system', label: 'בדיקת מערכת', icon: '🔬', sub: 'אימות אוטומטי' },
       { href: '/admin/anomalies', label: 'Anomaly Detection', icon: '⚡', sub: 'ניטור חריגות אוטומטי' },
       { href: '/admin/security', label: 'אבטחה', icon: '⬡', sub: 'IP, כניסות, הרשאות' },
       { href: '/admin/integrations', label: 'אינטגרציות', icon: '◌', sub: 'חיבורים חיצוניים' },
+      { href: '/admin/integrations/marketing', label: 'שיווק ופיקסלים', icon: '📣', sub: 'Meta, TikTok, GA4, GTM' },
       { href: '/admin/team', label: 'צוות', icon: '◉', sub: 'משתמשים והרשאות' },
       { href: '/admin/settings', label: 'הגדרות חנות', icon: '◈', sub: 'הגדרות מלאות' },
     ],
