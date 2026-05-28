@@ -1,112 +1,95 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getClientIP } from '@/lib/utils/ipParser'
+import { normalizeIP } from '@/lib/utils/ipParser'
 
-// ── Edge-side cache (persists within a V8 isolate / edge node) ───────────────
-// Avoids HTTP round-trip to serverless for already-seen IPs.
-// Entries expire independently so new blocks take effect quickly.
+// ── Edge cache for API-route blocking (no DB call needed for cached IPs) ─────
 const edgeCache = new Map<string, { blocked: boolean; expiry: number }>()
-const CACHE_TTL_ALLOWED  = 5 * 60 * 1000   // 5 min for non-blocked IPs
-const CACHE_TTL_BLOCKED  = 60 * 1000        // 1 min for blocked (allow quick unblocking)
-const CACHE_MAX_SIZE     = 2000
+const CACHE_TTL_BLOCKED  = 60_000          // 1 min — blocked stays blocked
+const CACHE_TTL_ALLOWED  = 5 * 60_000      // 5 min — non-blocked IPs skip check
 
 function getCached(ip: string): boolean | null {
-  const entry = edgeCache.get(ip)
-  if (!entry) return null
-  if (Date.now() > entry.expiry) { edgeCache.delete(ip); return null }
-  return entry.blocked
+  const e = edgeCache.get(ip)
+  if (!e) return null
+  if (Date.now() > e.expiry) { edgeCache.delete(ip); return null }
+  return e.blocked
 }
 
 function setCache(ip: string, blocked: boolean) {
-  if (edgeCache.size >= CACHE_MAX_SIZE) {
-    // Evict oldest 200 entries
+  if (edgeCache.size > 1000) {
     let evicted = 0
-    edgeCache.forEach((_, k) => { if (evicted < 200) { edgeCache.delete(k); evicted++ } })
+    edgeCache.forEach((_, k) => { if (evicted < 100) { edgeCache.delete(k); evicted++ } })
   }
-  edgeCache.set(ip, {
-    blocked,
-    expiry: Date.now() + (blocked ? CACHE_TTL_BLOCKED : CACHE_TTL_ALLOWED),
-  })
+  edgeCache.set(ip, { blocked, expiry: Date.now() + (blocked ? CACHE_TTL_BLOCKED : CACHE_TTL_ALLOWED) })
 }
 
-// ── Route skip list ───────────────────────────────────────────────────────────
-const IP_CHECK_SKIP = [
-  '/api/internal/ip-check',   // would cause circular HTTP loop
-  '/api/admin/',               // protected by admin JWT
-  '/api/auth/',                // NextAuth
-  '/blocked',
-  '/_next/',
-  '/favicon',
-]
-
-const PRIVATE_PREFIXES = [
-  '127.', '10.', '192.168.',
-  '172.16.', '172.17.', '172.18.', '172.19.', '172.20.',
-  '172.21.', '172.22.', '172.23.', '172.24.', '172.25.',
-  '172.26.', '172.27.', '172.28.', '172.29.', '172.30.', '172.31.',
-]
+const PRIVATE_PREFIXES = ['127.', '10.', '192.168.', '172.16.', '172.17.', '172.18.', '172.19.', '172.20.', '172.21.', '172.22.', '172.23.', '172.24.', '172.25.', '172.26.', '172.27.', '172.28.', '172.29.', '172.30.', '172.31.']
 
 function isPrivate(ip: string): boolean {
-  if (ip === '::1' || ip === '0.0.0.0') return true
+  if (ip === '::1' || ip === '0.0.0.0' || !ip) return true
   return PRIVATE_PREFIXES.some(p => ip.startsWith(p))
 }
 
-// ── Main middleware ───────────────────────────────────────────────────────────
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // Admin: cookie check only (full JWT in each API route via withAdminAuth)
+  // ── Admin auth (cookie presence; full JWT in each API route) ─────────────
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const token = req.cookies.get('admin_token')?.value
     if (!token) return NextResponse.redirect(new URL('/admin/login', req.url))
-    return NextResponse.next()
+    // Forward ip + pathname so layout knows to skip admin check
+    return forward(req, pathname, true)
   }
 
-  // IP block check
-  if (!IP_CHECK_SKIP.some(p => pathname.startsWith(p))) {
-    const ip = getClientIP(req)   // uses req.ip first (authoritative on Vercel)
+  // ── Get authoritative client IP (req.ip set by Vercel Edge directly) ─────
+  const rawIp =
+    req.ip ||
+    req.headers.get('x-real-ip') ||
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+    '0.0.0.0'
+  const ip = normalizeIP(rawIp)
 
-    if (ip && !isPrivate(ip)) {
-      // 1. Check edge cache (zero latency)
+  // ── For API routes: use edge cache for fast blocking ──────────────────────
+  // (pages are handled by the Server Component layout — more reliable, direct DB)
+  if (pathname.startsWith('/api/') &&
+      !pathname.startsWith('/api/internal/') &&
+      !pathname.startsWith('/api/admin/') &&
+      !pathname.startsWith('/api/auth/')) {
+
+    if (!isPrivate(ip)) {
       const cached = getCached(ip)
       if (cached === true) {
-        console.log(`[middleware] BLOCKED (cache) ip=${ip} path=${pathname}`)
-        return pathname.startsWith('/api/')
-          ? NextResponse.json({ error: 'Access denied' }, { status: 403 })
-          : NextResponse.redirect(new URL('/blocked', req.url))
+        return NextResponse.json({ error: 'Access denied' }, { status: 403 })
       }
-      if (cached === false) {
-        // Confirmed non-blocked recently — pass through without DB call
-        return NextResponse.next()
-      }
-
-      // 2. Cache miss — call ip-check serverless
-      try {
-        const origin = new URL(req.url).origin
-        const res = await fetch(
-          `${origin}/api/internal/ip-check?ip=${encodeURIComponent(ip)}`,
-          { signal: AbortSignal.timeout(3000) }
-        )
-
-        if (res.ok) {
-          const data = await res.json() as { blocked: boolean }
-          setCache(ip, data.blocked)
-          console.log(`[middleware] ip-check ip=${ip} blocked=${data.blocked} path=${pathname}`)
-
-          if (data.blocked) {
-            return pathname.startsWith('/api/')
-              ? NextResponse.json({ error: 'Access denied' }, { status: 403 })
-              : NextResponse.redirect(new URL('/blocked', req.url))
+      if (cached === null) {
+        // Cache miss — call ip-check to populate cache
+        try {
+          const origin = new URL(req.url).origin
+          const res = await fetch(
+            `${origin}/api/internal/ip-check?ip=${encodeURIComponent(ip)}`,
+            { signal: AbortSignal.timeout(3000) }
+          )
+          if (res.ok) {
+            const { blocked } = await res.json() as { blocked: boolean }
+            setCache(ip, blocked)
+            console.log(`[mw] api ip-check ip=${ip} blocked=${blocked} path=${pathname}`)
+            if (blocked) return NextResponse.json({ error: 'Access denied' }, { status: 403 })
           }
-        } else {
-          console.log(`[middleware] ip-check HTTP ${res.status} for ip=${ip} — fail open`)
+        } catch (err) {
+          console.log(`[mw] api ip-check timeout ip=${ip} — fail open: ${String(err)}`)
         }
-      } catch (err) {
-        console.log(`[middleware] ip-check timeout/error for ip=${ip} — fail open: ${String(err)}`)
       }
     }
   }
 
-  return NextResponse.next()
+  // For page routes, forward the verified IP so the root layout can do a direct DB check
+  return forward(req, pathname, false, ip)
+}
+
+function forward(req: NextRequest, pathname: string, isAdmin: boolean, ip?: string) {
+  const headers = new Headers(req.headers)
+  headers.set('x-pathname', pathname)
+  headers.set('x-is-admin', isAdmin ? '1' : '0')
+  if (ip) headers.set('x-real-ip-verified', ip)
+  return NextResponse.next({ request: { headers } })
 }
 
 export const config = {
