@@ -321,13 +321,10 @@ export default function HomePage() {
                     className="bg-white text-blue-700 font-bold px-8 py-3.5 rounded-xl hover:bg-blue-50 transition-colors text-lg shadow-lg">
                     לרכישה עכשיו ←
                   </Link>
-                  <button onClick={() => {
-                    const el = document.getElementById('features')
-                    if (!el) return
-                    const header = document.querySelector<HTMLElement>('[data-header]')
-                    const offset = header ? header.offsetHeight : 96
-                    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset - 8, behavior: 'smooth' })
-                  }} className="border-2 border-white/60 text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-white/10 transition-colors text-lg">
+                  <button
+                    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                    className="border-2 border-white/60 text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-white/10 transition-colors text-lg"
+                  >
                     קרא עוד
                   </button>
                 </div>
