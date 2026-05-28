@@ -43,7 +43,7 @@ const NAV = [
     group: 'פיננסים',
     items: [
       { href: '/admin/finance', label: 'פיננסים', icon: '◈', sub: 'הכנסות ודוחות' },
-      { href: '/admin/payments', label: 'תשלומים', icon: '◎', sub: 'עסקאות Cardcom' },
+      { href: '/admin/payments', label: 'תשלומים', icon: '◎', sub: 'עסקאות וספקים' },
       { href: '/admin/invoices', label: 'חשבוניות', icon: '◧', sub: 'מסמכים כספיים' },
     ],
   },
