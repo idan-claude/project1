@@ -7,8 +7,8 @@ const INTEGRATIONS = [
   { name: 'Cloudinary', desc: 'אחסון ועיבוד תמונות', icon: '🖼️', status: 'pending', href: '/admin/settings' },
   { name: 'AliExpress', desc: 'ייבוא מוצרים מ-AliExpress', icon: '📦', status: 'pending', href: '/admin/import' },
   { name: 'SMTP Email', desc: 'שליחת מיילים ללקוחות (Gmail/Mailgun)', icon: '📧', status: 'pending', href: '/admin/automations' },
-  { name: 'Google Analytics', desc: 'מעקב ביקורים ומשפכי המרה', icon: '📊', status: 'soon', href: '#' },
-  { name: 'Facebook Pixel', desc: 'פרסום ממוקד ברשתות חברתיות', icon: '📣', status: 'soon', href: '#' },
+  { name: 'שיווק ופיקסלים', desc: 'Meta, TikTok, GA4, GTM, Google Ads — מדריך הגדרה מלא', icon: '📣', status: 'active', href: '/admin/integrations/marketing' },
+  { name: 'Google Analytics', desc: 'מעקב ביקורים ומשפכי המרה', icon: '📊', status: 'soon', href: '/admin/integrations/marketing' },
   { name: 'Meshulam', desc: 'שער תשלומים חלופי', icon: '💰', status: 'soon', href: '#' },
 ]
 
