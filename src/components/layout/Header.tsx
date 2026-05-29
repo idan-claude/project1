@@ -26,7 +26,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen]           = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const itemCount = useCartStore((s) => s.itemCount())
-  const rafRef    = useRef<number>(0)
+  const [pendingScrollId, setPendingScrollId] = useState<string | null>(null)
 
   // Scroll spy — IntersectionObserver, one per section, only on homepage
   useEffect(() => {
