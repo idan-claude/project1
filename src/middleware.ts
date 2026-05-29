@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { normalizeIP } from '@/lib/utils/ipParser'
+import { normalizeIP, isPrivateOrInternalIP } from '@/lib/utils/ipParser'
 
 // ── Edge cache for API-route blocking (no DB call needed for cached IPs) ─────
 const edgeCache = new Map<string, { blocked: boolean; expiry: number }>()
@@ -21,11 +21,32 @@ function setCache(ip: string, blocked: boolean) {
   edgeCache.set(ip, { blocked, expiry: Date.now() + (blocked ? CACHE_TTL_BLOCKED : CACHE_TTL_ALLOWED) })
 }
 
-const PRIVATE_PREFIXES = ['127.', '10.', '192.168.', '172.16.', '172.17.', '172.18.', '172.19.', '172.20.', '172.21.', '172.22.', '172.23.', '172.24.', '172.25.', '172.26.', '172.27.', '172.28.', '172.29.', '172.30.', '172.31.']
+// Canonical IP for middleware (Edge Runtime) — same priority order as getClientIP in ipParser.ts
+// No x-real-ip-verified here because middleware is what SETS that header.
+function getMiddlewareIP(req: NextRequest): string {
+  const cf = req.headers.get('cf-connecting-ip')
+  if (cf && !isPrivateOrInternalIP(cf)) return normalizeIP(cf)
 
-function isPrivate(ip: string): boolean {
-  if (ip === '::1' || ip === '0.0.0.0' || !ip) return true
-  return PRIVATE_PREFIXES.some(p => ip.startsWith(p))
+  const xReal = req.headers.get('x-real-ip')
+  if (xReal && !isPrivateOrInternalIP(xReal)) return normalizeIP(xReal)
+
+  if (req.ip && !isPrivateOrInternalIP(req.ip)) return normalizeIP(req.ip)
+
+  const fwd = req.headers.get('x-forwarded-for')
+  if (fwd) {
+    for (const seg of fwd.split(',')) {
+      const candidate = normalizeIP(seg.trim())
+      if (candidate && !isPrivateOrInternalIP(candidate)) return candidate
+    }
+  }
+
+  const vFwd = req.headers.get('x-vercel-forwarded-for')
+  if (vFwd) {
+    const candidate = normalizeIP(vFwd.split(',')[0].trim())
+    if (candidate && !isPrivateOrInternalIP(candidate)) return candidate
+  }
+
+  return '0.0.0.0'
 }
 
 export async function middleware(req: NextRequest) {
