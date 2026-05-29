@@ -1,180 +1,199 @@
 /**
  * Scroll preservation debug against production.
- * Tests whether scrollTop survives admin sidebar navigation.
+ * Directly injects admin cookie to skip login.
  */
 const { chromium } = require('playwright');
+const https = require('https');
 
 const PROD  = 'https://project1-flame-phi.vercel.app';
+const HOST  = 'project1-flame-phi.vercel.app';
 const EMAIL = 'findcardsupport@gmail.com';
 const PASS  = 'F123456c!';
 
-async function login(page) {
-  await page.goto(`${PROD}/admin/login`);
-  await page.waitForSelector('input[type="password"]', { timeout: 10000 });
-  await page.fill('input[type="email"], input[name="email"]', EMAIL);
-  await page.fill('input[type="password"], input[name="password"]', PASS);
-  await page.click('button[type="submit"]');
-  await page.waitForURL(/\/admin(?!\/login)/, { timeout: 15000 });
-  console.log('✓ Logged in');
+async function getAdminToken() {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({ email: EMAIL, password: PASS });
+    const req = https.request({
+      hostname: HOST, path: '/api/admin/auth/login', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': body.length },
+    }, (res) => {
+      let token = '';
+      (res.headers['set-cookie'] || []).forEach(c => {
+        const m = c.match(/admin_token=([^;]+)/);
+        if (m) token = m[1];
+      });
+      res.resume();
+      token ? resolve(token) : reject(new Error('No admin_token in Set-Cookie'));
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
 }
 
 async function getMainScrollTop(page) {
-  return page.evaluate(() => {
-    const main = document.querySelector('main');
-    return main ? main.scrollTop : -1;
-  });
-}
-
-async function getMainScrollHeight(page) {
-  return page.evaluate(() => {
-    const main = document.querySelector('main');
-    return main ? { scrollHeight: main.scrollHeight, clientHeight: main.clientHeight } : null;
-  });
+  return page.evaluate(() => document.querySelector('main')?.scrollTop ?? -1);
 }
 
 async function scrollMainTo(page, px) {
   await page.evaluate((px) => {
-    const main = document.querySelector('main');
-    if (main) main.scrollTop = px;
+    const el = document.querySelector('main');
+    if (el) el.scrollTop = px;
   }, px);
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(400);
   return getMainScrollTop(page);
 }
 
-async function clickSidebarLinkDirect(page, href) {
-  // Click using the actual sidebar link element
-  const selector = `aside a[href="${href}"], nav a[href="${href}"]`;
-  const link = page.locator(selector).first();
-  const count = await link.count();
-  if (count > 0) {
-    console.log(`  ↪ clicking sidebar link: ${href}`);
-    await link.click();
-  } else {
-    console.log(`  ↪ no sidebar link found for ${href}, navigating directly`);
-    await page.goto(`${PROD}${href}`);
+async function waitForRealContent(page, timeout = 8000) {
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    const { sh, ch } = await page.evaluate(() => {
+      const m = document.querySelector('main');
+      return m ? { sh: m.scrollHeight, ch: m.clientHeight } : { sh: 0, ch: 0 };
+    });
+    if (sh > ch + 200) return { scrollHeight: sh, clientHeight: ch };
+    await page.waitForTimeout(250);
   }
-}
-
-async function waitForContentLoaded(page) {
-  // Wait for loading skeletons to disappear and real content to appear
-  await page.waitForTimeout(300);
-  // Wait until scrollHeight > clientHeight (real content loaded, page is scrollable)
-  let waited = 0;
-  while (waited < 5000) {
-    const dims = await getMainScrollHeight(page);
-    if (dims && dims.scrollHeight > dims.clientHeight + 100) break;
-    await page.waitForTimeout(200);
-    waited += 200;
-  }
-  await page.waitForTimeout(200);
+  const { sh, ch } = await page.evaluate(() => {
+    const m = document.querySelector('main');
+    return m ? { sh: m.scrollHeight, ch: m.clientHeight } : { sh: 0, ch: 0 };
+  });
+  return { scrollHeight: sh, clientHeight: ch };
 }
 
 async function main() {
-  console.log('=== Admin Scroll Preservation Test (Production) ===\n');
+  console.log('=== Admin Scroll Preservation — Production Test ===\n');
+
+  // Get admin token via API
+  console.log('Getting admin token...');
+  const token = await getAdminToken();
+  console.log('✓ Got admin_token:', token.slice(0, 20) + '...');
 
   const browser = await chromium.launch({ headless: true });
-  const ctx     = await browser.newContext({
+  const ctx = await browser.newContext({
     viewport: { width: 1440, height: 900 },
   });
+
+  // Set admin cookie before any navigation
+  await ctx.addCookies([{
+    name: 'admin_token',
+    value: token,
+    domain: HOST,
+    path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Lax',
+  }]);
+
   const page = await ctx.newPage();
-
   page.on('console', m => {
-    if (m.type() === 'error') console.log('  [JS ERROR]', m.text());
+    const t = m.type();
+    if (t === 'error' || (t === 'log' && m.text().startsWith('[mw]'))) {
+      console.log(`  [console.${t}]`, m.text());
+    }
   });
 
-  await login(page);
+  // Navigate to admin
+  await page.goto(`${PROD}/admin/orders`, { waitUntil: 'domcontentloaded', timeout: 20000 });
+  console.log('✓ Navigated to /admin/orders');
 
-  // ── Phase 1: DOM structure inspection ──────────────────────────────────────
-  console.log('\n=== Phase 1: DOM Structure ===');
-  await page.goto(`${PROD}/admin/orders`);
-  await waitForContentLoaded(page);
-
-  const domInfo = await page.evaluate(() => {
+  // ── DOM Structure ──────────────────────────────────────────────────────────
+  const dom = await page.evaluate(() => {
     const main = document.querySelector('main');
-    if (!main) return 'NO MAIN ELEMENT';
-    const children = Array.from(main.children).map(c => ({
-      tag: c.tagName,
-      class: c.className.slice(0, 80),
-      scrollHeight: c.scrollHeight,
+    if (!main) return 'NO MAIN';
+    const kids = Array.from(main.children).map((c, i) => ({
+      i, tag: c.tagName, class: c.className.slice(0, 60), sh: c.scrollHeight,
     }));
-    return {
-      mainClass: main.className,
-      mainScrollHeight: main.scrollHeight,
-      mainClientHeight: main.clientHeight,
-      mainScrollTop: main.scrollTop,
-      children,
-    };
+    return { mainClass: main.className, sh: main.scrollHeight, ch: main.clientHeight, kids };
   });
-  console.log(JSON.stringify(domInfo, null, 2));
+  console.log('\n── DOM Structure ──');
+  console.log(JSON.stringify(dom, null, 2));
 
-  // ── Phase 2: Can we even scroll? ───────────────────────────────────────────
-  console.log('\n=== Phase 2: Scroll feasibility ===');
-  const dims = await getMainScrollHeight(page);
-  console.log(`  main.scrollHeight=${dims?.scrollHeight}  main.clientHeight=${dims?.clientHeight}  overflow=${dims ? dims.scrollHeight - dims.clientHeight : 'N/A'}px`);
+  // ── Wait for real content ──────────────────────────────────────────────────
+  const dims = await waitForRealContent(page);
+  console.log(`\nmain.scrollHeight=${dims.scrollHeight}  clientHeight=${dims.clientHeight}  overflow=${dims.scrollHeight - dims.clientHeight}px`);
 
-  const scrollTarget = Math.min(1000, (dims?.scrollHeight || 0) - (dims?.clientHeight || 0) - 50);
-  if (scrollTarget <= 0) {
-    console.log('  ⚠ Page is NOT scrollable — content fits in viewport. Testing with whatever is available.');
-  }
-
-  // ── Phase 3: Core scroll preservation test ─────────────────────────────────
-  console.log('\n=== Phase 3: Scroll Preservation Tests ===');
+  // ── Core scroll tests ──────────────────────────────────────────────────────
+  console.log('\n── Scroll Preservation Tests ──');
 
   const pairs = [
-    { from: '/admin/orders',    to: '/admin/security',  label: 'orders → security' },
-    { from: '/admin/security',  to: '/admin/analytics', label: 'security → analytics' },
-    { from: '/admin/analytics', to: '/admin/orders',    label: 'analytics → orders' },
+    { from: '/admin/orders',    to: '/admin/security',            nav: 'aside a[href="/admin/security"]' },
+    { from: '/admin/security',  to: '/admin/analytics',           nav: 'aside a[href="/admin/analytics"]' },
+    { from: '/admin/analytics', to: '/admin/analytics/visitors',  nav: 'aside a[href="/admin/analytics/visitors"]' },
+    { from: '/admin/analytics/visitors', to: '/admin/orders',     nav: 'aside a[href="/admin/orders"]' },
   ];
 
   let passed = 0, failed = 0;
 
-  for (const { from, to, label } of pairs) {
-    console.log(`\n--- Test: ${label} ---`);
+  for (const { from, to, nav } of pairs) {
+    console.log(`\n▶ ${from} → ${to}`);
 
-    await page.goto(`${PROD}${from}`);
-    await waitForContentLoaded(page);
+    await page.goto(`${PROD}${from}`, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    const d = await waitForRealContent(page);
+    const maxScroll = Math.max(0, d.scrollHeight - d.clientHeight);
+    const target = Math.min(600, maxScroll);
 
-    const { scrollHeight, clientHeight } = await getMainScrollHeight(page) || { scrollHeight: 0, clientHeight: 0 };
-    const maxScroll = Math.max(0, scrollHeight - clientHeight);
-    const target = Math.min(500, maxScroll);
-    console.log(`  Page: scrollHeight=${scrollHeight} clientHeight=${clientHeight} maxScroll=${maxScroll} scrollingTo=${target}`);
+    console.log(`  scrollHeight=${d.scrollHeight} clientHeight=${d.clientHeight} maxScroll=${maxScroll} target=${target}`);
 
-    if (target < 10) {
-      console.log('  ⏭ SKIP — page too short to meaningfully scroll');
+    if (target < 20) {
+      console.log('  ⏭ SKIP — not enough content');
       continue;
     }
 
-    const actualScrolled = await scrollMainTo(page, target);
-    console.log(`  Scrolled to: ${actualScrolled}px`);
+    const actual = await scrollMainTo(page, target);
+    console.log(`  Scrolled to: ${actual}px`);
+
+    // Log contentWrapRef state before click
+    const beforeState = await page.evaluate(() => {
+      const main = document.querySelector('main');
+      const wrap = main?.children[1]; // second child = contentWrapRef
+      return {
+        mainScrollTop: main?.scrollTop,
+        wrapMinHeight: wrap ? getComputedStyle(wrap).minHeight : 'N/A',
+        wrapScrollHeight: wrap?.scrollHeight,
+      };
+    });
+    console.log('  Before click:', JSON.stringify(beforeState));
 
     // Click sidebar link
-    await clickSidebarLinkDirect(page, to);
-    await page.waitForTimeout(1500); // let navigation + content settle
+    const link = page.locator(nav).first();
+    if (await link.count() > 0) {
+      await link.click();
+    } else {
+      console.log(`  ⚠ sidebar link "${nav}" not found, using goto`);
+      await page.goto(`${PROD}${to}`, { waitUntil: 'domcontentloaded' });
+    }
 
+    // Sample scrollTop at multiple points during navigation
+    const samples = [];
+    for (let i = 0; i < 20; i++) {
+      await page.waitForTimeout(100);
+      const st = await getMainScrollTop(page);
+      samples.push(st);
+    }
+    console.log('  ScrollTop samples (every 100ms):', samples.join(', '));
+
+    await page.waitForTimeout(500);
     const afterNav = await getMainScrollTop(page);
-    console.log(`  After nav scroll: ${afterNav}px`);
 
-    const drift = afterNav;  // If it resets to top, afterNav ≈ 0
-    if (drift < 5) {
-      console.log(`  ❌ FAIL — scroll jumped to top (afterNav=${afterNav})`);
+    // Log contentWrapRef state after nav
+    const afterState = await page.evaluate(() => {
+      const main = document.querySelector('main');
+      const wrap = main?.children[1];
+      return {
+        mainScrollTop: main?.scrollTop,
+        wrapMinHeight: wrap ? getComputedStyle(wrap).minHeight : 'N/A',
+        wrapScrollHeight: wrap?.scrollHeight,
+        path: window.location.pathname,
+      };
+    });
+    console.log('  After nav:', JSON.stringify(afterState));
+
+    if (afterNav < 5) {
+      console.log(`  ❌ FAIL — jumped to top (afterNav=${afterNav})`);
       failed++;
-
-      // Deep diagnostics for the failure
-      const diagInfo = await page.evaluate(() => {
-        const main = document.querySelector('main');
-        const wrap = main?.children[1]; // contentWrapRef (after mobile top bar)
-        return {
-          mainScrollTop: main?.scrollTop,
-          mainScrollHeight: main?.scrollHeight,
-          mainClientHeight: main?.clientHeight,
-          wrapMinHeight: wrap ? getComputedStyle(wrap).minHeight : 'N/A',
-          wrapScrollHeight: wrap?.scrollHeight,
-          pathname: window.location.pathname,
-        };
-      });
-      console.log('  DIAG:', JSON.stringify(diagInfo));
-    } else if (Math.abs(afterNav - actualScrolled) > 80) {
-      console.log(`  ⚠ PARTIAL — expected ~${actualScrolled}, got ${afterNav} (drift=${Math.abs(afterNav - actualScrolled)}px)`);
+    } else if (Math.abs(afterNav - actual) > 80) {
+      console.log(`  ⚠ DRIFT — expected ~${actual}, got ${afterNav}`);
       failed++;
     } else {
       console.log(`  ✅ PASS — scroll preserved at ${afterNav}px`);
@@ -182,69 +201,43 @@ async function main() {
     }
   }
 
-  // ── Phase 4: Check if Next.js router is overriding scroll ──────────────────
-  console.log('\n=== Phase 4: Router Scroll Behavior Trace ===');
-  await page.goto(`${PROD}/admin/orders`);
-  await waitForContentLoaded(page);
+  // ── Final timing test: check minHeight is set ──────────────────────────────
+  console.log('\n── MinHeight Timing Test ──');
+  await page.goto(`${PROD}/admin/orders`, { waitUntil: 'domcontentloaded' });
+  await waitForRealContent(page);
   await scrollMainTo(page, 400);
 
-  // Intercept what happens to scrollTop DURING navigation
-  const scrollLog = await page.evaluate(() => {
-    return new Promise(resolve => {
-      const main = document.querySelector('main');
-      if (!main) { resolve([]); return; }
+  let minHeightDuringNav = 'never set';
+  // Inject a MutationObserver to track minHeight changes
+  await page.evaluate(() => {
+    window.__minHeightLog = [];
+    const main = document.querySelector('main');
+    const wrap = main?.children[1];
+    if (!wrap) return;
 
-      const log = [`init: scrollTop=${main.scrollTop}`];
-      const observer = new MutationObserver(() => {
-        log.push(`mutation: scrollTop=${main.scrollTop} scrollHeight=${main.scrollHeight}`);
-      });
-      observer.observe(main, { childList: true, subtree: true, attributes: false });
-
-      // Also log scrollTop changes
-      let lastST = main.scrollTop;
-      const interval = setInterval(() => {
-        if (main.scrollTop !== lastST) {
-          log.push(`scrollChange: ${lastST} → ${main.scrollTop}`);
-          lastST = main.scrollTop;
-        }
-      }, 50);
-
-      // Resolve after 3 seconds
-      setTimeout(() => {
-        observer.disconnect();
-        clearInterval(interval);
-        resolve(log);
-      }, 3000);
+    const orig = wrap.style.minHeight;
+    Object.defineProperty(wrap.style, 'minHeight', {
+      get() { return this._mh || ''; },
+      set(v) {
+        window.__minHeightLog.push({ time: Date.now(), value: v });
+        this._mh = v;
+      }
     });
   });
 
-  // Now trigger a navigation WHILE the observer is running
-  // Note: the evaluate promise already started, so we navigate from outside
-  await page.waitForTimeout(200); // let observer start
-  const sidebarLink = page.locator('aside a[href="/admin/security"]').first();
-  if (await sidebarLink.count() > 0) {
-    await sidebarLink.click();
+  // Click sidebar
+  const secLink = page.locator('aside a[href="/admin/security"]').first();
+  if (await secLink.count() > 0) {
+    await secLink.click();
+    await page.waitForTimeout(1500);
+    const log = await page.evaluate(() => window.__minHeightLog || []);
+    console.log('  minHeight changes during navigation:', JSON.stringify(log));
+    const afterST = await getMainScrollTop(page);
+    console.log(`  Final scrollTop: ${afterST}`);
   }
-  await page.waitForTimeout(3000); // let the observer finish
-
-  console.log('  Scroll timeline during navigation:');
-  // scrollLog may not be populated since evaluate returned early; let's check what we got
-  const lastLog = await page.evaluate(() => window.__scrollLog || []);
-  console.log('  (window.__scrollLog not set — checking final state)');
-  const finalState = await page.evaluate(() => {
-    const main = document.querySelector('main');
-    const wrap = main?.children[1];
-    return {
-      scrollTop: main?.scrollTop,
-      scrollHeight: main?.scrollHeight,
-      wrapMinHeight: wrap ? getComputedStyle(wrap).minHeight : 'N/A',
-    };
-  });
-  console.log('  Final state after nav:', JSON.stringify(finalState));
-
-  console.log(`\n=== RESULTS: ${passed} passed, ${failed} failed ===`);
 
   await browser.close();
+  console.log(`\n=== RESULT: ${passed} passed, ${failed} failed ===`);
   process.exit(failed > 0 ? 1 : 0);
 }
 
