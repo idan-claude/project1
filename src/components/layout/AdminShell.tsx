@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useLayoutEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import AdminSidebar from './AdminSidebar'
 
@@ -8,7 +8,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const mainRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
 
-  useEffect(() => {
+  // useLayoutEffect fires before paint — scroll resets before new content is visible, no jump
+  useLayoutEffect(() => {
     mainRef.current?.scrollTo(0, 0)
   }, [pathname])
 
