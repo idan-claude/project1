@@ -67,7 +67,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {children}
         <WhatsAppBubble />
         {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
-          <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+          <Suspense>
+            <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+          </Suspense>
         )}
       </body>
     </html>
