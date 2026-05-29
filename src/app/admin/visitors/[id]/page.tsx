@@ -285,42 +285,28 @@ export default function VisitorProfilePage() {
             )}
           </div>
 
-          {/* IP + Block controls — show all IPs, most recent first */}
-          {profile.allIps && profile.allIps.length > 0 && (
+          {/* IP + Block control — current canonical IP */}
+          {profile.ip && (
             <div className="mt-4 pt-4 border-t border-white/5">
-              <p className="text-xs text-gray-500 mb-2">
-                כתובות IP ({profile.allIps.length})
-                {profile.allIps.length > 1 && (
-                  <span className="text-amber-400 mr-1"> · {profile.allIps.length} כתובות שונות!</span>
-                )}
-              </p>
-              <div className="space-y-2">
-                {profile.allIps.map((addr, i) => (
-                  <div key={addr} className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <code className="text-xs text-white bg-black/20 px-2 py-1 rounded font-mono flex-1 select-all">
-                        {addr}
-                      </code>
-                      {i === 0 && (
-                        <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded flex-shrink-0">עדכני</span>
-                      )}
-                    </div>
-                    <div className="flex gap-1.5">
-                      <a
-                        href={`/admin/security?block=${encodeURIComponent(addr)}`}
-                        className="text-[10px] px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded hover:bg-red-500/30 transition-colors"
-                      >
-                        חסום
-                      </a>
-                      <button
-                        onClick={() => navigator.clipboard.writeText(addr)}
-                        className="text-[10px] text-gray-500 hover:text-gray-300 px-2 py-1 bg-white/5 rounded transition-colors"
-                      >
-                        העתק
-                      </button>
-                    </div>
-                  </div>
-                ))}
+              <p className="text-xs text-gray-500 mb-2">כתובת IP נוכחית</p>
+              <div className="space-y-1">
+                <code className="block text-xs text-white bg-black/20 px-2 py-1 rounded font-mono select-all">
+                  {profile.ip}
+                </code>
+                <div className="flex gap-1.5">
+                  <a
+                    href={`/admin/security?block=${encodeURIComponent(profile.ip)}`}
+                    className="text-[10px] px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded hover:bg-red-500/30 transition-colors"
+                  >
+                    חסום
+                  </a>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(profile.ip)}
+                    className="text-[10px] text-gray-500 hover:text-gray-300 px-2 py-1 bg-white/5 rounded transition-colors"
+                  >
+                    העתק
+                  </button>
+                </div>
               </div>
             </div>
           )}
