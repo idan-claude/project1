@@ -47,6 +47,7 @@ interface VisitorProfile {
     lastSeen: string
     duration: number
     eventCount: number
+    ip: string
     device: string
     converted: boolean
     addedToCart: boolean
