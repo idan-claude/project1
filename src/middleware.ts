@@ -4,7 +4,7 @@ import { normalizeIP } from '@/lib/utils/ipParser'
 // ── Edge cache for API-route blocking (no DB call needed for cached IPs) ─────
 const edgeCache = new Map<string, { blocked: boolean; expiry: number }>()
 const CACHE_TTL_BLOCKED  = 60_000          // 1 min — blocked stays blocked
-const CACHE_TTL_ALLOWED  = 5 * 60_000      // 5 min — non-blocked IPs skip check
+const CACHE_TTL_ALLOWED  = 30_000          // 30 sec — so blocks take effect fast
 
 function getCached(ip: string): boolean | null {
   const e = edgeCache.get(ip)
