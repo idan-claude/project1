@@ -17,13 +17,14 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
   const limit = 20
 
   if (!ip && !vid) {
-    // Return recent unique IPs with visitor counts
-    const recentIPs = await VisitorEvent.aggregate([
-      { $match: { 'geo.ip': { $ne: '' }, createdAt: { $gte: new Date(Date.now() - 7 * 86400000) } } },
+    // Return recent visitors — one row per visitorId, most recent canonical IP
+    const recentVisitors = await VisitorEvent.aggregate([
+      { $match: { createdAt: { $gte: new Date(Date.now() - 7 * 86400000) } } },
+      { $sort: { createdAt: -1 } },  // most-recent first so $first gives latest value
       { $group: {
-          _id: '$geo.ip',
+          _id: '$visitorId',
+          ip: { $first: '$geo.ip' },
           sessionCount: { $addToSet: '$sessionId' },
-          visitorIds: { $addToSet: '$visitorId' },
           eventCount: { $sum: 1 },
           lastSeen: { $max: '$createdAt' },
           firstSeen: { $min: '$createdAt' },
@@ -37,26 +38,25 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       { $limit: limit },
     ])
 
-    // Check which IPs are blocked
-    const ips = recentIPs.map((r: { _id: string }) => r._id)
+    const ips = recentVisitors.map((r: { ip: string }) => r.ip).filter(Boolean)
     const blocks = await IpBlock.find({ ip: { $in: ips } }).lean()
     const blockMap = new Map(blocks.map(b => [b.ip, b.type]))
 
     return NextResponse.json({
-      visitors: recentIPs.map((r: {
-        _id: string; sessionCount: string[]; visitorIds: string[]; eventCount: number
+      visitors: recentVisitors.map((r: {
+        _id: string; ip: string; sessionCount: string[]; eventCount: number
         lastSeen: Date; firstSeen: Date; country: string; city: string; device: string; events: string[]
       }) => ({
-        ip: r._id, // Full IP — admin visibility
+        ip: r.ip || '',
         sessions: r.sessionCount.length,
-        visitors: r.visitorIds.length,
+        visitors: 1,
         events: r.eventCount,
         lastSeen: r.lastSeen,
         firstSeen: r.firstSeen,
         country: r.country,
         city: r.city,
         device: r.device,
-        blockStatus: blockMap.get(r._id) || null,
+        blockStatus: blockMap.get(r.ip) || null,
         converted: r.events.includes('checkout_complete'),
         addedToCart: r.events.includes('add_to_cart'),
       })),
