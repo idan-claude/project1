@@ -7,9 +7,9 @@ export function normalizeIP(ip: string): string {
 }
 
 export function getClientIP(req: NextRequest): string {
-  // req.ip is set by Vercel/Next.js Edge Runtime directly — authoritative source
-  // Fall back to headers for non-Vercel environments
+  // x-real-ip-verified is set by middleware from req.ip (Edge authoritative) — same IP that middleware checks for blocking
   const raw =
+    req.headers.get('x-real-ip-verified') ||
     req.ip ||
     req.headers.get('x-real-ip') ||
     req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
