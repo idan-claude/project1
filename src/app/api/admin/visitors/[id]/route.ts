@@ -175,6 +175,7 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
         lastSeen: sorted[sorted.length - 1].createdAt,
         duration: dur,
         eventCount: sorted.length,
+        ip: sorted[0].geo?.ip || '',  // IP for this specific session
         events: sorted.map(e => ({
           event: e.event,
           path: e.path,
