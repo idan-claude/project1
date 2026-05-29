@@ -60,13 +60,7 @@ export async function middleware(req: NextRequest) {
     return forward(req, pathname, true)
   }
 
-  // ── Get authoritative client IP (req.ip set by Vercel Edge directly) ─────
-  const rawIp =
-    req.ip ||
-    req.headers.get('x-real-ip') ||
-    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-    '0.0.0.0'
-  const ip = normalizeIP(rawIp)
+  const ip = getMiddlewareIP(req)
 
   // ── Skip routes that must never be IP-blocked ────────────────────────────
   // /blocked itself, internal APIs, admin APIs, and auth APIs
