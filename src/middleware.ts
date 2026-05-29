@@ -72,7 +72,7 @@ export async function middleware(req: NextRequest) {
   // ── IP block check — runs for ALL routes (page + API) ─────────────────────
   // Middleware always executes on every request, bypassing Next.js router cache.
   // Deferring to layout was unreliable: client-side navigation skips server renders.
-  if (!isPrivate(ip)) {
+  if (!isPrivateOrInternalIP(ip)) {
     console.log(`[mw] path=${pathname} req.ip=${req.ip} normalized=${ip}`)
 
     let blocked = getCached(ip)
