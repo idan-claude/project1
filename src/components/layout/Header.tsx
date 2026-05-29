@@ -26,7 +26,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen]           = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const itemCount = useCartStore((s) => s.itemCount())
-  const [pendingScrollId, setPendingScrollId] = useState<string | null>(null)
 
   // Scroll spy — IntersectionObserver, one per section, only on homepage
   useEffect(() => {
@@ -43,7 +42,6 @@ export default function Header() {
           })
         },
         {
-          // rootMargin: negative top = section must be past sticky header; negative bottom = only top portion counts
           rootMargin: '-104px 0px -75% 0px',
           threshold: 0,
         }
@@ -58,17 +56,19 @@ export default function Header() {
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
-  // Fire scroll only after React has confirmed menuOpen === false and repainted
-  useEffect(() => {
-    if (!pendingScrollId || menuOpen) return
-    document.getElementById(pendingScrollId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    setPendingScrollId(null)
-  }, [pendingScrollId, menuOpen])
+  function scrollToId(id: string) {
+    const el = document.getElementById(id)
+    if (!el) return
+    const headerEl = document.querySelector<HTMLElement>('[data-header]')
+    const top = el.getBoundingClientRect().top + window.scrollY - (headerEl?.offsetHeight ?? 104)
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+  }
 
   function handleSectionClick(id: string) {
     if (isHome) {
       setMenuOpen(false)
-      setPendingScrollId(id)
+      // setTimeout lets React flush the menu-close re-render before measuring header height
+      setTimeout(() => scrollToId(id), 50)
     } else {
       sessionStorage.setItem('fc_scroll_to', id)
       window.location.href = '/'
