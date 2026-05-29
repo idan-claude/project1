@@ -150,7 +150,10 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
     const confidence = lastEvent.geo?.confidence || firstEvent.geo?.confidence || 0
     const isp = lastEvent.geo?.isp || firstEvent.geo?.isp || ''
     const asn = lastEvent.geo?.asn || firstEvent.geo?.asn || ''
-    const ip = firstEvent.geo?.ip || ''
+    // Most recent IP — the one that matches what middleware currently sees for this visitor
+    const ip = lastEvent.geo?.ip || firstEvent.geo?.ip || ''
+    // All unique IPs this visitor has ever used — admin may need to block them all
+    const allIps = [...new Set(events.map((e: { geo?: { ip?: string } }) => e.geo?.ip).filter(Boolean))] as string[]
 
     // Is returning (more than 1 session)
     const isReturning = sessionCount > 1
