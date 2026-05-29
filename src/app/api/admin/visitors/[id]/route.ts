@@ -152,14 +152,6 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
     const asn = lastEvent.geo?.asn || firstEvent.geo?.asn || ''
     // Most recent IP — the one that matches what middleware currently sees for this visitor
     const ip = lastEvent.geo?.ip || firstEvent.geo?.ip || ''
-    // All unique IPs this visitor has used — most recent first
-    const seenIps = new Set<string>()
-    const allIps: string[] = []
-    for (let i = events.length - 1; i >= 0; i--) {
-      const eip = (events[i].geo as { ip?: string } | undefined)?.ip
-      if (eip && !seenIps.has(eip)) { seenIps.add(eip); allIps.push(eip) }
-    }
-
     // Is returning (more than 1 session)
     const isReturning = sessionCount > 1
 
