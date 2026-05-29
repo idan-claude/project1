@@ -379,7 +379,10 @@ export default function VisitorProfilePage() {
                     {sess.converted ? '📋' : sess.startedCheckout ? '💳' : sess.addedToCart ? '🛒' : '👁'}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-300">{new Date(sess.firstSeen).toLocaleDateString('he-IL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs text-gray-300">{new Date(sess.firstSeen).toLocaleDateString('he-IL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</p>
+                      {sess.ip && <code className="text-[9px] text-gray-600 font-mono">{sess.ip}</code>}
+                    </div>
                     <div className="flex items-center gap-1 mt-0.5 flex-wrap">
                       {sess.events.slice(0, 10).map((e, i) => (
                         <span key={i} className="text-xs" title={EVENT_LABELS[e.event] || e.event}>
