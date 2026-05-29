@@ -90,7 +90,7 @@ export default function Header() {
 
               {/* Logo */}
               <button
-                onClick={() => isHome ? scrollToSection('hero') : (window.location.href = '/')}
+                onClick={() => isHome ? scrollToId('hero') : (window.location.href = '/')}
                 className="text-xl font-black tracking-tight focus-visible:outline-none"
                 aria-label="FindCard — scroll to top"
               >
