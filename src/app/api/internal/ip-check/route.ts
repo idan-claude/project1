@@ -13,9 +13,10 @@ export const dynamic = 'force-dynamic'
 // startup, not the first middleware check
 connectDB().catch(() => {})
 
-// In-process cache (shared within a serverless container instance)
-const cache = new Map<string, { blocked: boolean; reason: string; ts: number }>()
-const CACHE_TTL_MS = 60_000 // 60 seconds
+// In-process cache — short TTL for allowed IPs so blocks take effect within seconds
+const cache = new Map<string, { blocked: boolean; reason: string; expiry: number }>()
+const CACHE_TTL_BLOCKED_MS  = 300_000  // 5 min — blocked stays blocked without hammering DB
+const CACHE_TTL_ALLOWED_MS  =   5_000  // 5 sec — so a newly blocked IP is re-checked quickly
 
 export async function GET(req: NextRequest) {
   const ip = normalizeIP(req.nextUrl.searchParams.get('ip') || '')
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
 
   // Check in-process cache first
   const cached = cache.get(ip)
-  if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
+  if (cached && Date.now() < cached.expiry) {
     return NextResponse.json({ blocked: cached.blocked, reason: cached.reason })
   }
 
@@ -37,18 +38,17 @@ export async function GET(req: NextRequest) {
       $or: [{ expiresAt: null }, { expiresAt: { $gt: now } }],
     }).lean()
 
-    const result = { blocked: !!entry, reason: entry?.reason || '', ts: Date.now() }
-    cache.set(ip, result)
+    const isBlocked = !!entry
+    const expiry = Date.now() + (isBlocked ? CACHE_TTL_BLOCKED_MS : CACHE_TTL_ALLOWED_MS)
+    cache.set(ip, { blocked: isBlocked, reason: entry?.reason || '', expiry })
 
-    // Evict old cache entries periodically
+    // Evict expired entries periodically
     if (cache.size > 500) {
-      const cutoff = Date.now() - CACHE_TTL_MS * 2
-      cache.forEach((val, key) => {
-        if (val.ts < cutoff) cache.delete(key)
-      })
+      const now2 = Date.now()
+      cache.forEach((val, key) => { if (now2 > val.expiry) cache.delete(key) })
     }
 
-    return NextResponse.json({ blocked: result.blocked, reason: result.reason })
+    return NextResponse.json({ blocked: isBlocked, reason: entry?.reason || '' })
   } catch {
     // Fail open — don't block visitors if DB check fails
     return NextResponse.json({ blocked: false })
