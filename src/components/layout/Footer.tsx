@@ -16,15 +16,9 @@ export default function Footer() {
             </p>
             {/* Social links placeholder */}
             <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors text-sm" title="Instagram">
-                📸
-              </a>
-              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors text-sm" title="TikTok">
-                🎵
-              </a>
-              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors text-sm" title="WhatsApp">
-                💬
-              </a>
+              <span className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-sm" title="Instagram">📸</span>
+              <span className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-sm" title="TikTok">🎵</span>
+              <span className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-sm" title="WhatsApp">💬</span>
             </div>
           </div>
 
