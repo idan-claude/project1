@@ -13,12 +13,6 @@ const SECTIONS = [
   { id: 'faq',      label: 'שאלות' },
 ]
 
-// CSS scroll-margin-top on the sections does the offset work — we just scrollIntoView.
-// This is the browser-native way to handle sticky headers; zero calculation bugs.
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
 export default function Header() {
   const pathname  = usePathname()
   const isHome    = pathname === '/'
