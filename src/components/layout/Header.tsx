@@ -58,16 +58,18 @@ export default function Header() {
   // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
+  // Fire scroll only after React has confirmed menuOpen === false and repainted
+  useEffect(() => {
+    if (!pendingScrollId || menuOpen) return
+    document.getElementById(pendingScrollId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setPendingScrollId(null)
+  }, [pendingScrollId, menuOpen])
+
   function handleSectionClick(id: string) {
     if (isHome) {
-      // Close menu first; wait two frames so the menu DOM collapses before measuring
       setMenuOpen(false)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      rafRef.current = requestAnimationFrame(() => {
-        requestAnimationFrame(() => scrollToSection(id))
-      })
+      setPendingScrollId(id)
     } else {
-      // From a different page: navigate to homepage and scroll after load
       sessionStorage.setItem('fc_scroll_to', id)
       window.location.href = '/'
     }
