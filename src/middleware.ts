@@ -47,40 +47,49 @@ export async function middleware(req: NextRequest) {
     '0.0.0.0'
   const ip = normalizeIP(rawIp)
 
-  // ── For API routes: use edge cache for fast blocking ──────────────────────
-  // (pages are handled by the Server Component layout — more reliable, direct DB)
-  if (pathname.startsWith('/api/') &&
-      !pathname.startsWith('/api/internal/') &&
-      !pathname.startsWith('/api/admin/') &&
-      !pathname.startsWith('/api/auth/')) {
+  // ── Skip routes that must never be IP-blocked ────────────────────────────
+  // /blocked itself, internal APIs, admin APIs, and auth APIs
+  const NEVER_BLOCK = ['/blocked', '/api/internal/', '/api/admin/', '/api/auth/']
+  if (NEVER_BLOCK.some(p => pathname.startsWith(p))) {
+    return forward(req, pathname, false, ip)
+  }
 
-    if (!isPrivate(ip)) {
-      const cached = getCached(ip)
-      if (cached === true) {
-        return NextResponse.json({ error: 'Access denied' }, { status: 403 })
-      }
-      if (cached === null) {
-        // Cache miss — call ip-check to populate cache
-        try {
-          const origin = new URL(req.url).origin
-          const res = await fetch(
-            `${origin}/api/internal/ip-check?ip=${encodeURIComponent(ip)}`,
-            { signal: AbortSignal.timeout(3000) }
-          )
-          if (res.ok) {
-            const { blocked } = await res.json() as { blocked: boolean }
-            setCache(ip, blocked)
-            console.log(`[mw] api ip-check ip=${ip} blocked=${blocked} path=${pathname}`)
-            if (blocked) return NextResponse.json({ error: 'Access denied' }, { status: 403 })
-          }
-        } catch (err) {
-          console.log(`[mw] api ip-check timeout ip=${ip} — fail open: ${String(err)}`)
+  // ── IP block check — runs for ALL routes (page + API) ─────────────────────
+  // Middleware always executes on every request, bypassing Next.js router cache.
+  // Deferring to layout was unreliable: client-side navigation skips server renders.
+  if (!isPrivate(ip)) {
+    console.log(`[mw] path=${pathname} req.ip=${req.ip} normalized=${ip}`)
+
+    let blocked = getCached(ip)
+
+    if (blocked === null) {
+      // Cache miss — query DB via internal endpoint
+      try {
+        const origin = new URL(req.url).origin
+        const res = await fetch(
+          `${origin}/api/internal/ip-check?ip=${encodeURIComponent(ip)}`,
+          { signal: AbortSignal.timeout(3000) }
+        )
+        if (res.ok) {
+          const data = await res.json() as { blocked: boolean }
+          setCache(ip, data.blocked)
+          blocked = data.blocked
+          console.log(`[mw] ip-check ip=${ip} blocked=${blocked} path=${pathname}`)
         }
+      } catch (err) {
+        console.log(`[mw] ip-check timeout ip=${ip} — fail open: ${String(err)}`)
+        blocked = false
       }
+    }
+
+    if (blocked === true) {
+      const isApi = pathname.startsWith('/api/')
+      console.log(`[mw] BLOCKING ip=${ip} isApi=${isApi} path=${pathname}`)
+      if (isApi) return NextResponse.json({ error: 'Access denied' }, { status: 403 })
+      return NextResponse.redirect(new URL('/blocked', req.url))
     }
   }
 
-  // For page routes, forward the verified IP so the root layout can do a direct DB check
   return forward(req, pathname, false, ip)
 }
 
