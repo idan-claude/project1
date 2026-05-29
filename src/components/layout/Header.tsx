@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
 import CartDrawer from '@/components/cart/CartDrawer'
