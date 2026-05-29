@@ -220,7 +220,6 @@ export const GET = withAdminAuth(async (req: NextRequest, ctx) => {
       isp,
       asn,
       ip,
-      allIps,
       language: firstEvent.language || '',
       timezone: firstEvent.timezone || '',
       utmSource,
