@@ -36,6 +36,7 @@ interface VisitorProfile {
   isp: string
   asn: string
   ip: string
+  allIps: string[]
   language: string
   timezone: string
   utmSource: string
