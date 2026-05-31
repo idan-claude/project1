@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface IProductVersion extends Document {
+  storeId: string
   productId: mongoose.Types.ObjectId
   version: number
   snapshot: Record<string, unknown>
