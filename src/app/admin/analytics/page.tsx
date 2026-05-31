@@ -82,10 +82,10 @@ export default function AnalyticsPage() {
   const severityColors: Record<string, string> = { high: 'text-red-400 border-red-400/20 bg-red-400/5', medium: 'text-amber-400 border-amber-400/20 bg-amber-400/5', low: 'text-blue-400 border-blue-400/20 bg-blue-400/5' }
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-white">אנליטיקה</h1>
-        <p className="text-sm text-gray-500 mt-0.5">נתונים אמיתיים מ-MongoDB בלבד — ללא מוק</p>
+    <div className="p-5 md:p-7 min-h-screen bg-[#070B14]" dir="rtl">
+      <div className="mb-7">
+        <h1 className="text-xl font-bold text-[var(--ds-text-1)]">אנליטיקה</h1>
+        <p className="text-[12px] text-[var(--ds-text-3)] mt-0.5">נתונים אמיתיים מ-MongoDB בלבד — ללא מוק</p>
       </div>
 
       {/* Tab bar */}
