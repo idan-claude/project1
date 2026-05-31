@@ -38,23 +38,23 @@ export default function HealthPage() {
   useEffect(() => { load() }, [])
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-5 md:p-7 min-h-screen bg-[#070B14]" dir="rtl">
+      <div className="flex items-center justify-between mb-7">
         <div>
-          <h1 className="text-xl font-bold text-white">בריאות המערכת</h1>
-          <p className="text-sm text-gray-500 mt-0.5">אבחון אמיתי של כל רכיבי החנות</p>
+          <h1 className="text-xl font-bold text-[var(--ds-text-1)]">בריאות המערכת</h1>
+          <p className="text-[12px] text-[var(--ds-text-3)] mt-0.5">אבחון אמיתי של כל רכיבי החנות</p>
         </div>
         <button
           onClick={load}
-          className="text-xs text-gray-400 hover:text-white px-3 py-1.5 bg-[#0E1525] border border-white/5 rounded-lg transition-colors"
+          className="text-[12px] text-[var(--ds-text-2)] hover:text-[var(--ds-text-1)] px-3.5 py-2 bg-[#0E1629] border border-white/[0.055] rounded-xl transition-colors font-medium"
         >
           רענן
         </button>
       </div>
 
       {loading && (
-        <div className="space-y-3">
-          {[...Array(8)].map((_, i) => <div key={i} className="h-16 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+        <div className="space-y-2.5 animate-pulse">
+          {[...Array(8)].map((_, i) => <div key={i} className="h-16 bg-white/[0.04] rounded-xl border border-white/[0.055]" />)}
         </div>
       )}
 
@@ -91,7 +91,7 @@ export default function HealthPage() {
                 </h2>
                 <div className="space-y-2">
                   {group.map((check, i) => (
-                    <div key={i} className="bg-[#0E1525] border border-white/5 rounded-xl p-4 flex items-center gap-3">
+                    <div key={i} className="bg-[#0E1629] border border-white/5 rounded-xl p-4 flex items-center gap-3">
                       <div className={`w-2 h-2 rounded-full flex-shrink-0 ${STATUS_CONFIG[check.status].dot}`} />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-white">{check.name}</p>
