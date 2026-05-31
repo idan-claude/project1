@@ -16,6 +16,7 @@ const TRACKING_STATUS_VALUES: TrackingStatus[] = [
 ]
 
 export interface IShipmentEventDoc extends Document {
+  storeId: string
   orderId: mongoose.Types.ObjectId
   orderNumber: string
   trackingNumber: string
