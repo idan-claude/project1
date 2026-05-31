@@ -145,7 +145,7 @@ export default function AnalyticsPage() {
                     const day = d._id.slice(-2)
                     return (
                       <div key={d._id} className="flex-1 flex flex-col items-center gap-1 group relative">
-                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#1A2540] border border-white/10 rounded px-1.5 py-0.5 text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#16223A] border border-white/10 rounded px-1.5 py-0.5 text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-10">
                           {formatPrice(d.revenue)}
                         </div>
                         <div className="w-full bg-blue-500/80 rounded-sm" style={{ height: `${Math.max(pct, 2)}%` }} />
@@ -196,7 +196,7 @@ export default function AnalyticsPage() {
                   const pct = maxHour > 0 ? (count / maxHour) * 100 : 0
                   return (
                     <div key={h} className="flex-1 flex flex-col items-center gap-1 group relative">
-                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#1A2540] border border-white/10 rounded px-1.5 py-0.5 text-[9px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#16223A] border border-white/10 rounded px-1.5 py-0.5 text-[9px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-10">
                         {h}:00 — {count} הזמנות
                       </div>
                       <div className={`w-full rounded-sm ${count > 0 ? 'bg-violet-500/70' : 'bg-white/5'}`} style={{ height: `${Math.max(pct, 4)}%` }} />
