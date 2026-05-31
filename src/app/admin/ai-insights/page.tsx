@@ -74,13 +74,17 @@ export default function AIInsightsPage() {
   }, [])
 
   if (loading) return (
-    <div className="p-6 min-h-screen bg-[#080C16] space-y-3">
-      {[...Array(5)].map((_, i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+    <div className="p-5 md:p-7 min-h-screen bg-[#070B14] space-y-3 animate-pulse">
+      <div className="h-7 bg-white/[0.05] rounded-lg w-44 mb-1.5" />
+      <div className="h-4 bg-white/[0.03] rounded w-80 mb-6" />
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[...Array(4)].map((_, i) => <div key={i} className="h-20 bg-white/[0.04] rounded-2xl border border-white/[0.055]" />)}
+      </div>
     </div>
   )
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-5 md:p-7 min-h-screen bg-[#070B14]" dir="rtl">
       <AnalyticsConsistencyBanner />
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">תובנות חכמות</h1>
