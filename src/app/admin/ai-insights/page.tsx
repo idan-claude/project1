@@ -214,9 +214,11 @@ export default function AIInsightsPage() {
         </div>
       )}
 
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
-        <span className="text-blue-400 text-base flex-shrink-0">ℹ</span>
-        <p className="text-xs text-gray-600">כל ניתוח מבוסס על נתוני VisitorEvent ו-Orders ממסד הנתונים. אין נתוני demo. ככל שיותר תנועה, הדיוק גבוה יותר.</p>
+      <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl px-4 py-3.5 flex items-start gap-3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p className="text-[11px] text-[var(--ds-text-3)]">כל ניתוח מבוסס על נתוני VisitorEvent ו-Orders ממסד הנתונים. אין נתוני demo. ככל שיותר תנועה, הדיוק גבוה יותר.</p>
       </div>
     </div>
   )
