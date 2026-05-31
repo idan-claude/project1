@@ -5,9 +5,39 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── Design Tokens ──────────────────────────────────── */
   :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
+    /* Brand */
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+
+    /* Admin dark surfaces */
+    --ds-bg:          #070B14;
+    --ds-surface:     #0B1120;
+    --ds-card:        #0E1629;
+    --ds-card-hover:  #121D33;
+    --ds-elevated:    #16223A;
+
+    /* Borders */
+    --ds-border:      rgba(255,255,255,0.055);
+    --ds-border-md:   rgba(255,255,255,0.09);
+
+    /* Text */
+    --ds-text-1:      #E8EDF5;
+    --ds-text-2:      #8B9BB8;
+    --ds-text-3:      #4A5872;
+
+    /* Semantic accents */
+    --ds-blue:        #3b82f6;
+    --ds-blue-dim:    rgba(59,130,246,0.14);
+    --ds-green:       #10b981;
+    --ds-green-dim:   rgba(16,185,129,0.12);
+    --ds-amber:       #f59e0b;
+    --ds-amber-dim:   rgba(245,158,11,0.12);
+    --ds-red:         #ef4444;
+    --ds-red-dim:     rgba(239,68,68,0.12);
+    --ds-violet:      #8b5cf6;
+    --ds-violet-dim:  rgba(139,92,246,0.12);
   }
 
   html {
@@ -22,10 +52,33 @@
   body {
     @apply text-gray-900 bg-white;
   }
+
+  /* Admin scrollbar */
+  .admin-scroll::-webkit-scrollbar        { width: 5px; height: 5px; }
+  .admin-scroll::-webkit-scrollbar-track  { background: transparent; }
+  .admin-scroll::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.1); border-radius: 99px; }
+  .admin-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
 }
 
 @layer utilities {
   .rtl-flip {
     transform: scaleX(-1);
   }
+
+  /* Admin design system shorthand */
+  .ds-card {
+    background: var(--ds-card);
+    border: 1px solid var(--ds-border);
+    border-radius: 1rem;
+  }
+  .ds-card-hover:hover {
+    background: var(--ds-card-hover);
+    border-color: var(--ds-border-md);
+  }
+  .ds-text-1 { color: var(--ds-text-1); }
+  .ds-text-2 { color: var(--ds-text-2); }
+  .ds-text-3 { color: var(--ds-text-3); }
+
+  /* Number rendering — tabular for aligned metrics */
+  .num { font-variant-numeric: tabular-nums; }
 }
