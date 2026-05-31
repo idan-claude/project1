@@ -62,7 +62,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Main content */}
-      <main ref={mainRef} className="flex-1 overflow-auto min-w-0">
+      <main ref={mainRef} className="flex-1 overflow-auto min-w-0 admin-scroll">
         {/* Mobile top bar — sticky within <main> scroll container */}
         <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-[#0F172A] sticky top-0 z-20 shadow">
           <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
