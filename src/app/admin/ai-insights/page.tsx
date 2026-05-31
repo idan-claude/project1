@@ -104,7 +104,7 @@ export default function AIInsightsPage() {
               label: 'הכנסה 30 יום',
               value: data.revenue.totalRevenue > 0 ? formatPrice(data.revenue.totalRevenue) : '—',
               sub: 'הזמנות ששולמו',
-              color: 'text-white',
+              color: 'text-[var(--ds-text-1)]',
             },
             {
               label: 'ממוצע הזמנה',
@@ -121,10 +121,10 @@ export default function AIInsightsPage() {
               color: data.funnel.cartEvents > data.funnel.paidOrders * 1.5 ? 'text-red-400' : 'text-emerald-400',
             },
           ].map((kpi, i) => (
-            <div key={i} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
-              <p className="text-xs text-gray-500">{kpi.label}</p>
-              <p className={`text-xl font-black mt-1 ${kpi.color}`}>{kpi.value}</p>
-              <p className="text-xs text-gray-600 mt-0.5">{kpi.sub}</p>
+            <div key={i} className="bg-[#0E1629] border border-white/[0.055] rounded-2xl p-4">
+              <p className="text-[11px] text-[var(--ds-text-3)] font-medium">{kpi.label}</p>
+              <p className={`text-xl font-bold mt-1 num ${kpi.color}`}>{kpi.value}</p>
+              <p className="text-[11px] text-[var(--ds-text-3)] mt-0.5">{kpi.sub}</p>
             </div>
           ))}
         </div>
