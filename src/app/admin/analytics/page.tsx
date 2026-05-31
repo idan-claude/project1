@@ -296,11 +296,11 @@ export default function AnalyticsPage() {
                           <span className="text-xs text-gray-600 mr-auto">{d.sessions} סשנים</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="bg-[#080C16] rounded-lg p-2 text-center">
+                          <div className="bg-[#070B14] rounded-lg p-2 text-center">
                             <p className={`text-lg font-black ${d.convRate > 1 ? 'text-emerald-400' : 'text-gray-500'}`}>{d.convRate}%</p>
                             <p className="text-[10px] text-gray-600">המרה</p>
                           </div>
-                          <div className="bg-[#080C16] rounded-lg p-2 text-center">
+                          <div className="bg-[#070B14] rounded-lg p-2 text-center">
                             <p className={`text-lg font-black ${d.atcRate > 3 ? 'text-blue-400' : 'text-gray-500'}`}>{d.atcRate}%</p>
                             <p className="text-[10px] text-gray-600">ATC</p>
                           </div>
@@ -320,7 +320,7 @@ export default function AnalyticsPage() {
                         { label: 'פתחו FAQ', data: conv.faqImpact.withFaq, color: 'bg-blue-500' },
                         { label: 'לא פתחו FAQ', data: conv.faqImpact.withoutFaq, color: 'bg-gray-600' },
                       ].map((row, i) => (
-                        <div key={i} className="bg-[#080C16] rounded-xl p-3">
+                        <div key={i} className="bg-[#070B14] rounded-xl p-3">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-xs font-semibold text-gray-300">{row.label}</span>
                             <span className="text-[11px] text-gray-600">{row.data.sessions} סשנים</span>
