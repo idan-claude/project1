@@ -200,14 +200,14 @@ export default function AIInsightsPage() {
       )}
 
       {data && data.exitPages.length > 0 && (
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
-          <h2 className="text-sm font-semibold text-white mb-1">דפי יציאה</h2>
-          <p className="text-xs text-gray-600 mb-4">מקומות שמשם גולשים עוזבים בלי לקנות</p>
-          <div className="space-y-2">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-2xl p-5 mb-5">
+          <h2 className="text-[13px] font-semibold text-[var(--ds-text-1)] mb-0.5">דפי יציאה</h2>
+          <p className="text-[11px] text-[var(--ds-text-3)] mb-4">מקומות שמשם גולשים עוזבים בלי לקנות</p>
+          <div className="space-y-0 divide-y divide-white/[0.04]">
             {data.exitPages.map((page, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
-                <span className="text-xs text-gray-400">{page._id || '/'}</span>
-                <span className="text-xs font-semibold text-red-400">{page.exits} יציאות</span>
+              <div key={i} className="flex items-center justify-between py-2.5">
+                <span className="text-[12px] text-[var(--ds-text-2)]">{page._id || '/'}</span>
+                <span className="text-[11px] font-semibold text-red-400 num">{page.exits} יציאות</span>
               </div>
             ))}
           </div>
