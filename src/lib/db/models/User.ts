@@ -30,7 +30,8 @@ const AddressSchema = new Schema<IAddress>({
 
 const UserSchema = new Schema<IUser>(
   {
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    storeId: { type: String, default: 'default', index: true },
+    email: { type: String, required: true, lowercase: true, trim: true },
     passwordHash: { type: String, required: true },
     name: { type: String, required: true },
     phone: { type: String, default: '' },
@@ -39,6 +40,8 @@ const UserSchema = new Schema<IUser>(
   },
   { timestamps: true }
 )
+
+UserSchema.index({ storeId: 1, email: 1 }, { unique: true })
 
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', UserSchema)
 export default User
