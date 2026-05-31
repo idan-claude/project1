@@ -12,6 +12,7 @@ export interface IProductVersion extends Document {
 
 const ProductVersionSchema = new Schema<IProductVersion>(
   {
+    storeId: { type: String, default: 'default', index: true },
     productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true, index: true },
     version: { type: Number, required: true },
     snapshot: { type: Schema.Types.Mixed, required: true },
