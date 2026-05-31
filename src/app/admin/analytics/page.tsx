@@ -68,8 +68,12 @@ export default function AnalyticsPage() {
   }, [tab, conv])
 
   if (loading || !data) return (
-    <div className="p-6 min-h-screen bg-[#080C16] flex items-center justify-center">
-      <div className="text-gray-600 text-sm animate-pulse">טוען נתוני אנליטיקה...</div>
+    <div className="p-5 md:p-7 min-h-screen bg-[#070B14] animate-pulse">
+      <div className="h-7 bg-white/[0.05] rounded-lg w-32 mb-1.5" />
+      <div className="h-4 bg-white/[0.03] rounded w-56 mb-6" />
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[...Array(4)].map((_, i) => <div key={i} className="h-20 bg-white/[0.04] rounded-xl border border-white/[0.055]" />)}
+      </div>
     </div>
   )
 
