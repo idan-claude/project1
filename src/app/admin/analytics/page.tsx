@@ -93,7 +93,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Tab bar */}
-      <div className="flex gap-1 mb-6 bg-[#0E1525] border border-white/5 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-6 bg-[#0E1629] border border-white/5 rounded-xl p-1 w-fit">
         {[
           { id: 'revenue' as Tab, label: 'הכנסות' },
           { id: 'conversion' as Tab, label: 'המרות ואינטליגנציה' },
@@ -115,7 +115,7 @@ export default function AnalyticsPage() {
               { label: 'ממוצע הזמנה', val: formatPrice(data.totals.avgOrder), sub: 'AOV', cls: 'text-violet-400' },
               { label: 'לקוחות ייחודיים', val: data.totals.uniqueCustomers, sub: 'לפי אימייל', cls: 'text-amber-400' },
             ].map(k => (
-              <div key={k.label} className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
+              <div key={k.label} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
                 <p className={`text-2xl font-black ${k.cls}`}>{k.val}</p>
                 <p className="text-xs text-gray-400 font-medium mt-0.5">{k.label}</p>
                 <p className="text-[11px] text-gray-600">{k.sub}</p>
@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-            <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+            <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-bold text-white">הכנסות לאורך זמן</h2>
                 <div className="flex gap-1">
@@ -157,7 +157,7 @@ export default function AnalyticsPage() {
               )}
             </div>
 
-            <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+            <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
               <h2 className="text-sm font-bold text-white mb-4">מוצרים מובילים</h2>
               {data.topProducts.length === 0 ? (
                 <div className="h-32 flex items-center justify-center text-gray-700 text-sm">אין נתוני מכירות</div>
@@ -184,7 +184,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
             <h2 className="text-sm font-bold text-white mb-4">שעות פעילות שיא (30 ימים)</h2>
             {data.conversionByHour.length === 0 ? (
               <div className="h-16 flex items-center justify-center text-gray-700 text-sm">אין נתוני שעות</div>
@@ -214,9 +214,9 @@ export default function AnalyticsPage() {
       {tab === 'conversion' && (
         <>
           {convLoading ? (
-            <div className="space-y-3">{[...Array(5)].map((_, i) => <div key={i} className="h-24 bg-[#0E1525] rounded-2xl animate-pulse" />)}</div>
+            <div className="space-y-3">{[...Array(5)].map((_, i) => <div key={i} className="h-24 bg-[#0E1629] rounded-2xl animate-pulse" />)}</div>
           ) : !conv || conv.totalSessions === 0 ? (
-            <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-10 text-center">
+            <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-10 text-center">
               <p className="text-3xl mb-3">📊</p>
               <p className="text-gray-400 font-semibold">אין מספיק נתונים עדיין</p>
               <p className="text-xs text-gray-600 mt-2">נתוני המרה יופיעו כאן לאחר ביקורים ראשוניים במחנות</p>
@@ -231,7 +231,7 @@ export default function AnalyticsPage() {
                   { label: 'שיעור ATC', val: `${conv.overallAtcRate}%`, cls: conv.overallAtcRate > 3 ? 'text-emerald-400' : 'text-amber-400' },
                   { label: 'רכישות', val: conv.totalConverted, cls: 'text-blue-400' },
                 ].map(k => (
-                  <div key={k.label} className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
+                  <div key={k.label} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
                     <p className={`text-2xl font-black ${k.cls}`}>{k.val}</p>
                     <p className="text-xs text-gray-500 mt-0.5">{k.label}</p>
                   </div>
@@ -240,7 +240,7 @@ export default function AnalyticsPage() {
 
               {/* Conversion Blockers */}
               {conv.topConversionBlockers.length > 0 && (
-                <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+                <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
                   <h2 className="text-sm font-semibold text-white mb-1">חסמי המרה — מהנתונים</h2>
                   <p className="text-xs text-gray-600 mb-4">תובנות שנוצרו מנתוני סשנים אמיתיים בלבד</p>
                   <div className="space-y-2">
@@ -259,7 +259,7 @@ export default function AnalyticsPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 {/* Source conversion */}
-                <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+                <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
                   <h2 className="text-sm font-semibold text-white mb-1">המרה לפי מקור תנועה</h2>
                   <p className="text-xs text-gray-600 mb-4">UTM source · 30 ימים</p>
                   {conv.bySource.length === 0 ? (
@@ -284,7 +284,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Device conversion */}
-                <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+                <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
                   <h2 className="text-sm font-semibold text-white mb-1">המרה לפי מכשיר</h2>
                   <p className="text-xs text-gray-600 mb-4">30 ימים</p>
                   <div className="space-y-4">
@@ -312,7 +312,7 @@ export default function AnalyticsPage() {
 
                 {/* FAQ impact */}
                 {conv.faqImpact && (conv.faqImpact.withFaq.sessions > 0 || conv.faqImpact.withoutFaq.sessions > 0) && (
-                  <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+                  <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
                     <h2 className="text-sm font-semibold text-white mb-1">השפעת FAQ על המרה</h2>
                     <p className="text-xs text-gray-600 mb-4">מבקרים שפתחו שאלה נפוצה vs. לא</p>
                     <div className="space-y-3">
@@ -353,7 +353,7 @@ export default function AnalyticsPage() {
 
                 {/* Scroll depth vs conversion */}
                 {conv.scrollImpact.length > 0 && (
-                  <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+                  <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
                     <h2 className="text-sm font-semibold text-white mb-1">גלילה vs. המרה</h2>
                     <p className="text-xs text-gray-600 mb-4">עומק גלילה מקסימלי בסשן vs. שיעור המרה</p>
                     <div className="space-y-2">
@@ -375,7 +375,7 @@ export default function AnalyticsPage() {
 
               {/* Top FAQ opens */}
               {conv.topFaqOpens.length > 0 && (
-                <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+                <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
                   <h2 className="text-sm font-semibold text-white mb-1">שאלות נפוצות — הכי נפתחות</h2>
                   <p className="text-xs text-gray-600 mb-4">7 ימים אחרונים · מהנתונים בלבד</p>
                   <div className="space-y-2">
@@ -398,7 +398,7 @@ export default function AnalyticsPage() {
 
               {/* Top campaigns */}
               {conv.topCampaigns.length > 0 && (
-                <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+                <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
                   <h2 className="text-sm font-semibold text-white mb-1">קמפיינים מובילים</h2>
                   <p className="text-xs text-gray-600 mb-4">UTM campaign · לפי שיעור המרה</p>
                   <div className="space-y-2">
@@ -415,7 +415,7 @@ export default function AnalyticsPage() {
                 </div>
               )}
 
-              <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+              <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
                 <span className="text-blue-400 text-lg flex-shrink-0">ℹ</span>
                 <p className="text-xs text-gray-600">כל התובנות מחושבות מסשני VisitorEvent אמיתיים ב-MongoDB. אין AI, אין מוק, אין הנחות. חסמי המרה מופיעים רק כשיש מספיק נתונים לחישוב סטטיסטי.</p>
               </div>
