@@ -75,7 +75,7 @@ export default function OnboardingPage() {
   const [completed, setCompleted] = useState<Set<string>>(new Set(['store']))
 
   function complete(id: string, next?: string) {
-    setCompleted(s => new Set([...s, id]))
+    setCompleted(s => { const n = new Set(s); n.add(id); return n })
     if (next) router.push(next)
   }
 
