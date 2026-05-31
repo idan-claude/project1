@@ -9,6 +9,7 @@ export interface IAddress {
 }
 
 export interface IUser extends Document {
+  storeId: string
   email: string
   passwordHash: string
   name: string
