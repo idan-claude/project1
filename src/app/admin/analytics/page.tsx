@@ -116,7 +116,7 @@ export default function AnalyticsPage() {
               { label: 'לקוחות ייחודיים', val: data.totals.uniqueCustomers, sub: 'לפי אימייל', cls: 'text-amber-400' },
             ].map(k => (
               <div key={k.label} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
-                <p className={`text-2xl font-black ${k.cls}`}>{k.val}</p>
+                <p className={`text-2xl font-bold num ${k.cls}`}>{k.val}</p>
                 <p className="text-xs text-gray-400 font-medium mt-0.5">{k.label}</p>
                 <p className="text-[11px] text-gray-600">{k.sub}</p>
               </div>
@@ -232,7 +232,7 @@ export default function AnalyticsPage() {
                   { label: 'רכישות', val: conv.totalConverted, cls: 'text-blue-400' },
                 ].map(k => (
                   <div key={k.label} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
-                    <p className={`text-2xl font-black ${k.cls}`}>{k.val}</p>
+                    <p className={`text-2xl font-bold num ${k.cls}`}>{k.val}</p>
                     <p className="text-xs text-gray-500 mt-0.5">{k.label}</p>
                   </div>
                 ))}
@@ -297,11 +297,11 @@ export default function AnalyticsPage() {
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           <div className="bg-[#070B14] rounded-lg p-2 text-center">
-                            <p className={`text-lg font-black ${d.convRate > 1 ? 'text-emerald-400' : 'text-gray-500'}`}>{d.convRate}%</p>
+                            <p className={`text-lg font-bold num ${d.convRate > 1 ? 'text-emerald-400' : 'text-gray-500'}`}>{d.convRate}%</p>
                             <p className="text-[10px] text-gray-600">המרה</p>
                           </div>
                           <div className="bg-[#070B14] rounded-lg p-2 text-center">
-                            <p className={`text-lg font-black ${d.atcRate > 3 ? 'text-blue-400' : 'text-gray-500'}`}>{d.atcRate}%</p>
+                            <p className={`text-lg font-bold num ${d.atcRate > 3 ? 'text-blue-400' : 'text-gray-500'}`}>{d.atcRate}%</p>
                             <p className="text-[10px] text-gray-600">ATC</p>
                           </div>
                         </div>
@@ -408,7 +408,7 @@ export default function AnalyticsPage() {
                           <p className="text-xs text-gray-300 font-semibold">{c.campaign}</p>
                           <p className="text-[10px] text-gray-600">{c.sessions} סשנים · {c.conversions} רכישות</p>
                         </div>
-                        <span className={`text-sm font-black ${c.convRate > 1 ? 'text-emerald-400' : 'text-gray-500'}`}>{c.convRate}%</span>
+                        <span className={`text-sm font-bold num ${c.convRate > 1 ? 'text-emerald-400' : 'text-gray-500'}`}>{c.convRate}%</span>
                       </div>
                     ))}
                   </div>
