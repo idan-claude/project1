@@ -51,6 +51,7 @@ const TrackingEventSubSchema = new Schema(
 
 const ShipmentEventSchema = new Schema<IShipmentEventDoc>(
   {
+    storeId: { type: String, default: 'default', index: true },
     orderId: {
       type: Schema.Types.ObjectId,
       ref: 'Order',
