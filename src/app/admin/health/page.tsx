@@ -80,25 +80,31 @@ export default function HealthPage() {
             </div>
           </div>
 
-          {/* Critical first */}
+          {/* Grouped checks */}
           {['critical', 'warning', 'healthy'].map(status => {
             const group = data.checks.filter(c => c.status === status)
             if (group.length === 0) return null
+            const cfg = STATUS_CONFIG[status as keyof typeof STATUS_CONFIG]
             return (
               <div key={status} className="mb-4">
-                <h2 className={`text-xs font-semibold ${STATUS_CONFIG[status as keyof typeof STATUS_CONFIG].color} mb-2 uppercase tracking-wider`}>
-                  {STATUS_CONFIG[status as keyof typeof STATUS_CONFIG].label} ({group.length})
-                </h2>
-                <div className="space-y-2">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`text-[9px] font-bold ${cfg.color} uppercase tracking-[0.12em]`}>
+                    {cfg.label}
+                  </span>
+                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${cfg.bg} ${cfg.color}`}>
+                    {group.length}
+                  </span>
+                </div>
+                <div className="space-y-1.5">
                   {group.map((check, i) => (
-                    <div key={i} className="bg-[#0E1629] border border-white/5 rounded-xl p-4 flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${STATUS_CONFIG[check.status].dot}`} />
+                    <div key={i} className="bg-[#0E1629] border border-white/[0.055] rounded-xl px-4 py-3 flex items-center gap-3 hover:border-white/[0.09] transition-colors">
+                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${cfg.dot}`} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white">{check.name}</p>
-                        <p className="text-xs text-gray-500 mt-0.5 truncate">{check.detail}</p>
+                        <p className="text-[13px] font-medium text-[var(--ds-text-1)]">{check.name}</p>
+                        <p className="text-[11px] text-[var(--ds-text-3)] mt-0.5 truncate">{check.detail}</p>
                       </div>
                       {check.latencyMs !== undefined && (
-                        <span className={`text-xs flex-shrink-0 ${check.latencyMs < 500 ? 'text-emerald-400' : check.latencyMs < 2000 ? 'text-amber-400' : 'text-red-400'}`}>
+                        <span className={`text-[11px] font-semibold flex-shrink-0 num ${check.latencyMs < 500 ? 'text-emerald-400' : check.latencyMs < 2000 ? 'text-amber-400' : 'text-red-400'}`}>
                           {check.latencyMs}ms
                         </span>
                       )}
