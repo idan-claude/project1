@@ -1,11 +1,12 @@
 import mongoose, { Schema, Document } from 'mongoose'
 
 export interface IAuditLog extends Document {
+  storeId: string
   type: 'login_success' | 'login_fail' | 'order_update' | 'product_create' | 'product_update' | 'product_delete' | 'coupon_create' | 'settings_update' | 'review_update' | 'admin_action'
-  actor: string          // admin email or 'system'
-  entity: string         // e.g. 'product', 'order', 'coupon'
-  entityId: string       // MongoDB ID of affected entity
-  description: string    // human-readable
+  actor: string
+  entity: string
+  entityId: string
+  description: string
   ip: string
   userAgent: string
   meta: Record<string, unknown>
@@ -13,6 +14,7 @@ export interface IAuditLog extends Document {
 }
 
 const AuditLogSchema = new Schema<IAuditLog>({
+  storeId:     { type: String, default: 'default', index: true },
   type:        { type: String, required: true, index: true },
   actor:       { type: String, default: 'admin' },
   entity:      { type: String, default: '' },
