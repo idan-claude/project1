@@ -43,7 +43,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }, [pathname])
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50" dir="rtl">
+    <div className="flex h-screen overflow-hidden bg-[#070B14]" dir="rtl">
       {/* Mobile dark overlay */}
       {sidebarOpen && (
         <div
