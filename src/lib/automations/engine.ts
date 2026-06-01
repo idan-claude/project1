@@ -280,7 +280,8 @@ export async function processPendingScheduled(): Promise<number> {
       )
     }
 
-    processed++
+      processed++
+    }
   }
 
   return processed
