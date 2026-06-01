@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { withAdminAuth } from '@/lib/auth/adminAuth'
+import { withAdminAuth, getAdminPayload } from '@/lib/auth/adminAuth'
 import { v2 as cloudinary } from 'cloudinary'
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+import { getCloudinaryConfig } from '@/lib/settings/credentials'
 
 export const POST = withAdminAuth(async (req: NextRequest) => {
+  const storeId = getAdminPayload(req)?.storeId ?? 'default'
+
+  const cfg = await getCloudinaryConfig(storeId)
+  if (!cfg?.cloudName || !cfg?.apiKey || !cfg?.apiSecret) {
+    return NextResponse.json(
+      { error: 'העלאת תמונות לא מוגדרת עדיין — הגדר אחסון תמונות בהגדרות' },
+      { status: 503 }
+    )
+  }
+
+  cloudinary.config({
+    cloud_name: cfg.cloudName,
+    api_key: cfg.apiKey,
+    api_secret: cfg.apiSecret,
+  })
+
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File | null
@@ -47,15 +58,7 @@ export const POST = withAdminAuth(async (req: NextRequest) => {
       height: result.height,
     })
   } catch (err: unknown) {
-    const msg = (err as Error).message || 'שגיאה בהעלאת קובץ'
-    // Cloudinary credentials missing
-    if (msg.includes('cloud_name') || msg.includes('api_key') || msg.includes('Must supply')) {
-      return NextResponse.json(
-        { error: 'חסרים פרטי Cloudinary — הוסף CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET' },
-        { status: 503 }
-      )
-    }
     console.error('[POST /api/admin/upload]', err)
-    return NextResponse.json({ error: msg }, { status: 500 })
+    return NextResponse.json({ error: 'שגיאה בהעלאת קובץ' }, { status: 500 })
   }
 })
