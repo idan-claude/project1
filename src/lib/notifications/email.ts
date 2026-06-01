@@ -1,27 +1,25 @@
 import nodemailer from 'nodemailer'
 import { IOrder } from '@/lib/db/models/Order'
 import { formatPrice } from '@/lib/utils/formatPrice'
+import { getSmtpConfig } from '@/lib/settings/credentials'
 
-function getTransporter() {
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || '587'),
+export async function sendOrderConfirmationEmail(order: IOrder, storeId = 'default'): Promise<void> {
+  const cfg = await getSmtpConfig(storeId)
+  if (!cfg?.user || !cfg?.pass) return
+
+  const transporter = nodemailer.createTransport({
+    host: cfg.host,
+    port: cfg.port,
     secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
+    auth: { user: cfg.user, pass: cfg.pass },
   })
-}
 
-export async function sendOrderConfirmationEmail(order: IOrder): Promise<void> {
-  if (!process.env.SMTP_USER) return
+  const fromName = cfg.fromName || 'FindCard'
+  const fromAddress = `"${fromName}" <${cfg.user}>`
 
-  const transporter = getTransporter()
   const itemsHtml = order.items
-    .map(
-      (i) =>
-        `<tr><td style="padding:8px;border-bottom:1px solid #eee">${i.nameHe}${i.variantLabel ? ` (${i.variantLabel})` : ''}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:left">${formatPrice(i.totalPrice)}</td></tr>`
+    .map(i =>
+      `<tr><td style="padding:8px;border-bottom:1px solid #eee">${i.nameHe}${i.variantLabel ? ` (${i.variantLabel})` : ''}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:left">${formatPrice(i.totalPrice)}</td></tr>`
     )
     .join('')
 
@@ -41,24 +39,23 @@ export async function sendOrderConfirmationEmail(order: IOrder): Promise<void> {
         <p style="font-size:18px;font-weight:bold">סה"כ לתשלום: ${formatPrice(order.pricing.total)}</p>
         <p style="color:#666;font-size:14px">ניצור איתך קשר בקרוב לגבי המשלוח.</p>
         <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
-        <p style="color:#999;font-size:12px">TrackIt IL — עוקבי מיקום חכמים</p>
+        <p style="color:#999;font-size:12px">${fromName}</p>
       </div>
     </body>
     </html>
   `
 
   await transporter.sendMail({
-    from: `"TrackIt IL" <${process.env.SMTP_USER}>`,
+    from: fromAddress,
     to: order.customer.email,
-    subject: `אישור הזמנה ${order.orderNumber} | TrackIt IL`,
+    subject: `אישור הזמנה ${order.orderNumber}`,
     html,
   })
 
-  // Admin notification
-  if (process.env.ADMIN_EMAIL_TO) {
+  if (cfg.adminEmail) {
     await transporter.sendMail({
-      from: `"TrackIt IL" <${process.env.SMTP_USER}>`,
-      to: process.env.ADMIN_EMAIL_TO,
+      from: fromAddress,
+      to: cfg.adminEmail,
       subject: `הזמנה חדשה ${order.orderNumber} - ${formatPrice(order.pricing.total)}`,
       text: `הזמנה חדשה מ-${order.customer.name} (${order.customer.email})\nמספר: ${order.orderNumber}\nסכום: ${formatPrice(order.pricing.total)}`,
     })
