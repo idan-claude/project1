@@ -135,7 +135,8 @@ export async function processShipmentEvent(event: AutomationEvent): Promise<void
   }
 
   // Admin WhatsApp notifications
-  const adminNumber = process.env.ADMIN_WHATSAPP_NUMBER
+  const twilioForAdmin = await import('@/lib/settings/credentials').then(m => m.getTwilioConfig(storeId ?? 'default'))
+  const adminNumber = twilioForAdmin?.adminNumber
 
   if (adminNumber) {
     if (status === 'failed_delivery') {
