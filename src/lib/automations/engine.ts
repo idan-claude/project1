@@ -236,7 +236,7 @@ export async function processPendingScheduled(): Promise<number> {
 
   let processed = 0
 
-  for (const [sid, logs] of byStore) {
+  for (const [sid, logs] of Array.from(byStore)) {
     const { getSmtpConfig } = await import('@/lib/settings/credentials')
     const smtpCfg = await getSmtpConfig(sid)
     let mailer: nodemailer.Transporter | null = null
