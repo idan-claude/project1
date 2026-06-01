@@ -42,8 +42,8 @@ const INTEGRATIONS: IntegrationDef[] = [
     docsUrl: 'https://www.cardcom.solutions',
     fields: [
       { key: 'terminal', label: 'מספר מסוף', placeholder: 'לדוגמה: 1000', type: 'text', hint: 'נמצא בלוח הבקרה של Cardcom תחת "פרטי חשבון"' },
-      { key: 'username', label: 'שם משתמש API', placeholder: 'API username', type: 'text', hint: 'שם משתמש לחיבור ה-API' },
-      { key: 'password', label: 'סיסמת API', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'סיסמה לחיבור ה-API' },
+      { key: 'username', label: 'שם משתמש', placeholder: 'שם משתמש מ-Cardcom', type: 'text', hint: 'שם המשתמש של החשבון ב-Cardcom' },
+      { key: 'password', label: 'סיסמה', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'סיסמת החשבון ב-Cardcom' },
     ],
   },
   {
