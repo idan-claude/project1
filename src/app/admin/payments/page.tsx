@@ -140,7 +140,7 @@ export default function PaymentsPage() {
   const pendingCount = payments.filter(p => p.status === 'pending').length
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
         <div>
@@ -150,16 +150,16 @@ export default function PaymentsPage() {
         {totalSuccess > 0 && (
           <div className="sm:mr-auto bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2">
             <p className="text-xs text-emerald-600">סה"כ הכנסות (שולם)</p>
-            <p className="text-lg font-black text-emerald-400">{formatPrice(totalSuccess)}</p>
+            <p className="text-lg font-bold num text-emerald-400">{formatPrice(totalSuccess)}</p>
           </div>
         )}
       </div>
 
       {/* Tabs */}
       <div className="flex gap-1.5 mb-6">
-        {([['transactions','עסקאות'],['providers','ספקים'],['settings','הגדרות Webhook']] as [Tab,string][]).map(([t,label]) => (
+        {([['transactions','עסקאות'],['providers','ספקים'],['settings','חיבור Cardcom']] as [Tab,string][]).map(([t,label]) => (
           <button key={t} onClick={() => setTab(t)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${tab===t ? 'bg-blue-600 text-white' : 'bg-[#0E1525] text-gray-500 hover:text-gray-300'}`}>
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${tab===t ? 'bg-blue-600 text-white' : 'bg-[#0E1629] text-gray-500 hover:text-gray-300'}`}>
             {label}
           </button>
         ))}
@@ -174,8 +174,8 @@ export default function PaymentsPage() {
               { label: 'ממתין', value: pendingCount,  color: 'text-amber-400' },
               { label: 'נכשל',  value: failedCount,   color: 'text-red-400' },
             ].map(s => (
-              <div key={s.label} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4 text-center">
-                <p className={`text-2xl font-black ${s.color}`}>{s.value}</p>
+              <div key={s.label} className="bg-[#0E1629] border border-white/5 rounded-2xl p-4 text-center">
+                <p className={`text-2xl font-bold num ${s.color}`}>{s.value}</p>
                 <p className="text-xs text-gray-600 mt-1">{s.label}</p>
               </div>
             ))}
@@ -184,22 +184,22 @@ export default function PaymentsPage() {
           <div className="flex gap-1.5 mb-4">
             {['all','paid','pending','failed','refunded'].map(f => (
               <button key={f} onClick={() => setFilter(f)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter===f ? 'bg-blue-600 text-white' : 'bg-[#0E1525] text-gray-600 hover:text-gray-300'}`}>
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter===f ? 'bg-blue-600 text-white' : 'bg-[#0E1629] text-gray-600 hover:text-gray-300'}`}>
                 {f === 'all' ? 'הכל' : STATUS_LABEL[f] || f}
               </button>
             ))}
           </div>
 
           {loadingTx ? (
-            <div className="space-y-2">{[...Array(5)].map((_,i) => <div key={i} className="h-14 bg-[#0E1525] rounded-2xl animate-pulse" />)}</div>
+            <div className="space-y-2">{[...Array(5)].map((_,i) => <div key={i} className="h-14 bg-[#0E1629] rounded-2xl animate-pulse" />)}</div>
           ) : payments.length === 0 ? (
-            <div className="text-center py-20 bg-[#0E1525] border border-white/5 rounded-2xl">
+            <div className="text-center py-20 bg-[#0E1629] border border-white/5 rounded-2xl">
               <p className="text-4xl mb-3">💳</p>
               <p className="text-white font-semibold">אין עסקאות</p>
               <p className="text-xs text-gray-600 mt-1">כשלקוח ישלם — העסקה תופיע כאן</p>
             </div>
           ) : (
-            <div className="bg-[#0E1525] border border-white/5 rounded-2xl overflow-hidden">
+            <div className="bg-[#0E1629] border border-white/5 rounded-2xl overflow-hidden">
               <div className="hidden md:grid grid-cols-6 gap-2 px-5 py-3 border-b border-white/5 text-xs font-medium text-gray-500">
                 <span>הזמנה</span><span className="col-span-2">לקוח</span><span>סכום</span><span>סטטוס</span><span>תאריך</span>
               </div>
@@ -229,7 +229,7 @@ export default function PaymentsPage() {
             <button
               onClick={runHealthCheck}
               disabled={checkingHealth}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1525] text-gray-400 hover:text-white border border-white/10 transition-colors disabled:opacity-50">
+              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1629] text-gray-400 hover:text-white border border-white/10 transition-colors disabled:opacity-50">
               {checkingHealth ? 'בודק...' : 'בדיקת בריאות'}
             </button>
             <button
@@ -241,14 +241,14 @@ export default function PaymentsPage() {
           </div>
 
           {loadingProv ? (
-            <div className="space-y-2">{[...Array(5)].map((_,i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}</div>
+            <div className="space-y-2">{[...Array(5)].map((_,i) => <div key={i} className="h-20 bg-[#0E1629] rounded-2xl animate-pulse" />)}</div>
           ) : (
             <div className="space-y-2">
               {sortedProviders.map((prov, idx) => {
                 const h = health[prov.providerId]
                 return (
                   <div key={prov.providerId}
-                    className={`bg-[#0E1525] border rounded-2xl p-4 transition-all ${prov.enabled ? 'border-blue-500/30' : 'border-white/5'}`}>
+                    className={`bg-[#0E1629] border rounded-2xl p-4 transition-all ${prov.enabled ? 'border-blue-500/30' : 'border-white/5'}`}>
                     <div className="flex items-center gap-3">
                       {/* Priority arrows */}
                       <div className="flex flex-col gap-0.5">
@@ -309,7 +309,7 @@ export default function PaymentsPage() {
           )}
 
           {/* Legend */}
-          <div className="mt-5 bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <div className="mt-5 bg-[#0E1629] border border-white/5 rounded-2xl p-4">
             <p className="text-xs font-semibold text-gray-400 mb-2">איך זה עובד</p>
             <ul className="space-y-1 text-xs text-gray-600">
               <li>• הספק הפעיל הראשון עם אישורי גישה מוגדרים ישמש לכל תשלום חדש</li>
@@ -324,7 +324,7 @@ export default function PaymentsPage() {
       {/* ── WEBHOOK SETTINGS ── */}
       {tab === 'settings' && (
         <div className="max-w-lg space-y-4">
-          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+          <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">💳</span>
               <div>
@@ -362,7 +362,7 @@ export default function PaymentsPage() {
             </a>
           </div>
 
-          <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+          <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-white mb-3">Webhook URLs להגדרה ב-Cardcom</h3>
             <div className="space-y-3">
               {[
@@ -373,7 +373,7 @@ export default function PaymentsPage() {
                 <div key={url}>
                   <p className="text-xs text-gray-500 mb-1">{label}</p>
                   <div className="flex items-center gap-2">
-                    <code className={`flex-1 bg-[#080C16] ${color} text-xs px-3 py-2 rounded-lg font-mono truncate`}>{url}</code>
+                    <code className={`flex-1 bg-[#070B14] ${color} text-xs px-3 py-2 rounded-lg font-mono truncate`}>{url}</code>
                     <button onClick={() => navigator.clipboard.writeText(url)}
                       className="text-xs text-gray-500 hover:text-gray-300 bg-white/5 px-2 py-2 rounded-lg transition-colors flex-shrink-0">
                       העתק
