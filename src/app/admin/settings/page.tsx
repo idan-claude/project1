@@ -272,18 +272,14 @@ export default function AdminSettingsPage() {
         <div className="space-y-4 max-w-2xl">
           <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-sm font-semibold text-white">Twilio — WhatsApp ו-SMS</h2>
+              <h2 className="text-sm font-semibold text-white">WhatsApp — הודעות אוטומטיות</h2>
               <StatusBadge set={!!twilio.accountSid && !!twilio.authToken} />
             </div>
-            <p className="text-xs text-gray-500">נדרש לאוטומציות WhatsApp. פתח חשבון Twilio ב-twilio.com ואפשר WhatsApp Business.</p>
-            <Field label="Account SID" value={twilio.accountSid} placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" onChange={v => setTwilio(s => ({ ...s, accountSid: v }))} hint='מופיע בדף הראשי של קונסול Twilio' />
-            <Field label="Auth Token" value={twilio.authToken} type="password" placeholder="••••••••••••••••••••••••••••••••" onChange={v => setTwilio(s => ({ ...s, authToken: v }))} />
-            <Field label="WhatsApp From (מספר שולח)" value={twilio.whatsappFrom} placeholder="whatsapp:+14155238886" onChange={v => setTwilio(s => ({ ...s, whatsappFrom: v }))} hint='מספר Twilio WhatsApp Sandbox או Business מאומת' />
+            <p className="text-xs text-gray-500">שליחת הודעות WhatsApp ללקוחות. פתח חשבון Twilio ב-twilio.com ואפשר WhatsApp Business.</p>
+            <Field label="מזהה חשבון Twilio" value={twilio.accountSid} placeholder="AC..." onChange={v => setTwilio(s => ({ ...s, accountSid: v }))} hint='מופיע בדף הראשי של חשבון Twilio' />
+            <Field label="קוד גישה" value={twilio.authToken} type="password" placeholder="••••••••••••••••••••••••••••••••" onChange={v => setTwilio(s => ({ ...s, authToken: v }))} hint='ליד מזהה החשבון בדשבורד Twilio' />
+            <Field label="מספר WhatsApp שולח" value={twilio.whatsappFrom} placeholder="+14155238886" onChange={v => setTwilio(s => ({ ...s, whatsappFrom: v }))} hint='מספר WhatsApp Business מאומת ב-Twilio' />
             <SaveBar saving={saving} saved={saved} onSave={() => save('twilio', twilio)} />
-          </div>
-          <div className="bg-amber-950/30 border border-amber-500/20 rounded-xl p-4">
-            <p className="text-xs text-amber-400 font-semibold mb-1">⚠️ להפעלה בסביבת Vercel:</p>
-            <p className="text-xs text-amber-400/70">הוסף: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM לסביבת Vercel</p>
           </div>
         </div>
       )}
