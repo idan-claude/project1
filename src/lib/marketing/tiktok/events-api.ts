@@ -1,4 +1,5 @@
 import type { TikTokEventPayload } from './events'
+import { getTikTokConfig } from '@/lib/settings/credentials'
 
 export interface TikTokAPIResult {
   ok: boolean
@@ -7,11 +8,14 @@ export interface TikTokAPIResult {
   error?: string
 }
 
-export async function sendTikTokEvent(payload: TikTokEventPayload): Promise<TikTokAPIResult> {
-  const token = process.env.TIKTOK_EVENTS_API_TOKEN
+export async function sendTikTokEvent(
+  payload: TikTokEventPayload,
+  storeId = 'default'
+): Promise<TikTokAPIResult> {
+  const cfg = await getTikTokConfig(storeId)
 
-  if (!process.env.TIKTOK_PIXEL_ID || !token) {
-    return { ok: false, error: 'TIKTOK_PIXEL_ID or TIKTOK_EVENTS_API_TOKEN not configured' }
+  if (!cfg?.pixelId || !cfg?.eventsApiToken) {
+    return { ok: false, error: 'TikTok Pixel or Events API token not configured' }
   }
 
   try {
@@ -19,9 +23,17 @@ export async function sendTikTokEvent(payload: TikTokEventPayload): Promise<TikT
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Token': token,
+        'Access-Token': cfg.eventsApiToken,
       },
-      body: JSON.stringify({ pixel_code: payload.pixel_code, event: payload.event, event_id: payload.event_id, timestamp: payload.timestamp, context: payload.context, properties: payload.properties, user: payload.user }),
+      body: JSON.stringify({
+        pixel_code: payload.pixel_code,
+        event: payload.event,
+        event_id: payload.event_id,
+        timestamp: payload.timestamp,
+        context: payload.context,
+        properties: payload.properties,
+        user: payload.user,
+      }),
     })
 
     const json = await res.json() as { code?: number; message?: string }
@@ -39,9 +51,10 @@ export async function sendTikTokEvent(payload: TikTokEventPayload): Promise<TikT
   }
 }
 
-// Fire TikTok Purchase — ONLY call after payment.status === 'paid'
-export async function fireTikTokPurchase(opts: Parameters<typeof import('./events')['buildTikTokPurchasePayload']>[0]): Promise<TikTokAPIResult> {
+export async function fireTikTokPurchase(
+  opts: Parameters<typeof import('./events')['buildTikTokPurchasePayload']>[0] & { storeId?: string }
+): Promise<TikTokAPIResult> {
   const { buildTikTokPurchasePayload } = await import('./events')
   const payload = buildTikTokPurchasePayload(opts)
-  return sendTikTokEvent(payload)
+  return sendTikTokEvent(payload, opts.storeId ?? 'default')
 }
