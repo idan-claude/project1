@@ -68,7 +68,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       id: 'pixel_configured',
       name: 'Meta Pixel מוגדר',
       status: pixelConfigured ? 'ok' : 'error',
-      detail: pixelConfigured ? `Pixel ID: ${pixelId}` : 'חסר NEXT_PUBLIC_META_PIXEL_ID',
+      detail: pixelConfigured ? `Pixel ID: ${pixelId}` : 'חבר Meta Pixel בהגדרות → חיבורים',
     },
     {
       id: 'capi_configured',
