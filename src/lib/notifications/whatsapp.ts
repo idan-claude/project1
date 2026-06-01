@@ -1,25 +1,20 @@
-import twilio from 'twilio'
 import { IOrder } from '@/lib/db/models/Order'
 import { formatPrice } from '@/lib/utils/formatPrice'
+import { getTwilioConfig } from '@/lib/settings/credentials'
 
-let client: ReturnType<typeof twilio> | null = null
+export async function sendOrderWhatsApp(order: IOrder, storeId = 'default'): Promise<void> {
+  const cfg = await getTwilioConfig(storeId)
+  if (!cfg?.accountSid || !cfg?.authToken || !cfg?.fromNumber || !cfg?.adminNumber) return
 
-function getClient() {
-  if (!client && process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
-    client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
-  }
-  return client
-}
-
-export async function sendOrderWhatsApp(order: IOrder): Promise<void> {
-  const c = getClient()
-  if (!c || !process.env.ADMIN_WHATSAPP_NUMBER) return
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const twilio = require('twilio')
+  const client = twilio(cfg.accountSid, cfg.authToken)
 
   const msg = `🛍️ הזמנה חדשה!\nמספר: ${order.orderNumber}\nלקוח: ${order.customer.name}\nטלפון: ${order.customer.phone}\nסכום: ${formatPrice(order.pricing.total)}`
 
-  await c.messages.create({
-    from: process.env.TWILIO_WHATSAPP_FROM!,
-    to: process.env.ADMIN_WHATSAPP_NUMBER,
+  await client.messages.create({
+    from: cfg.fromNumber.startsWith('whatsapp:') ? cfg.fromNumber : `whatsapp:${cfg.fromNumber}`,
+    to: cfg.adminNumber.startsWith('whatsapp:') ? cfg.adminNumber : `whatsapp:${cfg.adminNumber}`,
     body: msg,
   })
 }
