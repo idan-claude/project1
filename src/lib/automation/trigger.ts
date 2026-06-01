@@ -1,5 +1,6 @@
 import { connectDB } from '@/lib/db/mongoose'
 import Automation from '@/lib/db/models/Automation'
+import { getSmtpConfig, getTwilioConfig } from '@/lib/settings/credentials'
 
 interface TriggerPayload extends Record<string, unknown> {
   customerName: string
@@ -9,6 +10,7 @@ interface TriggerPayload extends Record<string, unknown> {
   orderId?: string
   orderTotal?: number
   productName?: string
+  storeId?: string
 }
 
 export async function triggerAutomation(
@@ -21,13 +23,10 @@ export async function triggerAutomation(
     if (automations.length === 0) return
 
     for (const automation of automations) {
-      // Fire-and-forget: schedule or send immediately based on delay
       const delayMs = (automation.triggerConfig.delayMinutes || 0) * 60 * 1000
-
       if (delayMs === 0) {
         await sendAutomation(automation, payload)
       } else {
-        // For delayed sends, log intent — in production use a queue/cron
         setTimeout(() => sendAutomation(automation, payload).catch(console.error), Math.min(delayMs, 5 * 60 * 1000))
       }
     }
@@ -40,38 +39,40 @@ async function sendAutomation(
   automation: { _id: unknown; channel: string; emailConfig: { subject: string; body: string }; whatsappConfig: { message: string }; stats: { sent: number } },
   payload: TriggerPayload
 ) {
+  const storeId = payload.storeId ?? 'default'
   const channel = automation.channel
 
   if (channel === 'email' || channel === 'both') {
-    await sendEmailAutomation(automation.emailConfig, payload)
+    await sendEmailAutomation(automation.emailConfig, payload, storeId)
   }
   if (channel === 'whatsapp' || channel === 'both') {
-    await sendWhatsAppAutomation(automation.whatsappConfig, payload)
+    await sendWhatsAppAutomation(automation.whatsappConfig, payload, storeId)
   }
 
-  // Increment sent count
   await Automation.findByIdAndUpdate(automation._id, { $inc: { 'stats.sent': 1 } })
 }
 
 async function sendEmailAutomation(
   config: { subject: string; body: string },
-  payload: TriggerPayload
+  payload: TriggerPayload,
+  storeId: string
 ) {
-  const smtpUser = process.env.SMTP_USER
-  const smtpPass = process.env.SMTP_PASSWORD
-  if (!smtpUser || !smtpPass) return
+  const cfg = await getSmtpConfig(storeId)
+  if (!cfg?.user || !cfg?.pass) return
 
   const nodemailer = await import('nodemailer')
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user: smtpUser, pass: smtpPass },
+    host: cfg.host,
+    port: cfg.port,
+    secure: false,
+    auth: { user: cfg.user, pass: cfg.pass },
   })
 
   const subject = interpolate(config.subject, payload)
   const html = interpolate(config.body, payload)
 
   await transporter.sendMail({
-    from: `FindCard <${smtpUser}>`,
+    from: `"${cfg.fromName || 'FindCard'}" <${cfg.user}>`,
     to: payload.customerEmail,
     subject,
     html: html || subject,
@@ -80,19 +81,19 @@ async function sendEmailAutomation(
 
 async function sendWhatsAppAutomation(
   config: { message: string },
-  payload: TriggerPayload
+  payload: TriggerPayload,
+  storeId: string
 ) {
-  const sid = process.env.TWILIO_ACCOUNT_SID
-  const token = process.env.TWILIO_AUTH_TOKEN
-  const from = process.env.TWILIO_WHATSAPP_FROM
-  if (!sid || !token || !from || !payload.customerPhone) return
+  if (!payload.customerPhone) return
+  const cfg = await getTwilioConfig(storeId)
+  if (!cfg?.accountSid || !cfg?.authToken || !cfg?.fromNumber) return
 
   const twilio = await import('twilio')
-  const client = twilio.default(sid, token)
+  const client = twilio.default(cfg.accountSid, cfg.authToken)
   const body = interpolate(config.message, payload)
 
   await client.messages.create({
-    from: `whatsapp:${from}`,
+    from: `whatsapp:${cfg.fromNumber}`,
     to: `whatsapp:${payload.customerPhone}`,
     body,
   })
