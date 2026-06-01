@@ -6,6 +6,7 @@ export interface CreateSessionParams {
   customerPhone?: string
   description:   string
   baseUrl:       string
+  storeId?:      string
 }
 
 export interface SessionResult {
@@ -30,7 +31,7 @@ export interface RefundResult {
 
 export interface HealthResult {
   ok:      boolean
-  latency: number   // ms
+  latency: number
   message?: string
 }
 
@@ -39,15 +40,15 @@ export interface PaymentProvider {
   name:        string
   description: string
   logoEmoji:   string
-  countryCode: string      // 'IL' | 'GLOBAL'
-  docs:        string      // URL to docs
+  countryCode: string
+  docs:        string
   sandboxMode: boolean
 
   createSession(params: CreateSessionParams): Promise<SessionResult>
   verifyWebhook(body: Record<string, unknown>): Promise<VerifyResult>
   refund(orderId: string, amount: number): Promise<RefundResult>
-  healthCheck(): Promise<HealthResult>
-  isConfigured(): boolean   // returns true if required env vars are present
+  healthCheck(storeId?: string): Promise<HealthResult>
+  isConfigured(storeId?: string): boolean | Promise<boolean>
 }
 
 export interface ProviderRegistryEntry {
