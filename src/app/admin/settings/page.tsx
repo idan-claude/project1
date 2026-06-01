@@ -163,7 +163,7 @@ export default function AdminSettingsPage() {
             <p className="text-xs text-gray-400 leading-relaxed">
               שאלות אלה מוצגות ב<strong className="text-white">דף המוצר</strong> ו<strong className="text-white">בדף הבית</strong>.
               אם למוצר ספציפי יש שאלות משלו — הן יגברו על השאלות הגלובליות.
-              השינויים נשמרים ב-MongoDB ומסונכרנים מיידית ללא deploy.
+              השינויים מסונכרנים מיידית לאחר השמירה.
             </p>
           </div>
           <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
