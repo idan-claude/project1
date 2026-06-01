@@ -67,9 +67,10 @@ function waMessageForStatus(
 
 // ─── MAIN: PROCESS SHIPMENT EVENT ───────────────────────────────────────────
 
-export async function processShipmentEvent(event: AutomationEvent): Promise<void> {
+export async function processShipmentEvent(event: AutomationEvent & { storeId?: string }): Promise<void> {
   await connectDB()
 
+  const storeId = event.storeId ?? 'default'
   const { orderId, orderNumber, customerEmail, customerPhone, status } = event
   const ctx = buildCtx(event)
 
