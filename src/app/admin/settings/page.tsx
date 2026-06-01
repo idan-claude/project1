@@ -21,7 +21,7 @@ function Field({ label, value, onChange, type = 'text', placeholder = '', hint =
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-[#0E1525] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500"
+        className="w-full bg-[#0E1629] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500"
       />
       {hint && <p className="text-xs text-gray-600 mt-1">{hint}</p>}
     </div>
@@ -117,14 +117,14 @@ export default function AdminSettingsPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">הגדרות</h1>
         <p className="text-sm text-gray-500 mt-0.5">פרטי החנות, תשלום, מיילים ו-WhatsApp</p>
       </div>
 
       {/* Tab bar */}
-      <div className="flex gap-1 mb-6 bg-[#0E1525] border border-white/5 rounded-xl p-1 flex-wrap">
+      <div className="flex gap-1 mb-6 bg-[#0E1629] border border-white/5 rounded-xl p-1 flex-wrap">
         {TABS.map(t => (
           <button
             key={t.id}
@@ -139,7 +139,7 @@ export default function AdminSettingsPage() {
 
       {/* Store tab */}
       {tab === 'store' && (
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-6 space-y-4 max-w-2xl">
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4 max-w-2xl">
           <h2 className="text-sm font-semibold text-white mb-4">פרטי החנות</h2>
           <Field label="שם החנות" value={store.storeName} onChange={v => setStore(s => ({ ...s, storeName: v }))} />
           <Field label="אימייל תמיכה" value={store.storeEmail} type="email" onChange={v => setStore(s => ({ ...s, storeEmail: v }))} />
@@ -148,7 +148,7 @@ export default function AdminSettingsPage() {
             <Field label="כתובת" value={store.storeAddress} onChange={v => setStore(s => ({ ...s, storeAddress: v }))} />
             <Field label="עיר" value={store.storeCity} onChange={v => setStore(s => ({ ...s, storeCity: v }))} />
           </div>
-          <div className="bg-[#080C16] border border-white/5 rounded-lg px-4 py-3">
+          <div className="bg-[#070B14] border border-white/5 rounded-lg px-4 py-3">
             <p className="text-xs text-green-400 font-medium">✓ משלוח חינם על כל ההזמנות — תמיד</p>
           </div>
           <SaveBar saving={saving} saved={saved} onSave={() => save('store', store)} />
@@ -166,7 +166,7 @@ export default function AdminSettingsPage() {
               השינויים נשמרים ב-MongoDB ומסונכרנים מיידית ללא deploy.
             </p>
           </div>
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-6 space-y-4">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-sm font-semibold text-white">שאלות נפוצות ({globalFaqs.length})</h2>
               <button
@@ -183,7 +183,7 @@ export default function AdminSettingsPage() {
             ) : (
               <div className="space-y-3">
                 {globalFaqs.map((faq, i) => (
-                  <div key={i} className="bg-[#080C16] border border-white/5 rounded-xl p-3 space-y-2">
+                  <div key={i} className="bg-[#070B14] border border-white/5 rounded-xl p-3 space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-gray-600 w-4 flex-shrink-0">{i + 1}.</span>
                       <input
@@ -218,7 +218,7 @@ export default function AdminSettingsPage() {
               >
                 {faqSaving ? 'שומר...' : 'שמור שאלות'}
               </button>
-              {faqSaved && <span className="text-green-400 text-sm font-medium">✓ נשמר — מסונכרן מיידית</span>}
+              {faqSaved && <span className="text-green-400 text-sm font-medium">✓ נשמר בהצלחה</span>}
             </div>
           </div>
         </div>
@@ -227,7 +227,7 @@ export default function AdminSettingsPage() {
       {/* Cloudinary tab */}
       {tab === 'cloudinary' && (
         <div className="space-y-4 max-w-2xl">
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-6 space-y-4">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-sm font-semibold text-white">Cloudinary — אחסון תמונות</h2>
               <StatusBadge set={!!cloudinary.cloudName && !!cloudinary.apiKey} />
@@ -248,7 +248,7 @@ export default function AdminSettingsPage() {
       {/* SMTP tab */}
       {tab === 'smtp' && (
         <div className="space-y-4 max-w-2xl">
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-6 space-y-4">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-sm font-semibold text-white">SMTP — שליחת מיילים</h2>
               <StatusBadge set={!!smtp.smtpUser && !!smtp.smtpPassword} />
@@ -258,7 +258,7 @@ export default function AdminSettingsPage() {
             <Field label="סיסמת אפליקציה (App Password)" value={smtp.smtpPassword} type="password" placeholder="xxxx xxxx xxxx xxxx" onChange={v => setSmtp(s => ({ ...s, smtpPassword: v }))} hint='ב-Gmail: הגדרות → אבטחה → אימות דו-שלבי → סיסמאות אפליקציה → "Mail"' />
             <SaveBar saving={saving} saved={saved} onSave={() => save('smtp', smtp)} />
           </div>
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4 space-y-2">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4 space-y-2">
             <p className="text-xs font-semibold text-white">הוראות Gmail App Password:</p>
             <ol className="text-xs text-gray-500 space-y-1 list-decimal list-inside">
               <li>כנס לחשבון Google שלך</li>
@@ -278,7 +278,7 @@ export default function AdminSettingsPage() {
       {/* Twilio tab */}
       {tab === 'twilio' && (
         <div className="space-y-4 max-w-2xl">
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-6 space-y-4">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-sm font-semibold text-white">Twilio — WhatsApp ו-SMS</h2>
               <StatusBadge set={!!twilio.accountSid && !!twilio.authToken} />
