@@ -70,7 +70,7 @@ const INTEGRATIONS: IntegrationDef[] = [
     docsUrl: 'https://ads.tiktok.com/marketing_api/homepage',
     fields: [
       { key: 'pixelId', label: 'Pixel ID', placeholder: 'לדוגמה: C89ABCDEF12345', type: 'text', hint: 'TikTok Ads Manager → Events → Manage → Pixel ID' },
-      { key: 'eventsApiToken', label: 'Access Token', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'Events → Manage → Generate Access Token' },
+      { key: 'eventsApiToken', label: 'קוד גישה לשרת', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'TikTok Ads → Events → Manage → Generate Access Token' },
     ],
   },
   {
