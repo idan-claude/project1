@@ -56,7 +56,7 @@ const INTEGRATIONS: IntegrationDef[] = [
     docsUrl: 'https://www.facebook.com/events_manager',
     fields: [
       { key: 'pixelId', label: 'Pixel ID', placeholder: 'לדוגמה: 123456789012345', type: 'text', hint: 'Events Manager → מקורות נתונים → Pixel ID' },
-      { key: 'capiToken', label: 'Access Token', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'Business Settings → System Users → הוסף Token' },
+      { key: 'capiToken', label: 'קוד גישה לשרת', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'Business Settings → System Users → Generate Token' },
       { key: 'testCode', label: 'קוד בדיקה (אופציונלי)', placeholder: 'TEST12345', type: 'text', hint: 'רק לבדיקות — מחק לפני עלייה לאוויר' },
     ],
   },
