@@ -39,19 +39,19 @@ function LoginHistoryTab() {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-emerald-400">{successCount}</p>
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
+          <p className="text-2xl font-bold num text-emerald-400">{successCount}</p>
           <p className="text-xs text-gray-500 mt-0.5">כניסות מוצלחות</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className={`text-2xl font-black ${failCount > 0 ? 'text-red-400' : 'text-gray-600'}`}>{failCount}</p>
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
+          <p className={`text-2xl font-bold num ${failCount > 0 ? 'text-red-400' : 'text-gray-600'}`}>{failCount}</p>
           <p className="text-xs text-gray-500 mt-0.5">ניסיונות כושלים</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-blue-400">{uniqueIPs}</p>
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
+          <p className="text-2xl font-bold num text-blue-400">{uniqueIPs}</p>
           <p className="text-xs text-gray-500 mt-0.5">כתובות IP</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <p className="text-sm font-semibold text-emerald-400">פעיל</p>
@@ -60,16 +60,16 @@ function LoginHistoryTab() {
         </div>
       </div>
 
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+      <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
         <h2 className="text-sm font-bold text-white mb-3">הגנות פעילות</h2>
         <div className="space-y-2 text-sm">
           {[
             ['אימות JWT מוצפן', 'פעיל'],
             ['Cookie HttpOnly', 'פעיל'],
-            ['HTTPS (Vercel TLS)', 'פעיל'],
+            ['HTTPS מוצפן', 'פעיל'],
             ['Session 7 ימים', 'פעיל'],
           ].map(([name, status]) => (
-            <div key={name} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
+            <div key={name} className="flex items-center justify-between py-1.5 border-b border-white/[0.055] last:border-0">
               <span className="text-gray-400">{name}</span>
               <span className="text-emerald-400 text-xs font-medium">{status} ✓</span>
             </div>
@@ -77,8 +77,8 @@ function LoginHistoryTab() {
         </div>
       </div>
 
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
-        <div className="px-4 py-3 border-b border-white/5">
+      <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl overflow-hidden">
+        <div className="px-4 py-3 border-b border-white/[0.055]">
           <h2 className="text-sm font-bold text-white">היסטוריית כניסות</h2>
         </div>
         {loading ? (
@@ -187,21 +187,21 @@ function VisitorsTab() {
   return (
     <div className="space-y-5">
       {/* Search bar */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4 space-y-3">
+      <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4 space-y-3">
         <p className="text-sm font-semibold text-white">חיפוש מבקר</p>
         <div className="flex flex-col sm:flex-row gap-2">
           <input
             value={searchIp}
             onChange={e => setSearchIp(e.target.value)}
             placeholder="IP (דוגמה: 192.168)"
-            className="flex-1 bg-[#080C16] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
+            className="flex-1 bg-[#070B14] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
             onKeyDown={e => e.key === 'Enter' && search()}
           />
           <input
             value={searchVid}
             onChange={e => setSearchVid(e.target.value)}
             placeholder="Visitor ID"
-            className="flex-1 bg-[#080C16] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
+            className="flex-1 bg-[#070B14] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
             onKeyDown={e => e.key === 'Enter' && search()}
           />
           <button
@@ -212,7 +212,7 @@ function VisitorsTab() {
             {searching ? 'מחפש...' : 'חפש'}
           </button>
           {sessions !== null && (
-            <button onClick={clearSearch} className="px-4 py-2 bg-[#0E1525] border border-white/10 text-gray-400 hover:text-white text-sm rounded-lg transition-colors">
+            <button onClick={clearSearch} className="px-4 py-2 bg-[#0E1629] border border-white/10 text-gray-400 hover:text-white text-sm rounded-lg transition-colors">
               נקה
             </button>
           )}
@@ -221,8 +221,8 @@ function VisitorsTab() {
 
       {/* Search results */}
       {sessions !== null && (
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/5">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl overflow-hidden">
+          <div className="px-4 py-3 border-b border-white/[0.055]">
             <p className="text-sm font-bold text-white">{sessions.length} סשנים נמצאו</p>
           </div>
           {sessions.length === 0 ? (
@@ -244,7 +244,7 @@ function VisitorsTab() {
                     <span className={`text-gray-500 text-xs flex-shrink-0 transition-transform ${openSession === s.sessionId ? 'rotate-180' : ''}`}>▼</span>
                   </button>
                   {openSession === s.sessionId && (
-                    <div className="px-4 pb-4 pt-2 border-t border-white/5 space-y-1.5">
+                    <div className="px-4 pb-4 pt-2 border-t border-white/[0.055] space-y-1.5">
                       {s.events.map((e, i) => (
                         <div key={i} className="flex items-start gap-2 text-xs">
                           <span className="text-gray-500 w-14 flex-shrink-0">{new Date(e.createdAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
@@ -264,8 +264,8 @@ function VisitorsTab() {
 
       {/* Recent IPs table */}
       {sessions === null && (
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/5">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl overflow-hidden">
+          <div className="px-4 py-3 border-b border-white/[0.055]">
             <p className="text-sm font-bold text-white">IP-ים פעילים — 7 ימים אחרונים</p>
           </div>
           {loading ? (
@@ -276,7 +276,7 @@ function VisitorsTab() {
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-white/5 text-gray-600">
+                  <tr className="border-b border-white/[0.055] text-gray-600">
                     <th className="px-4 py-2 text-right font-medium">IP</th>
                     <th className="px-3 py-2 text-right font-medium">מדינה</th>
                     <th className="px-3 py-2 text-right font-medium">סשנים</th>
@@ -396,7 +396,7 @@ function BlocklistTab() {
         <div className="flex gap-1.5">
           {(['all', 'block', 'whitelist'] as const).map(t => (
             <button key={t} onClick={() => setFilter(t)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === t ? 'bg-blue-600 text-white' : 'bg-[#0E1525] text-gray-500 hover:text-gray-300'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === t ? 'bg-blue-600 text-white' : 'bg-[#0E1629] text-gray-500 hover:text-gray-300'}`}>
               {t === 'all' ? 'הכל' : t === 'block' ? 'חסומים' : 'מאושרים'}
             </button>
           ))}
@@ -411,19 +411,19 @@ function BlocklistTab() {
 
       {/* Add form */}
       {adding && (
-        <div className="bg-[#0E1525] border border-white/10 rounded-xl p-5 space-y-3">
+        <div className="bg-[#0E1629] border border-white/10 rounded-xl p-5 space-y-3">
           <p className="text-sm font-bold text-white">הוספת IP לרשימה</p>
           <input
             value={form.ip}
             onChange={e => setForm(f => ({ ...f, ip: e.target.value }))}
             placeholder="כתובת IP מלאה (לדוגמה: 1.2.3.4)"
-            className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
+            className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
           />
           <div className="flex gap-2">
             <select
               value={form.type}
               onChange={e => setForm(f => ({ ...f, type: e.target.value as 'block' | 'whitelist' }))}
-              className="bg-[#080C16] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+              className="bg-[#070B14] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
             >
               <option value="block">חסום</option>
               <option value="whitelist">מאושר</option>
@@ -432,7 +432,7 @@ function BlocklistTab() {
               value={form.reason}
               onChange={e => setForm(f => ({ ...f, reason: e.target.value }))}
               placeholder="סיבה (אופציונלי)"
-              className="flex-1 bg-[#080C16] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
+              className="flex-1 bg-[#070B14] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-700 focus:outline-none focus:border-blue-500"
             />
           </div>
           {error && <p className="text-xs text-red-400">{error}</p>}
@@ -441,7 +441,7 @@ function BlocklistTab() {
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 text-white text-sm font-medium rounded-lg transition-colors">
               {saving ? 'שומר...' : 'שמור'}
             </button>
-            <button onClick={() => setAdding(false)} className="px-4 py-2 bg-[#0E1525] border border-white/10 text-gray-400 hover:text-white text-sm rounded-lg transition-colors">
+            <button onClick={() => setAdding(false)} className="px-4 py-2 bg-[#0E1629] border border-white/10 text-gray-400 hover:text-white text-sm rounded-lg transition-colors">
               ביטול
             </button>
           </div>
@@ -449,8 +449,8 @@ function BlocklistTab() {
       )}
 
       {/* Table */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
-        <div className="px-4 py-3 border-b border-white/5">
+      <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl overflow-hidden">
+        <div className="px-4 py-3 border-b border-white/[0.055]">
           <p className="text-sm font-bold text-white">{filtered.length} רשומות</p>
         </div>
         {loading ? (
@@ -527,23 +527,23 @@ function SuspiciousTab() {
       {/* Summary KPIs */}
       {data && (
         <div className="grid grid-cols-3 gap-3">
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-            <p className={`text-2xl font-black ${data.totalFlagged > 0 ? 'text-red-400' : 'text-gray-600'}`}>{data.totalFlagged}</p>
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
+            <p className={`text-2xl font-bold num ${data.totalFlagged > 0 ? 'text-red-400' : 'text-gray-600'}`}>{data.totalFlagged}</p>
             <p className="text-xs text-gray-500 mt-0.5">סה"כ מסומנים</p>
           </div>
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-            <p className="text-2xl font-black text-amber-400">{data.suspiciousIps.length}</p>
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
+            <p className="text-2xl font-bold num text-amber-400">{data.suspiciousIps.length}</p>
             <p className="text-xs text-gray-500 mt-0.5">IP חשודים</p>
           </div>
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-            <p className="text-2xl font-black text-orange-400">{data.suspiciousSessions.length}</p>
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4">
+            <p className="text-2xl font-bold num text-orange-400">{data.suspiciousSessions.length}</p>
             <p className="text-xs text-gray-500 mt-0.5">סשנים חשודים</p>
           </div>
         </div>
       )}
 
       {/* Fraud score legend */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4 flex flex-wrap gap-4 text-xs text-gray-500">
+      <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-4 flex flex-wrap gap-4 text-xs text-gray-500">
         <span>ציון הונאה: <span className="text-emerald-400">0-30 נקי</span> · <span className="text-amber-400">31-60 מעקב</span> · <span className="text-red-400">61+ חשוד</span></span>
         <span className="text-gray-700">כלל: rage clicks ×15, נטישות תשלום ×12, 5+ ניסיונות תשלום +20</span>
       </div>
@@ -551,7 +551,7 @@ function SuspiciousTab() {
       <div className="flex gap-1.5">
         {(['ips', 'sessions'] as const).map(v => (
           <button key={v} onClick={() => setView(v)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${view === v ? 'bg-blue-600 text-white' : 'bg-[#0E1525] text-gray-500 hover:text-gray-300'}`}>
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${view === v ? 'bg-blue-600 text-white' : 'bg-[#0E1629] text-gray-500 hover:text-gray-300'}`}>
             {v === 'ips' ? 'IP חשודים' : 'סשנים חשודים'}
           </button>
         ))}
@@ -562,8 +562,8 @@ function SuspiciousTab() {
       ) : !data ? (
         <div className="p-8 text-center text-gray-600 text-sm">שגיאה בטעינה</div>
       ) : view === 'ips' ? (
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/5">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl overflow-hidden">
+          <div className="px-4 py-3 border-b border-white/[0.055]">
             <p className="text-sm font-bold text-white">{data.suspiciousIps.length} IP חשודים · 7 ימים אחרונים</p>
           </div>
           {data.suspiciousIps.length === 0 ? (
@@ -577,7 +577,7 @@ function SuspiciousTab() {
                 <div key={i} className="px-4 py-4">
                   <div className="flex items-start gap-3">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${scoreBg(s.fraudScore)}`}>
-                      <span className={`text-sm font-black ${scoreColor(s.fraudScore)}`}>{s.fraudScore}</span>
+                      <span className={`text-sm font-bold num ${scoreColor(s.fraudScore)}`}>{s.fraudScore}</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
@@ -604,8 +604,8 @@ function SuspiciousTab() {
           )}
         </div>
       ) : (
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/5">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl overflow-hidden">
+          <div className="px-4 py-3 border-b border-white/[0.055]">
             <p className="text-sm font-bold text-white">{data.suspiciousSessions.length} סשנים חשודים · 24 שעות אחרונות</p>
           </div>
           {data.suspiciousSessions.length === 0 ? (
@@ -619,7 +619,7 @@ function SuspiciousTab() {
                 <div key={i} className="px-4 py-4">
                   <div className="flex items-start gap-3">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${scoreBg(s.fraudScore)}`}>
-                      <span className={`text-sm font-black ${scoreColor(s.fraudScore)}`}>{s.fraudScore}</span>
+                      <span className={`text-sm font-bold num ${scoreColor(s.fraudScore)}`}>{s.fraudScore}</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
@@ -667,13 +667,13 @@ export default function SecurityPage() {
   ]
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">אבטחה</h1>
         <p className="text-sm text-gray-500 mt-0.5">ניטור מבקרים, ניהול חסימות וזיהוי פעילות חשודה</p>
       </div>
 
-      <div className="flex gap-1 bg-[#0E1525] border border-white/5 rounded-xl p-1 mb-6 overflow-x-auto">
+      <div className="flex gap-1 bg-[#0E1629] border border-white/[0.055] rounded-xl p-1 mb-6 overflow-x-auto">
         {tabs.map(t => (
           <button
             key={t.id}
