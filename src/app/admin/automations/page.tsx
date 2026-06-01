@@ -123,7 +123,7 @@ export default function AutomationsPage() {
   const activeCount = automations.filter(a => a.status === 'active').length
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
         <div>
@@ -150,7 +150,7 @@ export default function AutomationsPage() {
           <span className="text-amber-400 text-lg flex-shrink-0">⚠️</span>
           <div className="flex-1">
             <p className="text-sm font-semibold text-amber-400">פרטי חיבור חסרים</p>
-            <p className="text-xs text-gray-500 mt-0.5">לאוטומציות פעילות נדרש: SMTP_USER + SMTP_PASSWORD (מייל) ו-TWILIO_ACCOUNT_SID + TWILIO_AUTH_TOKEN (WhatsApp). הגדר ב-Vercel → Environment Variables.</p>
+            <p className="text-xs text-gray-500 mt-0.5">לאוטומציות פעילות, חבר שירות מייל ו-WhatsApp בהגדרות → <a href="/admin/settings/integrations" className="text-blue-400 underline">חיבורים ואינטגרציות</a>.</p>
           </div>
           <button onClick={() => setCredWarning(false)} className="text-gray-600 hover:text-gray-400 text-sm">✕</button>
         </div>
@@ -165,9 +165,9 @@ export default function AutomationsPage() {
             { label: 'המירו', value: totalConverted.toString(), color: 'text-blue-400' },
             { label: 'הכנסה', value: totalRevenue > 0 ? `₪${(totalRevenue / 100).toFixed(0)}` : '₪0', color: 'text-emerald-400' },
           ].map(kpi => (
-            <div key={kpi.label} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+            <div key={kpi.label} className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
               <p className="text-xs text-gray-600">{kpi.label}</p>
-              <p className={`text-2xl font-black mt-1 ${kpi.color}`}>{kpi.value}</p>
+              <p className={`text-2xl font-bold num mt-1 ${kpi.color}`}>{kpi.value}</p>
             </div>
           ))}
         </div>
@@ -176,13 +176,13 @@ export default function AutomationsPage() {
       {/* Loading */}
       {loading && (
         <div className="space-y-2">
-          {[...Array(4)].map((_, i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+          {[...Array(4)].map((_, i) => <div key={i} className="h-20 bg-[#0E1629] rounded-2xl animate-pulse" />)}
         </div>
       )}
 
       {/* Empty */}
       {!loading && automations.length === 0 && (
-        <div className="text-center py-16 bg-[#0E1525] border border-white/5 rounded-2xl">
+        <div className="text-center py-16 bg-[#0E1629] border border-white/5 rounded-2xl">
           <p className="text-4xl mb-3">⚡</p>
           <p className="text-white font-semibold mb-1">אין אוטומציות עדיין</p>
           <p className="text-xs text-gray-600 mb-5">צור אוטומציות שישלחו מיילים ו-WhatsApp ללקוחות אוטומטית</p>
@@ -201,7 +201,7 @@ export default function AutomationsPage() {
             const isEdit = editId === auto._id
             return (
               <div key={auto._id}
-                className={`bg-[#0E1525] border rounded-2xl transition-colors ${auto.status === 'active' ? 'border-blue-500/25' : 'border-white/5'}`}>
+                className={`bg-[#0E1629] border rounded-2xl transition-colors ${auto.status === 'active' ? 'border-blue-500/25' : 'border-white/5'}`}>
                 <div className="p-4 flex items-center gap-4">
                   <span className="text-xl flex-shrink-0">{meta?.icon || '⚡'}</span>
                   <div className="flex-1 min-w-0">
@@ -256,13 +256,13 @@ export default function AutomationsPage() {
       {/* New automation modal */}
       {showNew && (
         <div className="fixed inset-0 bg-black/70 flex items-end sm:items-center justify-center z-50 p-4" onClick={() => setShowNew(false)}>
-          <div className="bg-[#0E1525] border border-white/10 rounded-2xl p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#0E1629] border border-white/10 rounded-2xl p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
             <h3 className="text-white font-bold text-base mb-4">אוטומציה חדשה</h3>
             <div className="space-y-4">
               <div>
                 <label className="text-xs text-gray-400 block mb-1.5">סוג האוטומציה</label>
                 <select
-                  className="w-full bg-[#080C16] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500/60"
+                  className="w-full bg-[#070B14] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500/60"
                   value={newType}
                   onChange={e => setNewType(e.target.value as AutomationType)}
                 >
@@ -309,7 +309,7 @@ function EditPanel({ automation, onSave }: {
   const [channel, setChannel] = useState<Channel>(automation.channel)
   const [saving, setSaving] = useState(false)
 
-  const inputCls = 'w-full bg-[#080C16] border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500/60'
+  const inputCls = 'w-full bg-[#070B14] border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500/60'
 
   async function save() {
     setSaving(true)
