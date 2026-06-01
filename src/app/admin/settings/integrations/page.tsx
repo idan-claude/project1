@@ -111,9 +111,9 @@ const INTEGRATIONS: IntegrationDef[] = [
     category: 'storage',
     docsUrl: 'https://cloudinary.com',
     fields: [
-      { key: 'cloudName', label: 'Cloud Name', placeholder: 'my-store', type: 'text', hint: 'Dashboard → Account Details → Cloud name' },
-      { key: 'apiKey', label: 'API Key', placeholder: '123456789012345', type: 'text', hint: 'Dashboard → Settings → Security → API Keys' },
-      { key: 'apiSecret', label: 'API Secret', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'ליד ה-API Key' },
+      { key: 'cloudName', label: 'שם החשבון', placeholder: 'my-store', type: 'text', hint: 'Dashboard → Account Details → Cloud name' },
+      { key: 'apiKey', label: 'מפתח גישה', placeholder: '123456789012345', type: 'text', hint: 'Dashboard → Settings → Security → API Keys' },
+      { key: 'apiSecret', label: 'סיסמת גישה', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'נמצאת ליד מפתח הגישה' },
     ],
   },
 ]
