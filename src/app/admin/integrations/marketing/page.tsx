@@ -73,7 +73,7 @@ export default function MarketingIntegrationsPage() {
   const total       = data?.integrations.length ?? 0
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
         <div>
@@ -109,7 +109,7 @@ export default function MarketingIntegrationsPage() {
       </div>
 
       {loading ? (
-        <div className="space-y-3">{[...Array(4)].map((_,i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}</div>
+        <div className="space-y-3">{[...Array(4)].map((_,i) => <div key={i} className="h-20 bg-[#0E1629] rounded-2xl animate-pulse" />)}</div>
       ) : (
         <div className="space-y-3">
           {data?.integrations.map(integration => {
@@ -119,7 +119,7 @@ export default function MarketingIntegrationsPage() {
 
             return (
               <div key={integration.id}
-                className={`bg-[#0E1525] border rounded-2xl overflow-hidden transition-all ${
+                className={`bg-[#0E1629] border rounded-2xl overflow-hidden transition-all ${
                   integration.pixelConfigured ? 'border-emerald-500/20' : 'border-white/5'
                 }`}>
 
@@ -167,7 +167,7 @@ export default function MarketingIntegrationsPage() {
 
                     {/* Current status */}
                     {integration.pixelId && (
-                      <div className="flex items-center justify-between bg-[#080C16] rounded-xl px-3 py-2">
+                      <div className="flex items-center justify-between bg-[#070B14] rounded-xl px-3 py-2">
                         <span className="text-xs text-gray-500">Pixel ID מחובר</span>
                         <code className="text-xs text-emerald-400 font-mono">{integration.pixelId}</code>
                       </div>
@@ -192,37 +192,13 @@ export default function MarketingIntegrationsPage() {
                       </ol>
                     </div>
 
-                    {/* Env vars to set */}
-                    <div>
-                      <p className="text-xs font-semibold text-gray-400 mb-2">משתני סביבה להוסיף ב-Vercel:</p>
-                      <div className="space-y-2">
-                        {integration.envVars.map(v => (
-                          <div key={v.key}
-                            className={`flex items-center gap-2 p-2.5 rounded-xl ${
-                              v.required ? 'bg-[#080C16]' : 'bg-[#080C16] opacity-60'
-                            }`}>
-                            <button
-                              onClick={() => copyKey(v.key)}
-                              className="flex-shrink-0 text-[10px] text-gray-600 hover:text-gray-300 bg-white/5 px-1.5 py-0.5 rounded transition-colors">
-                              {copiedKey === v.key ? '✓' : 'העתק'}
-                            </button>
-                            <code className="text-[11px] text-blue-400 font-mono">{v.key}</code>
-                            <span className="text-[11px] text-gray-600 flex-1 truncate">{v.description}</span>
-                            {!v.required && <span className="text-[9px] text-gray-700 bg-white/5 px-1.5 py-0.5 rounded-full">אופציונלי</span>}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* CTA */}
                     {!fullyConfigured && (
-                      <a
-                        href="https://vercel.com/dashboard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-sm font-medium py-2.5 rounded-xl transition-colors">
-                        פתח Vercel Dashboard להוספת משתנים ↗
-                      </a>
+                      <Link
+                        href="/admin/settings/integrations"
+                        className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors">
+                        חבר {integration.name} בהגדרות ←
+                      </Link>
                     )}
                   </div>
                 )}
@@ -233,7 +209,7 @@ export default function MarketingIntegrationsPage() {
       )}
 
       {/* Bottom note */}
-      <div className="mt-6 bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+      <div className="mt-6 bg-[#0E1629] border border-white/5 rounded-2xl p-4">
         <p className="text-xs font-semibold text-gray-400 mb-1">חשוב לדעת</p>
         <ul className="space-y-1 text-xs text-gray-600">
           <li>• רכישות מדווחות רק לאחר אישור תשלום מ-Cardcom — לא מהדפדפן</li>
