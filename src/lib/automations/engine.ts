@@ -224,26 +224,34 @@ export async function processPendingScheduled(): Promise<number> {
 
   if (!pending.length) return 0
 
-  const smtpUser = process.env.SMTP_USER
-  let mailer: nodemailer.Transporter | null = null
-
-  if (smtpUser) {
-    mailer = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587', 10),
-      secure: false,
-      auth: {
-        user: smtpUser,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    })
+  // Group by storeId so we build one mailer per store
+  const byStore = new Map<string, typeof pending>()
+  for (const log of pending) {
+    const sid = (log as unknown as { storeId?: string }).storeId ?? 'default'
+    if (!byStore.has(sid)) byStore.set(sid, [])
+    byStore.get(sid)!.push(log)
   }
 
   let processed = 0
 
-  for (const log of pending) {
-    if (!mailer || !smtpUser) {
-      // Mark skipped — SMTP not available
+  for (const [sid, logs] of byStore) {
+    const { getSmtpConfig } = await import('@/lib/settings/credentials')
+    const smtpCfg = await getSmtpConfig(sid)
+    let mailer: nodemailer.Transporter | null = null
+    let fromAddress = ''
+
+    if (smtpCfg?.user && smtpCfg?.pass) {
+      mailer = nodemailer.createTransport({
+        host: smtpCfg.host,
+        port: smtpCfg.port,
+        secure: false,
+        auth: { user: smtpCfg.user, pass: smtpCfg.pass },
+      })
+      fromAddress = `"${smtpCfg.fromName || 'FindCard'}" <${smtpCfg.user}>`
+    }
+
+    for (const log of logs) {
+    if (!mailer) {
       await CommLog.updateOne(
         { _id: log._id },
         { $set: { status: 'skipped', error: 'SMTP not configured', sentAt: now } }
@@ -254,7 +262,7 @@ export async function processPendingScheduled(): Promise<number> {
 
     try {
       await mailer.sendMail({
-        from: `"FindCard" <${smtpUser}>`,
+        from: fromAddress,
         to: log.customerEmail,
         subject: log.subject,
         html: log.body,
