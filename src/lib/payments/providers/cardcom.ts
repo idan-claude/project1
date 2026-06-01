@@ -1,15 +1,8 @@
 import axios from 'axios'
 import type { PaymentProvider, CreateSessionParams, SessionResult, VerifyResult, RefundResult, HealthResult } from '../types'
+import { getCardcomConfig } from '@/lib/settings/credentials'
 
 const BASE = 'https://secure.cardcom.solutions'
-
-function creds() {
-  return {
-    terminal: process.env.CARDCOM_TERMINAL_NUMBER ?? '',
-    username: process.env.CARDCOM_API_USERNAME ?? '',
-    password: process.env.CARDCOM_API_PASSWORD ?? '',
-  }
-}
 
 const cardcomProvider: PaymentProvider = {
   id:          'cardcom',
@@ -20,33 +13,33 @@ const cardcomProvider: PaymentProvider = {
   docs:        'https://kb.cardcom.solutions/article/AA-00000/0/',
   sandboxMode: false,
 
-  isConfigured() {
-    const { terminal, username, password } = creds()
-    return !!(terminal && username && password)
+  async isConfigured(storeId = 'default') {
+    const cfg = await getCardcomConfig(storeId)
+    return !!(cfg?.terminal && cfg?.username && cfg?.password)
   },
 
   async createSession(params: CreateSessionParams): Promise<SessionResult> {
-    const { terminal, username, password } = creds()
-    if (!terminal || !username || !password) {
-      return { ok: false, error: 'Cardcom credentials not configured' }
+    const cfg = await getCardcomConfig(params.storeId ?? 'default')
+    if (!cfg?.terminal || !cfg?.username || !cfg?.password) {
+      return { ok: false, error: 'Cardcom לא מוגדר — חבר ספק תשלום בהגדרות' }
     }
     try {
       const amountNIS = (params.amount / 100).toFixed(2)
       const payload = new URLSearchParams({
-        TerminalNumber: terminal,
-        ApiName: username,
-        ApiPassword: password,
-        Operation: '1',
-        Language: 'he',
-        CoinID: '1',
-        SumToBill: amountNIS,
-        ReturnValue: params.orderId,
+        TerminalNumber: cfg.terminal,
+        ApiName:        cfg.username,
+        ApiPassword:    cfg.password,
+        Operation:      '1',
+        Language:       'he',
+        CoinID:         '1',
+        SumToBill:      amountNIS,
+        ReturnValue:    params.orderId,
         SuccessRedirectUrl: `${params.baseUrl}/checkout/success?orderId=${params.orderId}`,
-        ErrorRedirectUrl: `${params.baseUrl}/checkout/cancel?orderId=${params.orderId}`,
-        IndicatorUrl: `${params.baseUrl}/api/webhooks/payment`,
-        ProductName: params.description,
-        CustomerName: params.customerName,
-        CustomerEmail: params.customerEmail,
+        ErrorRedirectUrl:   `${params.baseUrl}/checkout/cancel?orderId=${params.orderId}`,
+        IndicatorUrl:       `${params.baseUrl}/api/webhooks/payment`,
+        ProductName:    params.description,
+        CustomerName:   params.customerName,
+        CustomerEmail:  params.customerEmail,
         ...(params.customerPhone ? { CustomerPhone: params.customerPhone } : {}),
       })
 
@@ -82,12 +75,12 @@ const cardcomProvider: PaymentProvider = {
   },
 
   async refund(_orderId: string, _amount: number): Promise<RefundResult> {
-    // Cardcom refunds are handled via their portal or support — not yet API-driven
-    return { ok: false, error: 'Cardcom refunds must be processed via portal' }
+    return { ok: false, error: 'החזרות כספיות ב-Cardcom מבוצעות דרך הפורטל שלהם' }
   },
 
-  async healthCheck(): Promise<HealthResult> {
-    if (!this.isConfigured()) {
+  async healthCheck(storeId = 'default'): Promise<HealthResult> {
+    const configured = await this.isConfigured(storeId)
+    if (!configured) {
       return { ok: false, latency: 0, message: 'Not configured' }
     }
     const t0 = Date.now()
@@ -95,7 +88,6 @@ const cardcomProvider: PaymentProvider = {
       await axios.get(`${BASE}/api/v11/`, { timeout: 5000 })
       return { ok: true, latency: Date.now() - t0 }
     } catch {
-      // Cardcom returns 4xx on GET to API root — reachability is what matters
       return { ok: true, latency: Date.now() - t0, message: 'Reachable' }
     }
   },
