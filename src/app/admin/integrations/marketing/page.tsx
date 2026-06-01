@@ -212,9 +212,9 @@ export default function MarketingIntegrationsPage() {
       <div className="mt-6 bg-[#0E1629] border border-white/5 rounded-2xl p-4">
         <p className="text-xs font-semibold text-gray-400 mb-1">חשוב לדעת</p>
         <ul className="space-y-1 text-xs text-gray-600">
-          <li>• רכישות מדווחות רק לאחר אישור תשלום מ-Cardcom — לא מהדפדפן</li>
-          <li>• זה מבטיח דיוק מלא: Behavior ≠ Purchase</li>
-          <li>• אחרי שינוי משתני סביבה יש לפרס מחדש ב-Vercel</li>
+          <li>• רכישות מדווחות רק לאחר אישור תשלום מוצלח — לא מהדפדפן</li>
+          <li>• זה מבטיח דיוק מלא — כל רכישה נספרת פעם אחת בלבד</li>
+          <li>• שינויים בחיבורים נכנסים לתוקף מיידית ללא כל פעולה נוספת</li>
         </ul>
       </div>
     </div>
