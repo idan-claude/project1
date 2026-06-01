@@ -233,14 +233,10 @@ export default function AdminSettingsPage() {
               <StatusBadge set={!!cloudinary.cloudName && !!cloudinary.apiKey} />
             </div>
             <p className="text-xs text-gray-500">נדרש להעלאת תמונות מוצרים. הגדר בחשבון Cloudinary שלך ומלא כאן.</p>
-            <Field label="Cloud Name" value={cloudinary.cloudName} placeholder="my-cloud-name" onChange={v => setCloudinary(s => ({ ...s, cloudName: v }))} hint="מופיע בדשבורד של Cloudinary" />
-            <Field label="API Key" value={cloudinary.apiKey} placeholder="123456789012345" onChange={v => setCloudinary(s => ({ ...s, apiKey: v }))} />
-            <Field label="API Secret" value={cloudinary.apiSecret} type="password" placeholder="••••••••••••••••••••" onChange={v => setCloudinary(s => ({ ...s, apiSecret: v }))} hint="Settings → Access Keys בדשבורד Cloudinary" />
+            <Field label="שם החשבון" value={cloudinary.cloudName} placeholder="my-cloud-name" onChange={v => setCloudinary(s => ({ ...s, cloudName: v }))} hint='מופיע בדשבורד של Cloudinary תחת "Account Details"' />
+            <Field label="מפתח גישה" value={cloudinary.apiKey} placeholder="123456789012345" onChange={v => setCloudinary(s => ({ ...s, apiKey: v }))} hint='Settings → Access Keys בדשבורד Cloudinary' />
+            <Field label="סיסמת גישה" value={cloudinary.apiSecret} type="password" placeholder="••••••••••••••••••••" onChange={v => setCloudinary(s => ({ ...s, apiSecret: v }))} hint='ליד המפתח בדשבורד Cloudinary' />
             <SaveBar saving={saving} saved={saved} onSave={() => save('cloudinary', cloudinary)} />
-          </div>
-          <div className="bg-amber-950/30 border border-amber-500/20 rounded-xl p-4">
-            <p className="text-xs text-amber-400 font-semibold mb-1">⚠️ חשוב — להפעלה בסביבת הפרודקשן:</p>
-            <p className="text-xs text-amber-400/70">הוסף גם לסביבת Vercel: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET</p>
           </div>
         </div>
       )}
