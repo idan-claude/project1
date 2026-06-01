@@ -96,8 +96,8 @@ const INTEGRATIONS: IntegrationDef[] = [
     whyNeedIt: 'WhatsApp הוא ערוץ התקשורת המועדף בישראל. לקוחות מעדיפים לקבל עדכונים בוואטסאפ.',
     category: 'messaging',
     fields: [
-      { key: 'accountSid', label: 'Account SID', placeholder: 'ACxxxxxxxxxx', type: 'text', hint: 'נמצא בלוח הבקרה הראשי של Twilio' },
-      { key: 'authToken', label: 'Auth Token', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'נמצא ליד ה-Account SID' },
+      { key: 'accountSid', label: 'מזהה חשבון Twilio', placeholder: 'ACxxxxxxxxxx', type: 'text', hint: 'נמצא בדשבורד הראשי של Twilio' },
+      { key: 'authToken', label: 'קוד גישה', placeholder: '••••••••', type: 'password', sensitive: true, hint: 'נמצא ליד מזהה החשבון בדשבורד Twilio' },
       { key: 'fromNumber', label: 'מספר WhatsApp שולח', placeholder: '+14155238886', type: 'tel', hint: 'מספר WhatsApp ה-Business של Twilio' },
       { key: 'adminNumber', label: 'הוואטסאפ שלך', placeholder: '+972501234567', type: 'tel', hint: 'לאן תישלחנה התראות על הזמנות חדשות' },
     ],
