@@ -246,27 +246,23 @@ export default function AdminSettingsPage() {
         <div className="space-y-4 max-w-2xl">
           <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-sm font-semibold text-white">SMTP — שליחת מיילים</h2>
+              <h2 className="text-sm font-semibold text-white">מיילים אוטומטיים</h2>
               <StatusBadge set={!!smtp.smtpUser && !!smtp.smtpPassword} />
             </div>
-            <p className="text-xs text-gray-500">נדרש לשליחת אימייל אישור הזמנה ואוטומציות. מומלץ Gmail עם App Password.</p>
-            <Field label="כתובת אימייל (SMTP User)" value={smtp.smtpUser} type="email" placeholder="findcardsupport@gmail.com" onChange={v => setSmtp(s => ({ ...s, smtpUser: v }))} />
-            <Field label="סיסמת אפליקציה (App Password)" value={smtp.smtpPassword} type="password" placeholder="xxxx xxxx xxxx xxxx" onChange={v => setSmtp(s => ({ ...s, smtpPassword: v }))} hint='ב-Gmail: הגדרות → אבטחה → אימות דו-שלבי → סיסמאות אפליקציה → "Mail"' />
+            <p className="text-xs text-gray-500">נדרש לשליחת אישורי הזמנה ועדכונים ללקוחות. מומלץ Gmail.</p>
+            <Field label="כתובת מייל שולחת" value={smtp.smtpUser} type="email" placeholder="orders@yourstore.com" onChange={v => setSmtp(s => ({ ...s, smtpUser: v }))} hint='הכתובת ממנה יישלחו המיילים ללקוחות' />
+            <Field label="סיסמת אפליקציה" value={smtp.smtpPassword} type="password" placeholder="xxxx xxxx xxxx xxxx" onChange={v => setSmtp(s => ({ ...s, smtpPassword: v }))} hint='ב-Gmail: הגדרות → אבטחה → סיסמאות אפליקציה' />
             <SaveBar saving={saving} saved={saved} onSave={() => save('smtp', smtp)} />
           </div>
           <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4 space-y-2">
-            <p className="text-xs font-semibold text-white">הוראות Gmail App Password:</p>
+            <p className="text-xs font-semibold text-white">איך מקבלים סיסמת Gmail:</p>
             <ol className="text-xs text-gray-500 space-y-1 list-decimal list-inside">
               <li>כנס לחשבון Google שלך</li>
               <li>הגדרות → אבטחה → הפעל אימות דו-שלבי</li>
-              <li>חפש &quot;App Passwords&quot; (סיסמאות אפליקציה)</li>
-              <li>צור סיסמה חדשה לסוג &quot;Mail&quot;</li>
+              <li>חפש &quot;סיסמאות אפליקציה&quot;</li>
+              <li>צור סיסמה חדשה עבור &quot;Mail&quot;</li>
               <li>העתק את 16 התווים והדבק למעלה</li>
             </ol>
-          </div>
-          <div className="bg-amber-950/30 border border-amber-500/20 rounded-xl p-4">
-            <p className="text-xs text-amber-400 font-semibold mb-1">⚠️ להפעלה בסביבת Vercel:</p>
-            <p className="text-xs text-amber-400/70">הוסף: SMTP_USER, SMTP_PASSWORD לסביבת Vercel</p>
           </div>
         </div>
       )}
