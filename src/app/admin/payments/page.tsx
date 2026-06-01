@@ -321,69 +321,9 @@ export default function PaymentsPage() {
         </div>
       )}
 
-      {/* ── WEBHOOK SETTINGS ── */}
+      {/* ── CARDCOM CONNECTION ── */}
       {tab === 'settings' && (
-        <div className="max-w-lg space-y-4">
-          <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl">💳</span>
-              <div>
-                <h2 className="text-base font-bold text-white">Cardcom</h2>
-                <p className="text-xs text-gray-500">הגדרות Webhook ומשתני סביבה</p>
-              </div>
-            </div>
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-4">
-              <p className="text-xs font-semibold text-blue-400 mb-1">הגדרת פרטי חיבור</p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                פרטי ה-API של Cardcom מוגדרים דרך <strong className="text-white">Vercel Environment Variables</strong> בלבד.
-                זה אבטחה מכוונת — מניעת חשיפת פרטים רגישים בממשק הניהול.
-              </p>
-            </div>
-            <div className="space-y-2.5 mb-4">
-              {[
-                { key: 'CARDCOM_TERMINAL_NUMBER', label: 'מספר מסוף' },
-                { key: 'CARDCOM_API_USERNAME',    label: 'שם משתמש API' },
-                { key: 'CARDCOM_API_PASSWORD',    label: 'סיסמת API' },
-              ].map(({ key, label }) => (
-                <div key={key} className="flex items-center justify-between gap-3 py-2 border-b border-white/5">
-                  <div>
-                    <p className="text-xs text-gray-300 font-medium">{label}</p>
-                    <code className="text-[10px] text-gray-600 font-mono">{key}</code>
-                  </div>
-                  <span className="text-[10px] font-bold border px-2 py-0.5 rounded-full border-amber-500/30 text-amber-400 bg-amber-500/10 whitespace-nowrap">
-                    בדוק ב-Vercel
-                  </span>
-                </div>
-              ))}
-            </div>
-            <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-sm font-medium py-2.5 rounded-xl transition-colors">
-              פתח Vercel Dashboard ↗
-            </a>
-          </div>
-
-          <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
-            <h3 className="text-sm font-semibold text-white mb-3">Webhook URLs להגדרה ב-Cardcom</h3>
-            <div className="space-y-3">
-              {[
-                { label: 'Payment Callback (IndicatorUrl)', url: 'https://project1-flame-phi.vercel.app/api/webhooks/payment',       color: 'text-blue-400' },
-                { label: 'Success Redirect',               url: 'https://project1-flame-phi.vercel.app/checkout/success',           color: 'text-emerald-400' },
-                { label: 'Cancel/Error Redirect',          url: 'https://project1-flame-phi.vercel.app/checkout/cancel',            color: 'text-red-400' },
-              ].map(({ label, url, color }) => (
-                <div key={url}>
-                  <p className="text-xs text-gray-500 mb-1">{label}</p>
-                  <div className="flex items-center gap-2">
-                    <code className={`flex-1 bg-[#070B14] ${color} text-xs px-3 py-2 rounded-lg font-mono truncate`}>{url}</code>
-                    <button onClick={() => navigator.clipboard.writeText(url)}
-                      className="text-xs text-gray-500 hover:text-gray-300 bg-white/5 px-2 py-2 rounded-lg transition-colors flex-shrink-0">
-                      העתק
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <CardcomSetupTab />
       )}
     </div>
   )
