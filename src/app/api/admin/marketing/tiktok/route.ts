@@ -1,20 +1,21 @@
-import { NextResponse } from 'next/server'
-import { withAdminAuth } from '@/lib/auth/adminAuth'
+import { NextRequest, NextResponse } from 'next/server'
+import { withAdminAuth, getAdminPayload } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 import { PAID_FILTER } from '@/lib/analytics/sourceOfTruth'
+import { getTikTokConfig } from '@/lib/settings/credentials'
 
 export const dynamic = 'force-dynamic'
 
-export const GET = withAdminAuth(async () => {
+export const GET = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
 
+  const storeId = getAdminPayload(req)?.storeId ?? 'default'
   const since7d = new Date(Date.now() - 7 * 86400000)
 
-  const pixelId = process.env.TIKTOK_PIXEL_ID || ''
-  const eventsApiToken = process.env.TIKTOK_EVENTS_API_TOKEN || ''
-
-  const pixelConfigured = !!process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID
+  const cfg = await getTikTokConfig(storeId)
+  const pixelId = cfg?.pixelId || ''
+  const eventsApiToken = cfg?.eventsApiToken || ''
   const eventsApiConfigured = !!(pixelId && eventsApiToken)
 
   const [totalPaidOrders7d, tiktokCapiFired7d, tiktokPixelFired7d] = await Promise.all([
@@ -37,14 +38,14 @@ export const GET = withAdminAuth(async () => {
     {
       id: 'pixel_configured',
       name: 'TikTok Pixel מוגדר',
-      status: pixelConfigured ? 'ok' : 'error',
-      detail: pixelConfigured ? `Pixel: ${process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID}` : 'חסר NEXT_PUBLIC_TIKTOK_PIXEL_ID',
+      status: pixelId ? 'ok' : 'error',
+      detail: pixelId ? `Pixel: ${pixelId}` : 'חבר TikTok Pixel בהגדרות → חיבורים',
     },
     {
       id: 'events_api',
       name: 'TikTok Events API',
       status: eventsApiConfigured ? 'ok' : 'error',
-      detail: eventsApiConfigured ? 'Pixel ID + Token מוגדרים' : 'חסר TIKTOK_PIXEL_ID או TIKTOK_EVENTS_API_TOKEN',
+      detail: eventsApiConfigured ? 'Pixel ID + Token מוגדרים' : 'חבר TikTok Events API בהגדרות → חיבורים',
     },
     {
       id: 'delivery',
@@ -63,7 +64,7 @@ export const GET = withAdminAuth(async () => {
   ]
 
   return NextResponse.json({
-    pixelId: process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || '',
+    pixelId,
     eventsApiConfigured,
     stats: { totalPaidOrders7d, tiktokCapiFired7d, tiktokPixelFired7d, ttAttributed, deliveryRate },
     checks,
