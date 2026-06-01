@@ -1,19 +1,22 @@
-import { NextResponse } from 'next/server'
-import { withAdminAuth } from '@/lib/auth/adminAuth'
+import { NextRequest, NextResponse } from 'next/server'
+import { withAdminAuth, getAdminPayload } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 import { PAID_FILTER } from '@/lib/analytics/sourceOfTruth'
+import { getMetaConfig } from '@/lib/settings/credentials'
 
 export const dynamic = 'force-dynamic'
 
-export const GET = withAdminAuth(async () => {
+export const GET = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
 
+  const storeId = getAdminPayload(req)?.storeId ?? 'default'
   const since7d = new Date(Date.now() - 7 * 86400000)
 
-  const pixelId = process.env.META_PIXEL_ID || ''
-  const capiToken = process.env.META_CAPI_TOKEN || ''
-  const testCode = process.env.META_CAPI_TEST_CODE || ''
+  const cfg = await getMetaConfig(storeId)
+  const pixelId = cfg?.pixelId || ''
+  const capiToken = cfg?.capiToken || ''
+  const testCode = cfg?.testCode || ''
 
   const pixelConfigured = !!pixelId
   const capiConfigured = !!(pixelId && capiToken)
