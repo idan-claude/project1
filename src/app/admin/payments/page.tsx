@@ -312,9 +312,9 @@ export default function PaymentsPage() {
           <div className="mt-5 bg-[#0E1629] border border-white/5 rounded-2xl p-4">
             <p className="text-xs font-semibold text-gray-400 mb-2">איך זה עובד</p>
             <ul className="space-y-1 text-xs text-gray-600">
-              <li>• הספק הפעיל הראשון עם אישורי גישה מוגדרים ישמש לכל תשלום חדש</li>
-              <li>• אישורי API מוגדרים ב-Vercel Environment Variables — לא נשמרים במסד הנתונים</li>
-              <li>• בדיקת בריאות בודקת נגישות בפועל לכל ספק מוגדר</li>
+              <li>• הספק הפעיל הראשון המחובר ישמש לכל תשלום חדש</li>
+              <li>• לחיבור ספק תשלום — לחץ על הכרטיסייה "חיבור Cardcom"</li>
+              <li>• בדיקת בריאות בודקת שהחיבור פעיל ועובד</li>
               <li>• שינוי עדיפות — החץ למעלה מעלה עדיפות (ייבחר קודם)</li>
             </ul>
           </div>
