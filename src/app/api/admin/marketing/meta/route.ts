@@ -74,7 +74,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       id: 'capi_configured',
       name: 'Conversions API מוגדר',
       status: capiConfigured ? 'ok' : 'error',
-      detail: capiConfigured ? 'Pixel ID + Token מוגדרים' : 'חסר META_PIXEL_ID או META_CAPI_TOKEN',
+      detail: capiConfigured ? 'Pixel ID + Token מוגדרים' : 'חבר Meta CAPI בהגדרות → חיבורים',
     },
     {
       id: 'test_mode',
