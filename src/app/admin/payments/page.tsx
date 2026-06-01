@@ -34,6 +34,156 @@ interface HealthResult {
 
 type Tab = 'transactions' | 'providers' | 'settings'
 
+function CardcomSetupTab() {
+  const [form, setForm] = useState({ terminal: '', username: '', password: '' })
+  const [saving, setSaving] = useState(false)
+  const [testing, setTesting] = useState(false)
+  const [testResult, setTestResult] = useState<{ ok: boolean; message: string } | null>(null)
+  const [configured, setConfigured] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/admin/integrations/cardcom')
+      .then(r => r.json())
+      .then(d => {
+        if (d.configured) {
+          setConfigured(true)
+          setForm({
+            terminal: String(d.config?.terminal ?? ''),
+            username: d.config?.username ?? '',
+            password: '',
+          })
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  async function handleSave() {
+    setSaving(true)
+    const body: Record<string, string | number> = {}
+    if (form.terminal) body.terminal = form.terminal
+    if (form.username) body.username = form.username
+    if (form.password) body.password = form.password
+    await fetch('/api/admin/integrations/cardcom', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    setConfigured(true)
+    setSaving(false)
+    setTestResult(null)
+  }
+
+  async function handleTest() {
+    setTesting(true)
+    setTestResult(null)
+    try {
+      const r = await fetch('/api/admin/integrations/cardcom/test', { method: 'POST' })
+      const d = await r.json()
+      setTestResult(d)
+    } catch {
+      setTestResult({ ok: false, message: 'שגיאת רשת — נסה שנית' })
+    }
+    setTesting(false)
+  }
+
+  const URLS = [
+    { label: 'כתובת אישור תשלום (IndicatorUrl)', url: typeof window !== 'undefined' ? `${window.location.origin}/api/webhooks/payment` : '/api/webhooks/payment' },
+    { label: 'כתובת הצלחה (Success URL)',          url: typeof window !== 'undefined' ? `${window.location.origin}/checkout/success`        : '/checkout/success' },
+    { label: 'כתובת ביטול (Cancel URL)',            url: typeof window !== 'undefined' ? `${window.location.origin}/checkout/cancel`         : '/checkout/cancel' },
+  ]
+
+  return (
+    <div className="max-w-lg space-y-4">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">💳</span>
+            <div>
+              <h2 className="text-base font-bold text-white">Cardcom</h2>
+              <p className="text-xs text-gray-500">קבלת תשלומים בכרטיס, ביט ו-PayBox</p>
+            </div>
+          </div>
+          <span className={`text-[10px] font-bold border px-2 py-0.5 rounded-full ${configured ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' : 'border-white/10 text-gray-500 bg-white/5'}`}>
+            {configured ? 'מחובר ✓' : 'לא מחובר'}
+          </span>
+        </div>
+
+        <div className="space-y-3 mb-4">
+          <div>
+            <label className="block text-xs font-medium text-gray-400 mb-1.5">מספר מסוף</label>
+            <input
+              type="text"
+              value={form.terminal}
+              onChange={e => setForm(p => ({ ...p, terminal: e.target.value }))}
+              placeholder="לדוגמה: 1000"
+              className="w-full bg-[#070B14] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500"
+            />
+            <p className="text-[10px] text-gray-600 mt-1">נמצא בלוח הבקרה של Cardcom תחת &quot;פרטי חשבון&quot;</p>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-400 mb-1.5">שם משתמש</label>
+            <input
+              type="text"
+              value={form.username}
+              onChange={e => setForm(p => ({ ...p, username: e.target.value }))}
+              placeholder="שם משתמש מ-Cardcom"
+              className="w-full bg-[#070B14] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-400 mb-1.5">סיסמה</label>
+            <input
+              type="password"
+              value={form.password}
+              onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
+              placeholder={configured ? '(שמורה — הזן שוב לשינוי)' : '••••••••'}
+              className="w-full bg-[#070B14] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500"
+            />
+          </div>
+        </div>
+
+        {testResult && (
+          <div className={`rounded-xl px-4 py-3 text-xs font-medium border mb-3 ${testResult.ok ? 'bg-emerald-400/10 border-emerald-400/20 text-emerald-400' : 'bg-red-400/10 border-red-400/20 text-red-400'}`}>
+            {testResult.message}
+          </div>
+        )}
+
+        <div className="flex gap-2">
+          {configured && (
+            <button onClick={handleTest} disabled={testing}
+              className="flex-shrink-0 bg-white/5 border border-white/10 text-gray-300 text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition-colors disabled:opacity-50">
+              {testing ? 'בודק...' : 'בדוק חיבור'}
+            </button>
+          )}
+          <button onClick={handleSave} disabled={saving}
+            className="flex-1 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-50">
+            {saving ? 'שומר...' : configured ? 'עדכן חיבור' : 'חבר Cardcom'}
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
+        <h3 className="text-sm font-semibold text-white mb-1">כתובות לחיבור ב-Cardcom</h3>
+        <p className="text-xs text-gray-500 mb-3">העתק כתובות אלו והדבק בהגדרות הטרמינל שלך ב-Cardcom</p>
+        <div className="space-y-3">
+          {URLS.map(({ label, url }) => (
+            <div key={url}>
+              <p className="text-xs text-gray-500 mb-1">{label}</p>
+              <div className="flex items-center gap-2">
+                <span className="flex-1 bg-[#070B14] text-blue-400 text-xs px-3 py-2 rounded-lg font-mono truncate">{url}</span>
+                <button onClick={() => navigator.clipboard.writeText(url)}
+                  className="text-xs text-gray-500 hover:text-gray-300 bg-white/5 px-2 py-2 rounded-lg transition-colors flex-shrink-0">
+                  העתק
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const STATUS_CLR: Record<string, string> = {
   paid:     'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
   pending:  'bg-amber-500/15 text-amber-400 border-amber-500/20',
