@@ -1,53 +1,34 @@
 import nodemailer from 'nodemailer'
 import CommLog from '@/lib/db/models/CommLog'
 import { connectDB } from '@/lib/db/mongoose'
-
-let transporter: nodemailer.Transporter | null = null
-
-function getTransporter(): nodemailer.Transporter | null {
-  if (!transporter && process.env.SMTP_USER) {
-    transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587', 10),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    })
-  }
-  return transporter
-}
-
-function getTwilioClient() {
-  const sid = process.env.TWILIO_ACCOUNT_SID
-  const token = process.env.TWILIO_AUTH_TOKEN
-  if (!sid || !token) return null
-  // Lazy-require so the module is optional at build time
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const twilio = require('twilio')
-  return twilio(sid, token) as {
-    messages: {
-      create: (opts: { from: string; to: string; body: string }) => Promise<{ sid: string }>
-    }
-  }
-}
+import { getSmtpConfig, getTwilioConfig } from '@/lib/settings/credentials'
 
 function normalisePhone(phone: string): string {
-  // Strip whitespace and dashes
   let p = phone.replace(/[\s\-().]/g, '')
-  // Convert leading 0 Israeli number to +972
   if (p.startsWith('05') || p.startsWith('07')) {
     p = '+972' + p.slice(1)
   }
-  // Ensure + prefix
   if (!p.startsWith('+')) {
     p = '+' + p
   }
   return p
 }
 
-// ─── SEND EMAIL ─────────────────────────────────────────────────────────────
+async function buildTransporter(storeId: string) {
+  const cfg = await getSmtpConfig(storeId)
+  if (!cfg?.user || !cfg?.pass) return null
+  return {
+    transporter: nodemailer.createTransport({
+      host: cfg.host,
+      port: cfg.port,
+      secure: false,
+      auth: { user: cfg.user, pass: cfg.pass },
+    }),
+    fromAddress: `"${cfg.fromName || 'FindCard'}" <${cfg.user}>`,
+  }
+}
+
+// ─── SEND EMAIL ───────────────────────────────────────────────────────────────
 
 export async function sendEmail(opts: {
   to: string
@@ -57,12 +38,13 @@ export async function sendEmail(opts: {
   orderNumber?: string
   eventType: string
   scheduledFor?: Date
+  storeId?: string
 }): Promise<boolean> {
   await connectDB()
+  const storeId = opts.storeId ?? 'default'
 
-  const t = getTransporter()
-  if (!t) {
-    // SMTP not configured — log as skipped
+  const result = await buildTransporter(storeId)
+  if (!result) {
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
       orderNumber: opts.orderNumber || '',
@@ -78,8 +60,8 @@ export async function sendEmail(opts: {
   }
 
   try {
-    await t.sendMail({
-      from: `"FindCard" <${process.env.SMTP_USER}>`,
+    await result.transporter.sendMail({
+      from: result.fromAddress,
       to: opts.to,
       subject: opts.subject,
       html: opts.html,
@@ -100,7 +82,6 @@ export async function sendEmail(opts: {
     return true
   } catch (err) {
     const errorMsg = err instanceof Error ? err.message : String(err)
-
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
       orderNumber: opts.orderNumber || '',
@@ -112,12 +93,11 @@ export async function sendEmail(opts: {
       status: 'failed',
       error: errorMsg,
     })
-
     return false
   }
 }
 
-// ─── SEND WHATSAPP ──────────────────────────────────────────────────────────
+// ─── SEND WHATSAPP ────────────────────────────────────────────────────────────
 
 export async function sendWhatsApp(opts: {
   to: string
@@ -125,13 +105,13 @@ export async function sendWhatsApp(opts: {
   orderId?: string
   orderNumber?: string
   eventType: string
+  storeId?: string
 }): Promise<boolean> {
   await connectDB()
+  const storeId = opts.storeId ?? 'default'
+  const cfg = await getTwilioConfig(storeId)
 
-  const client = getTwilioClient()
-  const from = process.env.TWILIO_WHATSAPP_FROM
-
-  if (!client || !from) {
+  if (!cfg?.accountSid || !cfg?.authToken || !cfg?.fromNumber) {
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
       orderNumber: opts.orderNumber || '',
@@ -145,15 +125,14 @@ export async function sendWhatsApp(opts: {
     return false
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const twilio = require('twilio')
+  const client = twilio(cfg.accountSid, cfg.authToken)
   const toFormatted = `whatsapp:${normalisePhone(opts.to)}`
-  const fromFormatted = from.startsWith('whatsapp:') ? from : `whatsapp:${from}`
+  const fromFormatted = cfg.fromNumber.startsWith('whatsapp:') ? cfg.fromNumber : `whatsapp:${cfg.fromNumber}`
 
   try {
-    await client.messages.create({
-      from: fromFormatted,
-      to: toFormatted,
-      body: opts.message,
-    })
+    await client.messages.create({ from: fromFormatted, to: toFormatted, body: opts.message })
 
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
@@ -169,7 +148,6 @@ export async function sendWhatsApp(opts: {
     return true
   } catch (err) {
     const errorMsg = err instanceof Error ? err.message : String(err)
-
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
       orderNumber: opts.orderNumber || '',
@@ -180,12 +158,11 @@ export async function sendWhatsApp(opts: {
       status: 'failed',
       error: errorMsg,
     })
-
     return false
   }
 }
 
-// ─── SEND SMS ───────────────────────────────────────────────────────────────
+// ─── SEND SMS ─────────────────────────────────────────────────────────────────
 
 export async function sendSMS(opts: {
   to: string
@@ -193,13 +170,13 @@ export async function sendSMS(opts: {
   orderId?: string
   orderNumber?: string
   eventType: string
+  storeId?: string
 }): Promise<boolean> {
   await connectDB()
+  const storeId = opts.storeId ?? 'default'
+  const cfg = await getTwilioConfig(storeId)
 
-  const client = getTwilioClient()
-  const from = process.env.TWILIO_WHATSAPP_FROM || process.env.TWILIO_SMS_FROM
-
-  if (!client || !from) {
+  if (!cfg?.accountSid || !cfg?.authToken || !cfg?.fromNumber) {
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
       orderNumber: opts.orderNumber || '',
@@ -213,16 +190,16 @@ export async function sendSMS(opts: {
     return false
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const twilio = require('twilio')
+  const client = twilio(cfg.accountSid, cfg.authToken)
   const toFormatted = normalisePhone(opts.to)
-  // Use raw phone number for SMS (not whatsapp: prefix)
-  const fromNumber = from.startsWith('whatsapp:') ? from.replace('whatsapp:', '') : from
+  const fromNumber = cfg.fromNumber.startsWith('whatsapp:')
+    ? cfg.fromNumber.replace('whatsapp:', '')
+    : cfg.fromNumber
 
   try {
-    await client.messages.create({
-      from: fromNumber,
-      to: toFormatted,
-      body: opts.message,
-    })
+    await client.messages.create({ from: fromNumber, to: toFormatted, body: opts.message })
 
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
@@ -238,7 +215,6 @@ export async function sendSMS(opts: {
     return true
   } catch (err) {
     const errorMsg = err instanceof Error ? err.message : String(err)
-
     await CommLog.create({
       orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
       orderNumber: opts.orderNumber || '',
@@ -249,12 +225,11 @@ export async function sendSMS(opts: {
       status: 'failed',
       error: errorMsg,
     })
-
     return false
   }
 }
 
-// ─── SCHEDULE EMAIL ─────────────────────────────────────────────────────────
+// ─── SCHEDULE EMAIL ───────────────────────────────────────────────────────────
 
 export async function scheduleEmail(opts: {
   to: string
@@ -266,7 +241,6 @@ export async function scheduleEmail(opts: {
   scheduledFor: Date
 }): Promise<void> {
   await connectDB()
-
   await CommLog.create({
     orderId: opts.orderId || new (require('mongoose').Types.ObjectId)(),
     orderNumber: opts.orderNumber || '',
