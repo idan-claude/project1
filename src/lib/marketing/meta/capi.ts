@@ -1,4 +1,5 @@
 import type { MetaEventPayload } from './events'
+import { getMetaConfig } from '@/lib/settings/credentials'
 
 const CAPI_URL = 'https://graph.facebook.com/v19.0'
 
@@ -9,20 +10,21 @@ export interface CAPIResult {
   raw?: unknown
 }
 
-export async function sendMetaCAPIEvent(payload: MetaEventPayload): Promise<CAPIResult> {
-  const pixelId = process.env.META_PIXEL_ID
-  const token = process.env.META_CAPI_TOKEN
+export async function sendMetaCAPIEvent(
+  payload: MetaEventPayload,
+  storeId = 'default'
+): Promise<CAPIResult> {
+  const cfg = await getMetaConfig(storeId)
 
-  if (!pixelId || !token) {
-    return { ok: false, error: 'META_PIXEL_ID or META_CAPI_TOKEN not configured' }
+  if (!cfg?.pixelId || !cfg?.capiToken) {
+    return { ok: false, error: 'Meta Pixel or CAPI token not configured' }
   }
 
-  const testCode = process.env.META_CAPI_TEST_CODE
   const body: Record<string, unknown> = { data: [payload] }
-  if (testCode) body.test_event_code = testCode
+  if (cfg.testCode) body.test_event_code = cfg.testCode
 
   try {
-    const res = await fetch(`${CAPI_URL}/${pixelId}/events?access_token=${token}`, {
+    const res = await fetch(`${CAPI_URL}/${cfg.pixelId}/events?access_token=${cfg.capiToken}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -43,7 +45,6 @@ export async function sendMetaCAPIEvent(payload: MetaEventPayload): Promise<CAPI
   }
 }
 
-// Fire Purchase CAPI — ONLY call after payment.status === 'paid' is confirmed
 export async function fireMetaPurchase(opts: {
   orderId: string
   sessionId: string
@@ -57,8 +58,9 @@ export async function fireMetaPurchase(opts: {
   fbc?: string
   pageUrl?: string
   existingEventId?: string
+  storeId?: string
 }): Promise<CAPIResult> {
   const { buildPurchasePayload } = await import('./events')
   const payload = buildPurchasePayload(opts)
-  return sendMetaCAPIEvent(payload)
+  return sendMetaCAPIEvent(payload, opts.storeId ?? 'default')
 }
