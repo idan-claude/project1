@@ -101,6 +101,7 @@ const NAV = [
       { href: '/admin/integrations',             label: 'אינטגרציות',     Icon: IRadio,   sub: 'חיבורים חיצוניים' },
       { href: '/admin/integrations/marketing',   label: 'שיווק ופיקסלים', Icon: IZap,     sub: 'Meta, TikTok, GA4, GTM' },
       { href: '/admin/team',                     label: 'צוות',           Icon: IUsers,   sub: 'משתמשים והרשאות' },
+      { href: '/admin/settings/integrations',     label: 'חיבורים ושירותים', Icon: ILink,  sub: 'תשלום, מייל, WhatsApp' },
       { href: '/admin/settings',                 label: 'הגדרות חנות',    Icon: ICog,     sub: 'הגדרות מלאות' },
     ],
   },
