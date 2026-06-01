@@ -336,11 +336,9 @@ export default function ConnectionsPage() {
           <div>
             <p className="text-[12px] font-medium text-[var(--ds-text-2)]">לחיבור שירות חדש</p>
             <p className="text-[11px] text-[var(--ds-text-3)] mt-0.5">
-              פרטי גישה מוגדרים דרך Vercel Environment Variables בלבד. ראה{' '}
-              <Link href="/admin/integrations/marketing" className="text-blue-400 hover:text-blue-300">מדריך הגדרה</Link>
-              {' '}לפיקסלים ו-
-              <Link href="/admin/payments?tab=settings" className="text-blue-400 hover:text-blue-300">הגדרות תשלום</Link>
-              {' '}לספקי תשלומים.
+              לחץ על כל שירות כדי לחבר אותו.{' '}
+              <Link href="/admin/settings/integrations" className="text-blue-400 hover:text-blue-300">הגדרות חיבורים</Link>
+              {' '}לניהול כל השירותים במקום אחד.
             </p>
           </div>
         </div>
