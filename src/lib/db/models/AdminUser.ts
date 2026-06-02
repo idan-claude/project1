@@ -21,6 +21,8 @@ const AdminUserSchema = new Schema<IAdminUser>(
     phone: { type: String, default: '' },
     emailVerified: { type: Boolean, default: false },
     status: { type: String, enum: ['active', 'suspended', 'pending_verification'], default: 'active' },
+    resetToken: { type: String, default: null },
+    resetTokenExpiry: { type: Date, default: null },
   },
   { timestamps: true }
 )
