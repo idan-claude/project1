@@ -93,8 +93,8 @@ export default function TikTokDiagnosticsPage() {
                 {[
                   { n: '1', text: 'היכנס ל-TikTok Ads Manager ופתח "Events" → "Manage"' },
                   { n: '2', text: 'צור Pixel חדש — תקבל מספר Pixel ID' },
-                  { n: '3', text: 'עבור ל-"Generate Access Token" עבור Events API' },
-                  { n: '4', text: 'הוסף את שני הערכים בדף ההגדרות → אינטגרציות שיווק' },
+                  { n: '3', text: 'בניהול אירועים: קוד גישה לשרת → העתק' },
+                  { n: '4', text: 'הוסף את שני הערכים בדף ההגדרות → חיבורים ואינטגרציות' },
                 ].map(s => (
                   <div key={s.n} className="flex items-start gap-3 text-[12px] text-[var(--ds-text-3)]">
                     <span className="w-5 h-5 rounded-full bg-white/[0.05] border border-white/[0.055] flex items-center justify-center text-[10px] font-bold text-[var(--ds-text-2)] flex-shrink-0 mt-0.5">
