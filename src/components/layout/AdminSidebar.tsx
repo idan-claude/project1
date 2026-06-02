@@ -98,6 +98,8 @@ const NAV = [
   {
     group: 'מערכת',
     items: [
+      { href: '/admin/stores',                    label: 'החנויות שלי',   Icon: ISwitch,   sub: 'ניהול וחלפת חנות' },
+      { href: '/admin/storefront/editor',         label: 'עיצוב חנות',    Icon: IPalette,  sub: 'צבעים, גופן, סקציות' },
       { href: '/admin/health',                   label: 'בריאות מערכת',  Icon: IActivity, sub: 'MongoDB, API, אינטגרציות' },
       { href: '/admin/system',                   label: 'בדיקת מערכת',   Icon: ISearch,   sub: 'אימות אוטומטי' },
       { href: '/admin/anomalies',                label: 'Anomaly Detection',Icon: IAlert,  sub: 'ניטור חריגות' },
