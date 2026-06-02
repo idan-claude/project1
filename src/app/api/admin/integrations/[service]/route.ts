@@ -9,11 +9,12 @@ import {
   getTikTokConfig,
   getCardcomConfig,
   getCloudinaryConfig,
+  getGa4Config,
 } from '@/lib/settings/credentials'
 
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_SERVICES = ['smtp', 'twilio', 'meta', 'tiktok', 'cardcom', 'cloudinary', 'aliexpress']
+const ALLOWED_SERVICES = ['smtp', 'twilio', 'meta', 'tiktok', 'cardcom', 'cloudinary', 'aliexpress', 'ga4']
 
 // Mask sensitive fields for display
 function maskSecret(value: string | undefined | null): string {
