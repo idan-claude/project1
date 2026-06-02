@@ -257,7 +257,7 @@ export default function StorefrontEditorPage() {
 
         {/* Tab bar */}
         <div className="flex border-b border-white/[0.055] flex-shrink-0">
-          {([['colors','צבעים'],['typography','גופן'],['layout','מבנה'],['sections','סקציות']] as [Tab,string][]).map(([t, label]) => (
+          {([['colors','צבעים'],['brand','מיתוג'],['typography','גופן'],['layout','מבנה'],['sections','סקציות']] as [Tab,string][]).map(([t, label]) => (
             <button key={t} onClick={() => setTab(t)}
               className={`flex-1 py-2.5 text-[10px] font-semibold transition-colors ${tab === t ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-500 hover:text-gray-300'}`}>
               {label}
