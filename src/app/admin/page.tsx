@@ -183,6 +183,80 @@ function KpiCard({
   )
 }
 
+/* ── Readiness Widget ─────────────────────────────────── */
+interface ReadinessData {
+  score: number
+  nextStep: { id: string; label: string; action?: string; actionLabel?: string } | null
+  items: Array<{ id: string; label: string; done: boolean; weight: number; action?: string; actionLabel?: string }>
+}
+
+function ReadinessWidget() {
+  const [ready, setReady] = useState<ReadinessData | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/readiness')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => setReady(d))
+      .catch(() => {})
+  }, [])
+
+  if (!ready || ready.score >= 100) return null
+
+  const doneCount = ready.items.filter(i => i.done).length
+  const totalCount = ready.items.length
+
+  return (
+    <div className="bg-[#0E1629] border border-blue-500/20 rounded-2xl p-4 mb-5">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-blue-400">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div>
+            <p className="text-[13px] font-bold text-white leading-none">מוכנות החנות</p>
+            <p className="text-[10px] text-gray-500 mt-0.5">{doneCount} מתוך {totalCount} שלבים הושלמו</p>
+          </div>
+        </div>
+        <span className={`text-lg font-black num ${ready.score >= 80 ? 'text-emerald-400' : ready.score >= 50 ? 'text-amber-400' : 'text-blue-400'}`}>
+          {ready.score}%
+        </span>
+      </div>
+
+      {/* Progress bar */}
+      <div className="w-full bg-white/[0.05] rounded-full h-1.5 mb-3.5 overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all duration-700 ${ready.score >= 80 ? 'bg-emerald-400' : ready.score >= 50 ? 'bg-amber-400' : 'bg-blue-500'}`}
+          style={{ width: `${ready.score}%` }}
+        />
+      </div>
+
+      {/* Step dots */}
+      <div className="flex items-center gap-1.5 mb-3">
+        {ready.items.map(item => (
+          <div key={item.id} title={item.label}
+            className={`flex-1 h-1 rounded-full transition-all ${item.done ? 'bg-emerald-400/60' : 'bg-white/[0.07]'}`} />
+        ))}
+      </div>
+
+      {/* Next action */}
+      {ready.nextStep && ready.nextStep.action && (
+        <Link href={ready.nextStep.action}
+          className="flex items-center justify-between bg-blue-500/10 border border-blue-500/15 rounded-xl px-3 py-2.5 hover:bg-blue-500/15 transition-colors group">
+          <div>
+            <p className="text-[11px] font-semibold text-white">הצעד הבא: {ready.nextStep.label}</p>
+            <p className="text-[10px] text-gray-500">{ready.nextStep.actionLabel}</p>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 text-blue-400 flex-shrink-0 group-hover:translate-x-[-2px] transition-transform">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </Link>
+      )}
+    </div>
+  )
+}
+
 /* ── Page ─────────────────────────────────────────────── */
 export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null)
