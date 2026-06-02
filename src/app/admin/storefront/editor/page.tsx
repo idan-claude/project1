@@ -95,6 +95,9 @@ export default function StorefrontEditorPage() {
   const [publishing, setPublishing] = useState(false)
   const [saved, setSaved] = useState(false)
   const [tab, setTab] = useState<Tab>('colors')
+  const [logoUploading, setLogoUploading] = useState(false)
+  const [heroUploading, setHeroUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop')
   const [previewOpen, setPreviewOpen] = useState(false)
 
