@@ -7,6 +7,8 @@ export interface IAdminUser extends Document {
   phone: string
   emailVerified: boolean
   status: 'active' | 'suspended' | 'pending_verification'
+  resetToken?: string
+  resetTokenExpiry?: Date
   createdAt: Date
   updatedAt: Date
 }
