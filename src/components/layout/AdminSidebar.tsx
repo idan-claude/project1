@@ -187,6 +187,9 @@ export default function AdminSidebar({ onClose }: Props) {
         )}
       </div>
 
+      {/* Store switcher */}
+      <StoreSwitcher />
+
       {/* Nav groups */}
       <nav className="flex-1 py-3 overflow-y-auto admin-scroll">
         {NAV.map(({ group, items }) => (
