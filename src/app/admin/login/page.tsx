@@ -53,7 +53,12 @@ export default function AdminLoginPage() {
               />
             </div>
             <div>
-              <label className="block text-[12px] font-medium text-[var(--ds-text-2)] mb-1.5">סיסמה</label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-[12px] font-medium text-[var(--ds-text-2)]">סיסמה</label>
+                <Link href="/admin/forgot-password" className="text-[11px] text-blue-400 hover:text-blue-300 transition-colors">
+                  שכחתי סיסמה
+                </Link>
+              </div>
               <input
                 type="password"
                 value={form.password}
