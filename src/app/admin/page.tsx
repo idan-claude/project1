@@ -368,6 +368,9 @@ export default function AdminDashboard() {
         </form>
       </div>
 
+      {/* Readiness widget — only visible until store is 100% ready */}
+      <ReadinessWidget />
+
       {/* KPI row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
         {kpis.map((s) => <KpiCard key={s.label} {...s} />)}
