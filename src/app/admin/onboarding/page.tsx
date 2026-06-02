@@ -80,6 +80,7 @@ const steps: Step[] = [
 const STEP_LINKS: Record<string, string> = {
   product: '/admin/builder',
   payment: '/admin/payments',
+  design: '/admin/storefront/editor',
   pixel: '/admin/integrations/marketing',
 }
 
