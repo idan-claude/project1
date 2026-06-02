@@ -65,7 +65,7 @@ const steps: Step[] = [
 ]
 
 const STEP_LINKS: Record<string, string> = {
-  product: '/admin/products/new',
+  product: '/admin/builder',
   payment: '/admin/payments',
   pixel: '/admin/integrations/marketing',
 }
