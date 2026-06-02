@@ -316,6 +316,87 @@ export default function StorefrontEditorPage() {
             </>
           )}
 
+          {/* Brand tab */}
+          {tab === 'brand' && (
+            <div className="space-y-5">
+              {uploadError && (
+                <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-3 py-2 text-[11px] text-red-400">
+                  {uploadError}
+                </div>
+              )}
+
+              {/* Logo */}
+              <div>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">לוגו החנות</p>
+                {theme.logoUrl && (
+                  <div className="mb-2 p-2 bg-white/[0.03] border border-white/[0.055] rounded-xl flex items-center justify-center" style={{ minHeight: 56 }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={theme.logoUrl} alt="לוגו" className="max-h-12 max-w-full object-contain" />
+                  </div>
+                )}
+                <label className={`flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border text-[11px] font-medium cursor-pointer transition-all ${
+                  logoUploading
+                    ? 'border-white/[0.055] text-gray-600 bg-white/[0.02]'
+                    : 'border-dashed border-white/20 text-gray-400 hover:border-blue-500/40 hover:text-blue-400 hover:bg-blue-500/5'
+                }`}>
+                  {logoUploading ? (
+                    <><span className="w-3 h-3 border border-gray-600 border-t-gray-400 rounded-full animate-spin" />מעלה...</>
+                  ) : (
+                    <><IUpload className="w-3 h-3" />{theme.logoUrl ? 'החלף לוגו' : 'העלה לוגו'}</>
+                  )}
+                  <input type="file" accept="image/*" className="sr-only" disabled={logoUploading}
+                    onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(f, 'logoUrl') }} />
+                </label>
+                <div className="mt-1.5">
+                  <input
+                    type="url"
+                    value={theme.logoUrl}
+                    onChange={e => setTheme(prev => prev ? { ...prev, logoUrl: e.target.value } : prev)}
+                    placeholder="או הדבק קישור לתמונה..."
+                    className="w-full bg-[#070B14] border border-white/[0.055] rounded-lg px-2.5 py-1.5 text-[10px] text-gray-400 placeholder:text-gray-600 focus:outline-none focus:border-blue-500/40 transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Hero image */}
+              <div>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">תמונת ראשית (Hero)</p>
+                {theme.heroImageUrl && (
+                  <div className="mb-2 rounded-xl overflow-hidden border border-white/[0.055]" style={{ height: 80 }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={theme.heroImageUrl} alt="Hero" className="w-full h-full object-cover" />
+                  </div>
+                )}
+                <label className={`flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border text-[11px] font-medium cursor-pointer transition-all ${
+                  heroUploading
+                    ? 'border-white/[0.055] text-gray-600 bg-white/[0.02]'
+                    : 'border-dashed border-white/20 text-gray-400 hover:border-blue-500/40 hover:text-blue-400 hover:bg-blue-500/5'
+                }`}>
+                  {heroUploading ? (
+                    <><span className="w-3 h-3 border border-gray-600 border-t-gray-400 rounded-full animate-spin" />מעלה...</>
+                  ) : (
+                    <><IUpload className="w-3 h-3" />{theme.heroImageUrl ? 'החלף תמונה' : 'העלה תמונה'}</>
+                  )}
+                  <input type="file" accept="image/*" className="sr-only" disabled={heroUploading}
+                    onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(f, 'heroImageUrl') }} />
+                </label>
+                <div className="mt-1.5">
+                  <input
+                    type="url"
+                    value={theme.heroImageUrl}
+                    onChange={e => setTheme(prev => prev ? { ...prev, heroImageUrl: e.target.value } : prev)}
+                    placeholder="או הדבק קישור לתמונה..."
+                    className="w-full bg-[#070B14] border border-white/[0.055] rounded-lg px-2.5 py-1.5 text-[10px] text-gray-400 placeholder:text-gray-600 focus:outline-none focus:border-blue-500/40 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <p className="text-[9px] text-gray-600 leading-relaxed">
+                ניתן להעלות קבצי JPG, PNG, WebP עד 10MB. לתוצאות הטובות ביותר, השתמש בתמונות רוחביות (landscape) לתמונת ה-Hero ותמונה מרובעת ללוגו.
+              </p>
+            </div>
+          )}
+
           {/* Typography tab */}
           {tab === 'typography' && (
             <div className="space-y-4">
