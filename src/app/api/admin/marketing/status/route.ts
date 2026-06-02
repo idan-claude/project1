@@ -1,27 +1,32 @@
-import { NextResponse } from 'next/server'
-import { withAdminAuth } from '@/lib/auth/adminAuth'
+import { NextRequest, NextResponse } from 'next/server'
+import { withAdminAuth, getAdminPayload } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Order from '@/lib/db/models/Order'
 import { PAID_FILTER } from '@/lib/analytics/sourceOfTruth'
+import { getMetaConfig, getTikTokConfig, getGa4Config } from '@/lib/settings/credentials'
 
 export const dynamic = 'force-dynamic'
 
-export const GET = withAdminAuth(async () => {
+export const GET = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
+  const storeId = getAdminPayload(req)?.storeId ?? 'default'
 
   const since7d = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 
-  const [paidOrders7d, metaFired7d, tiktokFired7d] = await Promise.all([
+  const [paidOrders7d, metaFired7d, tiktokFired7d, metaDbCfg, tiktokDbCfg, ga4DbCfg] = await Promise.all([
     Order.countDocuments({ ...PAID_FILTER, 'payment.paidAt': { $gte: since7d } }),
     Order.countDocuments({ ...PAID_FILTER, 'payment.paidAt': { $gte: since7d }, 'tracking.metaCapiFired': true }),
     Order.countDocuments({ ...PAID_FILTER, 'payment.paidAt': { $gte: since7d }, 'tracking.tiktokCapiFired': true }),
+    getMetaConfig(storeId),
+    getTikTokConfig(storeId),
+    getGa4Config(storeId),
   ])
 
-  const metaPixelId   = process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID || ''
-  const metaCapiToken = process.env.META_CAPI_TOKEN || ''
-  const tiktokPixelId = process.env.TIKTOK_PIXEL_ID || process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || ''
-  const tiktokToken   = process.env.TIKTOK_EVENTS_API_TOKEN || ''
-  const ga4Id         = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || ''
+  const metaPixelId   = metaDbCfg?.pixelId || process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID || ''
+  const metaCapiToken = metaDbCfg?.capiToken || process.env.META_CAPI_TOKEN || ''
+  const tiktokPixelId = tiktokDbCfg?.pixelId || process.env.TIKTOK_PIXEL_ID || process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || ''
+  const tiktokToken   = tiktokDbCfg?.eventsApiToken || process.env.TIKTOK_EVENTS_API_TOKEN || ''
+  const ga4Id         = ga4DbCfg?.measurementId || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || ''
   const gtmId         = process.env.NEXT_PUBLIC_GTM_ID || ''
   const gadsId        = process.env.NEXT_PUBLIC_GADS_ID || ''
 
