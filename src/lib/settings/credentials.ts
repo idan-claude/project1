@@ -59,6 +59,11 @@ export interface AliExpressConfig {
   appSecret: string  // * encrypted
 }
 
+export interface Ga4Config {
+  measurementId: string
+  apiSecret: string  // * encrypted — Measurement Protocol API Secret
+}
+
 // ─── Sensitive field definitions per service ─────────────────────────────────
 
 const SENSITIVE: Record<string, string[]> = {
