@@ -84,7 +84,7 @@ const RADIUS_OPTIONS = [
   { label: 'עגול',   value: '9999px' },
 ]
 
-type Tab = 'colors' | 'typography' | 'layout' | 'sections'
+type Tab = 'colors' | 'typography' | 'brand' | 'layout' | 'sections'
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
