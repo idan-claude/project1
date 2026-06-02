@@ -138,15 +138,15 @@ Auditor: Claude Code
 
 ## Remaining Risks
 
-| Risk | Severity | Fix |
+| Risk | Severity | Status |
 |---|---|---|
 | ANTHROPIC_API_KEY not set | MEDIUM | User must add via Vercel |
 | Email verification missing | LOW | Next sprint |
-| Password reset flow missing | MEDIUM | Next sprint |
-| Rate limiting on registration | MEDIUM | Next sprint |
-| GA4 wizard not built | LOW | Next sprint |
-| Logo upload in store editor | LOW | Next sprint |
-| Onboarding completion not persisted | LOW | Next sprint |
+| Password reset flow missing | MEDIUM | ✅ FIXED — /admin/forgot-password, /admin/reset-password |
+| Rate limiting on registration | MEDIUM | ✅ FIXED — 10/15min login, 5/hr register |
+| GA4 wizard not built | LOW | ✅ FIXED — /admin/marketing/ga4 |
+| Logo upload in store editor | LOW | ✅ FIXED — Brand tab in storefront editor |
+| Onboarding completion not persisted | LOW | ✅ FIXED — loads from readiness API |
 | Mobile not tested on physical device | LOW | User testing |
 
 ---
