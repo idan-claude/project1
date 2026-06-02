@@ -1,12 +1,15 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface Step {
   id: string
+  readinessId?: string
   title: string
   desc: string
   icon: React.ReactNode
+  link?: string
   optional?: boolean
 }
 
@@ -19,6 +22,7 @@ const CheckIcon = () => (
 const steps: Step[] = [
   {
     id: 'store',
+    readinessId: 'store_created',
     title: 'החנות שלך מוכנה',
     desc: 'חנות ריקה מוכנה לשימוש. עכשיו נגדיר אותה.',
     icon: (
@@ -31,8 +35,10 @@ const steps: Step[] = [
   },
   {
     id: 'product',
+    readinessId: 'product_added',
     title: 'הוסף מוצר ראשון עם AI',
     desc: 'הדבק קישור מ-AliExpress או כל אתר — AI יכתוב את כל התוכן.',
+    link: '/admin/builder',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -41,8 +47,10 @@ const steps: Step[] = [
   },
   {
     id: 'payment',
+    readinessId: 'payment_connected',
     title: 'חבר אמצעי תשלום',
     desc: 'כדי לקבל כסף מלקוחות, חבר ספק תשלום.',
+    link: '/admin/payments',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
@@ -52,8 +60,10 @@ const steps: Step[] = [
   },
   {
     id: 'design',
+    readinessId: 'design_customized',
     title: 'עצב את החנות שלך',
     desc: 'בחר צבעים, גופן ומבנה — החנות תיראה בדיוק כמו שרצית.',
+    link: '/admin/storefront/editor',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/>
@@ -65,8 +75,10 @@ const steps: Step[] = [
   },
   {
     id: 'pixel',
+    readinessId: 'pixel_connected',
     title: 'הגדר מעקב מכירות',
     desc: 'חבר Meta Pixel כדי לדעת מאיזה פרסום מגיעות המכירות.',
+    link: '/admin/marketing/meta',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
@@ -77,23 +89,39 @@ const steps: Step[] = [
   },
 ]
 
-const STEP_LINKS: Record<string, string> = {
-  product: '/admin/builder',
-  payment: '/admin/payments',
-  design: '/admin/storefront/editor',
-  pixel: '/admin/integrations/marketing',
-}
-
 export default function OnboardingPage() {
   const router = useRouter()
   const [completed, setCompleted] = useState<Set<string>>(new Set(['store']))
+  const [loading, setLoading] = useState(true)
 
-  function complete(id: string, next?: string) {
-    setCompleted(s => { const n = new Set(s); n.add(id); return n })
-    if (next) router.push(next)
-  }
+  useEffect(() => {
+    fetch('/api/admin/readiness')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.items) {
+          const done = new Set<string>(['store'])
+          for (const item of data.items) {
+            if (item.done) {
+              const step = steps.find(s => s.readinessId === item.id)
+              if (step) done.add(step.id)
+            }
+          }
+          setCompleted(done)
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
 
   const allRequired = steps.filter(s => !s.optional).every(s => completed.has(s.id))
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#070B14] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-[#070B14] flex items-center justify-center p-4" dir="rtl">
@@ -110,7 +138,6 @@ export default function OnboardingPage() {
           {steps.map((step, i) => {
             const done = completed.has(step.id)
             const canDo = i === 0 || completed.has(steps[i - 1].id) || step.optional
-            const link = STEP_LINKS[step.id]
 
             return (
               <div key={step.id} className={`bg-[#0E1629] border rounded-2xl p-4 transition-all ${
@@ -137,21 +164,13 @@ export default function OnboardingPage() {
                     </div>
                     <p className="text-[11px] text-[var(--ds-text-3)] mt-0.5">{step.desc}</p>
                   </div>
-                  {!done && canDo && link && (
-                    <button
-                      onClick={() => complete(step.id, link)}
+                  {!done && canDo && step.link && (
+                    <Link
+                      href={step.link}
                       className="flex-shrink-0 bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
                     >
                       התחל
-                    </button>
-                  )}
-                  {!done && canDo && !link && step.id === 'store' && (
-                    <button
-                      onClick={() => complete(step.id)}
-                      className="flex-shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
-                    >
-                      סמן כהושלם
-                    </button>
+                    </Link>
                   )}
                 </div>
               </div>
