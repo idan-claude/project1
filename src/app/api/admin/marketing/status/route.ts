@@ -94,7 +94,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
         serverSideConfigured: false,
         fired7d: null,
         deliveryRate: null,
-        detailUrl: null,
+        detailUrl: '/admin/marketing/ga4',
         envVars: [
           { key: 'NEXT_PUBLIC_GA4_MEASUREMENT_ID', description: 'Measurement ID מ-Google Analytics (G-XXXXXXXX)', required: true },
         ],
