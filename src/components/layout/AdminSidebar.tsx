@@ -57,6 +57,7 @@ const NAV = [
       { href: '/admin/executive', label: 'Executive', Icon: IGrid,    sub: 'Command Center',      exact: true },
       { href: '/admin',          label: 'לוח בקרה',  Icon: IHome,    sub: 'סקירת ביצועים',       exact: true },
       { href: '/admin/orders',   label: 'הזמנות',    Icon: IBag,     sub: 'ניהול וטיפול' },
+      { href: '/admin/builder',  label: 'בונה מוצרים', Icon: IWand,   sub: 'AI יוצר דף מוצר' },
       { href: '/admin/products', label: 'מוצרים',    Icon: IBox,     sub: 'קטלוג וניהול' },
       { href: '/admin/inventory',label: 'מלאי',      Icon: IArchive, sub: 'מעקב כמויות' },
       { href: '/admin/customers',label: 'לקוחות',    Icon: IUsers,   sub: 'רשימה ופרטים' },
