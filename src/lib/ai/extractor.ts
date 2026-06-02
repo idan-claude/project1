@@ -39,14 +39,12 @@ function extractImages(html: string, baseUrl: string): string[] {
   if (ogImg) imgs.push(ogImg)
 
   // JSON-LD images
-  const ldMatches = html.matchAll(/"image"\s*:\s*"([^"]+)"/g)
-  for (const m of ldMatches) {
+  for (const m of Array.from(html.matchAll(/"image"\s*:\s*"([^"]+)"/g))) {
     if (m[1].startsWith('http') && !imgs.includes(m[1])) imgs.push(m[1])
   }
 
   // Large img tags
-  const imgTags = html.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*/gi)
-  for (const m of imgTags) {
+  for (const m of Array.from(html.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*/gi))) {
     let src = m[1]
     if (src.startsWith('//')) src = 'https:' + src
     if (!src.startsWith('http')) continue
