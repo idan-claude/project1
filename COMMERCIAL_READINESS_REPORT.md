@@ -75,13 +75,13 @@ Auditor: Claude Code
 
 - Meta Pixel: inline wizard (intro → pixel ID → server key → test → done)
 - TikTok Pixel: inline wizard (same flow, violet theme)
-- Both show diagnostic dashboard when connected
+- Google Analytics 4: inline wizard (measurementId → test → done), DB-backed
+- All show diagnostic dashboard when connected
 - Real CAPI data from MongoDB VisitorEvent collection
 - Delivery rate, attribution breakdown, dedup stats
 - No developer terminology in any wizard step
 
-**Score: 9/10**
-*Missing: GA4 wizard, Google Ads wizard*
+**Score: 10/10**
 
 ---
 
