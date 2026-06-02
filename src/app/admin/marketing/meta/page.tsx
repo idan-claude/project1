@@ -146,8 +146,8 @@ export default function MetaDiagnosticsPage() {
                   { n: '1', text: 'צור חשבון ב-Meta Business Suite (בחינם)' },
                   { n: '2', text: 'עבור ל-Events Manager ולחץ על "הוסף מקור נתונים"' },
                   { n: '3', text: 'צור Meta Pixel חדש — תקבל מספר זיהוי (Pixel ID)' },
-                  { n: '4', text: 'צור System User Access Token ב-Business Settings' },
-                  { n: '5', text: 'הוסף את שני הערכים בדף ההגדרות → אינטגרציות שיווק' },
+                  { n: '4', text: 'בהגדרות עסקיות: משתמשי מערכת → צור קוד גישה לשרת' },
+                  { n: '5', text: 'הוסף את שני הערכים בדף ההגדרות → חיבורים ואינטגרציות' },
                 ].map(s => (
                   <div key={s.n} className="flex items-start gap-3 text-[12px] text-[var(--ds-text-3)]">
                     <span className="w-5 h-5 rounded-full bg-white/[0.05] border border-white/[0.055] flex items-center justify-center text-[10px] font-bold text-[var(--ds-text-2)] flex-shrink-0 mt-0.5">
