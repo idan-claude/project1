@@ -116,6 +116,44 @@ const NAV = [
 
 interface Props { onClose?: () => void }
 
+function StoreSwitcher() {
+  const [storeName, setStoreName] = useState<string | null>(null)
+  const [storeCount, setStoreCount] = useState(0)
+
+  useEffect(() => {
+    fetch('/api/admin/stores')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.stores?.length) {
+          setStoreCount(data.stores.length)
+          const active = data.stores.find((s: { isActive?: boolean; name: string }) => s.isActive) ?? data.stores[0]
+          setStoreName(active?.name ?? null)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  if (!storeName) return null
+
+  return (
+    <Link href="/admin/stores"
+      className="mx-2 mt-2 mb-1 flex items-center gap-2 px-2.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.07] transition-all group">
+      <div className="w-6 h-6 bg-blue-600/30 rounded-md flex items-center justify-center flex-shrink-0">
+        <ISwitch className="text-blue-400 w-[11px] h-[11px]" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="text-[11px] font-semibold text-white truncate leading-none">{storeName}</p>
+        <p className="text-[9px] text-[var(--ds-text-3)] mt-0.5 leading-none">
+          {storeCount > 1 ? `${storeCount} חנויות · החלף` : 'חנות פעילה'}
+        </p>
+      </div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3 text-[var(--ds-text-3)] group-hover:text-white transition-colors flex-shrink-0">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </Link>
+  )
+}
+
 export default function AdminSidebar({ onClose }: Props) {
   const pathname = usePathname()
   const router = useRouter()
