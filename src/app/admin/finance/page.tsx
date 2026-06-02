@@ -26,7 +26,7 @@ export default function FinancePage() {
   }, [])
 
   if (loading || !data) return (
-    <div className="p-6 min-h-screen bg-[#080C16] flex items-center justify-center">
+    <div className="p-6 min-h-screen bg-[#070B14] flex items-center justify-center">
       <div className="text-gray-600 text-sm animate-pulse">טוען נתוני פיננסים...</div>
     </div>
   )
@@ -39,7 +39,7 @@ export default function FinancePage() {
   const totalRevenue = data.byStatus.filter(s => s._id !== 'cancelled').reduce((a, s) => a + s.revenue, 0)
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">פיננסים</h1>
         <p className="text-sm text-gray-500 mt-0.5">הכנסות, עסקאות ודוחות כספיים</p>
@@ -47,14 +47,14 @@ export default function FinancePage() {
 
       {/* Top KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
           <p className="text-xs text-gray-600 mb-1">היום</p>
-          <p className="text-3xl font-black text-blue-400">{data.today.revenue > 0 ? formatPrice(data.today.revenue) : '—'}</p>
+          <p className="text-3xl font-bold num text-blue-400">{data.today.revenue > 0 ? formatPrice(data.today.revenue) : '—'}</p>
           <p className="text-xs text-gray-500 mt-1">{data.today.orders} הזמנות</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
           <p className="text-xs text-gray-600 mb-1">החודש</p>
-          <p className="text-3xl font-black text-emerald-400">{data.month.revenue > 0 ? formatPrice(data.month.revenue) : '—'}</p>
+          <p className="text-3xl font-bold num text-emerald-400">{data.month.revenue > 0 ? formatPrice(data.month.revenue) : '—'}</p>
           <p className="text-xs text-gray-500 mt-1">
             {data.month.orders} הזמנות
             {growthPct !== null && (
@@ -64,16 +64,16 @@ export default function FinancePage() {
             )}
           </p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
           <p className="text-xs text-gray-600 mb-1">חודש שעבר</p>
-          <p className="text-3xl font-black text-gray-400">{data.lastMonth.revenue > 0 ? formatPrice(data.lastMonth.revenue) : '—'}</p>
+          <p className="text-3xl font-bold num text-gray-400">{data.lastMonth.revenue > 0 ? formatPrice(data.lastMonth.revenue) : '—'}</p>
           <p className="text-xs text-gray-500 mt-1">{data.lastMonth.orders} הזמנות</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* 30-day chart */}
-        <div className="lg:col-span-2 bg-[#0E1525] border border-white/5 rounded-xl p-5">
+        <div className="lg:col-span-2 bg-[#0E1629] border border-white/5 rounded-xl p-5">
           <h2 className="text-sm font-bold text-white mb-4">הכנסות 30 ימים אחרונים</h2>
           {data.byDay.length === 0 ? (
             <div className="h-32 flex items-center justify-center text-gray-700 text-sm">אין נתונים</div>
@@ -96,7 +96,7 @@ export default function FinancePage() {
         </div>
 
         {/* By status */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
           <h2 className="text-sm font-bold text-white mb-4">הכנסות לפי סטטוס</h2>
           {data.byStatus.length === 0 ? (
             <div className="text-gray-700 text-sm text-center py-8">אין נתונים</div>

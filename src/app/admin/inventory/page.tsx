@@ -66,7 +66,7 @@ export default function InventoryPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">ניהול מלאי</h1>
         <p className="text-sm text-gray-500 mt-0.5">כמויות ריאלטיים מהמסד — עריכה ישירה</p>
@@ -81,8 +81,8 @@ export default function InventoryPage() {
             { label: 'מלאי נמוך', val: summary.lowStock, cls: 'text-amber-400' },
             { label: 'אזל מהמלאי', val: summary.outOfStock, cls: 'text-red-400' },
           ].map(s => (
-            <div key={s.label} className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-              <p className={`text-2xl font-black ${s.cls}`}>{s.val}</p>
+            <div key={s.label} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+              <p className={`text-2xl font-bold num ${s.cls}`}>{s.val}</p>
               <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
             </div>
           ))}
@@ -102,7 +102,7 @@ export default function InventoryPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
+      <div className="bg-[#0E1629] border border-white/5 rounded-xl overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-gray-600">טוען...</div>
         ) : filtered.length === 0 ? (

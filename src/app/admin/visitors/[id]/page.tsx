@@ -114,13 +114,13 @@ export default function VisitorProfilePage() {
   }, [id])
 
   if (loading) return (
-    <div className="p-6 min-h-screen bg-[#080C16] space-y-3">
-      {[...Array(6)].map((_, i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+    <div className="p-6 min-h-screen bg-[#070B14] space-y-3">
+      {[...Array(6)].map((_, i) => <div key={i} className="h-20 bg-[#0E1629] rounded-2xl animate-pulse" />)}
     </div>
   )
 
   if (error || !profile) return (
-    <div className="p-6 min-h-screen bg-[#080C16] flex flex-col items-center justify-center gap-4">
+    <div className="p-6 min-h-screen bg-[#070B14] flex flex-col items-center justify-center gap-4">
       <p className="text-red-400 text-sm">{error || 'מבקר לא נמצא'}</p>
       <Link href="/admin/analytics/visitors" className="text-xs text-blue-400 hover:underline">
         חזרה לניתוח מבקרים
@@ -136,7 +136,7 @@ export default function VisitorProfilePage() {
   const attentionColor = profile.attentionScore >= 70 ? 'bg-emerald-500' : profile.attentionScore >= 40 ? 'bg-blue-500' : 'bg-gray-600'
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       {/* Header */}
       <div className="flex items-start gap-4 mb-6">
         <div className="flex-1 min-w-0">
@@ -165,28 +165,28 @@ export default function VisitorProfilePage() {
 
       {/* Score cards — row 1 */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">כוונת רכישה</p>
-          <p className={`text-2xl font-black ${profile.purchaseIntentScore >= 70 ? 'text-emerald-400' : profile.purchaseIntentScore >= 40 ? 'text-amber-400' : 'text-gray-400'}`}>
+          <p className={`text-2xl font-bold num ${profile.purchaseIntentScore >= 70 ? 'text-emerald-400' : profile.purchaseIntentScore >= 40 ? 'text-amber-400' : 'text-gray-400'}`}>
             {profile.purchaseIntentScore}
           </p>
           <ScoreBar value={profile.purchaseIntentScore} color={intentColor} />
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">מעורבות</p>
-          <p className={`text-2xl font-black ${profile.engagementScore >= 50 ? 'text-blue-400' : 'text-gray-400'}`}>
+          <p className={`text-2xl font-bold num ${profile.engagementScore >= 50 ? 'text-blue-400' : 'text-gray-400'}`}>
             {profile.engagementScore}
           </p>
           <ScoreBar value={profile.engagementScore} color={engageColor} />
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">סשנים</p>
-          <p className="text-2xl font-black text-white">{profile.sessionCount}</p>
+          <p className="text-2xl font-bold num text-white">{profile.sessionCount}</p>
           <p className="text-xs text-gray-600 mt-1">סה״כ: {fmtDuration(profile.totalDuration)}</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">נטישה</p>
-          <p className={`text-2xl font-black ${profile.bounceProbability > 60 ? 'text-red-400' : 'text-gray-400'}`}>
+          <p className={`text-2xl font-bold num ${profile.bounceProbability > 60 ? 'text-red-400' : 'text-gray-400'}`}>
             {profile.bounceProbability}%
           </p>
           <p className="text-xs text-gray-600 mt-1">הסתברות</p>
@@ -195,30 +195,30 @@ export default function VisitorProfilePage() {
 
       {/* Score cards — row 2: behavioral intelligence */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">היסוס</p>
-          <p className={`text-2xl font-black ${profile.hesitationScore >= 70 ? 'text-red-400' : profile.hesitationScore >= 40 ? 'text-amber-400' : 'text-emerald-400'}`}>
+          <p className={`text-2xl font-bold num ${profile.hesitationScore >= 70 ? 'text-red-400' : profile.hesitationScore >= 40 ? 'text-amber-400' : 'text-emerald-400'}`}>
             {profile.hesitationScore}
           </p>
           <ScoreBar value={profile.hesitationScore} color={hesitationColor} />
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">תסכול</p>
-          <p className={`text-2xl font-black ${profile.frustrationScore >= 60 ? 'text-red-400' : profile.frustrationScore >= 30 ? 'text-amber-400' : 'text-gray-400'}`}>
+          <p className={`text-2xl font-bold num ${profile.frustrationScore >= 60 ? 'text-red-400' : profile.frustrationScore >= 30 ? 'text-amber-400' : 'text-gray-400'}`}>
             {profile.frustrationScore}
           </p>
           <ScoreBar value={profile.frustrationScore} color={frustrationColor} />
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">קשב</p>
-          <p className={`text-2xl font-black ${profile.attentionScore >= 70 ? 'text-emerald-400' : profile.attentionScore >= 40 ? 'text-blue-400' : 'text-gray-400'}`}>
+          <p className={`text-2xl font-bold num ${profile.attentionScore >= 70 ? 'text-emerald-400' : profile.attentionScore >= 40 ? 'text-blue-400' : 'text-gray-400'}`}>
             {profile.attentionScore}
           </p>
           <ScoreBar value={profile.attentionScore} color={attentionColor} />
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">עיכוב CTA</p>
-          <p className="text-2xl font-black text-white">
+          <p className="text-2xl font-bold num text-white">
             {profile.ctaHesitationSec != null ? fmtDuration(profile.ctaHesitationSec) : '—'}
           </p>
           <p className="text-xs text-gray-600 mt-1">מביקור ללחיצה</p>
@@ -227,7 +227,7 @@ export default function VisitorProfilePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         {/* Behavior metrics */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-4">התנהגות</h2>
           <div className="space-y-3">
             {[
@@ -255,7 +255,7 @@ export default function VisitorProfilePage() {
         </div>
 
         {/* Identity */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-4">זיהוי</h2>
           <div className="space-y-3">
             {[
@@ -348,7 +348,7 @@ export default function VisitorProfilePage() {
       )}
 
       {/* Session timeline */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
         <h2 className="text-sm font-semibold text-white mb-1">מסעות ({profile.sessionTimeline.length})</h2>
         <p className="text-xs text-gray-600 mb-4">לחץ על סשן לפרטי אירועים</p>
         <div className="space-y-2">

@@ -35,7 +35,7 @@ export default function MarketingPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-bold text-white">שיווק</h1>
@@ -49,22 +49,22 @@ export default function MarketingPage() {
 
       {/* Quick stats */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-white">{coupons.length}</p>
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+          <p className="text-2xl font-bold num text-white">{coupons.length}</p>
           <p className="text-xs text-gray-500 mt-0.5">קופונים סה"כ</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-emerald-400">{coupons.filter(c => c.active).length}</p>
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+          <p className="text-2xl font-bold num text-emerald-400">{coupons.filter(c => c.active).length}</p>
           <p className="text-xs text-gray-500 mt-0.5">פעילים</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-blue-400">{coupons.reduce((a, c) => a + c.uses, 0)}</p>
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+          <p className="text-2xl font-bold num text-blue-400">{coupons.reduce((a, c) => a + c.uses, 0)}</p>
           <p className="text-xs text-gray-500 mt-0.5">שימושים כולל</p>
         </div>
       </div>
 
       {/* Coupons table */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden mb-6">
+      <div className="bg-[#0E1629] border border-white/5 rounded-xl overflow-hidden mb-6">
         <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between">
           <h2 className="text-sm font-bold text-white">קופוני הנחה</h2>
           <Link href="/admin/coupons" className="text-xs text-blue-400 hover:underline">ניהול מלא ←</Link>
@@ -120,7 +120,7 @@ export default function MarketingPage() {
           { title: 'A/B Testing', sub: 'בדוק גרסאות שונות של דפים', icon: '🔬' },
           { title: 'תוכנית שותפים', sub: 'מעקב קישורי הפניה', icon: '🤝' },
         ].map(m => (
-          <div key={m.title} className="bg-[#0E1525] border border-white/5 rounded-xl p-4 flex items-center gap-3 opacity-60">
+          <div key={m.title} className="bg-[#0E1629] border border-white/5 rounded-xl p-4 flex items-center gap-3 opacity-60">
             <span className="text-2xl">{m.icon}</span>
             <div>
               <p className="text-sm font-semibold text-white">{m.title}</p>

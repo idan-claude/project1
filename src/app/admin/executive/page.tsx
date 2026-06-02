@@ -31,7 +31,7 @@ function Delta({ value, suffix = '%' }: { value: number | null; suffix?: string 
 
 function KPI({ label, value, delta, sub }: { label: string; value: string | number; delta?: number | null; sub?: string }) {
   return (
-    <div className="bg-[#111] border border-white/5 rounded-xl p-5 flex flex-col gap-1 hover:border-white/10 transition-colors">
+    <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5 flex flex-col gap-1 hover:border-white/10 transition-colors">
       <p className="text-[11px] font-medium text-gray-500 uppercase tracking-widest">{label}</p>
       <div className="flex items-end gap-2 mt-1">
         <span className="text-2xl font-semibold text-white tracking-tight">{value}</span>
@@ -76,7 +76,7 @@ export default function ExecutivePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-[#070B14] flex items-center justify-center">
         <div className="text-center space-y-3">
           <div className="w-6 h-6 border border-white/20 border-t-white rounded-full animate-spin mx-auto" />
           <p className="text-xs text-gray-600">טוען נתוני Executive...</p>
@@ -87,7 +87,7 @@ export default function ExecutivePage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-[#070B14] flex items-center justify-center">
         <p className="text-gray-500 text-sm">שגיאה בטעינת נתונים</p>
       </div>
     )
@@ -98,9 +98,9 @@ export default function ExecutivePage() {
   const maxTrend = Math.max(...dailyTrend.map(d => d.revenue), 1)
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white" dir="rtl">
+    <div className="p-5 md:p-7 bg-[#070B14] min-h-screen" dir="rtl">
       {/* Header */}
-      <div className="border-b border-white/5 px-8 py-5">
+      <div className="border-b border-white/[0.055] px-8 py-5">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-lg font-semibold tracking-tight">Executive</h1>
@@ -110,7 +110,7 @@ export default function ExecutivePage() {
           </div>
           <button
             onClick={() => { setLoading(true); fetch('/api/admin/executive').then(r => r.json()).then(d => { setData(d); setLoading(false) }) }}
-            className="text-[11px] text-gray-500 hover:text-white border border-white/5 hover:border-white/10 rounded-lg px-3 py-1.5 transition-all"
+            className="text-[11px] text-gray-500 hover:text-white border border-white/[0.055] hover:border-white/10 rounded-lg px-3 py-1.5 transition-all"
           >
             רענן
           </button>
@@ -165,7 +165,7 @@ export default function ExecutivePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* 7-day Revenue Trend */}
-          <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
             <h3 className="text-[11px] font-medium text-gray-500 uppercase tracking-widest mb-5">מגמת הכנסה 7 ימים</h3>
             {dailyTrend.length === 0 ? (
               <div className="h-24 flex items-center justify-center text-gray-600 text-xs">אין נתונים</div>
@@ -192,7 +192,7 @@ export default function ExecutivePage() {
           </div>
 
           {/* Funnel */}
-          <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
             <h3 className="text-[11px] font-medium text-gray-500 uppercase tracking-widest mb-5">משפך רכישה 7 ימים</h3>
             <div className="space-y-4">
               <FunnelBar label="מבקרים" value={funnel.visitors7d} max={funnel.visitors7d} />
@@ -207,7 +207,7 @@ export default function ExecutivePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* Top Products */}
-          <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
             <h3 className="text-[11px] font-medium text-gray-500 uppercase tracking-widest mb-4">מוצרים מובילים</h3>
             {topProducts.length === 0 ? (
               <p className="text-xs text-gray-600 py-4 text-center">אין נתוני מכירות עדיין</p>
@@ -230,7 +230,7 @@ export default function ExecutivePage() {
           </div>
 
           {/* Top Sources */}
-          <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
             <h3 className="text-[11px] font-medium text-gray-500 uppercase tracking-widest mb-4">מקורות תנועה</h3>
             {topSources.length === 0 ? (
               <p className="text-xs text-gray-600 py-4 text-center">אין נתוני מקור עדיין</p>
@@ -254,7 +254,7 @@ export default function ExecutivePage() {
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
           <h3 className="text-[11px] font-medium text-gray-500 uppercase tracking-widest mb-4">הזמנות אחרונות (תשלום אמיתי)</h3>
           {recentOrders.length === 0 ? (
             <div className="py-8 text-center space-y-2">

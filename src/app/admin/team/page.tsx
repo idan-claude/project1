@@ -16,17 +16,17 @@ export default function TeamPage() {
   }, [])
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">צוות</h1>
         <p className="text-sm text-gray-500 mt-0.5">ניהול גישות ופעילות מנהלים</p>
       </div>
 
       {/* Current admin */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-4">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-4">
         <p className="text-xs text-gray-600 uppercase tracking-widest mb-4">מנהל ראשי</p>
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 font-black text-sm flex-shrink-0">FC</div>
+          <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold num text-sm flex-shrink-0">FC</div>
           <div className="flex-1">
             <p className="text-sm font-semibold text-white">FindCard Admin</p>
             <p className="text-xs text-gray-500 mt-0.5">findcardsupport@gmail.com</p>
@@ -37,7 +37,7 @@ export default function TeamPage() {
       </div>
 
       {/* Recent activity */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-4">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-4">
         <h2 className="text-sm font-semibold text-white mb-1">פעילות אחרונה</h2>
         <p className="text-xs text-gray-600 mb-4">כניסות ופעולות ניהוליות מהיסטוריית AuditLog</p>
         {loading ? (
@@ -65,7 +65,7 @@ export default function TeamPage() {
       </div>
 
       {/* Multi-user info */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
         <h2 className="text-sm font-semibold text-white mb-1">ניהול משתמשים מרובים</h2>
         <p className="text-xs text-gray-600 mb-4">תמיכה בצוות עם רמות הרשאה שונות — זמין בגרסה הבאה</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

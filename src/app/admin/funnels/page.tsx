@@ -57,8 +57,8 @@ export default function FunnelsPage() {
   }, [])
 
   if (loading) return (
-    <div className="p-6 min-h-screen bg-[#080C16] space-y-3">
-      {[...Array(5)].map((_, i) => <div key={i} className="h-20 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+    <div className="p-6 min-h-screen bg-[#070B14] space-y-3">
+      {[...Array(5)].map((_, i) => <div key={i} className="h-20 bg-[#0E1629] rounded-2xl animate-pulse" />)}
     </div>
   )
 
@@ -79,7 +79,7 @@ export default function FunnelsPage() {
   })() : []
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <AnalyticsConsistencyBanner />
       {/* Header */}
       <div className="mb-6">
@@ -118,9 +118,9 @@ export default function FunnelsPage() {
               color: 'text-white',
             },
           ].map((kpi, i) => (
-            <div key={i} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+            <div key={i} className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
               <p className="text-xs text-gray-500">{kpi.label}</p>
-              <p className={`text-2xl font-black mt-1 ${kpi.color}`}>{kpi.value}</p>
+              <p className={`text-2xl font-bold num mt-1 ${kpi.color}`}>{kpi.value}</p>
               <p className="text-xs text-gray-600 mt-0.5">{kpi.sub}</p>
             </div>
           ))}
@@ -128,7 +128,7 @@ export default function FunnelsPage() {
       )}
 
       {/* Funnel chart */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
         <h2 className="text-sm font-semibold text-white mb-1">המשפך</h2>
         <p className="text-xs text-gray-600 mb-5">נקודות נפילה גדולות מסומנות באדום</p>
         {steps.map((step, i) => (
@@ -156,7 +156,7 @@ export default function FunnelsPage() {
 
       {/* Recommendations */}
       {data && (
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
           <h2 className="text-sm font-semibold text-white mb-1">תובנות אוטומטיות</h2>
           <p className="text-xs text-gray-600 mb-4">המלצות מבוססות על נתוני המשפך האמיתיים</p>
           <div className="space-y-3">
@@ -201,7 +201,7 @@ export default function FunnelsPage() {
       )}
 
       {/* Data source note */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
         <span className="text-gray-500 text-base flex-shrink-0">📊</span>
         <p className="text-xs text-gray-600">
           שלב 1 (ביקורי מוצר, עגלה, תשלום) מגיע מ-<strong className="text-gray-500">VisitorEvent tracking</strong>.

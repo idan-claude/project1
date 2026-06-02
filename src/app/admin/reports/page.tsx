@@ -70,15 +70,15 @@ export default function ReportsPage() {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <p className="text-xs text-gray-500 mb-1">סה"כ הכנסות</p>
-              <p className="text-2xl font-black text-blue-600">{formatPrice(totalRevenue)}</p>
+              <p className="text-2xl font-bold num text-blue-600">{formatPrice(totalRevenue)}</p>
             </div>
             <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <p className="text-xs text-gray-500 mb-1">סה"כ הזמנות</p>
-              <p className="text-2xl font-black text-gray-900">{totalOrders}</p>
+              <p className="text-2xl font-bold num text-gray-900">{totalOrders}</p>
             </div>
             <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <p className="text-xs text-gray-500 mb-1">ממוצע הזמנה</p>
-              <p className="text-2xl font-black text-gray-900">{formatPrice(avgOrder)}</p>
+              <p className="text-2xl font-bold num text-gray-900">{formatPrice(avgOrder)}</p>
             </div>
           </div>
 

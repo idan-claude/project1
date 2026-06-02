@@ -45,7 +45,7 @@ export default function AbandonedCartsPage() {
   }, [])
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
         <div>
           <h1 className="text-xl font-bold text-white">עגלות נטושות</h1>
@@ -66,9 +66,9 @@ export default function AbandonedCartsPage() {
             { label: 'נטישה 30 יום', value: stats.totalAbandoned30d.toString(), color: 'text-white' },
             { label: 'רכישות 30 יום', value: stats.totalOrders30d.toString(), color: 'text-emerald-400' },
           ].map(kpi => (
-            <div key={kpi.label} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+            <div key={kpi.label} className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
               <p className="text-xs text-gray-500">{kpi.label}</p>
-              <p className={`text-2xl font-black mt-1 ${kpi.color}`}>{kpi.value}</p>
+              <p className={`text-2xl font-bold num mt-1 ${kpi.color}`}>{kpi.value}</p>
             </div>
           ))}
         </div>
@@ -85,15 +85,15 @@ export default function AbandonedCartsPage() {
       )}
 
       {loading ? (
-        <div className="space-y-2">{[...Array(5)].map((_, i) => <div key={i} className="h-14 bg-[#0E1525] rounded-2xl animate-pulse" />)}</div>
+        <div className="space-y-2">{[...Array(5)].map((_, i) => <div key={i} className="h-14 bg-[#0E1629] rounded-2xl animate-pulse" />)}</div>
       ) : carts.length === 0 ? (
-        <div className="text-center py-20 bg-[#0E1525] border border-white/5 rounded-2xl">
+        <div className="text-center py-20 bg-[#0E1629] border border-white/5 rounded-2xl">
           <p className="text-4xl mb-3">🛒</p>
           <p className="text-white font-semibold">אין עגלות נטושות</p>
           <p className="text-xs text-gray-600 mt-1">עגלות נטושות מזוהות לפי event tracking בחנות</p>
         </div>
       ) : (
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl overflow-hidden">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl overflow-hidden">
           <div className="hidden md:grid grid-cols-5 gap-2 px-5 py-3 border-b border-white/5 text-xs font-medium text-gray-500">
             <span>סשן</span>
             <span>מכשיר</span>
@@ -115,7 +115,7 @@ export default function AbandonedCartsPage() {
         </div>
       )}
 
-      <div className="mt-5 bg-[#0E1525] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+      <div className="mt-5 bg-[#0E1629] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
         <span className="text-blue-400 text-sm flex-shrink-0">ℹ</span>
         <p className="text-xs text-gray-600">
           עגלות נטושות מזוהות לפי VisitorEvent tracking. לשליחת תזכורות אוטומטיות נדרש חיבור SMTP ו-Twilio.

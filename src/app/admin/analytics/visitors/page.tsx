@@ -117,13 +117,13 @@ export default function VisitorAnalyticsPage() {
     : '—'
 
   if (loading) return (
-    <div className="p-6 min-h-screen bg-[#080C16] space-y-3">
-      {[...Array(6)].map((_, i) => <div key={i} className="h-16 bg-[#0E1525] rounded-2xl animate-pulse" />)}
+    <div className="p-6 min-h-screen bg-[#070B14] space-y-3">
+      {[...Array(6)].map((_, i) => <div key={i} className="h-16 bg-[#0E1629] rounded-2xl animate-pulse" />)}
     </div>
   )
 
   if (!stats) return (
-    <div className="p-6 min-h-screen bg-[#080C16] flex items-center justify-center">
+    <div className="p-6 min-h-screen bg-[#070B14] flex items-center justify-center">
       <p className="text-gray-500">שגיאה בטעינת נתונים</p>
     </div>
   )
@@ -132,7 +132,7 @@ export default function VisitorAnalyticsPage() {
   const uniqueVisitors = range === 'today' ? stats.uniqueVisitorsToday : stats.uniqueVisitorsWeek
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <AnalyticsConsistencyBanner />
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
@@ -143,7 +143,7 @@ export default function VisitorAnalyticsPage() {
         <div className="flex gap-1.5 sm:mr-auto">
           {(['today', 'week'] as const).map(r => (
             <button key={r} onClick={() => setRange(r)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${range === r ? 'bg-blue-600 text-white' : 'bg-[#0E1525] text-gray-500 hover:text-gray-300'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${range === r ? 'bg-blue-600 text-white' : 'bg-[#0E1629] text-gray-500 hover:text-gray-300'}`}>
               {r === 'today' ? 'היום' : '7 ימים'}
             </button>
           ))}
@@ -158,9 +158,9 @@ export default function VisitorAnalyticsPage() {
           { label: 'נטישת עגלה', value: cartAbandonment === '—' ? '—' : `${cartAbandonment}%`, sub: `${stats.cartEvents} הוסיפו לסל`, color: cartAbandonment === '—' ? 'text-gray-500' : Number(cartAbandonment) > 70 ? 'text-red-400' : 'text-emerald-400' },
           { label: 'המרה', value: `${convRate}%`, sub: `${stats.paidOrderCount} הזמנות ששולמו`, color: Number(convRate) > 1 ? 'text-emerald-400' : 'text-gray-400' },
         ].map((kpi, i) => (
-          <div key={i} className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+          <div key={i} className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
             <p className="text-xs text-gray-500 mb-1">{kpi.label}</p>
-            <p className={`text-xl font-black ${kpi.color}`}>{kpi.value}</p>
+            <p className={`text-xl font-bold num ${kpi.color}`}>{kpi.value}</p>
             <p className="text-xs text-gray-600 mt-0.5">{kpi.sub}</p>
           </div>
         ))}
@@ -168,30 +168,30 @@ export default function VisitorAnalyticsPage() {
 
       {/* KPI row — engagement */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">שיעור נטישה</p>
-          <p className={`text-xl font-black ${stats.bounceRate > 60 ? 'text-red-400' : stats.bounceRate > 40 ? 'text-amber-400' : 'text-emerald-400'}`}>
+          <p className={`text-xl font-bold num ${stats.bounceRate > 60 ? 'text-red-400' : stats.bounceRate > 40 ? 'text-amber-400' : 'text-emerald-400'}`}>
             {stats.bounceRate > 0 ? `${stats.bounceRate}%` : '—'}
           </p>
           <p className="text-xs text-gray-600 mt-0.5">{stats.totalSessions} סשנים</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">משך סשן ממוצע</p>
-          <p className="text-xl font-black text-purple-400">
+          <p className="text-xl font-bold num text-purple-400">
             {stats.avgSessionDuration > 0 ? fmtDuration(stats.avgSessionDuration) : '—'}
           </p>
           <p className="text-xs text-gray-600 mt-0.5">ללא קצוות חריגים</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">מבקרים חוזרים</p>
-          <p className={`text-xl font-black ${stats.returningRate > 20 ? 'text-emerald-400' : 'text-gray-400'}`}>
+          <p className={`text-xl font-bold num ${stats.returningRate > 20 ? 'text-emerald-400' : 'text-gray-400'}`}>
             {stats.returningRate > 0 ? `${stats.returningRate}%` : '—'}
           </p>
           <p className="text-xs text-gray-600 mt-0.5">30 ימים אחרונים</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4">
           <p className="text-xs text-gray-500 mb-1">גלילה ממוצעת</p>
-          <p className={`text-xl font-black ${stats.avgScrollDepth >= 70 ? 'text-emerald-400' : stats.avgScrollDepth >= 40 ? 'text-amber-400' : 'text-gray-400'}`}>
+          <p className={`text-xl font-bold num ${stats.avgScrollDepth >= 70 ? 'text-emerald-400' : stats.avgScrollDepth >= 40 ? 'text-amber-400' : 'text-gray-400'}`}>
             {stats.avgScrollDepth > 0 ? `${stats.avgScrollDepth}%` : '—'}
           </p>
           <p className="text-xs text-gray-600 mt-0.5">עומק גלילה מרבי לסשן</p>
@@ -199,7 +199,7 @@ export default function VisitorAnalyticsPage() {
       </div>
 
       {/* Funnel */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
         <h2 className="text-sm font-semibold text-white mb-1">משפך המרה (7 ימים)</h2>
         <p className="text-xs text-gray-600 mb-5">מבקר ← מוצר ← עגלה ← תשלום ← רכישה</p>
         {[
@@ -233,7 +233,7 @@ export default function VisitorAnalyticsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         {/* Top pages */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-1">דפים פופולריים</h2>
           <p className="text-xs text-gray-600 mb-4">7 ימים אחרונים · pageview בלבד</p>
           {stats.topPages.length === 0 ? (
@@ -263,7 +263,7 @@ export default function VisitorAnalyticsPage() {
         </div>
 
         {/* Device breakdown */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-1">מכשירים</h2>
           <p className="text-xs text-gray-600 mb-4">7 ימים אחרונים</p>
           {Object.keys(stats.byDevice).length === 0 ? (
@@ -296,7 +296,7 @@ export default function VisitorAnalyticsPage() {
         </div>
 
         {/* Referrers */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-1">מקורות תנועה</h2>
           <p className="text-xs text-gray-600 mb-4">30 ימים אחרונים</p>
           {stats.topReferrers.length === 0 ? (
@@ -314,7 +314,7 @@ export default function VisitorAnalyticsPage() {
         </div>
 
         {/* Hourly chart */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-1">פעילות לפי שעה</h2>
           <p className="text-xs text-gray-600 mb-4">היום</p>
           {stats.byHour.length === 0 ? (
@@ -341,7 +341,7 @@ export default function VisitorAnalyticsPage() {
       {/* Scroll depth + Countries row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         {/* Scroll depth */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-1">עומק גלילה ממוצע</h2>
           <p className="text-xs text-gray-600 mb-4">לפי דף · 7 ימים</p>
           {!stats.scrollDepth?.length ? (
@@ -364,7 +364,7 @@ export default function VisitorAnalyticsPage() {
         </div>
 
         {/* Countries */}
-        <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-1">מדינות</h2>
           <p className="text-xs text-gray-600 mb-4">גיאוגרפיה · 7 ימים</p>
           {!stats.byCountry?.length ? (
@@ -390,7 +390,7 @@ export default function VisitorAnalyticsPage() {
       </div>
 
       {/* Drop-off analysis */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
         <h2 className="text-sm font-semibold text-white mb-1">ניתוח נטישה — איפה יוצאים</h2>
         <p className="text-xs text-gray-600 mb-4">האירוע האחרון לפני יציאה, עבור סשנים שלא הסתיימו ברכישה · 7 ימים</p>
         {!stats.dropoffByEvent?.length ? (
@@ -422,7 +422,7 @@ export default function VisitorAnalyticsPage() {
       </div>
 
       {/* Journey Timeline */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-5 mb-5">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-5 mb-5">
         <h2 className="text-sm font-semibold text-white mb-1">מסעות מבקרים אחרונים</h2>
         <p className="text-xs text-gray-600 mb-4">7 ימים אחרונים · לחץ על מסע לפרטים</p>
         {!stats.recentJourneys?.length ? (
@@ -505,7 +505,7 @@ export default function VisitorAnalyticsPage() {
       </div>
 
       {/* Data integrity note */}
-      <div className="bg-[#0E1525] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
+      <div className="bg-[#0E1629] border border-white/5 rounded-2xl p-4 flex items-start gap-3">
         <span className="text-blue-400 text-lg flex-shrink-0">ℹ</span>
         <div>
           <p className="text-xs font-semibold text-gray-300">נתונים בזמן אמת — ללא מוק</p>

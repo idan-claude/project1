@@ -105,7 +105,7 @@ export default function CampaignsPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-bold text-white">קמפיינים</h1>
@@ -134,8 +134,8 @@ export default function CampaignsPage() {
             { label: 'מיילים יצאו', value: campaigns.reduce((a, c) => a + c.stats.sent, 0) },
             { label: 'בוטלו/טיוטות', value: campaigns.filter(c => c.status === 'draft' || c.status === 'cancelled').length },
           ].map(s => (
-            <div key={s.label} className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-              <p className="text-2xl font-black text-white">{s.value.toLocaleString('he-IL')}</p>
+            <div key={s.label} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+              <p className="text-2xl font-bold num text-white">{s.value.toLocaleString('he-IL')}</p>
               <p className="text-xs text-gray-500 mt-1">{s.label}</p>
             </div>
           ))}
@@ -159,7 +159,7 @@ export default function CampaignsPage() {
             const openRate = c.stats.sent > 0 ? Math.round((c.stats.opened / c.stats.sent) * 100) : 0
             const clickRate = c.stats.sent > 0 ? Math.round((c.stats.clicked / c.stats.sent) * 100) : 0
             return (
-              <div key={c._id} className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
+              <div key={c._id} className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -204,7 +204,7 @@ export default function CampaignsPage() {
       {/* Create modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="bg-[#0E1525] border border-white/10 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto" dir="rtl">
+          <div className="bg-[#0E1629] border border-white/10 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto" dir="rtl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-bold text-white">קמפיין חדש</h2>
               <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-white text-xl">×</button>
@@ -213,19 +213,19 @@ export default function CampaignsPage() {
               <div>
                 <label className="block text-xs font-semibold text-gray-400 mb-1">שם הקמפיין</label>
                 <input required value={form.name} onChange={e => setForm(s => ({ ...s, name: e.target.value }))}
-                  className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
                   placeholder='לדוג׳: מבצע סוף שבוע — 20% הנחה' />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-400 mb-1">נושא המייל</label>
                 <input required value={form.subject} onChange={e => setForm(s => ({ ...s, subject: e.target.value }))}
-                  className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
                   placeholder="🎉 20% הנחה — סוף שבוע בלבד!" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-400 mb-1">קהל יעד</label>
                 <select value={form.targetSegment} onChange={e => setForm(s => ({ ...s, targetSegment: e.target.value }))}
-                  className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                  className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
                   {Object.entries(SEGMENT_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                 </select>
               </div>
@@ -233,20 +233,20 @@ export default function CampaignsPage() {
                 <div>
                   <label className="block text-xs font-semibold text-gray-400 mb-1">כתובות מייל (שורה אחת לכל כתובת)</label>
                   <textarea value={form.targetEmails} onChange={e => setForm(s => ({ ...s, targetEmails: e.target.value }))}
-                    rows={4} className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                    rows={4} className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
                     placeholder="email1@example.com&#10;email2@example.com" />
                 </div>
               )}
               <div>
                 <label className="block text-xs font-semibold text-gray-400 mb-1">תוכן המייל</label>
                 <textarea required value={form.bodyText} onChange={e => setForm(s => ({ ...s, bodyText: e.target.value }))}
-                  rows={6} className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  rows={6} className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
                   placeholder="שלום,&#10;&#10;רצינו לעדכן אותך על מבצע מיוחד..." />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-400 mb-1">תזמון (ריק = טיוטה)</label>
                 <input type="datetime-local" value={form.scheduledAt} onChange={e => setForm(s => ({ ...s, scheduledAt: e.target.value }))}
-                  className="w-full bg-[#080C16] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500" />
+                  className="w-full bg-[#070B14] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500" />
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm py-2.5 rounded-lg transition-colors">

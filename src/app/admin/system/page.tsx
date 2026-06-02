@@ -43,7 +43,7 @@ export default function SystemVerifyPage() {
   const overall = data ? STATUS_CONFIG[data.overallStatus] : null
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
         <div>
@@ -69,7 +69,7 @@ export default function SystemVerifyPage() {
       {data && overall && (
         <div className={`border rounded-2xl p-5 mb-6 ${overall.bg}`}>
           <div className="flex items-center gap-3">
-            <span className={`text-3xl font-black ${overall.color}`}>{overall.icon}</span>
+            <span className={`text-3xl font-bold num ${overall.color}`}>{overall.icon}</span>
             <div>
               <p className={`text-lg font-bold ${overall.color}`}>
                 {data.overallStatus === 'pass' ? 'כל הבדיקות עברו בהצלחה' :
@@ -87,7 +87,7 @@ export default function SystemVerifyPage() {
 
       {/* Empty state */}
       {!data && !loading && (
-        <div className="text-center py-20 bg-[#0E1525] border border-white/5 rounded-2xl">
+        <div className="text-center py-20 bg-[#0E1629] border border-white/5 rounded-2xl">
           <p className="text-4xl mb-3">🔬</p>
           <p className="text-white font-semibold">מוכן לבדיקה</p>
           <p className="text-xs text-gray-600 mt-1">לחץ "הפעל בדיקה" לאימות כל רכיבי הפלטפורמה</p>
@@ -96,7 +96,7 @@ export default function SystemVerifyPage() {
 
       {/* Loading skeleton */}
       {loading && (
-        <div className="space-y-2">{[...Array(8)].map((_,i) => <div key={i} className="h-14 bg-[#0E1525] rounded-2xl animate-pulse" />)}</div>
+        <div className="space-y-2">{[...Array(8)].map((_,i) => <div key={i} className="h-14 bg-[#0E1629] rounded-2xl animate-pulse" />)}</div>
       )}
 
       {/* Results */}
@@ -112,7 +112,7 @@ export default function SystemVerifyPage() {
                 <p className="text-xs font-semibold text-gray-600 uppercase tracking-widest mb-2 px-1">
                   {isCritical ? 'בדיקות קריטיות' : 'בדיקות נוספות'}
                 </p>
-                <div className="bg-[#0E1525] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-[#0E1629] border border-white/5 rounded-2xl overflow-hidden">
                   <div className="divide-y divide-white/5">
                     {groupResults.map(r => {
                       const cfg = STATUS_CONFIG[r.status]
@@ -145,7 +145,7 @@ export default function SystemVerifyPage() {
 
       {/* What's tested */}
       {!data && (
-        <div className="mt-6 bg-[#0E1525] border border-white/5 rounded-2xl p-5">
+        <div className="mt-6 bg-[#0E1629] border border-white/5 rounded-2xl p-5">
           <p className="text-sm font-semibold text-white mb-3">מה הבדיקה בודקת?</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {[

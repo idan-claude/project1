@@ -34,23 +34,23 @@ export default function CRMPage() {
   const avgLTV = customers.length > 0 ? Math.round(customers.reduce((a, c) => a + c.totalSpent, 0) / customers.length) : 0
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-white">CRM — קשרי לקוחות</h1>
         <p className="text-sm text-gray-500 mt-0.5">ניהול לקוחות, היסטוריה ופרופיל</p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-white">{customers.length}</p>
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+          <p className="text-2xl font-bold num text-white">{customers.length}</p>
           <p className="text-xs text-gray-500 mt-0.5">סה"כ לקוחות</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4">
-          <p className="text-2xl font-black text-amber-400">{vip.length}</p>
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4">
+          <p className="text-2xl font-bold num text-amber-400">{vip.length}</p>
           <p className="text-xs text-gray-500 mt-0.5">לקוחות חוזרים</p>
         </div>
-        <div className="bg-[#0E1525] border border-white/5 rounded-xl p-4 col-span-2">
-          <p className="text-2xl font-black text-blue-400">{avgLTV > 0 ? formatPrice(avgLTV) : '—'}</p>
+        <div className="bg-[#0E1629] border border-white/5 rounded-xl p-4 col-span-2">
+          <p className="text-2xl font-bold num text-blue-400">{avgLTV > 0 ? formatPrice(avgLTV) : '—'}</p>
           <p className="text-xs text-gray-500 mt-0.5">ממוצע LTV לקוח</p>
         </div>
       </div>
@@ -60,11 +60,11 @@ export default function CRMPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="חיפוש לפי שם, אימייל או טלפון..."
-          className="w-full sm:max-w-sm bg-[#0E1525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50"
+          className="w-full sm:max-w-sm bg-[#0E1629] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50"
         />
       </div>
 
-      <div className="bg-[#0E1525] border border-white/5 rounded-xl overflow-hidden">
+      <div className="bg-[#0E1629] border border-white/5 rounded-xl overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-gray-600 text-sm">טוען...</div>
         ) : filtered.length === 0 ? (

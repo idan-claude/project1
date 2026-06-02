@@ -33,15 +33,15 @@ export default function EditProductPage() {
   }
 
   if (loading) return (
-    <div className="p-6 min-h-screen bg-[#080C16]">
+    <div className="p-6 min-h-screen bg-[#070B14]">
       <div className="max-w-2xl space-y-3 animate-pulse">
-        {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-[#0E1525] rounded-2xl" />)}
+        {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-[#0E1629] rounded-2xl" />)}
       </div>
     </div>
   )
 
   if (!product) return (
-    <div className="p-6 min-h-screen bg-[#080C16] flex flex-col items-center justify-center text-center">
+    <div className="p-6 min-h-screen bg-[#070B14] flex flex-col items-center justify-center text-center">
       <p className="text-4xl mb-3">❌</p>
       <p className="text-white font-semibold mb-1">מוצר לא נמצא</p>
       <Link href="/admin/products" className="text-blue-400 text-sm hover:underline">← חזור למוצרים</Link>
@@ -49,7 +49,7 @@ export default function EditProductPage() {
   )
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <Link href="/admin/products" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">

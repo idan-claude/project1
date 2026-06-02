@@ -116,7 +116,7 @@ export default function LayoutEditorPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#080C16] flex items-center justify-center">
+      <div className="min-h-screen bg-[#070B14] flex items-center justify-center">
         <div className="text-white text-sm">טוען עורך עמוד...</div>
       </div>
     )
@@ -125,7 +125,7 @@ export default function LayoutEditorPage() {
   const enabledCount = sections.filter(s => s.enabled).length
 
   return (
-    <div className="min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="min-h-screen bg-[#070B14]" dir="rtl">
       <div className="max-w-2xl mx-auto px-4 py-8">
 
         {/* Header */}
@@ -172,7 +172,7 @@ export default function LayoutEditorPage() {
                 onDragOver={e => handleDragOver(e, i)}
                 onDrop={() => handleDrop(i)}
                 onDragEnd={handleDragEnd}
-                className={`group flex items-center gap-3 bg-[#0E1525] border rounded-2xl px-4 py-3.5 transition-all cursor-grab active:cursor-grabbing select-none
+                className={`group flex items-center gap-3 bg-[#0E1629] border rounded-2xl px-4 py-3.5 transition-all cursor-grab active:cursor-grabbing select-none
                   ${isDragging ? 'opacity-40 scale-95 border-blue-500/50' : ''}
                   ${isOver && !isDragging ? 'border-blue-500/60 bg-blue-500/10 scale-[1.01]' : ''}
                   ${!isDragging && !isOver ? (section.enabled ? 'border-white/10 hover:border-white/20' : 'border-white/5 opacity-50') : ''}

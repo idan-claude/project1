@@ -68,14 +68,14 @@ export default function ProductIntelligencePage() {
   })
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+    <div className="min-h-screen bg-[#070B14] flex items-center justify-center">
       <div className="w-5 h-5 border border-white/20 border-t-white rounded-full animate-spin" />
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white" dir="rtl">
-      <div className="border-b border-white/5 px-8 py-5">
+    <div className="p-5 md:p-7 bg-[#070B14] min-h-screen" dir="rtl">
+      <div className="border-b border-white/[0.055] px-8 py-5">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-base font-semibold">Product Intelligence</h1>
@@ -86,7 +86,7 @@ export default function ProductIntelligencePage() {
               <button
                 key={s}
                 onClick={() => setSort(s)}
-                className={`text-[11px] px-3 py-1.5 rounded-lg border transition-all ${sort === s ? 'bg-white/10 border-white/20 text-white' : 'border-white/5 text-gray-500 hover:text-white hover:border-white/10'}`}
+                className={`text-[11px] px-3 py-1.5 rounded-lg border transition-all ${sort === s ? 'bg-white/10 border-white/20 text-white' : 'border-white/[0.055] text-gray-500 hover:text-white hover:border-white/10'}`}
               >
                 {s === 'revenue' ? 'הכנסה' : s === 'views' ? 'צפיות' : 'המרה'}
               </button>
@@ -105,7 +105,7 @@ export default function ProductIntelligencePage() {
         ) : (
           <div className="space-y-3">
             {sorted.map(p => (
-              <div key={p.slug} className="bg-[#111] border border-white/5 rounded-xl p-5 hover:border-white/10 transition-colors">
+              <div key={p.slug} className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5 hover:border-white/10 transition-colors">
                 <div className="flex items-start gap-4">
                   {/* Product Info */}
                   <div className="flex-1 min-w-0">

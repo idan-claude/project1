@@ -53,21 +53,21 @@ export default function WhatsAppPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-[#080C16]" dir="rtl">
+    <div className="p-4 md:p-6 min-h-screen bg-[#070B14]" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-bold text-white">וואטסאפ</h1>
           <p className="text-sm text-gray-500">אוטומציות ושליחה ידנית ל-WhatsApp</p>
         </div>
         <Link href="/admin/settings?tab=twilio"
-          className="flex items-center gap-2 bg-[#0E1525] border border-white/10 rounded-xl px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+          className="flex items-center gap-2 bg-[#0E1629] border border-white/10 rounded-xl px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
           <span>⚙️</span>
           <span>הגדרת Twilio</span>
         </Link>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-[#0E1525] border border-white/5 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-6 bg-[#0E1629] border border-white/5 rounded-xl p-1 w-fit">
         {[{ id: 'automations', label: 'אוטומציות' }, { id: 'manual', label: 'שליחה ידנית' }].map(t => (
           <button key={t.id} onClick={() => setTab(t.id as typeof tab)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === t.id ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
@@ -79,7 +79,7 @@ export default function WhatsAppPage() {
       {tab === 'automations' && (
         <div className="space-y-4">
           {automations.length === 0 ? (
-            <div className="bg-[#0E1525] border border-white/5 rounded-xl p-8 text-center">
+            <div className="bg-[#0E1629] border border-white/5 rounded-xl p-8 text-center">
               <p className="text-3xl mb-3">📱</p>
               <p className="text-white font-semibold mb-1">אין אוטומציות WhatsApp</p>
               <p className="text-sm text-gray-500 mb-4">צור אוטומציות עם ערוץ WhatsApp בדף האוטומציות</p>
@@ -90,7 +90,7 @@ export default function WhatsAppPage() {
             </div>
           ) : (
             automations.map(a => (
-              <div key={a._id} className="bg-[#0E1525] border border-white/5 rounded-xl p-4 flex items-center justify-between gap-3">
+              <div key={a._id} className="bg-[#0E1629] border border-white/5 rounded-xl p-4 flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-semibold text-white text-sm">{a.name}</p>
                   <p className="text-xs text-gray-500 mt-0.5">{TYPE_LABELS[a.type] ?? a.type} · {a.stats.sent} נשלחו</p>
@@ -105,7 +105,7 @@ export default function WhatsAppPage() {
             ))
           )}
           <Link href="/admin/automations"
-            className="block w-full text-center bg-[#0E1525] border border-white/5 rounded-xl py-3 text-sm text-gray-500 hover:text-white hover:border-white/10 transition-colors">
+            className="block w-full text-center bg-[#0E1629] border border-white/5 rounded-xl py-3 text-sm text-gray-500 hover:text-white hover:border-white/10 transition-colors">
             + הוסף אוטומציה חדשה
           </Link>
         </div>
@@ -113,22 +113,22 @@ export default function WhatsAppPage() {
 
       {tab === 'manual' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
             <h2 className="font-semibold text-white mb-4 text-sm">תבניות הודעה</h2>
             <div className="space-y-2">
               {TEMPLATES.map(t => (
                 <button key={t.id} onClick={() => { setSelected(t); setCustomText(t.text) }}
-                  className={`w-full text-right px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${selected.id === t.id ? 'bg-blue-600 text-white' : 'bg-[#080C16] text-gray-300 hover:bg-white/5'}`}>
+                  className={`w-full text-right px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${selected.id === t.id ? 'bg-blue-600 text-white' : 'bg-[#070B14] text-gray-300 hover:bg-white/5'}`}>
                   {t.name}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="bg-[#0E1525] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5">
             <h2 className="font-semibold text-white mb-3 text-sm">עריכת הודעה: {selected.name}</h2>
             <textarea value={customText} onChange={e => setCustomText(e.target.value)} rows={5}
-              className="w-full bg-[#080C16] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 resize-none mb-3" />
+              className="w-full bg-[#070B14] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 resize-none mb-3" />
             <p className="text-xs text-gray-600 mb-4">משתנים: {'{name}'}, {'{orderNumber}'}, {'{tracking}'}</p>
 
             <div className="bg-[#1B2638] rounded-xl p-4 mb-4">

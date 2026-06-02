@@ -49,8 +49,8 @@ export default function AnomaliesPage() {
   const { anomalies = [], summary, snapshot } = data || {}
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white" dir="rtl">
-      <div className="border-b border-white/5 px-8 py-5">
+    <div className="p-5 md:p-7 bg-[#070B14] min-h-screen" dir="rtl">
+      <div className="border-b border-white/[0.055] px-8 py-5">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2.5">
@@ -66,7 +66,7 @@ export default function AnomaliesPage() {
           <button
             onClick={load}
             disabled={loading}
-            className="text-[11px] text-gray-500 hover:text-white border border-white/5 hover:border-white/10 rounded-lg px-3 py-1.5 transition-all disabled:opacity-50"
+            className="text-[11px] text-gray-500 hover:text-white border border-white/[0.055] hover:border-white/10 rounded-lg px-3 py-1.5 transition-all disabled:opacity-50"
           >
             {loading ? 'טוען...' : 'רענן'}
           </button>
@@ -78,21 +78,21 @@ export default function AnomaliesPage() {
         {/* Summary */}
         {summary && (
           <div className="grid grid-cols-4 gap-3">
-            <div className={`rounded-xl p-4 border ${summary.healthy ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-white/2 border-white/5'}`}>
+            <div className={`rounded-xl p-4 border ${summary.healthy ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-white/2 border-white/[0.055]'}`}>
               <p className="text-[10px] text-gray-500 uppercase tracking-widest">סטטוס</p>
               <p className={`text-sm font-semibold mt-1 ${summary.healthy ? 'text-emerald-400' : 'text-white'}`}>
                 {summary.healthy ? 'תקין' : 'דורש תשומת לב'}
               </p>
             </div>
-            <div className={`rounded-xl p-4 border ${summary.critical > 0 ? 'bg-red-500/10 border-red-500/30' : 'bg-white/2 border-white/5'}`}>
+            <div className={`rounded-xl p-4 border ${summary.critical > 0 ? 'bg-red-500/10 border-red-500/30' : 'bg-white/2 border-white/[0.055]'}`}>
               <p className="text-[10px] text-gray-500 uppercase tracking-widest">קריטי</p>
               <p className={`text-sm font-semibold mt-1 ${summary.critical > 0 ? 'text-red-400' : 'text-gray-600'}`}>{summary.critical}</p>
             </div>
-            <div className={`rounded-xl p-4 border ${summary.warning > 0 ? 'bg-amber-500/10 border-amber-500/30' : 'bg-white/2 border-white/5'}`}>
+            <div className={`rounded-xl p-4 border ${summary.warning > 0 ? 'bg-amber-500/10 border-amber-500/30' : 'bg-white/2 border-white/[0.055]'}`}>
               <p className="text-[10px] text-gray-500 uppercase tracking-widest">אזהרה</p>
               <p className={`text-sm font-semibold mt-1 ${summary.warning > 0 ? 'text-amber-400' : 'text-gray-600'}`}>{summary.warning}</p>
             </div>
-            <div className="rounded-xl p-4 border bg-white/2 border-white/5">
+            <div className="rounded-xl p-4 border bg-white/2 border-white/[0.055]">
               <p className="text-[10px] text-gray-500 uppercase tracking-widest">מבקרים 24h</p>
               <p className="text-sm font-semibold mt-1 text-white">{snapshot?.visitors24h || 0}</p>
             </div>
@@ -105,7 +105,7 @@ export default function AnomaliesPage() {
             <div className="w-5 h-5 border border-white/20 border-t-white rounded-full animate-spin" />
           </div>
         ) : anomalies.length === 0 ? (
-          <div className="bg-[#111] border border-white/5 rounded-xl p-12 text-center">
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-12 text-center">
             <p className="text-3xl mb-3">✓</p>
             <p className="text-sm font-medium text-white">הכל תקין</p>
             <p className="text-xs text-gray-500 mt-1">לא זוהו חריגות במערכת</p>
@@ -144,7 +144,7 @@ export default function AnomaliesPage() {
 
         {/* Snapshot */}
         {snapshot && (
-          <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+          <div className="bg-[#0E1629] border border-white/[0.055] rounded-xl p-5">
             <h3 className="text-[11px] font-medium text-gray-500 uppercase tracking-widest mb-4">תמונת מצב 24 שעות</h3>
             <div className="grid grid-cols-3 gap-4">
               <div>

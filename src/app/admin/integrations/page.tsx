@@ -127,7 +127,7 @@ export default function IntegrationsPage() {
             >
               {/* Logo */}
               <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${item.color}`}>
-                <span className="text-[12px] font-black tracking-tight">{item.abbr}</span>
+                <span className="text-[12px] font-bold num tracking-tight">{item.abbr}</span>
               </div>
 
               {/* Info */}
