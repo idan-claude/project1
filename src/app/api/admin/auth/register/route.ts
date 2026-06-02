@@ -5,8 +5,26 @@ import { connectDB } from '@/lib/db/mongoose'
 import AdminUser from '@/lib/db/models/AdminUser'
 import Store from '@/lib/db/models/Store'
 import StoreMember from '@/lib/db/models/StoreMember'
+import { getClientIP } from '@/lib/utils/ipParser'
 
 export const dynamic = 'force-dynamic'
+
+// Simple in-memory rate limiter: 5 registrations per hour per IP
+const registerAttempts = new Map<string, { count: number; resetAt: number }>()
+const REGISTER_LIMIT = 5
+const REGISTER_WINDOW_MS = 60 * 60 * 1000
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const entry = registerAttempts.get(ip)
+  if (!entry || now > entry.resetAt) {
+    registerAttempts.set(ip, { count: 1, resetAt: now + REGISTER_WINDOW_MS })
+    return true
+  }
+  if (entry.count >= REGISTER_LIMIT) return false
+  entry.count++
+  return true
+}
 
 function generateStoreId(name: string): string {
   const base = name
