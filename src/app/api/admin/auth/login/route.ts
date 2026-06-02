@@ -31,6 +31,13 @@ export async function POST(req: NextRequest) {
   const ip = getClientIP(req)
   const ua = req.headers.get('user-agent') || ''
 
+  if (!checkRateLimit(ip)) {
+    return NextResponse.json(
+      { error: 'יותר מדי ניסיונות כניסה. נסה שוב בעוד 15 דקות.' },
+      { status: 429 }
+    )
+  }
+
   await connectDB()
 
   let userId = 'legacy'
