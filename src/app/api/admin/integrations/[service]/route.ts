@@ -55,6 +55,11 @@ async function getConfig(service: string, storeId: string) {
       if (!cfg) return null
       return { ...cfg, apiSecret: maskSecret(cfg.apiSecret) }
     }
+    case 'ga4': {
+      const cfg = await getGa4Config(storeId)
+      if (!cfg) return null
+      return { ...cfg, apiSecret: maskSecret(cfg.apiSecret) }
+    }
     default:
       return null
   }
