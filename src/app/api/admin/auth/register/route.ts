@@ -51,6 +51,14 @@ function generateSlug(name: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIP(req)
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json(
+        { error: 'יותר מדי ניסיונות הרשמה. נסה שוב בעוד שעה.' },
+        { status: 429 }
+      )
+    }
+
     const { name, email, password, storeName } = await req.json()
 
     if (!name || !email || !password || !storeName) {
