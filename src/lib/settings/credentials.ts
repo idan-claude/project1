@@ -74,6 +74,7 @@ const SENSITIVE: Record<string, string[]> = {
   cardcom:    ['password'],
   cloudinary: ['apiSecret'],
   aliexpress: ['appSecret'],
+  ga4:        ['apiSecret'],
 }
 
 // ─── Core read/write ─────────────────────────────────────────────────────────
