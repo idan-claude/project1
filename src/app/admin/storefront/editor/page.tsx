@@ -189,9 +189,14 @@ export default function StorefrontEditorPage() {
   if (!theme) return null
 
   const sortedSections = [...theme.sections].sort((a, b) => a.order - b.order)
+  const fontQuery = FONTS.map(f => f.replace(/ /g, '+')).join('&family=')
+  const googleFontsUrl = `https://fonts.googleapis.com/css2?family=${fontQuery}&display=swap&subset=hebrew`
 
   return (
     <div className="flex h-screen bg-[#070B14] overflow-hidden" dir="rtl">
+      {/* Load Hebrew Google Fonts for preview */}
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+      <link rel="stylesheet" href={googleFontsUrl} />
       {/* Sidebar panel */}
       <div className="w-72 flex-shrink-0 bg-[#080C18] border-l border-white/[0.055] flex flex-col overflow-hidden">
         {/* Header */}
