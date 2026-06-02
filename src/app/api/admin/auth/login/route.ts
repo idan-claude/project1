@@ -9,6 +9,23 @@ import { getClientIP, parseUserAgent } from '@/lib/utils/ipParser'
 
 export const dynamic = 'force-dynamic'
 
+// Simple in-memory rate limiter: 10 attempts per 15 min per IP
+const loginAttempts = new Map<string, { count: number; resetAt: number }>()
+const LOGIN_LIMIT = 10
+const LOGIN_WINDOW_MS = 15 * 60 * 1000
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const entry = loginAttempts.get(ip)
+  if (!entry || now > entry.resetAt) {
+    loginAttempts.set(ip, { count: 1, resetAt: now + LOGIN_WINDOW_MS })
+    return true
+  }
+  if (entry.count >= LOGIN_LIMIT) return false
+  entry.count++
+  return true
+}
+
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json()
   const ip = getClientIP(req)
