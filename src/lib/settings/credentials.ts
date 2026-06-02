@@ -205,3 +205,12 @@ export async function getAliExpressConfig(storeId = 'default'): Promise<AliExpre
   if (!appKey || !appSecret) return null
   return { appKey, appSecret }
 }
+
+export async function getGa4Config(storeId = 'default'): Promise<Ga4Config | null> {
+  const db = await readFromDB<Ga4Config>(storeId, 'ga4')
+  if (db?.measurementId) return db
+
+  const measurementId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || ''
+  if (!measurementId) return null
+  return { measurementId, apiSecret: process.env.GA4_API_SECRET || '' }
+}
