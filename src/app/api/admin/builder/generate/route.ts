@@ -24,34 +24,41 @@ export const POST = withAdminAuth(async (req: NextRequest) => {
       .replace(/\s+/g, '-')
       .slice(0, 50) + '-' + Math.random().toString(36).slice(2, 6)
 
-    // Save to Product model
+    const sellingPrice = content.suggestedPrice
+      ?? (extracted.price ? Math.round(extracted.price * 3.7 * 2.5) : 99)
+
+    // Save to Product model using correct schema field names
     const product = await Product.create({
       storeId,
-      title: content.nameHe || extracted.title,
+      nameHe: content.nameHe || extracted.title || 'מוצר חדש',
       slug,
-      subtitle: content.subtitle,
-      description: content.descriptionHe,
-      descriptionShort: content.descriptionShort,
-      price: content.suggestedPrice ?? (extracted.price ? Math.round(extracted.price * 3.7 * 100 * 2.5) : null),
-      compareAtPrice: content.suggestedCompareAtPrice ?? null,
-      images: extracted.images,
+      subtitle: content.subtitle ?? '',
+      descriptionHe: content.descriptionHe ?? '',
+      descriptionShort: content.descriptionShort ?? '',
+      images: (extracted.images ?? []).map((url: string) => ({ url, alt: content.nameHe || '' })),
       status: 'draft',
-      benefitsList: content.benefitsList,
-      ctaText: content.ctaText,
-      addToCartText: content.addToCartText,
-      sourceUrl: extracted.sourceUrl,
-      sourcePlatform: extracted.sourcePlatform,
+      benefitsList: content.benefitsList ?? [],
+      ctaText: content.ctaText ?? '',
+      addToCartText: content.addToCartText ?? 'הוסף לסל',
+      pricing: {
+        sellingPrice,
+        compareAtPrice: content.suggestedCompareAtPrice ?? Math.round(sellingPrice * 1.3),
+        costPrice: 0,
+        vatIncluded: true,
+      },
+      sourceUrl: extracted.sourceUrl ?? '',
+      sourcePlatform: extracted.sourcePlatform ?? 'manual',
       pageContent: {
-        features: content.features,
-        faqs: content.faqs,
-        guaranteeText: content.guaranteeText,
-        shippingText: content.shippingText,
-        urgencyText: content.urgencyText,
-        trustBadges: content.trustBadges,
+        features: content.features ?? [],
+        faqs: content.faqs ?? [],
+        guaranteeText: content.guaranteeText ?? '',
+        shippingText: content.shippingText ?? '',
+        urgencyText: content.urgencyText ?? '',
+        trustBadges: content.trustBadges ?? [],
       },
       seo: {
-        title: content.seoTitle,
-        description: content.seoDescription,
+        title: content.seoTitle ?? content.nameHe ?? '',
+        description: content.seoDescription ?? '',
       },
     })
 
