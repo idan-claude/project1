@@ -25,9 +25,11 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
   const stores = await Store.find({ storeId: { $in: storeIds } }).lean()
 
   return NextResponse.json({
+    currentStoreId: payload.storeId,
     stores: stores.map(s => ({
       ...s,
       role: memberships.find(m => m.storeId === s.storeId)?.role ?? 'admin',
+      isActive: s.storeId === payload.storeId,
     })),
   })
 })
