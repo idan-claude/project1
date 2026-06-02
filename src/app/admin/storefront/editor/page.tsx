@@ -163,6 +163,27 @@ export default function StorefrontEditorPage() {
     }
   }
 
+  async function uploadImage(file: File, field: 'logoUrl' | 'heroImageUrl') {
+    const setter = field === 'logoUrl' ? setLogoUploading : setHeroUploading
+    setter(true)
+    setUploadError('')
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const r = await fetch('/api/admin/upload', { method: 'POST', body: fd })
+      const d = await r.json()
+      if (!r.ok) {
+        setUploadError(d.error || 'שגיאה בהעלאה')
+      } else {
+        setTheme(prev => prev ? { ...prev, [field]: d.url } : prev)
+      }
+    } catch {
+      setUploadError('שגיאה בהעלאה')
+    } finally {
+      setter(false)
+    }
+  }
+
   async function publish() {
     setPublishing(true)
     try {
