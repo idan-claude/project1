@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
 
         <p className="text-center text-[12px] text-[var(--ds-text-3)] mt-5">
           אין לך חשבון עדיין?{' '}
-          <Link href="/admin/register" className="text-blue-400 hover:text-blue-300 transition-colors">
+          <Link href="/register" className="text-blue-400 hover:text-blue-300 transition-colors">
             צור חנות חדשה
           </Link>
         </p>
