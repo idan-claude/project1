@@ -154,15 +154,11 @@ Auditor: Claude Code
 ## Next Sprint Recommendations
 
 1. Add ANTHROPIC_API_KEY to Vercel (user action required)
-2. Password reset flow
-3. Email verification
-4. Rate limiting (registration, login)
-5. GA4 + Google Ads pixel wizards
-6. Logo upload in storefront editor
-7. Onboarding persistence to DB
-8. Domain management UI
-9. Physical mobile device testing
-10. Analytics email digest
+2. Email verification
+3. Domain management UI
+4. Google Ads pixel wizard
+5. Physical mobile device testing
+6. Analytics email digest
 
 ---
 
