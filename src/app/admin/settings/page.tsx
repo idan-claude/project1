@@ -251,6 +251,137 @@ export default function AdminSettingsPage() {
         </div>
       )}
 
+      {/* Domain tab */}
+      {tab === 'domain' && (
+        <div className="space-y-4 max-w-2xl">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
+            <h2 className="text-sm font-semibold text-white mb-2">דומיין מותאם אישית</h2>
+            <p className="text-xs text-gray-500">
+              בברירת מחדל, החנות פועלת על הדומיין שהגדרת ב-Vercel.
+              כדי לחבר דומיין משלך, הוסף אותו ב-Vercel ואז מלא אותו כאן.
+            </p>
+            <Field
+              label="דומיין מותאם אישית"
+              value={domain.customDomain}
+              onChange={v => setDomain({ customDomain: v })}
+              placeholder="shop.yourdomain.com"
+              hint="ללא https:// — למשל: shop.mybrand.co.il"
+            />
+            <SaveBar saving={saving} saved={saved} onSave={() => save('domain', domain)} />
+          </div>
+
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-5 space-y-3">
+            <p className="text-xs font-semibold text-white">הוראות חיבור דומיין:</p>
+            <ol className="text-xs text-gray-500 space-y-2 list-decimal list-inside leading-relaxed">
+              <li>היכנס לרשם הדומיין שלך (GoDaddy, Cloudflare, וכו&apos;)</li>
+              <li>הוסף רשומת CNAME: <code className="text-blue-400 bg-blue-500/10 px-1 py-0.5 rounded">shop.yourdomain.com → cname.vercel-dns.com</code></li>
+              <li>ב-Vercel, פרוייקט שלך → Settings → Domains → הוסף את הדומיין</li>
+              <li>המתן עד 48 שעות להפצת ה-DNS</li>
+            </ol>
+          </div>
+        </div>
+      )}
+
+      {/* Notifications tab */}
+      {tab === 'notifications' && (
+        <div className="max-w-2xl">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6">
+            <h2 className="text-sm font-semibold text-white mb-4">התראות אימייל</h2>
+            <p className="text-xs text-gray-500 mb-5">בחר אילו התראות תקבל לכתובת המייל שהגדרת בהגדרות החנות.</p>
+
+            <div className="space-y-3">
+              {([
+                { key: 'newOrder',      label: 'הזמנה חדשה',                   desc: 'קבל אימייל בכל פעם שנכנסת הזמנה' },
+                { key: 'lowStock',      label: 'מלאי נמוך',                    desc: 'התרעה כשמוצר יורד מ-5 יחידות' },
+                { key: 'abandonedCart', label: 'עגלה נטושה',                   desc: 'לאחר 24 שעות ללא השלמת הזמנה' },
+                { key: 'weeklyReport',  label: 'דוח שבועי',                    desc: 'סיכום מכירות כל יום ראשון' },
+              ] as { key: keyof typeof notifications; label: string; desc: string }[]).map(({ key, label, desc }) => (
+                <div key={key} className="flex items-center justify-between p-3 bg-[#070B14] border border-white/5 rounded-xl">
+                  <div>
+                    <p className="text-[12px] font-semibold text-white">{label}</p>
+                    <p className="text-[10px] text-gray-500 mt-0.5">{desc}</p>
+                  </div>
+                  <button
+                    onClick={() => setNotifications(n => ({ ...n, [key]: !n[key] }))}
+                    className={`relative w-10 h-5 rounded-full transition-colors flex-shrink-0 ${notifications[key] ? 'bg-blue-600' : 'bg-white/10'}`}
+                  >
+                    <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform shadow-sm ${notifications[key] ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <SaveBar saving={saving} saved={saved} onSave={() => save('notifications', notifications)} />
+          </div>
+        </div>
+      )}
+
+      {/* Team tab */}
+      {tab === 'team' && (
+        <div className="max-w-2xl space-y-4">
+          <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-white">חברי הצוות</h2>
+              <button
+                onClick={loadTeam}
+                className="text-xs text-blue-400 hover:text-blue-300 border border-blue-400/20 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                רענן רשימה
+              </button>
+            </div>
+
+            {teamLoading ? (
+              <div className="space-y-2">{[...Array(3)].map((_, i) => <div key={i} className="h-12 bg-white/5 rounded-xl animate-pulse" />)}</div>
+            ) : team.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-4xl mb-2">👥</p>
+                <p className="text-sm text-gray-500">לחץ &quot;רענן רשימה&quot; לטעינת חברי הצוות</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {team.map(member => (
+                  <div key={member.id} className="flex items-center gap-3 p-3 bg-[#070B14] border border-white/5 rounded-xl">
+                    <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm text-blue-400">{(member.name || member.email).charAt(0).toUpperCase()}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[12px] font-semibold text-white truncate">{member.name || member.email}</p>
+                      <p className="text-[10px] text-gray-500 truncate">{member.email} · {member.role}</p>
+                    </div>
+                    <span className={`text-[9px] border px-2 py-0.5 rounded-full flex-shrink-0 ${
+                      member.status === 'active' ? 'text-emerald-400 border-emerald-400/30' :
+                      member.status === 'invited' ? 'text-amber-400 border-amber-400/30' :
+                      'text-gray-500 border-gray-600'
+                    }`}>
+                      {member.status === 'active' ? 'פעיל' : member.status === 'invited' ? 'ממתין לאישור' : member.status}
+                    </span>
+                    {member.role !== 'owner' && (
+                      <button
+                        onClick={() => removeTeamMember(member.id)}
+                        disabled={removingId === member.id}
+                        className="text-[10px] text-red-500 hover:text-red-400 border border-red-500/20 px-2 py-1 rounded-lg transition-colors disabled:opacity-50 flex-shrink-0"
+                      >
+                        {removingId === member.id ? '...' : 'הסר'}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+            <p className="text-xs font-semibold text-blue-400 mb-1">הזמנת עמיתים</p>
+            <p className="text-xs text-gray-400">
+              לכניסה למערכת, עמיתים צריכים ליצור חשבון עצמאי ב-
+              <code className="text-blue-300 mx-1">/admin/register</code>
+              עם אותה כתובת מייל.
+              הם יוכלו לעבוד על החנות לאחר אישורך.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Cloudinary tab */}
       {tab === 'cloudinary' && (
         <div className="space-y-4 max-w-2xl">
