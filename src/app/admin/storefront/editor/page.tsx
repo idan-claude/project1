@@ -669,29 +669,116 @@ export default function StorefrontEditorPage() {
           {/* ── SECTIONS ───────────────────────────────────── */}
           {tab === 'sections' && (
             <div>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">סדר וניראות סקציות</p>
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">סדר, ניראות ותוכן</p>
               <div className="space-y-1.5">
                 {sortedSections.map((section, idx) => {
                   const meta = SECTION_LABELS[section.type] ?? { label: section.type, emoji: '📌', desc: '' }
+                  const hasContent = ['hero', 'benefits', 'guarantee', 'cta'].includes(section.type)
+                  const isExpanded = expandedSection === section.id
                   return (
-                    <div key={section.id}
-                      className={`flex items-center gap-2.5 p-2.5 rounded-xl border transition-all ${section.enabled ? 'bg-[#0E1629] border-white/[0.055]' : 'bg-white/[0.02] border-white/[0.03] opacity-50'}`}>
-                      <div className="flex flex-col gap-0.5 flex-shrink-0">
-                        <button onClick={() => moveSection(section.id, -1)} disabled={idx === 0}
-                          className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-20 transition-colors">
-                          <IChevronU className="w-2.5 h-2.5" />
-                        </button>
-                        <button onClick={() => moveSection(section.id, 1)} disabled={idx === sortedSections.length - 1}
-                          className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-20 transition-colors">
-                          <IChevronD className="w-2.5 h-2.5" />
-                        </button>
+                    <div key={section.id} className="rounded-xl border border-white/[0.055] overflow-hidden">
+                      {/* Section row */}
+                      <div className={`flex items-center gap-2.5 p-2.5 transition-all ${section.enabled ? 'bg-[#0E1629]' : 'bg-white/[0.02] opacity-50'}`}>
+                        <div className="flex flex-col gap-0.5 flex-shrink-0">
+                          <button onClick={() => moveSection(section.id, -1)} disabled={idx === 0}
+                            className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-20 transition-colors">
+                            <IChevronU className="w-2.5 h-2.5" />
+                          </button>
+                          <button onClick={() => moveSection(section.id, 1)} disabled={idx === sortedSections.length - 1}
+                            className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-20 transition-colors">
+                            <IChevronD className="w-2.5 h-2.5" />
+                          </button>
+                        </div>
+                        <span className="text-base flex-shrink-0">{meta.emoji}</span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[11px] font-semibold text-white truncate">{meta.label}</p>
+                          <p className="text-[9px] text-gray-600 truncate">{meta.desc}</p>
+                        </div>
+                        {hasContent && (
+                          <button onClick={() => setExpandedSection(isExpanded ? null : section.id)}
+                            className={`p-1 rounded transition-colors flex-shrink-0 ${isExpanded ? 'text-blue-400' : 'text-gray-600 hover:text-gray-300'}`}>
+                            {isExpanded ? <IChevronU className="w-3 h-3" /> : <IChevronD className="w-3 h-3" />}
+                          </button>
+                        )}
+                        <Toggle on={section.enabled} onToggle={() => toggleSection(section.id)} />
                       </div>
-                      <span className="text-base flex-shrink-0">{meta.emoji}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[11px] font-semibold text-white truncate">{meta.label}</p>
-                        <p className="text-[9px] text-gray-600 truncate">{meta.desc}</p>
-                      </div>
-                      <Toggle on={section.enabled} onToggle={() => toggleSection(section.id)} />
+
+                      {/* Content editor panel */}
+                      {hasContent && isExpanded && (
+                        <div className="bg-[#070B14] border-t border-white/[0.055] p-3 space-y-3">
+                          {section.type === 'hero' && (
+                            <>
+                              <FieldRow label="כותרת ראשית">
+                                <TextInput value={(section.settings.headline as string) || ''} onChange={v => setSectionSetting(section.id, 'headline', v)} placeholder="מצא את כל מה שאיבדת" />
+                              </FieldRow>
+                              <FieldRow label="תיאור">
+                                <TextArea value={(section.settings.subheadline as string) || ''} onChange={v => setSectionSetting(section.id, 'subheadline', v)} placeholder="תיאור קצר של המוצר..." rows={2} />
+                              </FieldRow>
+                              <FieldRow label="תג פרומו" hint="הכיתוב בבועה הקטנה מעל הכותרת">
+                                <TextInput value={(section.settings.badge as string) || ''} onChange={v => setSectionSetting(section.id, 'badge', v)} placeholder="🎉 מבצע — קנה 2, קבל 1 חינם" />
+                              </FieldRow>
+                              <FieldRow label="טקסט כפתור">
+                                <TextInput value={(section.settings.ctaText as string) || ''} onChange={v => setSectionSetting(section.id, 'ctaText', v)} placeholder="לרכישה עכשיו" />
+                              </FieldRow>
+                            </>
+                          )}
+
+                          {section.type === 'benefits' && (
+                            <div>
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-[10px] text-gray-500 font-semibold">פריטים ({getBenefitItems(section).length})</p>
+                                <button onClick={() => addBenefitItem(section.id)}
+                                  className="text-[9px] text-blue-400 hover:text-blue-300 border border-blue-400/30 px-2 py-0.5 rounded-lg transition-colors">
+                                  + הוסף
+                                </button>
+                              </div>
+                              {getBenefitItems(section).length === 0 ? (
+                                <p className="text-[9px] text-gray-600 text-center py-2">לחץ &quot;+ הוסף&quot; להוסיף פריט יתרון</p>
+                              ) : (
+                                <div className="space-y-1.5">
+                                  {getBenefitItems(section).map((item, i) => (
+                                    <div key={i} className="flex items-center gap-1.5">
+                                      <input value={item.emoji} onChange={e => setBenefitItem(section.id, i, 'emoji', e.target.value)}
+                                        className="w-9 bg-[#0E1629] border border-white/[0.055] rounded-lg px-1.5 py-1.5 text-[11px] text-center text-white focus:outline-none focus:border-blue-500/40" maxLength={2} />
+                                      <div className="flex-1">
+                                        <TextInput value={item.text} onChange={v => setBenefitItem(section.id, i, 'text', v)} placeholder="יתרון..." />
+                                      </div>
+                                      <button onClick={() => removeBenefitItem(section.id, i)} className="text-gray-600 hover:text-red-400 transition-colors flex-shrink-0">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {section.type === 'guarantee' && (
+                            <>
+                              <FieldRow label="כותרת">
+                                <TextInput value={(section.settings.headline as string) || ''} onChange={v => setSectionSetting(section.id, 'headline', v)} placeholder="אחריות לכל החיים" />
+                              </FieldRow>
+                              <FieldRow label="תיאור">
+                                <TextArea value={(section.settings.body as string) || ''} onChange={v => setSectionSetting(section.id, 'body', v)} placeholder="תיאור מדיניות האחריות..." rows={3} />
+                              </FieldRow>
+                            </>
+                          )}
+
+                          {section.type === 'cta' && (
+                            <>
+                              <FieldRow label="כותרת">
+                                <TextInput value={(section.settings.headline as string) || ''} onChange={v => setSectionSetting(section.id, 'headline', v)} placeholder="מוכן להפסיק לאבד דברים?" />
+                              </FieldRow>
+                              <FieldRow label="תיאור">
+                                <TextInput value={(section.settings.body as string) || ''} onChange={v => setSectionSetting(section.id, 'body', v)} placeholder="הזמן עכשיו וקבל משלוח חינם" />
+                              </FieldRow>
+                              <FieldRow label="טקסט כפתור">
+                                <TextInput value={(section.settings.ctaText as string) || ''} onChange={v => setSectionSetting(section.id, 'ctaText', v)} placeholder="הזמן עכשיו" />
+                              </FieldRow>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
                   )
                 })}
