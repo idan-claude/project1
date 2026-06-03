@@ -189,6 +189,10 @@ export default function StorefrontEditorPage() {
     setTheme(prev => prev ? { ...prev, footerConfig: { ...prev.footerConfig, [key]: value } } : prev)
   }
 
+  function setCheckout(key: keyof CheckoutConfig, value: string | boolean) {
+    setTheme(prev => prev ? { ...prev, checkoutConfig: { ...prev.checkoutConfig, [key]: value } } : prev)
+  }
+
   function applyPreset(preset: typeof COLOR_PRESETS[0]) {
     setTheme(prev => prev ? { ...prev, tokens: { ...prev.tokens, primaryColor: preset.primary, secondaryColor: preset.secondary, accentColor: preset.accent } } : prev)
   }
