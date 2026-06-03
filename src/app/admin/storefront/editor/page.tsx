@@ -701,7 +701,7 @@ export default function StorefrontEditorPage() {
           )}
 
           {/* ── CHECKOUT ───────────────────────────────────── */}
-          {tab === 'checkout' && theme.checkoutConfig && (
+          {tab === 'checkout' && theme.checkoutConfig && theme.checkoutConfig.securityText !== undefined && (
             <div className="space-y-4">
               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">תגי אמון בדף התשלום</p>
 
