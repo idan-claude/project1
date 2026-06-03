@@ -85,7 +85,6 @@ interface CheckoutClientProps {
 
 export default function CheckoutClient({ checkoutConfig, headerConfig, logoUrl, storeName }: CheckoutClientProps) {
   const { items, total, clearCart } = useCartStore()
-  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', phone: '', street: '', city: '', zip: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
