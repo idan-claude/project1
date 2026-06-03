@@ -305,6 +305,10 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
     })
   }
 
+  const displayBenefits = content.benefitItems && content.benefitItems.length > 0
+    ? content.benefitItems
+    : DEFAULT_BENEFIT_ITEMS
+
   return (
     <>
       {/* ── HERO ── */}
@@ -312,14 +316,16 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 text-center md:text-right">
-              <div className="inline-block bg-white/20 text-white text-sm font-bold px-4 py-1.5 rounded-full mb-5 border border-white/30">
-                🎉 מבצע — קנה 2, קבל 1 חינם · נגמר בקרוב!
-              </div>
+              {(content.heroBadge || !content.heroHeadline) && (
+                <div className="inline-block bg-white/20 text-white text-sm font-bold px-4 py-1.5 rounded-full mb-5 border border-white/30">
+                  {content.heroBadge || '🎉 מבצע — קנה 2, קבל 1 חינם · נגמר בקרוב!'}
+                </div>
+              )}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-5">
-                מצא את כל מה{' '}<br className="hidden md:block" /><span className="text-white">שאיבדת</span>
+                {content.heroHeadline || 'מצא את כל מה שאיבדת'}
               </h1>
               <p className="text-blue-100 text-lg md:text-xl mb-6 max-w-lg mx-auto md:mx-0">
-                הכרטיס נכנס לארנק שלך ומאתר אותו תוך שניות. דק כמו כרטיס אשראי, עובד בכל מקום בעולם.
+                {content.heroSubheadline || 'הכרטיס נכנס לארנק שלך ומאתר אותו תוך שניות. דק כמו כרטיס אשראי, עובד בכל מקום בעולם.'}
               </p>
               <div className="flex flex-wrap items-center gap-2 mb-8 justify-center md:justify-start text-sm">
                 <span className="bg-white/15 rounded-full px-3 py-1 font-medium">✅ Apple MFI מאושר</span>
