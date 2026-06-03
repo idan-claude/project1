@@ -86,7 +86,7 @@ export default async function OrdersPage() {
                   <div className="border-t border-gray-100 pt-3 mb-3 space-y-1.5">
                     {o.items.map((item, i) => (
                       <div key={i} className="flex items-center justify-between text-sm text-gray-600">
-                        <span>{item.productName}</span>
+                        <span>{item.nameHe}</span>
                         <span className="text-gray-400">x{item.quantity}</span>
                       </div>
                     ))}
