@@ -207,7 +207,29 @@ interface ProductPricing {
 
 type FaqItem = { q: string; a: string }
 
-export default function HomePageClient() {
+export interface BenefitItem { emoji: string; text: string }
+
+export interface SectionContent {
+  heroHeadline?: string
+  heroSubheadline?: string
+  heroBadge?: string
+  heroCtaText?: string
+  benefitItems?: BenefitItem[]
+  guaranteeHeadline?: string
+  guaranteeBody?: string
+  ctaHeadline?: string
+  ctaBody?: string
+  ctaButtonText?: string
+}
+
+const DEFAULT_BENEFIT_ITEMS: BenefitItem[] = [
+  { emoji: '🚚', text: 'משלוח חינם על כל הזמנה' },
+  { emoji: '🛡️', text: 'אחריות לכל החיים' },
+  { emoji: '↩️', text: '100 יום החזר כסף מלא' },
+  { emoji: '⭐', text: '4.9/5 · אלפי לקוחות מרוצים' },
+]
+
+export default function HomePageClient({ content = {} }: { content?: SectionContent }) {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
