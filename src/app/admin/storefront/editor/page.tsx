@@ -23,7 +23,8 @@ interface FooterConfig {
   showPaymentIcons: boolean; showTrustBadges: boolean
 }
 
-interface Section { id: string; type: string; enabled: boolean; order: number; settings: Record<string, string> }
+interface BenefitItem { emoji: string; text: string }
+interface Section { id: string; type: string; enabled: boolean; order: number; settings: Record<string, unknown> }
 
 interface Theme {
   _id?: string; storeId?: string; tokens: DesignTokens; logoUrl: string; faviconUrl: string
