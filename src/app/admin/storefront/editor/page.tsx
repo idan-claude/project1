@@ -23,6 +23,11 @@ interface FooterConfig {
   showPaymentIcons: boolean; showTrustBadges: boolean
 }
 
+interface CheckoutConfig {
+  showSslBadge: boolean; showGuaranteeBadge: boolean; showReturnBadge: boolean; showShippingBadge: boolean
+  guaranteeText: string; returnText: string; shippingText: string; showPaymentIcons: boolean; securityText: string
+}
+
 interface BenefitItem { emoji: string; text: string }
 interface Section { id: string; type: string; enabled: boolean; order: number; settings: Record<string, unknown> }
 
