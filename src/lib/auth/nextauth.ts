@@ -16,7 +16,8 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) return null
 
         await connectDB()
-        const user = await User.findOne({ email: credentials.email.toLowerCase() })
+        const storeId = process.env.STORE_ID || 'default'
+        const user = await User.findOne({ storeId, email: credentials.email.toLowerCase() })
         if (!user) return null
 
         const valid = await bcrypt.compare(credentials.password, user.passwordHash)
