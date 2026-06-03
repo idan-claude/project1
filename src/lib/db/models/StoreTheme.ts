@@ -46,6 +46,18 @@ export interface IFooterConfig {
   showTrustBadges: boolean
 }
 
+export interface ICheckoutConfig {
+  showSslBadge: boolean
+  showGuaranteeBadge: boolean
+  showReturnBadge: boolean
+  showShippingBadge: boolean
+  guaranteeText: string
+  returnText: string
+  shippingText: string
+  showPaymentIcons: boolean
+  securityText: string
+}
+
 export interface IStoreTheme extends Document {
   storeId: string
   name: string
@@ -55,6 +67,7 @@ export interface IStoreTheme extends Document {
   heroImageUrl: string
   headerConfig: IHeaderConfig
   footerConfig: IFooterConfig
+  checkoutConfig: ICheckoutConfig
   sections: Array<{
     id: string
     type: string
