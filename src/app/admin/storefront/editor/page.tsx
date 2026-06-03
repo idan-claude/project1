@@ -320,6 +320,15 @@ export default function StorefrontEditorPage() {
   const fontQuery = FONTS.map(f => f.replace(/ /g, '+')).join('&family=')
   const googleFontsUrl = `https://fonts.googleapis.com/css2?family=${fontQuery}&display=swap&subset=hebrew`
 
+  const heroSection     = theme.sections.find(s => s.id === 'hero')
+  const benefitsSection = theme.sections.find(s => s.id === 'benefits')
+  const previewHeadline    = (heroSection?.settings?.headline    as string) || 'הכותרת של החנות שלך'
+  const previewSubheadline = (heroSection?.settings?.subheadline as string) || 'תיאור קצר שמסביר מה אתה מוכר'
+  const previewCtaText     = (heroSection?.settings?.ctaText     as string) || theme.headerConfig.ctaText || 'הזמן עכשיו'
+  const previewBenefits    = (benefitsSection?.settings?.items   as BenefitItem[]) || [
+    { emoji: '✅', text: 'יתרון ראשון' }, { emoji: '🚚', text: 'יתרון שני' }, { emoji: '🛡️', text: 'יתרון שלישי' },
+  ]
+
   return (
     <div className="flex h-screen bg-[#070B14] overflow-hidden" dir="rtl">
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
