@@ -2,11 +2,14 @@
 import { useEffect, useState } from 'react'
 
 const TABS = [
-  { id: 'store', label: 'פרטי חנות', icon: '🏪' },
-  { id: 'faq', label: 'שאלות נפוצות', icon: '❓' },
-  { id: 'cloudinary', label: 'Cloudinary', icon: '🖼️' },
-  { id: 'smtp', label: 'אימייל SMTP', icon: '📧' },
-  { id: 'twilio', label: 'Twilio WhatsApp', icon: '📱' },
+  { id: 'store',         label: 'פרטי חנות',    icon: '🏪' },
+  { id: 'faq',           label: 'שאלות נפוצות', icon: '❓' },
+  { id: 'domain',        label: 'דומיין',        icon: '🌐' },
+  { id: 'notifications', label: 'התראות',        icon: '🔔' },
+  { id: 'team',          label: 'צוות',          icon: '👥' },
+  { id: 'cloudinary',    label: 'Cloudinary',   icon: '🖼️' },
+  { id: 'smtp',          label: 'אימייל SMTP',   icon: '📧' },
+  { id: 'twilio',        label: 'WhatsApp',      icon: '📱' },
 ]
 
 function Field({ label, value, onChange, type = 'text', placeholder = '', hint = '' }: {
