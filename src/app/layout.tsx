@@ -65,7 +65,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         <WhatsAppBubble />
         {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
           <Suspense>
