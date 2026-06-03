@@ -5,6 +5,7 @@ import { connectDB } from '@/lib/db/mongoose'
 import User from '@/lib/db/models/User'
 import Order from '@/lib/db/models/Order'
 import Link from 'next/link'
+import SignOutButton from '@/components/account/SignOutButton'
 
 export const dynamic = 'force-dynamic'
 
