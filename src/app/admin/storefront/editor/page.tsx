@@ -166,12 +166,26 @@ export default function StorefrontEditorPage() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const tabBarRef = useRef<HTMLDivElement>(null)
 
+  const DEFAULT_CHECKOUT_CONFIG: CheckoutConfig = {
+    showSslBadge: true, showGuaranteeBadge: true, showReturnBadge: true, showShippingBadge: true,
+    guaranteeText: 'אחריות לכל החיים', returnText: '100 יום החזר כסף מלא',
+    shippingText: 'משלוח חינם · 7–14 ימי עסקים', showPaymentIcons: true,
+    securityText: 'כל הפרטים מוצפנים ומאובטחים',
+  }
+
   const load = useCallback(async () => {
     setLoading(true)
     try {
       const r = await fetch('/api/admin/storefront/theme')
       const d = await r.json()
-      if (d.theme) setTheme(d.theme)
+      if (d.theme) {
+        setTheme({
+          ...d.theme,
+          checkoutConfig: d.theme.checkoutConfig
+            ? { ...DEFAULT_CHECKOUT_CONFIG, ...d.theme.checkoutConfig }
+            : DEFAULT_CHECKOUT_CONFIG,
+        })
+      }
     } finally { setLoading(false) }
   }, [])
 
