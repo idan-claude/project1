@@ -253,6 +253,11 @@ function ReadinessWidget() {
           </svg>
         </Link>
       )}
+
+      <Link href="/admin/health/store"
+        className="block text-center text-[10px] text-gray-600 hover:text-gray-400 transition-colors mt-1">
+        הצג פירוט מלא של בריאות החנות →
+      </Link>
     </div>
   )
 }
