@@ -686,6 +686,52 @@ export default function StorefrontEditorPage() {
             </div>
           )}
 
+          {/* ── CHECKOUT ───────────────────────────────────── */}
+          {tab === 'checkout' && theme.checkoutConfig && (
+            <div className="space-y-4">
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">תגי אמון בדף התשלום</p>
+
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] text-gray-400">🔒 תגי SSL ואבטחה</p>
+                  <Toggle on={theme.checkoutConfig.showSslBadge} onToggle={() => setCheckout('showSslBadge', !theme.checkoutConfig.showSslBadge)} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] text-gray-400">🛡️ תג אחריות</p>
+                  <Toggle on={theme.checkoutConfig.showGuaranteeBadge} onToggle={() => setCheckout('showGuaranteeBadge', !theme.checkoutConfig.showGuaranteeBadge)} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] text-gray-400">↩️ תג החזרה</p>
+                  <Toggle on={theme.checkoutConfig.showReturnBadge} onToggle={() => setCheckout('showReturnBadge', !theme.checkoutConfig.showReturnBadge)} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] text-gray-400">🚚 תג משלוח</p>
+                  <Toggle on={theme.checkoutConfig.showShippingBadge} onToggle={() => setCheckout('showShippingBadge', !theme.checkoutConfig.showShippingBadge)} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] text-gray-400">💳 אייקוני תשלום (Visa/MC)</p>
+                  <Toggle on={theme.checkoutConfig.showPaymentIcons} onToggle={() => setCheckout('showPaymentIcons', !theme.checkoutConfig.showPaymentIcons)} />
+                </div>
+              </div>
+
+              <div className="h-px bg-white/[0.055]" />
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">טקסט מותאם אישית</p>
+
+              <FieldRow label="טקסט אבטחה" hint="מופיע ליד אייקון הנעילה">
+                <TextInput value={theme.checkoutConfig.securityText} onChange={v => setCheckout('securityText', v)} placeholder="כל הפרטים מוצפנים ומאובטחים" />
+              </FieldRow>
+              <FieldRow label="טקסט אחריות">
+                <TextInput value={theme.checkoutConfig.guaranteeText} onChange={v => setCheckout('guaranteeText', v)} placeholder="אחריות לכל החיים" />
+              </FieldRow>
+              <FieldRow label="טקסט החזרה">
+                <TextInput value={theme.checkoutConfig.returnText} onChange={v => setCheckout('returnText', v)} placeholder="100 יום החזר כסף מלא" />
+              </FieldRow>
+              <FieldRow label="טקסט משלוח">
+                <TextInput value={theme.checkoutConfig.shippingText} onChange={v => setCheckout('shippingText', v)} placeholder="משלוח חינם · 7–14 ימי עסקים" />
+              </FieldRow>
+            </div>
+          )}
+
           {/* ── SECTIONS ───────────────────────────────────── */}
           {tab === 'sections' && (
             <div>
