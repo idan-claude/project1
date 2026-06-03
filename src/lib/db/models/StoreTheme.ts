@@ -138,6 +138,21 @@ const FooterConfigSchema = new Schema<IFooterConfig>(
   { _id: false }
 )
 
+const CheckoutConfigSchema = new Schema<ICheckoutConfig>(
+  {
+    showSslBadge:       { type: Boolean, default: true },
+    showGuaranteeBadge: { type: Boolean, default: true },
+    showReturnBadge:    { type: Boolean, default: true },
+    showShippingBadge:  { type: Boolean, default: true },
+    guaranteeText:      { type: String, default: 'אחריות לכל החיים' },
+    returnText:         { type: String, default: '100 יום החזר כסף מלא' },
+    shippingText:       { type: String, default: 'משלוח חינם · 7–14 ימי עסקים' },
+    showPaymentIcons:   { type: Boolean, default: true },
+    securityText:       { type: String, default: 'כל הפרטים מוצפנים ומאובטחים' },
+  },
+  { _id: false }
+)
+
 const SectionSettingsSchema = new Schema(
   {
     id:       { type: String, required: true },
