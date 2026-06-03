@@ -772,19 +772,29 @@ export default function StorefrontEditorPage() {
                   const meta = SECTION_LABELS[section.type] ?? { label: section.type, emoji: '📌', desc: '' }
                   const hasContent = ['hero', 'benefits', 'guarantee', 'cta'].includes(section.type)
                   const isExpanded = expandedSection === section.id
+                  const isDragging  = dragId === section.id
+                  const isDragOver  = dragOverId === section.id && dragId !== section.id
+
                   return (
-                    <div key={section.id} className="rounded-xl border border-white/[0.055] overflow-hidden">
+                    <div
+                      key={section.id}
+                      draggable
+                      onDragStart={() => setDragId(section.id)}
+                      onDragEnd={() => { setDragId(null); setDragOverId(null) }}
+                      onDragOver={e => { e.preventDefault(); setDragOverId(section.id) }}
+                      onDragLeave={() => setDragOverId(null)}
+                      onDrop={() => { if (dragId) reorderSectionAfter(dragId, section.id); setDragId(null); setDragOverId(null) }}
+                      className={`rounded-xl border overflow-hidden transition-all ${isDragOver ? 'border-blue-500/60 shadow-[0_0_0_1px_rgba(59,130,246,0.3)]' : 'border-white/[0.055]'} ${isDragging ? 'opacity-40' : ''}`}
+                    >
                       {/* Section row */}
                       <div className={`flex items-center gap-2.5 p-2.5 transition-all ${section.enabled ? 'bg-[#0E1629]' : 'bg-white/[0.02] opacity-50'}`}>
-                        <div className="flex flex-col gap-0.5 flex-shrink-0">
-                          <button onClick={() => moveSection(section.id, -1)} disabled={idx === 0}
-                            className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-20 transition-colors">
-                            <IChevronU className="w-2.5 h-2.5" />
-                          </button>
-                          <button onClick={() => moveSection(section.id, 1)} disabled={idx === sortedSections.length - 1}
-                            className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-20 transition-colors">
-                            <IChevronD className="w-2.5 h-2.5" />
-                          </button>
+                        {/* Drag handle */}
+                        <div className="flex-shrink-0 cursor-grab active:cursor-grabbing text-gray-600 hover:text-gray-400 transition-colors px-0.5">
+                          <svg viewBox="0 0 10 16" fill="currentColor" className="w-2.5 h-4">
+                            <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/>
+                            <circle cx="2" cy="7" r="1.5"/><circle cx="8" cy="7" r="1.5"/>
+                            <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
+                          </svg>
                         </div>
                         <span className="text-base flex-shrink-0">{meta.emoji}</span>
                         <div className="flex-1 min-w-0">
