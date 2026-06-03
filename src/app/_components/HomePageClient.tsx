@@ -335,7 +335,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                 <Link href="/product"
                   className="bg-white text-blue-700 font-bold px-8 py-3.5 rounded-xl hover:bg-blue-50 transition-colors text-lg shadow-lg">
-                  לרכישה עכשיו ←
+                  {content.heroCtaText || 'לרכישה עכשיו ←'}
                 </Link>
                 <button
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
