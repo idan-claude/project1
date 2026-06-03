@@ -24,7 +24,10 @@ export default async function AccountPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">החשבון שלי</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">החשבון שלי</h1>
+        <SignOutButton />
+      </div>
 
       {/* User info card */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
