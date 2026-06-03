@@ -288,6 +288,21 @@ export default function StorefrontEditorPage() {
     })
   }
 
+  function reorderSectionAfter(draggedId: string, targetId: string) {
+    if (draggedId === targetId) return
+    setTheme(prev => {
+      if (!prev) return prev
+      const sorted = [...prev.sections].sort((a, b) => a.order - b.order)
+      const fromIdx = sorted.findIndex(s => s.id === draggedId)
+      const toIdx   = sorted.findIndex(s => s.id === targetId)
+      if (fromIdx === -1 || toIdx === -1) return prev
+      const reordered = [...sorted]
+      const [moved] = reordered.splice(fromIdx, 1)
+      reordered.splice(toIdx, 0, moved)
+      return { ...prev, sections: reordered.map((s, i) => ({ ...s, order: i })) }
+    })
+  }
+
   async function uploadImage(file: File, field: 'logoUrl' | 'heroImageUrl' | 'faviconUrl') {
     const setters = { logoUrl: setLogoUploading, heroImageUrl: setHeroUploading, faviconUrl: setFaviconUploading }
     setters[field](true)
