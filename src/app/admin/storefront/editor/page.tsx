@@ -884,22 +884,21 @@ export default function StorefrontEditorPage() {
               {/* Hero */}
               <div style={{ background: theme.tokens.primaryColor, padding: '3rem 2rem', textAlign: 'center', direction: 'rtl' }}>
                 <h1 style={{ color: '#fff', fontSize: theme.tokens.headingSize === '2xl' ? '2.5rem' : theme.tokens.headingSize === 'xl' ? '2rem' : theme.tokens.headingSize === 'sm' ? '1.25rem' : '1.75rem', fontWeight: theme.tokens.fontWeight === 'extrabold' ? 800 : theme.tokens.fontWeight === 'bold' ? 700 : theme.tokens.fontWeight === 'medium' ? 500 : 400, marginBottom: '0.75rem', fontFamily: `'${theme.tokens.fontFamily}', 'Rubik', sans-serif`, lineHeight: theme.tokens.lineHeight === 'tight' ? 1.25 : theme.tokens.lineHeight === 'relaxed' ? 1.75 : 1.5 }}>
-                  הכותרת של החנות שלך
+                  {previewHeadline}
                 </h1>
-                <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '1.5rem', fontSize: '1rem' }}>תיאור קצר שמסביר מה אתה מוכר</p>
+                <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '1.5rem', fontSize: '1rem' }}>{previewSubheadline}</p>
                 <button style={{ background: theme.tokens.accentColor, color: '#000', border: 'none', borderRadius: theme.tokens.buttonRadius, padding: '0.75rem 2rem', fontSize: '1rem', fontWeight: 700, cursor: 'pointer', fontFamily: `'${theme.tokens.fontFamily}', 'Rubik', sans-serif` }}>
-                  {theme.headerConfig.ctaText || 'הזמן עכשיו'}
+                  {previewCtaText}
                 </button>
               </div>
 
-              {/* Cards grid */}
-              <div style={{ background: theme.tokens.surfaceColor, padding: '2rem', direction: 'rtl' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: previewDevice === 'mobile' ? '1fr' : 'repeat(3,1fr)', gap: '1rem' }}>
-                  {['יתרון ראשון', 'יתרון שני', 'יתרון שלישי'].map((label, i) => (
-                    <div key={i} style={{ background: theme.tokens.backgroundColor, border: `1px solid ${theme.tokens.borderColor}`, borderRadius: theme.tokens.cardRadius, padding: '1.25rem', textAlign: 'center', boxShadow: theme.tokens.shadowIntensity === 'none' ? 'none' : theme.tokens.shadowIntensity === 'sm' ? '0 1px 3px rgba(0,0,0,0.1)' : theme.tokens.shadowIntensity === 'lg' ? '0 10px 25px rgba(0,0,0,0.15)' : '0 4px 12px rgba(0,0,0,0.1)' }}>
-                      <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>✨</div>
-                      <p style={{ fontWeight: 700, marginBottom: '0.25rem', color: theme.tokens.textColor, fontFamily: `'${theme.tokens.fontFamily}', 'Rubik', sans-serif` }}>{label}</p>
-                      <p style={{ fontSize: '0.875rem', color: theme.tokens.textSecondary }}>תיאור קצר</p>
+              {/* Benefits bar */}
+              <div style={{ background: '#fff', padding: '1rem 1.5rem', direction: 'rtl', borderBottom: `1px solid ${theme.tokens.borderColor}` }}>
+                <div style={{ display: 'grid', gridTemplateColumns: previewDevice === 'mobile' ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: '0.5rem' }}>
+                  {previewBenefits.slice(0, 4).map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: theme.tokens.surfaceColor, borderRadius: theme.tokens.cardRadius, padding: '0.5rem 0.75rem' }}>
+                      <span style={{ fontSize: '1.1rem' }}>{item.emoji}</span>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 500, color: theme.tokens.textColor, fontFamily: `'${theme.tokens.fontFamily}', 'Rubik', sans-serif` }}>{item.text}</span>
                     </div>
                   ))}
                 </div>
