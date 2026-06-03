@@ -90,7 +90,7 @@ export default async function AccountPage() {
                     <p className="text-xs text-gray-500 mt-0.5">{new Date(o.createdAt).toLocaleDateString('he-IL')}</p>
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-gray-900">₪{o.total?.toFixed(2)}</p>
+                    <p className="text-sm font-semibold text-gray-900">₪{((o.pricing?.total ?? 0) / 100).toFixed(2)}</p>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                       o.status === 'delivered' ? 'bg-green-100 text-green-700' :
                       o.status === 'shipped'   ? 'bg-blue-100 text-blue-700' :
