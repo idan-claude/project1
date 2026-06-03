@@ -38,7 +38,9 @@ const UserSchema = new Schema<IUser>(
     name: { type: String, required: true },
     phone: { type: String, default: '' },
     addresses: [AddressSchema],
-    role: { type: String, default: 'customer', enum: ['customer'] },
+    role:              { type: String, default: 'customer', enum: ['customer'] },
+    resetToken:        { type: String, default: null },
+    resetTokenExpiry:  { type: Date,   default: null },
   },
   { timestamps: true }
 )
