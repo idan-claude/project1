@@ -297,7 +297,8 @@ export default function StorefrontEditorPage() {
         body: JSON.stringify({
           tokens: theme.tokens, logoUrl: theme.logoUrl, faviconUrl: theme.faviconUrl,
           heroImageUrl: theme.heroImageUrl, headerConfig: theme.headerConfig,
-          footerConfig: theme.footerConfig, sections: theme.sections, customCss: theme.customCss,
+          footerConfig: theme.footerConfig, checkoutConfig: theme.checkoutConfig,
+          sections: theme.sections, customCss: theme.customCss,
         }),
       })
       setSaved(true)
