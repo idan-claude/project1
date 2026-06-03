@@ -608,14 +608,16 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <section id="cta" className="scroll-mt-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-          מוכן להפסיק לאבד דברים?
+          {content.ctaHeadline || 'מוכן להפסיק לאבד דברים?'}
         </h2>
-        <p className="text-gray-500 text-lg mb-8">הזמן עכשיו וקבל משלוח חינם — מגיע תוך 7-14 ימי עסקים</p>
+        <p className="text-gray-500 text-lg mb-8">
+          {content.ctaBody || 'הזמן עכשיו וקבל משלוח חינם — מגיע תוך 7-14 ימי עסקים'}
+        </p>
         <Link href="/product"
           className="inline-block bg-blue-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-blue-700 transition-colors text-xl shadow-lg">
-          הזמן את FindCard ←
+          {content.ctaButtonText || 'הזמן עכשיו ←'}
         </Link>
         <p className="text-sm text-gray-400 mt-4">🛡️ אחריות לכל החיים · ✅ Apple MFI מאושר · 🚚 משלוח חינם</p>
       </section>
