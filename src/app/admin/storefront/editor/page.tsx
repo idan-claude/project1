@@ -164,6 +164,8 @@ export default function StorefrontEditorPage() {
   const [faviconUploading, setFaviconUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
+  const [dragId, setDragId] = useState<string | null>(null)
+  const [dragOverId, setDragOverId] = useState<string | null>(null)
   const tabBarRef = useRef<HTMLDivElement>(null)
 
   const DEFAULT_CHECKOUT_CONFIG: CheckoutConfig = {
