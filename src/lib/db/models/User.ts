@@ -16,6 +16,8 @@ export interface IUser extends Document {
   phone: string
   addresses: IAddress[]
   role: 'customer'
+  resetToken?: string
+  resetTokenExpiry?: Date
   createdAt: Date
   updatedAt: Date
 }
