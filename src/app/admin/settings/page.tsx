@@ -97,6 +97,23 @@ export default function AdminSettingsPage() {
       .finally(() => setFaqLoading(false))
   }, [])
 
+  async function loadTeam() {
+    setTeamLoading(true)
+    try {
+      const r = await fetch('/api/admin/team')
+      const d = await r.json()
+      if (d.members) setTeam(d.members)
+    } catch {} finally { setTeamLoading(false) }
+  }
+
+  async function removeTeamMember(id: string) {
+    setRemovingId(id)
+    try {
+      await fetch('/api/admin/team', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ memberId: id }) })
+      setTeam(t => t.filter(m => m.id !== id))
+    } catch {} finally { setRemovingId(null) }
+  }
+
   async function saveGlobalFaqs() {
     setFaqSaving(true)
     try {
