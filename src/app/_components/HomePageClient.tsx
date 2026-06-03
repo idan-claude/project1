@@ -359,6 +359,20 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
         </div>
       </section>
 
+      {/* ── BENEFITS BAR ── */}
+      <section id="benefits" className="scroll-mt-28 bg-white border-b border-gray-100 py-4 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {displayBenefits.map((item, i) => (
+              <div key={i} className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3 py-2.5">
+                <span className="text-xl flex-shrink-0">{item.emoji}</span>
+                <span className="text-xs font-medium text-gray-700 leading-snug">{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FEATURE CAROUSEL ── */}
       <FeatureCarousel />
 
