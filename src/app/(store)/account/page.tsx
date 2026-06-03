@@ -82,7 +82,7 @@ export default async function AccountPage() {
           </div>
           <div className="space-y-3">
             {recentOrders.map((order) => {
-              const o = order as { _id: { toString: () => string }; orderNumber?: string; status: string; total: number; createdAt: Date }
+              const o = order as unknown as { _id: { toString: () => string }; orderNumber?: string; status: string; pricing: { total: number }; createdAt: Date }
               return (
                 <div key={o._id.toString()} className="flex items-center justify-between py-3 border-t border-gray-100 first:border-0 first:pt-0">
                   <div>
