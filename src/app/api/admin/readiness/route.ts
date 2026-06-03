@@ -3,15 +3,18 @@ import { withAdminAuth, getAdminPayload } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import Product from '@/lib/db/models/Product'
 import Store from '@/lib/db/models/Store'
+import StoreTheme from '@/lib/db/models/StoreTheme'
 import { getCardcomConfig, getMetaConfig, getSmtpConfig } from '@/lib/settings/credentials'
 
 export const dynamic = 'force-dynamic'
 
-interface ReadinessItem {
+export interface ReadinessItem {
   id: string
   label: string
+  desc: string
   done: boolean
   weight: number
+  category: 'brand' | 'product' | 'sales' | 'comms'
   action?: string
   actionLabel?: string
 }
@@ -21,78 +24,110 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
   const payload = getAdminPayload(req)
   const storeId = payload?.storeId ?? 'default'
 
-  const [store, productCount, cardcom, meta, smtp] = await Promise.all([
+  const [store, productCount, cardcom, meta, smtp, theme] = await Promise.all([
     Store.findOne({ storeId }).lean(),
     Product.countDocuments({ storeId, status: { $in: ['active', 'draft'] } }),
     getCardcomConfig(storeId),
     getMetaConfig(storeId),
     getSmtpConfig(storeId),
+    StoreTheme.findOne({ storeId }).lean(),
   ])
 
+  const heroSettings = theme?.sections?.find((s) => s.id === 'hero')?.settings as Record<string, unknown> | undefined
+
   const items: ReadinessItem[] = [
+    // Brand
     {
-      id: 'store_created',
-      label: 'חנות נוצרה',
-      done: !!store,
+      id: 'logo_uploaded',
+      label: 'לוגו הועלה',
+      desc: 'הלוגו שלך מוצג בראש כל דף',
+      done: !!(theme?.logoUrl),
       weight: 10,
+      category: 'brand',
+      action: '/admin/storefront/editor',
+      actionLabel: 'העלה לוגו',
     },
+    {
+      id: 'hero_content',
+      label: 'תוכן הכותרת הראשית הוגדר',
+      desc: 'הכותרת והתיאור של הדף הראשי',
+      done: !!(heroSettings?.headline),
+      weight: 10,
+      category: 'brand',
+      action: '/admin/storefront/editor',
+      actionLabel: 'ערוך תוכן',
+    },
+    {
+      id: 'announcement_customized',
+      label: 'סרגל מבצע הוגדר',
+      desc: 'הכרזה בראש האתר עם מבצע או מסר',
+      done: !!(theme?.headerConfig?.announcementText && theme.headerConfig.announcementText !== '🚚 משלוח חינם על כל הזמנה'),
+      weight: 5,
+      category: 'brand',
+      action: '/admin/storefront/editor',
+      actionLabel: 'ערוך סרגל',
+    },
+    // Product
     {
       id: 'product_added',
       label: 'מוצר ראשון הוסף',
+      desc: 'לפחות מוצר אחד זמין בחנות',
       done: productCount > 0,
       weight: 20,
+      category: 'product',
       action: '/admin/builder',
       actionLabel: 'הוסף מוצר עם AI',
     },
+    // Sales
     {
       id: 'payment_connected',
       label: 'תשלום מחובר',
+      desc: 'לקוחות יכולים לשלם',
       done: !!(cardcom?.terminal && cardcom?.username),
-      weight: 25,
+      weight: 20,
+      category: 'sales',
       action: '/admin/payments',
       actionLabel: 'חבר Cardcom',
     },
     {
-      id: 'design_customized',
-      label: 'עיצוב החנות הוגדר',
-      done: false, // will be true when StoreTheme has been saved with non-default values
-      weight: 15,
-      action: '/admin/storefront/editor',
-      actionLabel: 'עצב את החנות',
-    },
-    {
       id: 'pixel_connected',
       label: 'מעקב מכירות פעיל',
+      desc: 'Meta Pixel מחובר לפרסום',
       done: !!(meta?.pixelId),
-      weight: 20,
+      weight: 15,
+      category: 'sales',
       action: '/admin/marketing/meta',
       actionLabel: 'חבר Meta Pixel',
+    },
+    // Communication
+    {
+      id: 'footer_contact',
+      label: 'פרטי קשר בפוטר',
+      desc: 'אימייל או טלפון לשירות לקוחות',
+      done: !!(theme?.footerConfig?.contactEmail || theme?.footerConfig?.contactPhone),
+      weight: 10,
+      category: 'comms',
+      action: '/admin/storefront/editor',
+      actionLabel: 'הוסף פרטי קשר',
     },
     {
       id: 'email_connected',
       label: 'מיילים אוטומטיים',
-      done: !!(smtp?.host && smtp?.user),
+      desc: 'שליחת אישורי הזמנה ללקוחות',
+      done: !!(smtp?.smtpUser && smtp?.smtpPassword),
       weight: 10,
-      action: '/admin/settings/integrations',
-      actionLabel: 'הגדר מיילים',
+      category: 'comms',
+      action: '/admin/settings',
+      actionLabel: 'הגדר SMTP',
     },
   ]
 
-  // Check if theme has been customized
-  try {
-    const StoreTheme = (await import('@/lib/db/models/StoreTheme')).default
-    const theme = await StoreTheme.findOne({ storeId }).lean() as { status?: string } | null
-    if (theme) {
-      items.find(i => i.id === 'design_customized')!.done = theme.status === 'published' || !!theme
-    }
-  } catch { /* StoreTheme optional */ }
-
   const totalWeight = items.reduce((sum, i) => sum + i.weight, 0)
-  const doneWeight = items.filter(i => i.done).reduce((sum, i) => sum + i.weight, 0)
-  const score = Math.round((doneWeight / totalWeight) * 100)
+  const doneWeight  = items.filter(i => i.done).reduce((sum, i) => sum + i.weight, 0)
+  const score       = Math.round((doneWeight / totalWeight) * 100)
 
-  const missing = items.filter(i => !i.done)
+  const missing  = items.filter(i => !i.done)
   const nextStep = missing[0] ?? null
 
-  return NextResponse.json({ score, items, nextStep, productCount })
+  return NextResponse.json({ score, items, nextStep, productCount, storeName: (store as { name?: string } | null)?.name ?? '' })
 })
