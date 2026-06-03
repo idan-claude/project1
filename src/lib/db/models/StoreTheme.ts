@@ -236,6 +236,18 @@ export const DEFAULT_FOOTER: IFooterConfig = {
   showTrustBadges:  true,
 }
 
+export const DEFAULT_CHECKOUT: ICheckoutConfig = {
+  showSslBadge:       true,
+  showGuaranteeBadge: true,
+  showReturnBadge:    true,
+  showShippingBadge:  true,
+  guaranteeText:      'אחריות לכל החיים',
+  returnText:         '100 יום החזר כסף מלא',
+  shippingText:       'משלוח חינם · 7–14 ימי עסקים',
+  showPaymentIcons:   true,
+  securityText:       'כל הפרטים מוצפנים ומאובטחים',
+}
+
 export const DEFAULT_SECTIONS = [
   { id: 'hero',     type: 'hero',        enabled: true,  order: 0,  settings: { headline: '', subheadline: '', ctaText: 'הזמן עכשיו' } },
   { id: 'benefits', type: 'benefits',    enabled: true,  order: 1,  settings: {} },
