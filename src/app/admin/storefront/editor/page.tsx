@@ -122,6 +122,13 @@ function TextInput({ value, onChange, placeholder, type = 'text' }: { value: str
   )
 }
 
+function TextArea({ value, onChange, placeholder, rows = 3 }: { value: string; onChange: (v: string) => void; placeholder?: string; rows?: number }) {
+  return (
+    <textarea rows={rows} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
+      className="w-full bg-[#070B14] border border-white/[0.055] rounded-lg px-2.5 py-1.5 text-[11px] text-gray-300 placeholder:text-gray-600 focus:outline-none focus:border-blue-500/40 transition-colors resize-none leading-relaxed" />
+  )
+}
+
 function OptionPills({ options, value, onChange }: { options: { label: string; value: string }[]; value: string; onChange: (v: string) => void }) {
   return (
     <div className="flex flex-wrap gap-1">
