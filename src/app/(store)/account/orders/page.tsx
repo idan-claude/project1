@@ -60,12 +60,12 @@ export default async function OrdersPage() {
       ) : (
         <div className="space-y-4">
           {orders.map((order) => {
-            const o = order as {
+            const o = order as unknown as {
               _id: { toString: () => string }
               orderNumber: string
               status: string
               pricing: { total: number }
-              items: Array<{ productName: string; quantity: number }>
+              items: Array<{ nameHe: string; quantity: number }>
               createdAt: Date
               trackingNumber?: string
             }
