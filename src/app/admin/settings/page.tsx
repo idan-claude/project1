@@ -74,16 +74,18 @@ export default function AdminSettingsPage() {
   const [faqSaved, setFaqSaved] = useState(false)
 
   useEffect(() => {
-    const keys = ['store', 'cloudinary', 'smtp', 'twilio']
+    const keys = ['store', 'cloudinary', 'smtp', 'twilio', 'domain', 'notifications']
     keys.forEach(key => {
       fetch(`/api/admin/settings?key=${key}`)
         .then(r => r.json())
         .then(d => {
           if (!d.settings || Object.keys(d.settings).length === 0) return
-          if (key === 'store') setStore(s => ({ ...s, ...d.settings }))
-          if (key === 'cloudinary') setCloudinary(s => ({ ...s, ...d.settings }))
-          if (key === 'smtp') setSmtp(s => ({ ...s, ...d.settings }))
-          if (key === 'twilio') setTwilio(s => ({ ...s, ...d.settings }))
+          if (key === 'store')         setStore(s => ({ ...s, ...d.settings }))
+          if (key === 'cloudinary')    setCloudinary(s => ({ ...s, ...d.settings }))
+          if (key === 'smtp')          setSmtp(s => ({ ...s, ...d.settings }))
+          if (key === 'twilio')        setTwilio(s => ({ ...s, ...d.settings }))
+          if (key === 'domain')        setDomain(s => ({ ...s, ...d.settings }))
+          if (key === 'notifications') setNotifications(s => ({ ...s, ...d.settings }))
         })
         .catch(() => {})
     })
