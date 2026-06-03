@@ -114,7 +114,7 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
       id: 'email_connected',
       label: 'מיילים אוטומטיים',
       desc: 'שליחת אישורי הזמנה ללקוחות',
-      done: !!(smtp?.smtpUser && smtp?.smtpPassword),
+      done: !!(smtp?.user || (smtp as unknown as Record<string, unknown>)?.smtpUser || process.env.SMTP_USER),
       weight: 10,
       category: 'comms',
       action: '/admin/settings',
