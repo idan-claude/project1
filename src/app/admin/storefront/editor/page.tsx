@@ -187,6 +187,62 @@ export default function StorefrontEditorPage() {
     setTheme(prev => prev ? { ...prev, tokens: { ...prev.tokens, primaryColor: preset.primary, secondaryColor: preset.secondary, accentColor: preset.accent } } : prev)
   }
 
+  function setSectionSetting(id: string, key: string, value: unknown) {
+    setTheme(prev => prev ? {
+      ...prev,
+      sections: prev.sections.map(s => s.id === id ? { ...s, settings: { ...s.settings, [key]: value } } : s)
+    } : prev)
+  }
+
+  function getBenefitItems(section: Section): BenefitItem[] {
+    const items = section.settings.items
+    if (Array.isArray(items)) return items as BenefitItem[]
+    return []
+  }
+
+  function setBenefitItem(sectionId: string, idx: number, key: 'emoji' | 'text', value: string) {
+    setTheme(prev => {
+      if (!prev) return prev
+      return {
+        ...prev,
+        sections: prev.sections.map(s => {
+          if (s.id !== sectionId) return s
+          const items = [...getBenefitItems(s)]
+          items[idx] = { ...items[idx], [key]: value }
+          return { ...s, settings: { ...s.settings, items } }
+        }),
+      }
+    })
+  }
+
+  function addBenefitItem(sectionId: string) {
+    setTheme(prev => {
+      if (!prev) return prev
+      return {
+        ...prev,
+        sections: prev.sections.map(s => {
+          if (s.id !== sectionId) return s
+          const items = [...getBenefitItems(s), { emoji: '✅', text: '' }]
+          return { ...s, settings: { ...s.settings, items } }
+        }),
+      }
+    })
+  }
+
+  function removeBenefitItem(sectionId: string, idx: number) {
+    setTheme(prev => {
+      if (!prev) return prev
+      return {
+        ...prev,
+        sections: prev.sections.map(s => {
+          if (s.id !== sectionId) return s
+          const items = getBenefitItems(s).filter((_, i) => i !== idx)
+          return { ...s, settings: { ...s.settings, items } }
+        }),
+      }
+    })
+  }
+
   function toggleSection(id: string) {
     setTheme(prev => prev ? { ...prev, sections: prev.sections.map(s => s.id === id ? { ...s, enabled: !s.enabled } : s) } : prev)
   }
