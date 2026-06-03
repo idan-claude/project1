@@ -33,7 +33,7 @@ interface Section { id: string; type: string; enabled: boolean; order: number; s
 
 interface Theme {
   _id?: string; storeId?: string; tokens: DesignTokens; logoUrl: string; faviconUrl: string
-  heroImageUrl: string; headerConfig: HeaderConfig; footerConfig: FooterConfig
+  heroImageUrl: string; headerConfig: HeaderConfig; footerConfig: FooterConfig; checkoutConfig: CheckoutConfig
   sections: Section[]; customCss: string; status: 'draft' | 'published'; version?: number
 }
 
