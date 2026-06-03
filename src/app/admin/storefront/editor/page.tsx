@@ -157,6 +157,7 @@ export default function StorefrontEditorPage() {
   const [heroUploading, setHeroUploading] = useState(false)
   const [faviconUploading, setFaviconUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const tabBarRef = useRef<HTMLDivElement>(null)
 
   const load = useCallback(async () => {
