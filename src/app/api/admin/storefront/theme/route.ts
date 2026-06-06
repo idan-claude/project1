@@ -39,7 +39,8 @@ export const PUT = withAdminAuth(async (req: NextRequest) => {
 
 export const POST = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
-  const storeId = getAdminPayload(req)?.storeId ?? 'default'
+  const payload = getAdminPayload(req)
+  const storeId = payload?.storeId ?? 'default'
   const { action } = await req.json()
 
   if (action === 'publish') {
