@@ -341,6 +341,37 @@ export default function StorefrontEditorPage() {
     } finally { setSaving(false) }
   }
 
+  async function loadVersions() {
+    setVersionsLoading(true)
+    try {
+      const r = await fetch('/api/admin/storefront/versions')
+      const d = await r.json()
+      if (d.versions) setVersions(d.versions)
+    } catch {} finally { setVersionsLoading(false) }
+  }
+
+  async function restoreVersion(versionId: string) {
+    if (!confirm('שחזור ירחיב את נסח הנוכחי. להמשיך?')) return
+    setRestoring(versionId)
+    try {
+      const r = await fetch('/api/admin/storefront/versions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ versionId }),
+      })
+      const d = await r.json()
+      if (d.theme) {
+        setTheme({
+          ...d.theme,
+          checkoutConfig: d.theme.checkoutConfig
+            ? { ...DEFAULT_CHECKOUT_CONFIG, ...d.theme.checkoutConfig }
+            : DEFAULT_CHECKOUT_CONFIG,
+        })
+        alert(`גרסה ${d.restoredVersion} שוחזרה בהצלחה כטיוטה.`)
+      }
+    } catch {} finally { setRestoring(null) }
+  }
+
   async function publish() {
     setPublishing(true)
     try {
