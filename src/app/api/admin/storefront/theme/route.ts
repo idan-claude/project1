@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { withAdminAuth, getAdminPayload } from '@/lib/auth/adminAuth'
 import { connectDB } from '@/lib/db/mongoose'
 import StoreTheme, { DEFAULT_TOKENS, DEFAULT_SECTIONS } from '@/lib/db/models/StoreTheme'
+import StoreThemeVersion from '@/lib/db/models/StoreThemeVersion'
 
 export const dynamic = 'force-dynamic'
 
