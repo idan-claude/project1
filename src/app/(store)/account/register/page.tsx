@@ -63,7 +63,7 @@ export default function RegisterPage() {
               value={form.name}
               onChange={e => update('name', e.target.value)}
               required
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="ישראל ישראלי"
             />
           </div>
@@ -76,7 +76,7 @@ export default function RegisterPage() {
               onChange={e => update('email', e.target.value)}
               required
               dir="ltr"
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="your@email.com"
             />
           </div>
@@ -89,7 +89,7 @@ export default function RegisterPage() {
               onChange={e => update('password', e.target.value)}
               required
               dir="ltr"
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="לפחות 8 תווים"
             />
           </div>
@@ -103,7 +103,7 @@ export default function RegisterPage() {
               value={form.phone}
               onChange={e => update('phone', e.target.value)}
               dir="ltr"
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="050-000-0000"
             />
           </div>
