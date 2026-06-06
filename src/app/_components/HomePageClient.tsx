@@ -597,7 +597,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="האימייל שלך"
                 required
-                className="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
+                className="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
               />
               <button type="submit" className="bg-blue-600 text-white font-bold px-5 py-3 rounded-xl hover:bg-blue-700 transition-colors text-sm whitespace-nowrap">
                 שלח לי
