@@ -165,7 +165,7 @@ export default function Header({
                     )}
                   </button>
                 )}
-                <button className="md:hidden p-2 rounded-lg hover:bg-gray-100" onClick={() => setMenuOpen(!menuOpen)} aria-label="תפריט">
+                <button className="md:hidden p-2.5 min-w-[44px] min-h-[44px] rounded-lg hover:bg-gray-100 flex items-center justify-center" onClick={() => setMenuOpen(!menuOpen)} aria-label="תפריט">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
