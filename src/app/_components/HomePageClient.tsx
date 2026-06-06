@@ -321,7 +321,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
                   {content.heroBadge || '🎉 מבצע — קנה 2, קבל 1 חינם · נגמר בקרוב!'}
                 </div>
               )}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-5">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
                 {content.heroHeadline || 'מצא את כל מה שאיבדת'}
               </h1>
               <p className="text-blue-100 text-lg md:text-xl mb-6 max-w-lg mx-auto md:mx-0">
