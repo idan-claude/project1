@@ -928,6 +928,79 @@ export default function StorefrontEditorPage() {
             </div>
           )}
 
+          {/* ── HISTORY ────────────────────────────────────── */}
+          {tab === 'history' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">גרסאות פרסום</p>
+                <button
+                  onClick={loadVersions}
+                  className="text-[10px] text-blue-400 hover:text-blue-300 border border-blue-400/20 px-2 py-1 rounded-lg transition-colors"
+                >
+                  טען היסטוריה
+                </button>
+              </div>
+
+              {versionsLoading ? (
+                <div className="space-y-2">{[...Array(3)].map((_, i) => <div key={i} className="h-14 bg-white/5 rounded-xl animate-pulse" />)}</div>
+              ) : versions.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-3xl mb-2">📋</p>
+                  <p className="text-[11px] text-gray-500">לחץ &quot;טען היסטוריה&quot; לצפייה בגרסאות קודמות.</p>
+                  <p className="text-[10px] text-gray-600 mt-1">גרסאות נשמרות בכל פרסום.</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {/* Current version indicator */}
+                  {theme?.status === 'published' && (
+                    <div className="flex items-center gap-2 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0 animate-pulse" />
+                      <span className="text-[11px] text-emerald-400 font-semibold">גרסה {theme.version} — פעילה כעת</span>
+                    </div>
+                  )}
+
+                  {versions.map(v => {
+                    const d = new Date(v.publishedAt)
+                    const dateStr = d.toLocaleDateString('he-IL', { day: 'numeric', month: 'short', year: 'numeric' })
+                    const timeStr = d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+                    const isCurrent = theme?.version === v.version && theme?.status === 'published'
+                    return (
+                      <div key={v._id} className={`flex items-center gap-2.5 p-3 rounded-xl border transition-colors ${isCurrent ? 'bg-blue-500/10 border-blue-500/20' : 'bg-white/[0.02] border-white/[0.055] hover:bg-white/[0.04]'}`}>
+                        {/* Version badge */}
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px] font-black ${isCurrent ? 'bg-blue-500/20 text-blue-400' : 'bg-white/[0.05] text-gray-500'}`}>
+                          v{v.version}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[11px] font-semibold text-white truncate">{v.label || `גרסה ${v.version}`}</p>
+                          <p className="text-[9px] text-gray-500">{dateStr} · {timeStr}</p>
+                        </div>
+                        {!isCurrent && (
+                          <button
+                            onClick={() => restoreVersion(v._id)}
+                            disabled={restoring === v._id}
+                            className="text-[9px] text-blue-400 hover:text-blue-300 border border-blue-400/20 px-2 py-1 rounded-lg transition-colors disabled:opacity-50 flex-shrink-0 whitespace-nowrap"
+                          >
+                            {restoring === v._id ? '...' : 'שחזר'}
+                          </button>
+                        )}
+                        {isCurrent && <span className="text-[9px] text-emerald-400 flex-shrink-0">פעילה</span>}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+              <div className="h-px bg-white/[0.055]" />
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3">
+                <p className="text-[10px] text-blue-400 font-semibold mb-1">איך עובד שחזור?</p>
+                <p className="text-[9px] text-gray-400 leading-relaxed">
+                  שחזור טוען את הגדרות הגרסה הנבחרת כ<strong className="text-white">טיוטה</strong> חדשה.
+                  הגרסה הפעילה לא משתנה עד שתלחץ &quot;פרסם&quot;.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* ── ADVANCED ───────────────────────────────────── */}
           {tab === 'advanced' && (
             <div className="space-y-5">
