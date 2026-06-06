@@ -77,7 +77,7 @@ function ResetForm() {
                 required
                 minLength={8}
                 dir="ltr"
-                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="לפחות 8 תווים"
               />
             </div>
@@ -90,7 +90,7 @@ function ResetForm() {
                 onChange={e => setConfirm(e.target.value)}
                 required
                 dir="ltr"
-                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="הכנס שוב את הסיסמה"
               />
             </div>
