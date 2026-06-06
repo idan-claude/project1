@@ -167,6 +167,9 @@ export default function StorefrontEditorPage() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const [dragId, setDragId] = useState<string | null>(null)
   const [dragOverId, setDragOverId] = useState<string | null>(null)
+  const [versions, setVersions] = useState<{ _id: string; version: number; publishedAt: string; publishedBy: string; label: string }[]>([])
+  const [versionsLoading, setVersionsLoading] = useState(false)
+  const [restoring, setRestoring] = useState<string | null>(null)
   const tabBarRef = useRef<HTMLDivElement>(null)
 
   const DEFAULT_CHECKOUT_CONFIG: CheckoutConfig = {
