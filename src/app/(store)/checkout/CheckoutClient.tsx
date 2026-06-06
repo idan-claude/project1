@@ -295,7 +295,7 @@ export default function CheckoutClient({ checkoutConfig, headerConfig, logoUrl, 
                     onChange={e => setCouponCode(e.target.value.toUpperCase())}
                     onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), applyCoupon())}
                     placeholder="הכנס קוד קופון"
-                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 border border-gray-200 rounded-xl px-3 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <button type="button" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}
                     className="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-50 hover:bg-blue-700 transition-colors">
