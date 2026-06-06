@@ -326,7 +326,7 @@ export default function CheckoutClient({ checkoutConfig, headerConfig, logoUrl, 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-700 hover:bg-blue-800 disabled:opacity-60 text-white font-extrabold py-4 rounded-xl text-lg shadow-lg transition-colors flex items-center justify-center gap-3"
+                  className="w-full bg-blue-700 hover:bg-blue-800 active:bg-blue-900 disabled:opacity-60 text-white font-extrabold py-4 rounded-xl text-lg shadow-lg transition-colors flex items-center justify-center gap-3"
                 >
                   {loading ? (
                     <><span className="animate-spin">⏳</span> מעבד...</>
