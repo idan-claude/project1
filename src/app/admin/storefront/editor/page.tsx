@@ -87,7 +87,7 @@ const RADIUS_OPTIONS = [
   { label: 'עגול',  value: '9999px' },
 ]
 
-type Tab = 'colors' | 'brand' | 'typography' | 'layout' | 'header' | 'footer' | 'checkout' | 'sections' | 'advanced'
+type Tab = 'colors' | 'brand' | 'typography' | 'layout' | 'header' | 'footer' | 'checkout' | 'sections' | 'history' | 'advanced'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'colors',     label: 'צבעים' },
@@ -98,6 +98,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'footer',     label: 'פוטר' },
   { id: 'checkout',   label: 'צ\'קאאוט' },
   { id: 'sections',   label: 'סקציות' },
+  { id: 'history',    label: 'היסטוריה' },
   { id: 'advanced',   label: 'מתקדם' },
 ]
 
