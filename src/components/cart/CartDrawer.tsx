@@ -52,19 +52,19 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                     <p className="text-sm font-medium line-clamp-2">{item.nameHe}</p>
                     {item.variantLabel && <p className="text-xs text-gray-500">{item.variantLabel}</p>}
                     <p className="text-sm font-bold text-blue-600 mt-1">{formatPrice(item.sellingPrice)}</p>
-                    <div className="flex items-center gap-2 mt-1.5">
+                    <div className="flex items-center gap-2 mt-2">
                       <button
                         onClick={() => updateQuantity(item.productId, item.variantLabel, item.quantity - 1)}
-                        className="w-6 h-6 rounded border text-sm flex items-center justify-center hover:bg-gray-50"
-                      >-</button>
-                      <span className="text-sm font-medium w-5 text-center">{item.quantity}</span>
+                        className="w-9 h-9 rounded-lg border text-base font-medium flex items-center justify-center hover:bg-gray-50 active:bg-gray-100 flex-shrink-0"
+                      >−</button>
+                      <span className="text-sm font-semibold w-5 text-center">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.productId, item.variantLabel, item.quantity + 1)}
-                        className="w-6 h-6 rounded border text-sm flex items-center justify-center hover:bg-gray-50"
+                        className="w-9 h-9 rounded-lg border text-base font-medium flex items-center justify-center hover:bg-gray-50 active:bg-gray-100 flex-shrink-0"
                       >+</button>
                       <button
                         onClick={() => removeItem(item.productId, item.variantLabel)}
-                        className="mr-auto text-red-400 hover:text-red-600 text-xs"
+                        className="mr-auto text-red-400 hover:text-red-600 text-sm font-medium px-2 py-1.5 rounded-lg hover:bg-red-50 active:bg-red-100 transition-colors"
                       >הסר</button>
                     </div>
                   </div>
