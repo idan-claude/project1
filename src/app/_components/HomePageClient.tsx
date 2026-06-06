@@ -349,7 +349,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
                 <span>🚚 משלוח חינם על כל הזמנה</span>
               </div>
             </div>
-            <div className="flex-shrink-0 w-72 md:w-96">
+            <div className="flex-shrink-0 w-full max-w-xs md:w-96">
               <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20">
                 <img src="/images/product-1-hero.svg" alt="FindCard PRO" className="w-full h-auto" />
               </div>
