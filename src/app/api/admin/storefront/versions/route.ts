@@ -6,7 +6,6 @@ import StoreThemeVersion from '@/lib/db/models/StoreThemeVersion'
 
 export const dynamic = 'force-dynamic'
 
-// GET — list all version snapshots for the store
 export const GET = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
   const storeId = getAdminPayload(req)?.storeId ?? 'default'
@@ -20,7 +19,6 @@ export const GET = withAdminAuth(async (req: NextRequest) => {
   return NextResponse.json({ versions })
 })
 
-// POST — restore a specific version
 export const POST = withAdminAuth(async (req: NextRequest) => {
   await connectDB()
   const storeId = getAdminPayload(req)?.storeId ?? 'default'
@@ -30,14 +28,15 @@ export const POST = withAdminAuth(async (req: NextRequest) => {
   const ver = await StoreThemeVersion.findOne({ _id: versionId, storeId }).lean()
   if (!ver) return NextResponse.json({ error: 'גרסה לא נמצאה' }, { status: 404 })
 
-  const { storeId: _s, version: _v, publishedAt: _pa, publishedBy: _pb, label: _l,
-          _id: _id, createdAt: _ca, updatedAt: _ua, ...fields } = ver.snapshot as Record<string, unknown> & typeof ver
+  const snap = ver.snapshot as Record<string, unknown>
+  // Restore snapshot fields, but keep it as draft
+  const { _id: _a, __v: _b, createdAt: _c, updatedAt: _d, storeId: _e, ...restorableFields } = snap
 
   const theme = await StoreTheme.findOneAndUpdate(
     { storeId },
-    { $set: { ...fields, status: 'draft', publishedAt: null } },
+    { $set: { ...restorableFields, status: 'draft', publishedAt: null } },
     { upsert: true, new: true }
   )
 
-  return NextResponse.json({ theme, restored: true })
+  return NextResponse.json({ theme, restored: true, restoredVersion: ver.version })
 })
