@@ -43,11 +43,23 @@ export const POST = withAdminAuth(async (req: NextRequest) => {
   const { action } = await req.json()
 
   if (action === 'publish') {
+    const now = new Date()
     const theme = await StoreTheme.findOneAndUpdate(
       { storeId },
-      { $set: { status: 'published', publishedAt: new Date() }, $inc: { version: 1 } },
+      { $set: { status: 'published', publishedAt: now }, $inc: { version: 1 } },
       { new: true }
     )
+    if (theme) {
+      const { _id, __v, createdAt, updatedAt, ...snapshot } = theme.toObject()
+      await StoreThemeVersion.create({
+        storeId,
+        version: theme.version,
+        publishedAt: now,
+        publishedBy: payload?.email || '',
+        label: `גרסה ${theme.version}`,
+        snapshot,
+      })
+    }
     return NextResponse.json({ theme, published: true })
   }
 
