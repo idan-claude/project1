@@ -21,7 +21,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
 
     const [theme, store] = await Promise.all([
       StoreTheme.findOne({ storeId }).lean(),
-      Store.findById(storeId).select('name').lean(),
+      Store.findOne({ storeId }).select('name').lean(),
     ])
 
     if (store?.name) storeName = store.name
