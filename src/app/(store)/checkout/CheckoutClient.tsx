@@ -176,11 +176,12 @@ export default function CheckoutClient({ checkoutConfig, headerConfig, logoUrl, 
 
   function handleWhatsApp() {
     if (!validate()) return
+    const wa = headerConfig?.whatsapp?.replace(/\D/g, '') || FALLBACK_WA_NUMBER
     const itemsText = items.map(i => `${i.nameHe} × ${i.quantity} — ${formatPrice(i.sellingPrice * i.quantity)}`).join('\n')
     const msg = encodeURIComponent(
       `שלום! אני רוצה להזמין:\n\n${itemsText}\n\nסה"כ: ${formatPrice(orderTotal)}\n\nפרטים:\nשם: ${form.name}\nאימייל: ${form.email}\nטלפון: ${form.phone}\nכתובת: ${form.street}, ${form.city}${form.zip ? ' ' + form.zip : ''}`
     )
-    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank')
+    window.open(`https://wa.me/${wa}?text=${msg}`, '_blank')
   }
 
   if (items.length === 0) {
