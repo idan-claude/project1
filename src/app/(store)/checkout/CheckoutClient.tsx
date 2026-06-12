@@ -8,7 +8,7 @@ import Header from '@/components/layout/Header'
 import { track, trackPageView, getAttributionData } from '@/lib/tracking/tracker'
 import type { ICheckoutConfig, IHeaderConfig } from '@/lib/db/models/StoreTheme'
 
-const WA_NUMBER = '9720525884463'
+const FALLBACK_WA_NUMBER = '9720525884463'
 
 function LockIcon() {
   return (
