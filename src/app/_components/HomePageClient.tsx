@@ -363,7 +363,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
       </section>}
 
       {/* ── BENEFITS BAR ── */}
-      <section id="benefits" className="scroll-mt-28 bg-white border-b border-gray-100 py-4 px-4">
+      {show('benefits') && <section id="benefits" className="scroll-mt-28 bg-white border-b border-gray-100 py-4 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {displayBenefits.map((item, i) => (
