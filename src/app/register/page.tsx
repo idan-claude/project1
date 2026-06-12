@@ -85,8 +85,10 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[#070B14] flex flex-col items-center justify-center p-4" dir="rtl">
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white text-lg font-black tracking-tight mx-auto mb-4 shadow-lg shadow-blue-500/20">
-          S
+        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 shadow-lg shadow-blue-500/20">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
         </div>
         <h1 className="text-2xl font-bold text-white">פתח חנות חינם</h1>
         <p className="text-gray-500 text-sm mt-1">הצטרף לאלפי בעלי עסקים שמוכרים עם הפלטפורמה שלנו</p>
