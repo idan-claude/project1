@@ -288,14 +288,22 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
         <div className="lg:hidden">
           <div className="relative bg-[#0C1020] select-none" onTouchStart={e => imgSwipe(e, 'start')} onTouchEnd={e => imgSwipe(e, 'end')}>
             <img src={displayImage} alt={nameHe} className="w-full aspect-square object-cover" />
-            <div dir="ltr" className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-2 pt-6 bg-gradient-to-t from-[#0C1020]/80 to-transparent">
-              {gallery.map((src, i) => (
+            {/* Dot indicators overlay */}
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pb-1">
+              {gallery.map((_, i) => (
                 <button key={i} onClick={() => setActiveImgTracked(i)}
-                  className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${activeImg === i ? 'border-blue-400 opacity-100' : 'border-transparent opacity-50'}`}>
-                  <img src={src} alt="" className="w-full h-full object-cover bg-[#0C1020]" />
-                </button>
+                  className={`rounded-full transition-all duration-200 ${activeImg === i ? 'w-5 h-1.5 bg-blue-400' : 'w-1.5 h-1.5 bg-white/50'}`} />
               ))}
             </div>
+          </div>
+          {/* Scrollable thumbnail strip */}
+          <div dir="ltr" className="flex gap-2 overflow-x-auto px-4 py-2 bg-[#0C1020] scrollbar-none">
+            {gallery.map((src, i) => (
+              <button key={i} onClick={() => setActiveImgTracked(i)} className="flex-shrink-0"
+                style={{ width: 52, height: 52 }}>
+                <img src={src} alt="" className={`w-full h-full object-cover rounded-lg border-2 transition-all bg-[#0C1020] ${activeImg === i ? 'border-blue-400 opacity-100' : 'border-transparent opacity-45'}`} />
+              </button>
+            ))}
           </div>
 
           <div className="px-4 pt-4 space-y-3">
