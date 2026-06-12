@@ -405,13 +405,13 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
             </div>
           ))}
         </div>
-      </section>
+      </section>}
 
       {/* ── FEATURE CAROUSEL ── */}
-      <FeatureCarousel />
+      {show('features') && <FeatureCarousel />}
 
       {/* ── PRODUCT PREVIEW ── */}
-      <section id="product" className="scroll-mt-28 bg-gray-50 py-20 px-4">
+      {show('product') && <section id="product" className="scroll-mt-28 bg-gray-50 py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
             <div className="rounded-3xl overflow-hidden shadow-xl order-2 md:order-1">
