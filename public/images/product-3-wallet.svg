@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <linearGradient id="walletBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7A5930"/>
+      <stop offset="50%" stop-color="#5E4020"/>
+      <stop offset="100%" stop-color="#3E2810"/>
+    </linearGradient>
+    <linearGradient id="walletFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9A7040"/>
+      <stop offset="100%" stop-color="#6A4A20"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background: warm beige -->
+  <rect width="900" height="900" fill="#F2EDE5"/>
+  <ellipse cx="450" cy="440" rx="300" ry="190" fill="white" opacity="0.35"/>
+
+  <!-- Wallet shadow -->
+  <rect x="195" y="330" width="510" height="340" rx="20" fill="#000" opacity="0.09" transform="translate(0,16)"/>
+  <rect x="195" y="330" width="510" height="340" rx="20" fill="#000" opacity="0.06" transform="translate(0,8)"/>
+
+  <!-- Wallet body (leather brown) -->
+  <rect x="195" y="330" width="510" height="340" rx="20" fill="url(#walletBody)"/>
+  <rect x="195" y="330" width="510" height="230" rx="20" fill="url(#walletFace)"/>
+
+  <!-- Leather texture dots -->
+  <g fill="#4A2E10" opacity="0.20">
+    <circle cx="225" cy="358" r="2.5"/><circle cx="255" cy="358" r="2.5"/><circle cx="285" cy="358" r="2.5"/><circle cx="315" cy="358" r="2.5"/><circle cx="345" cy="358" r="2.5"/><circle cx="375" cy="358" r="2.5"/><circle cx="405" cy="358" r="2.5"/><circle cx="435" cy="358" r="2.5"/><circle cx="465" cy="358" r="2.5"/><circle cx="495" cy="358" r="2.5"/><circle cx="525" cy="358" r="2.5"/><circle cx="555" cy="358" r="2.5"/><circle cx="585" cy="358" r="2.5"/>
+    <circle cx="240" cy="378" r="2.5"/><circle cx="270" cy="378" r="2.5"/><circle cx="300" cy="378" r="2.5"/><circle cx="330" cy="378" r="2.5"/><circle cx="360" cy="378" r="2.5"/><circle cx="390" cy="378" r="2.5"/><circle cx="420" cy="378" r="2.5"/><circle cx="450" cy="378" r="2.5"/><circle cx="480" cy="378" r="2.5"/><circle cx="510" cy="378" r="2.5"/><circle cx="540" cy="378" r="2.5"/><circle cx="570" cy="378" r="2.5"/>
+    <circle cx="225" cy="398" r="2.5"/><circle cx="255" cy="398" r="2.5"/><circle cx="285" cy="398" r="2.5"/><circle cx="315" cy="398" r="2.5"/><circle cx="345" cy="398" r="2.5"/><circle cx="375" cy="398" r="2.5"/><circle cx="405" cy="398" r="2.5"/><circle cx="435" cy="398" r="2.5"/><circle cx="465" cy="398" r="2.5"/><circle cx="495" cy="398" r="2.5"/><circle cx="525" cy="398" r="2.5"/>
+  </g>
+
+  <!-- Wallet stitching border -->
+  <rect x="203" y="338" width="494" height="324" rx="16" fill="none" stroke="#C09048" stroke-width="1.5" stroke-dasharray="7 5" opacity="0.40"/>
+
+  <!-- Wallet snap/clasp bottom center -->
+  <circle cx="450" cy="670" r="13" fill="#C09048"/>
+  <circle cx="450" cy="670" r="9" fill="#A07028"/>
+  <circle cx="450" cy="670" r="4" fill="#C09048"/>
+
+  <!-- FindCard card slotted into top card compartment (protruding up slightly) -->
+  <g transform="translate(450 355) rotate(1)">
+    <!-- Card shadow -->
+    <rect x="-198" y="-122" width="396" height="244" rx="18" fill="#000" opacity="0.20" transform="translate(4,7)"/>
+    <!-- Matte black card body -->
+    <rect x="-198" y="-122" width="396" height="244" rx="18" fill="#1A1A1C"/>
+
+    <!-- Matte texture -->
+    <g fill="#2C2C2E" opacity="0.50">
+      <circle cx="-170" cy="-95" r="1"/><circle cx="-148" cy="-95" r="1"/><circle cx="-126" cy="-95" r="1"/><circle cx="-104" cy="-95" r="1"/><circle cx="-82" cy="-95" r="1"/><circle cx="-60" cy="-95" r="1"/><circle cx="-38" cy="-95" r="1"/><circle cx="-16" cy="-95" r="1"/><circle cx="6" cy="-95" r="1"/><circle cx="28" cy="-95" r="1"/><circle cx="50" cy="-95" r="1"/><circle cx="72" cy="-95" r="1"/><circle cx="94" cy="-95" r="1"/><circle cx="116" cy="-95" r="1"/><circle cx="138" cy="-95" r="1"/><circle cx="160" cy="-95" r="1"/>
+      <circle cx="-181" cy="-74" r="1"/><circle cx="-159" cy="-74" r="1"/><circle cx="-137" cy="-74" r="1"/><circle cx="-115" cy="-74" r="1"/><circle cx="-93" cy="-74" r="1"/><circle cx="-71" cy="-74" r="1"/><circle cx="-49" cy="-74" r="1"/><circle cx="-27" cy="-74" r="1"/><circle cx="-5" cy="-74" r="1"/><circle cx="17" cy="-74" r="1"/><circle cx="39" cy="-74" r="1"/><circle cx="61" cy="-74" r="1"/><circle cx="83" cy="-74" r="1"/><circle cx="105" cy="-74" r="1"/><circle cx="127" cy="-74" r="1"/><circle cx="149" cy="-74" r="1"/><circle cx="171" cy="-74" r="1"/>
+    </g>
+
+    <!-- Top edge highlight -->
+    <rect x="-198" y="-122" width="396" height="2" rx="1" fill="white" opacity="0.06"/>
+
+    <!-- Wireless coil (bottom right) -->
+    <g transform="translate(155, 88)" fill="none" stroke="white" opacity="0.25">
+      <circle cx="0" cy="0" r="16" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="10" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="4.5" stroke-width="1.2"/>
+    </g>
+
+    <!-- Small "FindCard PRO" text -->
+    <text x="-178" y="108" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" opacity="0.18" letter-spacing="1.5">FINDCARD PRO</text>
+  </g>
+
+  <!-- Caption label -->
+  <text x="450" y="798" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#3A2412" text-anchor="middle" opacity="0.85">נכנס לכל ארנק — בלי תוספת עובי</text>
+  <text x="450" y="822" font-family="Arial, sans-serif" font-size="13" fill="#888" text-anchor="middle">1.8 מ״מ עובי · אותו גודל כמו כרטיס אשראי</text>
+</svg>
