@@ -619,7 +619,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
           className="inline-block bg-blue-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-blue-700 transition-colors text-xl shadow-lg">
           {content.ctaButtonText || 'הזמן עכשיו ←'}
         </Link>
-        <p className="text-sm text-gray-400 mt-4">🛡️ אחריות לכל החיים · ✅ Apple MFI מאושר · 🚚 משלוח חינם</p>
+        <p className="text-sm text-gray-400 mt-4">🛡️ אחריות לכל החיים · ✅ תואם Apple Find My · 🚚 משלוח חינם</p>
       </section>
     </>
   )
