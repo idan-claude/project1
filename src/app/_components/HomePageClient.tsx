@@ -532,7 +532,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
       </section>
 
       {/* ── GUARANTEE ── */}
-      <section id="guarantee" className="scroll-mt-28 bg-gray-900 text-white py-14 px-4">
+      {show('guarantee') && <section id="guarantee" className="scroll-mt-28 bg-gray-900 text-white py-14 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <div className="text-5xl mb-4">🛡️</div>
           <h2 className="text-2xl md:text-3xl font-extrabold mb-3">
