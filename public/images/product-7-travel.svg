@@ -1,100 +1,92 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision">
   <defs>
-    <linearGradient id="luggageBody" x1="0%" y1="0%" x2="0%" y2="100%">
+    <pattern id="pb" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#1C1E22"/>
+      <circle cx="2" cy="2" r="1.5" fill="#252829"/>
+      <circle cx="6.5" cy="6.5" r="1.5" fill="#252829"/>
+      <circle cx="2" cy="7" r="1.1" fill="#232628"/>
+      <circle cx="7" cy="2" r="1.1" fill="#232628"/>
+    </pattern>
+    <linearGradient id="lgb" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#3A3A50"/>
       <stop offset="100%" stop-color="#22222E"/>
     </linearGradient>
-    <linearGradient id="luggageFace" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="lgf" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#4A4A64"/>
       <stop offset="100%" stop-color="#2E2E40"/>
     </linearGradient>
   </defs>
 
-  <!-- Background: soft travel blue-gray -->
   <rect width="900" height="900" fill="#EEF2F8"/>
-  <ellipse cx="450" cy="400" rx="340" ry="210" fill="white" opacity="0.45"/>
+  <ellipse cx="450" cy="430" rx="340" ry="218" fill="white" opacity="0.40"/>
 
-  <!-- Airplane silhouette (top, suggesting travel) -->
-  <g transform="translate(450, 130) rotate(-15)" fill="#8899BB" opacity="0.20">
-    <path d="M0,-20 L80,5 L80,15 L10,8 L5,40 L20,42 L20,48 L0,46 L-20,48 L-20,42 L-5,40 L-10,8 L-80,15 L-80,5 Z"/>
+  <!-- Airplane -->
+  <g transform="translate(450, 130) rotate(-15)" fill="#8899BB" opacity="0.17">
+    <path d="M0,-18 L76,4 L76,14 L8,8 L4,36 L18,38 L18,44 L0,42 L-18,44 L-18,38 L-4,36 L-8,8 L-76,14 L-76,4 Z"/>
   </g>
 
-  <!-- Location pins (connecting cities) -->
-  <!-- TLV pin -->
-  <g transform="translate(200, 220)">
-    <path d="M0,-24 C-12,-24 -20,-16 -20,-6 C-20,8 0,26 0,26 C0,26 20,8 20,-6 C20,-16 12,-24 0,-24 Z" fill="#4488FF"/>
-    <circle cx="0" cy="-6" r="8" fill="white"/>
-    <text x="0" y="38" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#3355AA" text-anchor="middle">TLV</text>
+  <!-- Location pin left (origin) -->
+  <g transform="translate(196, 216)">
+    <path d="M0,-22 C-11,-22 -18,-14 -18,-5 C-18,8 0,24 0,24 C0,24 18,8 18,-5 C18,-14 11,-22 0,-22 Z" fill="#4488FF"/>
+    <circle cx="0" cy="-5" r="7" fill="white"/>
   </g>
-  <!-- BCN pin -->
-  <g transform="translate(700, 200)">
-    <path d="M0,-24 C-12,-24 -20,-16 -20,-6 C-20,8 0,26 0,26 C0,26 20,8 20,-6 C20,-16 12,-24 0,-24 Z" fill="#FF5544"/>
-    <circle cx="0" cy="-6" r="8" fill="white"/>
-    <text x="0" y="38" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#AA3322" text-anchor="middle">BCN</text>
+  <!-- Location pin right (destination) -->
+  <g transform="translate(702, 198)">
+    <path d="M0,-22 C-11,-22 -18,-14 -18,-5 C-18,8 0,24 0,24 C0,24 18,8 18,-5 C18,-14 11,-22 0,-22 Z" fill="#FF5544"/>
+    <circle cx="0" cy="-5" r="7" fill="white"/>
   </g>
-  <!-- Dashed path between -->
-  <path d="M220,220 Q450,150 680,200" stroke="#8899BB" stroke-width="1.5" fill="none" stroke-dasharray="6 5" opacity="0.50"/>
+  <!-- Dashed flight path -->
+  <path d="M214,216 Q450,148 684,198" stroke="#8899BB" stroke-width="1.5" fill="none" stroke-dasharray="6 5" opacity="0.46"/>
 
-  <!-- Luggage / suitcase -->
-  <g transform="translate(420, 490)">
-    <!-- Wheel shadows -->
-    <ellipse cx="-100" cy="225" rx="22" ry="8" fill="#000" opacity="0.10"/>
-    <ellipse cx="100" cy="225" rx="22" ry="8" fill="#000" opacity="0.10"/>
-    <!-- Luggage shadow -->
-    <rect x="-165" y="80" width="330" height="280" rx="22" fill="#000" opacity="0.10" transform="translate(6,14)"/>
-    <!-- Luggage body -->
-    <rect x="-165" y="80" width="330" height="280" rx="22" fill="url(#luggageBody)"/>
-    <rect x="-165" y="80" width="330" height="180" rx="22" fill="url(#luggageFace)"/>
-    <!-- Luggage handle -->
-    <rect x="-42" y="50" width="84" height="14" rx="7" fill="#3A3A48"/>
-    <rect x="-42" y="50" width="84" height="40" rx="8" fill="none" stroke="#4A4A58" stroke-width="7"/>
-    <!-- Luggage zipper line -->
-    <line x1="-165" y1="230" x2="165" y2="230" stroke="#4A4A60" stroke-width="2" opacity="0.5"/>
-    <!-- Luggage wheels -->
-    <circle cx="-100" cy="218" r="18" fill="#2A2A38" stroke="#3A3A48" stroke-width="2"/>
-    <circle cx="-100" cy="218" r="8" fill="#3A3A48"/>
-    <circle cx="100" cy="218" r="18" fill="#2A2A38" stroke="#3A3A48" stroke-width="2"/>
-    <circle cx="100" cy="218" r="8" fill="#3A3A48"/>
-    <!-- Luggage corner guards -->
-    <rect x="-165" y="80" width="12" height="12" rx="3" fill="#5A5A70" opacity="0.5"/>
-    <rect x="153" y="80" width="12" height="12" rx="3" fill="#5A5A70" opacity="0.5"/>
-    <rect x="-165" y="338" width="12" height="12" rx="3" fill="#5A5A70" opacity="0.5"/>
-    <rect x="153" y="338" width="12" height="12" rx="3" fill="#5A5A70" opacity="0.5"/>
-    <!-- Luggage tag -->
-    <rect x="110" y="108" width="50" height="34" rx="5" fill="#FFCC44" stroke="#DD9922" stroke-width="1.5"/>
-    <text x="135" y="130" font-family="Arial, sans-serif" font-size="10" font-weight="700" fill="#664400" text-anchor="middle">✈</text>
+  <!-- Suitcase -->
+  <g transform="translate(420, 502)">
+    <ellipse cx="-95" cy="224" rx="20" ry="7" fill="#000" opacity="0.07"/>
+    <ellipse cx="95" cy="224" rx="20" ry="7" fill="#000" opacity="0.07"/>
+    <!-- Shadow -->
+    <rect x="-158" y="88" width="316" height="268" rx="20" fill="#000" opacity="0.09" transform="translate(6,14)"/>
+    <!-- Body -->
+    <rect x="-158" y="88" width="316" height="268" rx="20" fill="url(#lgb)"/>
+    <rect x="-158" y="88" width="316" height="174" rx="20" fill="url(#lgf)"/>
+    <!-- Handle -->
+    <rect x="-40" y="58" width="80" height="12" rx="6" fill="#383844"/>
+    <rect x="-40" y="58" width="80" height="38" rx="8" fill="none" stroke="#484854" stroke-width="7"/>
+    <!-- Zipper line -->
+    <line x1="-158" y1="234" x2="158" y2="234" stroke="#4A4A60" stroke-width="2" opacity="0.42"/>
+    <!-- Wheels -->
+    <circle cx="-95" cy="218" r="17" fill="#2A2A38" stroke="#3A3A48" stroke-width="2"/>
+    <circle cx="-95" cy="218" r="7" fill="#3A3A48"/>
+    <circle cx="95" cy="218" r="17" fill="#2A2A38" stroke="#3A3A48" stroke-width="2"/>
+    <circle cx="95" cy="218" r="7" fill="#3A3A48"/>
+    <!-- Corner guards -->
+    <rect x="-158" y="88" width="11" height="11" rx="3" fill="#5A5A70" opacity="0.42"/>
+    <rect x="147" y="88" width="11" height="11" rx="3" fill="#5A5A70" opacity="0.42"/>
+    <rect x="-158" y="345" width="11" height="11" rx="3" fill="#5A5A70" opacity="0.42"/>
+    <rect x="147" y="345" width="11" height="11" rx="3" fill="#5A5A70" opacity="0.42"/>
+    <!-- Luggage tag (no text, just color) -->
+    <rect x="110" y="114" width="44" height="30" rx="5" fill="#FFCC44" stroke="#DD9922" stroke-width="1.5"/>
+    <circle cx="132" cy="129" r="4" fill="#AA7700" opacity="0.65"/>
   </g>
 
-  <!-- FindCard card resting against luggage -->
-  <g transform="translate(640 540) rotate(8)">
-    <!-- Card shadow -->
-    <rect x="-90" y="-60" width="180" height="120" rx="10" fill="#000" opacity="0.15" transform="translate(3,5)"/>
-    <!-- Matte black card -->
-    <rect x="-90" y="-60" width="180" height="120" rx="10" fill="#1A1A1C"/>
-    <!-- Texture -->
-    <g fill="#2C2C2E" opacity="0.45">
-      <circle cx="-72" cy="-42" r="1"/><circle cx="-54" cy="-42" r="1"/><circle cx="-36" cy="-42" r="1"/><circle cx="-18" cy="-42" r="1"/><circle cx="0" cy="-42" r="1"/><circle cx="18" cy="-42" r="1"/><circle cx="36" cy="-42" r="1"/><circle cx="54" cy="-42" r="1"/><circle cx="72" cy="-42" r="1"/>
-      <circle cx="-81" cy="-24" r="1"/><circle cx="-63" cy="-24" r="1"/><circle cx="-45" cy="-24" r="1"/><circle cx="-27" cy="-24" r="1"/><circle cx="-9" cy="-24" r="1"/><circle cx="9" cy="-24" r="1"/><circle cx="27" cy="-24" r="1"/><circle cx="45" cy="-24" r="1"/><circle cx="63" cy="-24" r="1"/><circle cx="81" cy="-24" r="1"/>
+  <!-- FindCard card propped against suitcase -->
+  <g transform="translate(644, 548) rotate(6)">
+    <rect x="-90" y="-57" width="180" height="114" rx="10" fill="#000" opacity="0.13" transform="translate(3,5)"/>
+    <rect x="-90" y="-57" width="180" height="114" rx="10" fill="#1C1E22"/>
+    <rect x="-90" y="-57" width="180" height="114" rx="10" fill="url(#pb)" opacity="0.92"/>
+    <rect x="-90" y="-57" width="180" height="2" fill="white" opacity="0.05"/>
+    <g transform="translate(-25, 7)" fill="none" stroke="#282B2E" stroke-linecap="round">
+      <path d="M -6,0 A 7,7 0 0 0 6,0" stroke-width="1.8"/>
+      <path d="M -10,2 A 11,11 0 0 0 10,2" stroke-width="1.6"/>
+      <path d="M -14,5 A 15,15 0 0 0 14,5" stroke-width="1.4"/>
+      <path d="M 2,8 L -2,16 L 1,16 L -3,24" stroke-width="1.6"/>
     </g>
-    <!-- Top edge highlight -->
-    <rect x="-90" y="-60" width="180" height="1.5" rx="0.75" fill="white" opacity="0.06"/>
-    <!-- Wireless coil -->
-    <g transform="translate(60, 30)" fill="none" stroke="white" opacity="0.22">
-      <circle cx="0" cy="0" r="12" stroke-width="1.2"/>
-      <circle cx="0" cy="0" r="7" stroke-width="1"/>
-      <circle cx="0" cy="0" r="3" stroke-width="1"/>
-    </g>
-    <!-- Text mark -->
-    <text x="-78" y="48" font-family="Arial, sans-serif" font-size="6" font-weight="600" fill="white" opacity="0.18" letter-spacing="1.2">FINDCARD PRO</text>
+    <rect x="82" y="-28" width="7" height="13" rx="2" fill="#0F1114"/>
   </g>
 
-  <!-- "Found!" indicator -->
-  <g transform="translate(670, 440)">
-    <rect x="-68" y="-20" width="136" height="40" rx="20" fill="#1A5A2A" opacity="0.92"/>
-    <text x="0" y="5" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">📍 מזוודה נמצאת!</text>
+  <!-- Location pin on suitcase (green = found) -->
+  <g transform="translate(420, 432)">
+    <ellipse cx="0" cy="22" rx="9" ry="4" fill="#000" opacity="0.14"/>
+    <path d="M0,-22 C-11,-22 -18,-14 -18,-4 C-18,10 0,24 0,24 C0,24 18,10 18,-4 C18,-14 11,-22 0,-22 Z" fill="#32AE60"/>
+    <circle cx="0" cy="-4" r="8" fill="white"/>
+    <rect x="-4" y="-7" width="8" height="6" rx="1.5" fill="#1C1E22"/>
   </g>
-
-  <!-- Caption -->
-  <text x="450" y="798" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1A2040" text-anchor="middle" opacity="0.88">לטיול חו"ל עם שקט נפשי מלא</text>
-  <text x="450" y="822" font-family="Arial, sans-serif" font-size="13" fill="#888" text-anchor="middle">Find My עובד ב-185 מדינות · דרך כל iPhone בסביבה</text>
 </svg>
