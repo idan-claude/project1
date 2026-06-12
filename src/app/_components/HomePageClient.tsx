@@ -315,7 +315,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
   return (
     <>
       {/* ── HERO ── */}
-      <section id="hero" className="scroll-mt-28 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white">
+      {show('hero') && <section id="hero" className="scroll-mt-28 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-28">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 text-center md:text-right">
