@@ -140,9 +140,9 @@ function psychoPrice(n: number): number {
 function buildDefaultBundles(sellingPrice: number, compareAtPrice: number): ProductBundle[] {
   const c1 = compareAtPrice || psychoPrice(sellingPrice * 1.5)
   return [
-    { title: 'כרטיס 1', quantity: 1, price: sellingPrice, compareAtPrice: c1, badge: null, badgeColor: '', isRecommended: false, benefits: [] },
-    { title: '2 כרטיסים + 1 חינם', quantity: 3, price: psychoPrice(sellingPrice * 1.5), compareAtPrice: 3 * sellingPrice, badge: '72% מהלקוחות', badgeColor: 'bg-blue-600', isRecommended: true, benefits: [] },
-    { title: '3 כרטיסים + 1 חינם', quantity: 4, price: psychoPrice(sellingPrice * 1.9), compareAtPrice: 4 * sellingPrice, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500', isRecommended: false, benefits: [] },
+    { title: 'כרטיס 1', quantity: 1, price: sellingPrice, compareAtPrice: c1, badge: null, badgeColor: '', isRecommended: false, benefits: ['מטען אלחוטי מתנה'] },
+    { title: '2 כרטיסים + 1 חינם', quantity: 3, price: psychoPrice(sellingPrice * 1.5), compareAtPrice: 3 * sellingPrice, badge: '🔥 הכי נמכר', badgeColor: 'bg-blue-600', isRecommended: true, benefits: [`חיסכון ${priceDisplay(Math.round(sellingPrice * 1.5))}`] },
+    { title: '3 כרטיסים + 1 חינם', quantity: 4, price: psychoPrice(sellingPrice * 1.9), compareAtPrice: 4 * sellingPrice, badge: 'הכי משתלם!', badgeColor: 'bg-orange-500', isRecommended: false, benefits: ['למשפחה שלמה'] },
   ]
 }
 
