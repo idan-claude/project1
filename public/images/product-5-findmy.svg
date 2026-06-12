@@ -1,74 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Background: light gray -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision">
+  <defs>
+    <pattern id="pb" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#1C1E22"/>
+      <circle cx="2" cy="2" r="1.5" fill="#252829"/>
+      <circle cx="6.5" cy="6.5" r="1.5" fill="#252829"/>
+      <circle cx="2" cy="7" r="1.1" fill="#232628"/>
+      <circle cx="7" cy="2" r="1.1" fill="#232628"/>
+    </pattern>
+  </defs>
+
   <rect width="900" height="900" fill="#EDEEF2"/>
-  <ellipse cx="450" cy="400" rx="320" ry="220" fill="white" opacity="0.45"/>
+  <ellipse cx="450" cy="420" rx="320" ry="220" fill="white" opacity="0.4"/>
 
-  <!-- iPhone frame -->
-  <g transform="translate(450, 400)">
-    <!-- Phone outer shadow -->
-    <rect x="-118" y="-232" width="236" height="464" rx="34" fill="#000" opacity="0.12" transform="translate(4,8)"/>
-    <!-- Phone body (dark) -->
-    <rect x="-118" y="-232" width="236" height="464" rx="34" fill="#1C1C1E"/>
-    <!-- Phone side buttons (right) -->
-    <rect x="118" y="-120" width="6" height="48" rx="3" fill="#2A2A2C"/>
-    <rect x="118" y="-50" width="6" height="32" rx="3" fill="#2A2A2C"/>
-    <!-- Phone side button (left, power) -->
-    <rect x="-124" y="-80" width="6" height="60" rx="3" fill="#2A2A2C"/>
+  <!-- iPhone -->
+  <g transform="translate(450, 420)">
+    <!-- Shadow -->
+    <rect x="-120" y="-236" width="240" height="472" rx="36" fill="#000" opacity="0.12" transform="translate(4,8)"/>
+    <!-- Body -->
+    <rect x="-120" y="-236" width="240" height="472" rx="36" fill="#1C1C1E"/>
+    <!-- Side buttons -->
+    <rect x="120" y="-124" width="6" height="50" rx="3" fill="#2A2A2C"/>
+    <rect x="120" y="-52" width="6" height="34" rx="3" fill="#2A2A2C"/>
+    <rect x="-126" y="-82" width="6" height="62" rx="3" fill="#2A2A2C"/>
     <!-- Screen bezel -->
-    <rect x="-108" y="-218" width="216" height="436" rx="26" fill="#0C0C10"/>
-    <!-- Screen content area -->
-    <rect x="-104" y="-210" width="208" height="420" rx="22" fill="#1A4A2A"/>
-
-    <!-- Map background (green gradient representing satellite/terrain view) -->
-    <rect x="-104" y="-210" width="208" height="420" rx="22" fill="#1E5530"/>
-    <!-- Map road grid lines -->
-    <line x1="-104" y1="-80" x2="104" y2="-80" stroke="#27663A" stroke-width="1.5" opacity="0.7"/>
-    <line x1="-104" y1="20" x2="104" y2="20" stroke="#27663A" stroke-width="1.5" opacity="0.7"/>
-    <line x1="-104" y1="120" x2="104" y2="120" stroke="#27663A" stroke-width="1.5" opacity="0.7"/>
-    <line x1="-40" y1="-210" x2="-40" y2="210" stroke="#27663A" stroke-width="1.5" opacity="0.7"/>
-    <line x1="30" y1="-210" x2="30" y2="210" stroke="#27663A" stroke-width="1.5" opacity="0.7"/>
-    <!-- Building blocks on map -->
-    <rect x="-95" y="-200" width="35" height="22" rx="2" fill="#2A7040" opacity="0.8"/>
-    <rect x="-50" y="-195" width="28" height="18" rx="2" fill="#2A7040" opacity="0.8"/>
-    <rect x="-95" y="-160" width="20" height="30" rx="2" fill="#2A7040" opacity="0.8"/>
-    <rect x="50" y="-180" width="45" height="25" rx="2" fill="#2A7040" opacity="0.8"/>
-    <rect x="60" y="-130" width="35" height="20" rx="2" fill="#2A7040" opacity="0.8"/>
-    <rect x="-80" y="40" width="30" height="40" rx="2" fill="#2A7040" opacity="0.8"/>
-    <rect x="55" y="30" width="40" height="30" rx="2" fill="#2A7040" opacity="0.8"/>
-
-    <!-- Location pin for wallet/card -->
-    <g transform="translate(-10, -20)">
-      <!-- Pin shadow -->
-      <ellipse cx="1" cy="40" rx="12" ry="5" fill="#000" opacity="0.25"/>
-      <!-- Pin body -->
-      <path d="M0,-38 C-20,-38 -34,-24 -34,-8 C-34,16 0,42 0,42 C0,42 34,16 34,-8 C34,-24 20,-38 0,-38 Z" fill="#FF3B30"/>
-      <!-- Pin inner circle -->
-      <circle cx="0" cy="-8" r="13" fill="white"/>
-      <!-- Wallet icon inside pin -->
-      <text x="0" y="-3" font-family="Arial" font-size="14" text-anchor="middle" fill="#FF3B30">👜</text>
+    <rect x="-110" y="-222" width="220" height="444" rx="28" fill="#0C0C10"/>
+    <!-- Map background -->
+    <rect x="-106" y="-214" width="212" height="428" rx="22" fill="#1E5530"/>
+    <!-- Map grid -->
+    <line x1="-106" y1="-100" x2="106" y2="-100" stroke="#276638" stroke-width="2" opacity="0.6"/>
+    <line x1="-106" y1="10" x2="106" y2="10" stroke="#276638" stroke-width="2" opacity="0.6"/>
+    <line x1="-106" y1="120" x2="106" y2="120" stroke="#276638" stroke-width="2" opacity="0.6"/>
+    <line x1="-50" y1="-214" x2="-50" y2="214" stroke="#276638" stroke-width="2" opacity="0.6"/>
+    <line x1="30" y1="-214" x2="30" y2="214" stroke="#276638" stroke-width="2" opacity="0.6"/>
+    <!-- Map blocks -->
+    <rect x="-98" y="-205" width="36" height="24" rx="3" fill="#2A7040" opacity="0.72"/>
+    <rect x="-52" y="-198" width="28" height="18" rx="2" fill="#2A7040" opacity="0.72"/>
+    <rect x="-98" y="-162" width="22" height="32" rx="2" fill="#2A7040" opacity="0.72"/>
+    <rect x="42" y="-185" width="44" height="26" rx="2" fill="#2A7040" opacity="0.72"/>
+    <rect x="54" y="-140" width="36" height="22" rx="2" fill="#2A7040" opacity="0.72"/>
+    <rect x="-82" y="30" width="30" height="40" rx="2" fill="#2A7040" opacity="0.72"/>
+    <rect x="46" y="20" width="40" height="32" rx="2" fill="#2A7040" opacity="0.72"/>
+    <!-- Accuracy circle -->
+    <circle cx="-8" cy="-30" r="52" fill="#4488FF" opacity="0.10" stroke="#4488FF" stroke-width="1" stroke-dasharray="4 3" opacity="0.24"/>
+    <!-- Location pin -->
+    <g transform="translate(-8, -22)">
+      <ellipse cx="1" cy="38" rx="11" ry="5" fill="#000" opacity="0.22"/>
+      <path d="M0,-36 C-18,-36 -30,-22 -30,-8 C-30,14 0,40 0,40 C0,40 30,14 30,-8 C30,-22 18,-36 0,-36 Z" fill="#FF3B30"/>
+      <circle cx="0" cy="-8" r="12" fill="white"/>
+      <!-- Small card icon inside pin -->
+      <rect x="-6" y="-12" width="12" height="8" rx="1.5" fill="#1C1E22"/>
     </g>
-
-    <!-- Accuracy circle around pin -->
-    <circle cx="-10" cy="-28" r="55" fill="#4488FF" opacity="0.12" stroke="#4488FF" stroke-width="1" stroke-dasharray="4 3" opacity="0.30"/>
-
-    <!-- Find My notification banner at top of screen -->
-    <rect x="-100" y="-205" width="200" height="68" rx="20" fill="white" opacity="0.96"/>
-    <text x="-85" y="-183" font-family="Arial, sans-serif" font-size="9" font-weight="700" fill="#1C1C1E">Find My</text>
-    <text x="-85" y="-167" font-family="Arial, sans-serif" font-size="8.5" fill="#3A3A3C">ארנק נמצא!</text>
-    <text x="-85" y="-153" font-family="Arial, sans-serif" font-size="8" fill="#636366">52 מטר ממך · כיכר דיזנגוף</text>
-    <!-- Notification icon (Apple Find My green) -->
-    <circle cx="80" cy="-176" r="14" fill="#32AE60"/>
-    <text x="80" y="-172" font-family="Arial" font-size="12" text-anchor="middle" fill="white">✓</text>
-
-    <!-- Bottom control bar -->
-    <rect x="-104" y="175" width="208" height="35" rx="0" fill="#1C1C1E"/>
-    <text x="0" y="197" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="white" text-anchor="middle" opacity="0.7">צלצל · נווט · שתף</text>
-
-    <!-- Dynamic island (top center) -->
-    <rect x="-28" y="-213" width="56" height="20" rx="10" fill="#1C1C1E"/>
+    <!-- Dynamic island -->
+    <rect x="-28" y="-218" width="56" height="20" rx="10" fill="#1C1C1E"/>
   </g>
-
-  <!-- Caption -->
-  <text x="450" y="792" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1A1A2E" text-anchor="middle" opacity="0.88">מציאת הארנק דרך Apple Find My</text>
-  <text x="450" y="817" font-family="Arial, sans-serif" font-size="13" fill="#888" text-anchor="middle">פותחים Find My באייפון · רואים מיקום מדויק על מפה</text>
 </svg>
