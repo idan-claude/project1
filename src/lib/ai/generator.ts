@@ -77,7 +77,7 @@ function templateGenerate(product: ExtractedProduct): GeneratedContent {
     benefitsList: [
       'איכות גבוהה ועמידות מוכחת',
       'קל לשימוש — מתאים לכולם',
-      'משלוח מהיר ישירות לדלת',
+      'משלוח חינם לכל הארץ',
       'אחריות מלאה ושירות לקוחות',
     ],
     ctaText: 'הזמן עכשיו',
