@@ -547,37 +547,6 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
         </div>
       </section>
 
-      {/* ── REVIEWS ── */}
-      <section id="reviews" className="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-2">
-          מה הלקוחות שלנו אומרים
-        </h2>
-        <p className="text-center text-gray-500 mb-10">⭐ 4.9 / 5 · מעל 312 ביקורות מאומתות</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {REVIEWS.map(({ initials, color, name, location, text, detail, stars }) => (
-            <div key={name + location} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-11 h-11 rounded-full ${color} text-white font-bold text-lg flex items-center justify-center flex-shrink-0`}>
-                  {initials}
-                </div>
-                <div>
-                  <p className="font-bold text-sm text-gray-900">{name}</p>
-                  <p className="text-xs text-gray-400">{location}</p>
-                </div>
-                <span className="mr-auto text-xs bg-green-50 text-green-600 border border-green-200 rounded-full px-2 py-0.5 font-medium whitespace-nowrap">מאומת ✓</span>
-              </div>
-              <div className="flex mb-3">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className={`text-lg ${i < stars ? 'text-blue-500' : 'text-gray-200'}`}>★</span>
-                ))}
-              </div>
-              <p className="text-gray-700 text-sm leading-relaxed flex-1">&quot;{text}&quot;</p>
-              <p className="text-xs text-gray-400 mt-4 pt-3 border-t">{detail}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── FAQ ── */}
       <section id="faq" className="scroll-mt-28">
         {faqs.length > 0 && (
