@@ -72,6 +72,18 @@ async function enforceIPBlock() {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   await enforceIPBlock()
 
+  let waNumber: string | undefined
+  try {
+    await connectDB()
+    const storeId = process.env.STORE_ID || 'default'
+    const theme = await StoreTheme.findOne({ storeId }).select('headerConfig footerConfig').lean()
+    const fromHeader = theme?.headerConfig?.whatsapp?.replace(/\D/g, '')
+    const fromFooter = theme?.footerConfig?.whatsappUrl?.match(/wa\.me\/(\d+)/)?.[1]
+    waNumber = fromHeader || fromFooter || undefined
+  } catch {
+    // fall through — bubble uses its own fallback
+  }
+
   return (
     <html lang="he" dir="rtl">
       <head>
@@ -81,7 +93,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <Providers>
           {children}
-          <WhatsAppBubble />
+          <WhatsAppBubble waNumber={waNumber} />
           {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
             <Suspense>
               <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
