@@ -468,7 +468,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ── SETUP STEPS ── */}
       <section className="bg-blue-600 text-white py-16 px-4">
