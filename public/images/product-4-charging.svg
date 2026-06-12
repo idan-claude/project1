@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <radialGradient id="padGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2255CC" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#1133AA" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#0A1A66" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="padSurface" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2A2A30"/>
+      <stop offset="100%" stop-color="#18181E"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background: very dark navy -->
+  <rect width="900" height="900" fill="#080C18"/>
+
+  <!-- Ambient glow from charging pad -->
+  <ellipse cx="450" cy="620" rx="320" ry="180" fill="url(#padGlow)"/>
+
+  <!-- Charging rings (radiating outward, fading) -->
+  <circle cx="450" cy="620" r="240" fill="none" stroke="#2244BB" stroke-width="1" opacity="0.08"/>
+  <circle cx="450" cy="620" r="200" fill="none" stroke="#2244BB" stroke-width="1" opacity="0.12"/>
+  <circle cx="450" cy="620" r="160" fill="none" stroke="#3355CC" stroke-width="1.5" opacity="0.18"/>
+  <circle cx="450" cy="620" r="120" fill="none" stroke="#4466DD" stroke-width="2" opacity="0.25"/>
+  <circle cx="450" cy="620" r="85" fill="none" stroke="#5577EE" stroke-width="2" opacity="0.35"/>
+
+  <!-- Wireless charging pad -->
+  <ellipse cx="450" cy="640" rx="160" ry="28" fill="#14141A" stroke="#2A2A38" stroke-width="1.5"/>
+  <ellipse cx="450" cy="635" rx="160" ry="22" fill="url(#padSurface)"/>
+  <!-- Pad surface texture -->
+  <ellipse cx="450" cy="633" rx="100" ry="12" fill="none" stroke="#3A3A48" stroke-width="1" opacity="0.5"/>
+  <!-- Qi symbol on pad -->
+  <g transform="translate(450, 633)" fill="none" stroke="#4466CC" stroke-width="2" opacity="0.6">
+    <path d="M-14,-10 A18,18 0 1,1 14,-10" stroke-linecap="round"/>
+    <path d="M-8,-5 A10,10 0 1,1 8,-5" stroke-linecap="round"/>
+    <circle cx="0" cy="2" r="3" fill="#4466CC"/>
+  </g>
+  <!-- Blue LED indicator on pad -->
+  <circle cx="390" cy="633" r="4" fill="#4488FF" opacity="0.9"/>
+  <circle cx="390" cy="633" r="7" fill="#4488FF" opacity="0.25"/>
+
+  <!-- FindCard card resting on pad (flat, landscape) -->
+  <g transform="translate(450 545)">
+    <!-- Card shadow on pad -->
+    <rect x="-215" y="-70" width="430" height="150" rx="16" fill="#000" opacity="0.40" transform="translate(2,10)"/>
+    <!-- Matte black card body -->
+    <rect x="-215" y="-70" width="430" height="150" rx="16" fill="#1A1A1C"/>
+
+    <!-- Matte texture dots -->
+    <g fill="#2C2C2E" opacity="0.50">
+      <circle cx="-188" cy="-48" r="1"/><circle cx="-165" cy="-48" r="1"/><circle cx="-142" cy="-48" r="1"/><circle cx="-119" cy="-48" r="1"/><circle cx="-96" cy="-48" r="1"/><circle cx="-73" cy="-48" r="1"/><circle cx="-50" cy="-48" r="1"/><circle cx="-27" cy="-48" r="1"/><circle cx="-4" cy="-48" r="1"/><circle cx="19" cy="-48" r="1"/><circle cx="42" cy="-48" r="1"/><circle cx="65" cy="-48" r="1"/><circle cx="88" cy="-48" r="1"/><circle cx="111" cy="-48" r="1"/><circle cx="134" cy="-48" r="1"/><circle cx="157" cy="-48" r="1"/><circle cx="180" cy="-48" r="1"/>
+      <circle cx="-200" cy="-27" r="1"/><circle cx="-177" cy="-27" r="1"/><circle cx="-154" cy="-27" r="1"/><circle cx="-131" cy="-27" r="1"/><circle cx="-108" cy="-27" r="1"/><circle cx="-85" cy="-27" r="1"/><circle cx="-62" cy="-27" r="1"/><circle cx="-39" cy="-27" r="1"/><circle cx="-16" cy="-27" r="1"/><circle cx="7" cy="-27" r="1"/><circle cx="30" cy="-27" r="1"/><circle cx="53" cy="-27" r="1"/><circle cx="76" cy="-27" r="1"/><circle cx="99" cy="-27" r="1"/><circle cx="122" cy="-27" r="1"/><circle cx="145" cy="-27" r="1"/><circle cx="168" cy="-27" r="1"/><circle cx="191" cy="-27" r="1"/>
+      <circle cx="-188" cy="-6" r="1"/><circle cx="-165" cy="-6" r="1"/><circle cx="-142" cy="-6" r="1"/><circle cx="-119" cy="-6" r="1"/><circle cx="-96" cy="-6" r="1"/><circle cx="-73" cy="-6" r="1"/><circle cx="-50" cy="-6" r="1"/><circle cx="-27" cy="-6" r="1"/><circle cx="-4" cy="-6" r="1"/><circle cx="19" cy="-6" r="1"/><circle cx="42" cy="-6" r="1"/><circle cx="65" cy="-6" r="1"/><circle cx="88" cy="-6" r="1"/><circle cx="111" cy="-6" r="1"/><circle cx="134" cy="-6" r="1"/><circle cx="157" cy="-6" r="1"/><circle cx="180" cy="-6" r="1"/>
+    </g>
+
+    <!-- Charging glow visible through card surface (blue tint at bottom) -->
+    <rect x="-215" y="50" width="430" height="30" rx="0" fill="#2244AA" opacity="0.08"/>
+    <rect x="-215" y="120" width="430" height="10" rx="0" fill="#2244AA" opacity="0.12"/>
+
+    <!-- Top edge highlight -->
+    <rect x="-215" y="-70" width="430" height="2" rx="1" fill="white" opacity="0.06"/>
+
+    <!-- Wireless coil indicator (centered, glowing) -->
+    <g transform="translate(0, 20)" fill="none" stroke="#5577FF" opacity="0.55">
+      <circle cx="0" cy="0" r="28" stroke-width="2"/>
+      <circle cx="0" cy="0" r="18" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="9" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="3" fill="#5577FF" stroke="none"/>
+    </g>
+
+    <!-- "FindCard PRO" text mark -->
+    <text x="-195" y="65" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" opacity="0.18" letter-spacing="1.5">FINDCARD PRO</text>
+  </g>
+
+  <!-- "Charging" status label -->
+  <rect x="330" y="280" width="240" height="44" rx="22" fill="#1A2240" stroke="#2A3A70" stroke-width="1.5"/>
+  <text x="450" y="307" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#7AADFF" text-anchor="middle">⚡ טוען...</text>
+
+  <!-- Caption -->
+  <text x="450" y="790" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="white" text-anchor="middle" opacity="0.88">טעינה אלחוטית Qi</text>
+  <text x="450" y="815" font-family="Arial, sans-serif" font-size="13" fill="#5577AA" text-anchor="middle">מניחים על המשטח · מלא תוך שעתיים · 8 חודשי סוללה</text>
+</svg>
