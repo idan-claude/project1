@@ -328,7 +328,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
                 {content.heroSubheadline || 'הכרטיס נכנס לארנק שלך ומאתר אותו תוך שניות. דק כמו כרטיס אשראי, עובד בכל מקום בעולם.'}
               </p>
               <div className="flex flex-wrap items-center gap-2 mb-8 justify-center md:justify-start text-sm">
-                <span className="bg-white/15 rounded-full px-3 py-1 font-medium">✅ Apple MFI מאושר</span>
+                <span className="bg-white/15 rounded-full px-3 py-1 font-medium">✅ תואם Apple Find My</span>
                 <span className="bg-white/15 rounded-full px-3 py-1 font-medium">⭐ 4.9/5 · 312 ביקורות</span>
                 <span className="bg-white/15 rounded-full px-3 py-1 font-medium">👥 2,000+ לקוחות</span>
               </div>
