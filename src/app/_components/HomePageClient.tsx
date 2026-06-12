@@ -509,7 +509,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
               <tbody className="divide-y">
                 {[
                   ['עובי 1.8 מ"מ (כמו כרטיס אשראי)', '✅', '❌'],
-                  ['מאושר Apple Find My', '✅', '✅'],
+                  ['תואם Apple Find My', '✅', '✅'],
                   ['טעינה אלחוטית Qi', '✅', '❌'],
                   ['ללא החלפת סוללה לעולם', '✅', '❌'],
                   ['מחיר', sellingPrice ? formatPrice(sellingPrice) : '...', '₪350+'],
