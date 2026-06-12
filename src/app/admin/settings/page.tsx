@@ -257,8 +257,7 @@ export default function AdminSettingsPage() {
           <div className="bg-[#0E1629] border border-white/5 rounded-xl p-6 space-y-4">
             <h2 className="text-sm font-semibold text-white mb-2">דומיין מותאם אישית</h2>
             <p className="text-xs text-gray-500">
-              בברירת מחדל, החנות פועלת על הדומיין שהגדרת ב-Vercel.
-              כדי לחבר דומיין משלך, הוסף אותו ב-Vercel ואז מלא אותו כאן.
+              כדי לחבר דומיין משלך, עדכן את שם הדומיין כאן ועקוב אחר ההוראות למטה.
             </p>
             <Field
               label="דומיין מותאם אישית"
