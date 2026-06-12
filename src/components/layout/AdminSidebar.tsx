@@ -172,10 +172,14 @@ export default function AdminSidebar({ onClose }: Props) {
       {/* Logo */}
       <div className="px-4 py-4 border-b border-white/[0.055] flex items-center justify-between flex-shrink-0">
         <Link href="/admin" onClick={onClose} className="flex items-center gap-2.5">
-          <div className="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center text-white text-[11px] font-black tracking-tight">FC</div>
+          <div className="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center text-white text-[11px] font-black tracking-tight">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
           <div>
-            <p className="text-white font-bold text-[13px] leading-none tracking-tight">FindCard</p>
-            <p className="text-[var(--ds-text-3)] text-[10px] mt-0.5 leading-none font-medium">Admin Panel</p>
+            <p className="text-white font-bold text-[13px] leading-none tracking-tight">ניהול חנות</p>
+            <p className="text-[var(--ds-text-3)] text-[10px] mt-0.5 leading-none font-medium">לוח בקרה</p>
           </div>
         </Link>
         {onClose && (
