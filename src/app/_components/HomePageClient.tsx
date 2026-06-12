@@ -611,7 +611,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section id="cta" className="scroll-mt-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      {show('cta') && <section id="cta" className="scroll-mt-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
           {content.ctaHeadline || 'מוכן להפסיק לאבד דברים?'}
         </h2>
@@ -623,7 +623,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
           {content.ctaButtonText || 'הזמן עכשיו ←'}
         </Link>
         <p className="text-sm text-gray-400 mt-4">🛡️ אחריות לכל החיים · ✅ תואם Apple Find My · 🚚 משלוח חינם</p>
-      </section>
+      </section>}
     </>
   )
 }
