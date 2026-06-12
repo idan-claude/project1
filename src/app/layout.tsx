@@ -8,15 +8,29 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { connectDB } from '@/lib/db/mongoose'
 import IpBlock from '@/lib/db/models/IpBlock'
+import StoreTheme from '@/lib/db/models/StoreTheme'
 import { normalizeIP } from '@/lib/utils/ipParser'
 
 const MetaPixel = dynamic(() => import('@/components/marketing/MetaPixel'), { ssr: false })
 
-export const metadata: Metadata = {
-  title: 'FindCard - כרטיס המעקב החכם',
-  description: 'כרטיס מעקב חכם תואם Apple Find My. דק כמו כרטיס אשראי — מצא את הארנק, המפתחות וכל דבר אחר בשניות.',
-  keywords: 'FindCard, כרטיס מעקב, Apple Find My, עוקב מיקום, ארנק חכם',
-  openGraph: { locale: 'he_IL', type: 'website' },
+export async function generateMetadata(): Promise<Metadata> {
+  const base: Metadata = {
+    title: 'FindCard - כרטיס המעקב החכם',
+    description: 'כרטיס מעקב חכם תואם Apple Find My. דק כמו כרטיס אשראי — מצא את הארנק, המפתחות וכל דבר אחר בשניות.',
+    keywords: 'FindCard, כרטיס מעקב, Apple Find My, עוקב מיקום, ארנק חכם',
+    openGraph: { locale: 'he_IL', type: 'website' },
+  }
+  try {
+    await connectDB()
+    const storeId = process.env.STORE_ID || 'default'
+    const theme = await StoreTheme.findOne({ storeId }).select('faviconUrl').lean()
+    if (theme?.faviconUrl) {
+      base.icons = { icon: theme.faviconUrl }
+    }
+  } catch {
+    // fall through — static metadata is fine
+  }
+  return base
 }
 
 // Paths where IP blocking must NOT apply
