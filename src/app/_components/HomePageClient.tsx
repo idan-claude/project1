@@ -508,7 +508,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
             {content.guaranteeBody || 'אנחנו מאמינים במוצר הזה. לכן: אחריות לכל החיים על כל פגם ייצור, ו-100 יום להחזר כסף אם לא מרוצה — לא שואלים שאלות.'}
           </p>
           <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-gray-400">
-            <span>✅ Apple MFI מאושר</span>
+            <span>✅ תואם Apple Find My</span>
             <span>✅ IP67 עמיד במים</span>
             <span>✅ אחריות לכל החיים</span>
             <span>✅ משלוח חינם על כל הזמנה</span>
