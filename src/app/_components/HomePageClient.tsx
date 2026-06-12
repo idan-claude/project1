@@ -548,10 +548,10 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
             <span>✅ משלוח חינם על כל הזמנה</span>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ── FAQ ── */}
-      <section id="faq" className="scroll-mt-28">
+      {show('faq') && <section id="faq" className="scroll-mt-28">
         {faqs.length > 0 && (
           <div className="bg-gray-50 py-16 px-4">
             <div className="max-w-2xl mx-auto">
