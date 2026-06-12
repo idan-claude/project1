@@ -5,6 +5,7 @@ import StoreTheme, {
   ICheckoutConfig,
   IHeaderConfig,
 } from '@/lib/db/models/StoreTheme'
+import Store from '@/lib/db/models/Store'
 import CheckoutClient from './CheckoutClient'
 
 export default async function CheckoutPage() {
@@ -16,7 +17,11 @@ export default async function CheckoutPage() {
   try {
     await connectDB()
     const storeId = process.env.STORE_ID || 'default'
-    const theme = await StoreTheme.findOne({ storeId }).lean()
+    const [theme, store] = await Promise.all([
+      StoreTheme.findOne({ storeId }).lean(),
+      Store.findOne({ storeId }).select('name').lean(),
+    ])
+    if (store?.name) storeName = store.name
     if (theme?.checkoutConfig) checkoutConfig = { ...DEFAULT_CHECKOUT, ...(theme.checkoutConfig as unknown as ICheckoutConfig) }
     if (theme?.headerConfig)   headerConfig   = { ...DEFAULT_HEADER,   ...(theme.headerConfig   as unknown as IHeaderConfig) }
     if (theme?.logoUrl) logoUrl = theme.logoUrl
