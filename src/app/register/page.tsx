@@ -132,7 +132,7 @@ export default function RegisterPage() {
                     onChange={e => set(f.key, e.target.value)}
                     placeholder={f.placeholder}
                     onKeyDown={e => e.key === 'Enter' && step < 2 && next()}
-                    className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20"
+                    className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-base text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20"
                   />
                 </div>
               ))}
