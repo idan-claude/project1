@@ -22,7 +22,7 @@ export default async function HomePage() {
     const storeId = process.env.STORE_ID || 'default'
     const [theme, store] = await Promise.all([
       StoreTheme.findOne({ storeId }).lean(),
-      Store.findById(storeId).select('name').lean(),
+      Store.findOne({ storeId }).select('name').lean(),
     ])
     if (store?.name) storeName = store.name
     if (theme?.logoUrl) logoUrl = theme.logoUrl
