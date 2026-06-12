@@ -196,7 +196,7 @@ export default function ProductClient({ productId, slug, nameHe, subtitle, benef
   const reviewCount = pageContent.reviewCount || reviews.length
   const ratingDisplay = reviewRating > 0 ? reviewRating.toFixed(1) : null
 
-  const urgencyText = pageContent.urgencyText || 'מבצע מוגבל: 24 שעות אחרונות למחיר הזה!'
+  const urgencyText = pageContent.urgencyText || '24 שעות אחרונות למחיר הזה!'
   const shippingText = pageContent.shippingText || 'מגיע תוך 7–14 ימי עסקים · מספר מעקב במייל'
   const guaranteeText = pageContent.guaranteeText || 'אחריות לכל החיים + 100 יום החזר כסף מלא — בלי שאלות'
   const trustBadges = pageContent.trustBadges?.length ? pageContent.trustBadges : [
