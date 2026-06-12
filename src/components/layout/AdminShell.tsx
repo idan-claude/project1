@@ -65,10 +65,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <main ref={mainRef} className="flex-1 overflow-auto min-w-0 admin-scroll">
         {/* Mobile top bar — sticky within <main> scroll container */}
         <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-[#0F172A] sticky top-0 z-20 shadow">
-          <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-            FC
+          <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center text-white flex-shrink-0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
           </div>
-          <span className="font-bold text-white flex-1 text-sm">FindCard Admin</span>
+          <span className="font-bold text-white flex-1 text-sm">ניהול חנות</span>
           <button
             onClick={() => setSidebarOpen(true)}
             className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
