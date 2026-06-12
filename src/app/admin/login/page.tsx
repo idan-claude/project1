@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
                 onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
                 required
                 placeholder="your@email.com"
-                className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-sm text-[var(--ds-text-1)] placeholder:text-[var(--ds-text-3)] focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
+                className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-base text-[var(--ds-text-1)] placeholder:text-[var(--ds-text-3)] focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
               />
             </div>
             <div>
@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
                 onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
                 required
                 placeholder="••••••••"
-                className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-sm text-[var(--ds-text-1)] placeholder:text-[var(--ds-text-3)] focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
+                className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-base text-[var(--ds-text-1)] placeholder:text-[var(--ds-text-3)] focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
               />
             </div>
 
