@@ -613,7 +613,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
           {content.ctaHeadline || 'מוכן להפסיק לאבד דברים?'}
         </h2>
         <p className="text-gray-500 text-lg mb-8">
-          {content.ctaBody || 'הזמן עכשיו וקבל משלוח חינם — מגיע תוך 7-14 ימי עסקים'}
+          {content.ctaBody || 'הזמן עכשיו וקבל משלוח חינם — מגיע תוך 5-10 ימי עסקים'}
         </p>
         <Link href="/product"
           className="inline-block bg-blue-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-blue-700 transition-colors text-xl shadow-lg">
