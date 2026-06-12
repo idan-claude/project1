@@ -53,7 +53,8 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   // ── Admin auth (cookie presence; full JWT in each API route) ─────────────
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  const ADMIN_PUBLIC = ['/admin/login', '/admin/forgot-password', '/admin/reset-password']
+  if (pathname.startsWith('/admin') && !ADMIN_PUBLIC.includes(pathname)) {
     const token = req.cookies.get('admin_token')?.value
     if (!token) return NextResponse.redirect(new URL('/admin/login', req.url))
     // Forward ip + pathname so layout knows to skip admin check
