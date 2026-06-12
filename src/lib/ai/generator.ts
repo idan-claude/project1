@@ -28,7 +28,7 @@ export interface GeneratedContent {
 const DEFAULT_TRUST_BADGES = [
   { icon: '🔒', text: 'תשלום מאובטח' },
   { icon: '✅', text: 'אחריות מלאה' },
-  { icon: '🚚', text: 'משלוח מהיר' },
+  { icon: '🚚', text: 'משלוח חינם' },
   { icon: '↩️', text: 'החזרה קלה' },
 ]
 
