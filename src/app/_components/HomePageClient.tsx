@@ -222,6 +222,8 @@ export interface SectionContent {
   ctaButtonText?: string
 }
 
+export type SectionVisibility = Record<string, boolean>
+
 const DEFAULT_BENEFIT_ITEMS: BenefitItem[] = [
   { emoji: '🚚', text: 'משלוח חינם על כל הזמנה' },
   { emoji: '🛡️', text: 'אחריות לכל החיים' },
