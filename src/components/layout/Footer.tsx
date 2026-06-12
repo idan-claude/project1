@@ -24,7 +24,7 @@ export default function Footer({
   }
 
   const hasSocial = config.instagramUrl || config.tiktokUrl || config.whatsappUrl || config.facebookUrl
-  const tagline = config.tagline || `חנות ${storeName} — מוצרים איכותיים במשלוח מהיר`
+  const tagline = config.tagline || `חנות ${storeName} — מוצרים איכותיים עם משלוח חינם`
   const copyright = config.copyright || `© ${new Date().getFullYear()} ${storeName}. כל הזכויות שמורות.`
 
   return (
