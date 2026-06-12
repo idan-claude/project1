@@ -274,7 +274,7 @@ export default function AdminSettingsPage() {
             <ol className="text-xs text-gray-500 space-y-2 list-decimal list-inside leading-relaxed">
               <li>היכנס לרשם הדומיין שלך (GoDaddy, Cloudflare, וכו&apos;)</li>
               <li>הוסף רשומת CNAME: <code className="text-blue-400 bg-blue-500/10 px-1 py-0.5 rounded">shop.yourdomain.com → cname.vercel-dns.com</code></li>
-              <li>ב-Vercel, פרוייקט שלך → Settings → Domains → הוסף את הדומיין</li>
+              <li>פנה לתמיכה שלנו כדי שנחבר את הדומיין לחנות שלך</li>
               <li>המתן עד 48 שעות להפצת ה-DNS</li>
             </ol>
           </div>
