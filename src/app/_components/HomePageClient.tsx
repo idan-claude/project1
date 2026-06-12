@@ -360,7 +360,7 @@ export default function HomePageClient({ content = {}, sectionVisibility = {} }:
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ── BENEFITS BAR ── */}
       <section id="benefits" className="scroll-mt-28 bg-white border-b border-gray-100 py-4 px-4">
