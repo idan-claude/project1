@@ -14,9 +14,15 @@ const PRODUCT_SLUG = 'kartis-maakav-smart-pro'
 
 const FALLBACK_GALLERY = [
   '/images/product-1-hero.svg',
-  '/images/product-2-wallet.svg',
-  '/images/product-3-bundle.svg',
-  '/images/product-4-features.svg',
+  '/images/product-2-fingers.svg',
+  '/images/product-3-wallet.svg',
+  '/images/product-4-charging.svg',
+  '/images/product-5-findmy.svg',
+  '/images/product-6-lost.svg',
+  '/images/product-7-travel.svg',
+  '/images/product-8-texture.svg',
+  '/images/product-9-compare.svg',
+  '/images/product-10-package.svg',
 ]
 
 const FALLBACK_FEATURES = [
