@@ -1,72 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Background: warm amber tint (stress/urgency) -->
-  <rect width="900" height="900" fill="#FDF5E8"/>
-  <ellipse cx="450" cy="420" rx="340" ry="220" fill="white" opacity="0.40"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" shape-rendering="geometricPrecision">
+  <defs>
+    <pattern id="pb" x="0" y="0" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#1C1E22"/>
+      <circle cx="2" cy="2" r="1.5" fill="#252829"/>
+      <circle cx="6.5" cy="6.5" r="1.5" fill="#252829"/>
+      <circle cx="2" cy="7" r="1.1" fill="#232628"/>
+      <circle cx="7" cy="2" r="1.1" fill="#232628"/>
+    </pattern>
+  </defs>
 
-  <!-- Person silhouette (simplified, searching) -->
-  <!-- Body -->
-  <g opacity="0.25" fill="#8A6030">
-    <!-- Head -->
-    <circle cx="450" cy="195" r="42"/>
-    <!-- Torso -->
-    <rect x="416" y="235" width="68" height="90" rx="16"/>
-    <!-- Arm left (extended, searching gesture) -->
-    <rect x="330" y="240" width="88" height="22" rx="11" transform="rotate(-25, 375, 240)"/>
-    <!-- Arm right -->
-    <rect x="484" y="240" width="80" height="22" rx="11" transform="rotate(15, 530, 245)"/>
-    <!-- Legs -->
-    <rect x="416" y="318" width="30" height="80" rx="12"/>
-    <rect x="454" y="318" width="30" height="80" rx="12"/>
+  <rect width="900" height="900" fill="#F0EDE8"/>
+  <ellipse cx="450" cy="460" rx="340" ry="230" fill="white" opacity="0.36"/>
+
+  <!-- Searching person silhouette (subtle) -->
+  <g opacity="0.16" fill="#8A6030">
+    <circle cx="350" cy="210" r="38"/>
+    <rect x="320" y="248" width="60" height="84" rx="14"/>
+    <rect x="228" y="256" width="96" height="20" rx="10" transform="rotate(-22, 276, 260)"/>
+    <rect x="382" y="256" width="80" height="20" rx="10" transform="rotate(12, 432, 261)"/>
+    <rect x="320" y="326" width="26" height="72" rx="12"/>
+    <rect x="354" y="326" width="26" height="72" rx="12"/>
   </g>
 
-  <!-- Question marks floating around person -->
-  <text x="290" y="220" font-family="Arial" font-size="36" font-weight="700" fill="#CC8830" opacity="0.35">?</text>
-  <text x="608" y="240" font-family="Arial" font-size="28" font-weight="700" fill="#CC8830" opacity="0.25">?</text>
-  <text x="330" y="320" font-family="Arial" font-size="22" font-weight="700" fill="#CC8830" opacity="0.20">?</text>
-
-  <!-- Phone in hand showing notification -->
-  <g transform="translate(580, 390)">
-    <!-- Phone shadow -->
-    <rect x="-62" y="-90" width="124" height="180" rx="18" fill="#000" opacity="0.10" transform="translate(4,6)"/>
-    <!-- Phone body -->
-    <rect x="-62" y="-90" width="124" height="180" rx="18" fill="#1C1C1E"/>
-    <!-- Screen -->
-    <rect x="-54" y="-80" width="108" height="160" rx="12" fill="#1A1A1A"/>
-
-    <!-- Notification on screen -->
-    <rect x="-48" y="-70" width="96" height="72" rx="10" fill="white" opacity="0.95"/>
-    <!-- Find My app icon area -->
-    <circle cx="-25" cy="-47" r="13" fill="#32AE60"/>
-    <text x="-25" y="-42" font-family="Arial" font-size="11" text-anchor="middle" fill="white" font-weight="700">📍</text>
-    <text x="-6" y="-55" font-family="Arial, sans-serif" font-size="8.5" font-weight="700" fill="#1C1C1E">Find My</text>
-    <text x="-6" y="-42" font-family="Arial, sans-serif" font-size="8" fill="#3A3A3C">FindCard PRO</text>
-    <text x="-6" y="-28" font-family="Arial, sans-serif" font-size="7.5" fill="#636366">יצא מטווח Bluetooth</text>
-
-    <!-- Last seen location bar -->
-    <rect x="-48" y="8" width="96" height="38" rx="8" fill="#F0F0F5"/>
-    <text x="0" y="25" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#3A3A3C" text-anchor="middle">מיקום אחרון ידוע:</text>
-    <text x="0" y="38" font-family="Arial, sans-serif" font-size="8" fill="#32AE60" text-anchor="middle" font-weight="600">קניון רמת אביב</text>
-
-    <!-- Home indicator -->
-    <rect x="-18" y="65" width="36" height="4" rx="2" fill="white" opacity="0.35"/>
+  <!-- Wallet silhouette -->
+  <g transform="translate(330, 498)">
+    <rect x="-110" y="-70" width="220" height="140" rx="14" fill="#6B4226" opacity="0.65"/>
+    <rect x="-110" y="-70" width="220" height="90" rx="14" fill="#8A5A30" opacity="0.55"/>
+    <rect x="-100" y="-72" width="200" height="8" rx="4" fill="#4A2E14" opacity="0.45"/>
+    <!-- Clasp -->
+    <circle cx="55" cy="42" r="10" fill="#A07832" opacity="0.65"/>
+    <circle cx="55" cy="42" r="6" fill="#7A5824" opacity="0.65"/>
   </g>
 
-  <!-- Arrow pointing from person to phone -->
-  <path d="M500,380 Q540,360 545,340" stroke="#CC8830" stroke-width="2.5" fill="none" stroke-dasharray="6 4" opacity="0.5"/>
-
-  <!-- Resolution card at bottom — "Found!" state -->
-  <g transform="translate(450 630)">
-    <rect x="-195" y="-42" width="390" height="84" rx="20" fill="#E8F5EC" stroke="#32AE60" stroke-width="2" opacity="0.95"/>
-    <!-- Green check -->
-    <circle cx="-152" cy="0" r="26" fill="#32AE60"/>
-    <text x="-152" y="6" font-family="Arial" font-size="20" text-anchor="middle" fill="white">✓</text>
-    <!-- Text -->
-    <text x="-108" y="-10" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#1A5A2A" text-anchor="start">נמצא תוך 2 דקות!</text>
-    <text x="-108" y="10" font-family="Arial, sans-serif" font-size="11" fill="#3A7A4A" text-anchor="start">Find My הוביל ישירות לארנק</text>
-    <text x="-108" y="26" font-family="Arial, sans-serif" font-size="11" fill="#3A7A4A" text-anchor="start">ליד קופת הסופר 🎉</text>
+  <!-- Location pin above wallet -->
+  <g transform="translate(330, 398)">
+    <ellipse cx="1" cy="30" rx="10" ry="4" fill="#000" opacity="0.16"/>
+    <path d="M0,-28 C-14,-28 -24,-18 -24,-6 C-24,10 0,32 0,32 C0,32 24,10 24,-6 C24,-18 14,-28 0,-28 Z" fill="#FF3B30"/>
+    <circle cx="0" cy="-6" r="10" fill="white"/>
+    <rect x="-5" y="-10" width="10" height="7" rx="1.5" fill="#1C1E22"/>
   </g>
 
-  <!-- Caption -->
-  <text x="450" y="796" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#3A2A0A" text-anchor="middle" opacity="0.88">לא יותר "איפה הארנק שלי?"</text>
-  <text x="450" y="820" font-family="Arial, sans-serif" font-size="13" fill="#888" text-anchor="middle">ברגע שיוצא מטווח — מיקום אחרון נשמר אוטומטית</text>
+  <!-- Phone with Found notification (no text) -->
+  <g transform="translate(582, 392)">
+    <rect x="-65" y="-95" width="130" height="190" rx="20" fill="#000" opacity="0.10" transform="translate(4,6)"/>
+    <rect x="-65" y="-95" width="130" height="190" rx="20" fill="#1C1C1E"/>
+    <rect x="-57" y="-85" width="114" height="170" rx="14" fill="#1A1A1A"/>
+    <!-- Green success notification card -->
+    <rect x="-52" y="-78" width="104" height="74" rx="12" fill="white" opacity="0.96"/>
+    <!-- Find My green circle with checkmark path -->
+    <circle cx="-28" cy="-50" r="16" fill="#32AE60"/>
+    <path d="M -36,-50 L -30,-44 L -20,-58" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Notification content bars -->
+    <rect x="-6" y="-62" width="46" height="7" rx="3.5" fill="#D8DCE4" opacity="0.8"/>
+    <rect x="-6" y="-50" width="38" height="6" rx="3" fill="#C8CCD4" opacity="0.65"/>
+    <rect x="-6" y="-38" width="30" height="5" rx="2.5" fill="#C8CCD4" opacity="0.5"/>
+    <!-- Home bar -->
+    <rect x="-18" y="68" width="36" height="4" rx="2" fill="white" opacity="0.30"/>
+  </g>
+
+  <!-- Signal dashed line from wallet to phone -->
+  <path d="M330,428 Q460,350 528,340" stroke="#32AE60" stroke-width="2" fill="none" stroke-dasharray="6 5" opacity="0.42"/>
 </svg>
