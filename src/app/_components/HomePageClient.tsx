@@ -381,7 +381,7 @@ export default function HomePageClient({ content = {} }: { content?: SectionCont
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
             <div className="rounded-3xl overflow-hidden shadow-xl order-2 md:order-1">
-              <img src="/images/product-2-wallet.svg" alt="FindCard PRO בארנק" className="w-full h-auto" />
+              <img src="/images/product-3-wallet.svg" alt="FindCard PRO בארנק" className="w-full h-auto" />
             </div>
             <div className="order-1 md:order-2">
               <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">במלאי — 2,000+ לקוחות מרוצים</span>
