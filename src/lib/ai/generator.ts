@@ -84,7 +84,7 @@ function templateGenerate(product: ExtractedProduct): GeneratedContent {
     addToCartText: 'הוסף לסל',
     features: [
       { icon: '⭐', label: 'איכות מוכחת', desc: 'בדוק ומאושר על ידי לקוחות מרוצים' },
-      { icon: '🚀', label: 'משלוח מהיר', desc: 'משלוח לכל הארץ תוך 2-5 ימי עסקים' },
+      { icon: '🚚', label: 'משלוח חינם', desc: 'משלוח חינם לכל הארץ' },
       { icon: '🔒', label: 'תשלום מאובטח', desc: 'כל העסקאות מאובטחות ומוגנות' },
       { icon: '✅', label: 'אחריות מלאה', desc: 'אחריות 30 יום ללא שאלות' },
     ],
