@@ -117,7 +117,7 @@ export default function StoresPage() {
                 placeholder="לדוגמה: החנות החדשה שלי"
                 autoFocus
                 onKeyDown={e => e.key === 'Enter' && createStore()}
-                className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 max-w-sm"
+                className="w-full bg-[#070B14] border border-white/[0.055] rounded-xl px-3 py-2.5 text-base text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 max-w-sm"
               />
               {createError && <p className="text-red-400 text-[11px] mt-1">{createError}</p>}
             </div>
