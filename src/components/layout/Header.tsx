@@ -224,6 +224,23 @@ export default function Header({
                   <Link href="/track" className="px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>מעקב הזמנה</Link>
                 </>
               )}
+              {(config.phone || config.whatsapp) && (
+                <div className="flex gap-2 px-3 pt-2 mt-1 border-t border-gray-100">
+                  {config.phone && (
+                    <a href={`tel:${config.phone.replace(/\s/g, '')}`}
+                      className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors text-xs py-1">
+                      📞 {config.phone}
+                    </a>
+                  )}
+                  {config.whatsapp && (
+                    <a href={`https://wa.me/${config.whatsapp.replace(/\D/g, '')}`}
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-[#25D366] font-semibold text-xs py-1">
+                      WhatsApp
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </header>
