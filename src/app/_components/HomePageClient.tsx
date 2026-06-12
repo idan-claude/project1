@@ -231,7 +231,8 @@ const DEFAULT_BENEFIT_ITEMS: BenefitItem[] = [
   { emoji: '⭐', text: '4.9/5 · אלפי לקוחות מרוצים' },
 ]
 
-export default function HomePageClient({ content = {} }: { content?: SectionContent }) {
+export default function HomePageClient({ content = {}, sectionVisibility = {} }: { content?: SectionContent; sectionVisibility?: SectionVisibility }) {
+  const show = (id: string) => sectionVisibility[id] !== false
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
