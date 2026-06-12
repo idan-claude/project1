@@ -1,17 +1,19 @@
 'use client'
 import { usePathname } from 'next/navigation'
 
-const WA_NUMBER = '9720525884463'
+const FALLBACK_WA_NUMBER = '9720525884463'
 const WA_MESSAGE = encodeURIComponent('שלום! יש לי שאלה על FindCard PRO')
 
-export default function WhatsAppBubble() {
+export default function WhatsAppBubble({ waNumber }: { waNumber?: string }) {
   const pathname = usePathname()
   if (pathname.startsWith('/admin')) return null
+
+  const wa = waNumber?.replace(/\D/g, '') || FALLBACK_WA_NUMBER
 
   return (
     <div className="fixed bottom-28 lg:bottom-6 left-4 z-40">
       <a
-        href={`https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`}
+        href={`https://wa.me/${wa}?text=${WA_MESSAGE}`}
         target="_blank"
         rel="noopener noreferrer"
         className="w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-110"
